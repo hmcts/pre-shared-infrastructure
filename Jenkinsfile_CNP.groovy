@@ -2,6 +2,6 @@
 //noinspection GroovyUnusedAssignment
 @Library("Infrastructure") _
 
-withInfraPipeline('vh') {
+withInfraPipeline('pre') {
     enableSlackNotifications('#vh-builds')
 }
