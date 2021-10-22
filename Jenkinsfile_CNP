@@ -1,0 +1,7 @@
+#!groovy
+//noinspection GroovyUnusedAssignment
+@Library("Infrastructure") _
+
+withInfraPipeline(product) {
+    enableSlackNotifications('#dts-pre-rec-evidence-tech')
+}
