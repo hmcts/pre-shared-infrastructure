@@ -18,7 +18,7 @@ module "key-vault" {
   resource_group_name = azurerm_resource_group.rg.name
 
   # dcd_platformengineering group object ID
-  product_group_name = "dcd_pre"
+  product_group_name = "DTS Pre-recorded Evidence"
   common_tags                = var.common_tags
   create_managed_identity    = true
 }
