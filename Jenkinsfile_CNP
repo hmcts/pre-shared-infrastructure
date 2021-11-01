@@ -6,5 +6,5 @@
 def product = 'pre'
 
 withInfraPipeline(product) {
-    enableSlackNotifications('#dts-pre-rec-evidence-tech')
+    enableSlackNotifications('#pre-builds')
 }
