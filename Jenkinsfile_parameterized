@@ -1,5 +1,3 @@
-
-   
 #!groovy
 import groovy.json.JsonSlurper
 
