@@ -5,7 +5,7 @@ import groovy.json.JsonSlurper
 
 properties([
     parameters([
-        string(name: 'PRODUCT_NAME', defaultValue: 'pre', description: '')
+        string(name: 'PRODUCT_NAME', defaultValue: 'pre', description: 'Pre-recorded Evidence')
     ])
 ])
 
