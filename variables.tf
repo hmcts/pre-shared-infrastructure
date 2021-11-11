@@ -5,6 +5,7 @@ variable "location" {
 }
 
 variable "env" {}
+variable "jenkins_AAD_objectId" {}
 
 variable "common_tags" {
   type = map(string)
