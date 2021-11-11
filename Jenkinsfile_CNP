@@ -1,10 +1,8 @@
 #!groovy
 //noinspection GroovyUnusedAssignment
-
 @Library("Infrastructure") _
 
-def product = 'pre'
+def product = "pre"
 
 withInfraPipeline(product) {
-    enableSlackNotifications('#pre-builds')
 }
