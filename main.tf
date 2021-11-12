@@ -3,31 +3,3 @@ resource "azurerm_resource_group" "rg" {
   location = var.location
   tags     = var.common_tags
 }
-
-resource "azurerm_storage_account" "sa" {
-  name                     = "examplestoracc"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_tier             = var.sa_account_tier
-  account_replication_type = var.sa_replication_type
-}
-
-resource "azurerm_media_services_account" "ams" {
-  name                = "${var.product}-ams-${var.env}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-
-  storage_account {
-    id         = azurerm_storage_account.sa.id
-    is_primary = true
-  }
-}
-
-//module "azure-media-services" {
-//  source                   = "git@github.com:hmcts/cnp-module-azure-media-services"
-//  location                 = var.location
-//  env                      = var.env
-//  common_tags              = var.common_tags
-//  account_tier             = var.sa_account_tier
-//  account_replication_type = var.sa_replication_type
-//}
