@@ -7,7 +7,7 @@ resource "azurerm_storage_account" "sa" {
 }
 
 resource "azurerm_media_services_account" "ams" {
-  name                = "${var.product}-ams-${var.env}"
+  name                = "${var.product}ams${var.env}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -16,12 +16,3 @@ resource "azurerm_media_services_account" "ams" {
     is_primary = true
   }
 }
-
-//module "azure-media-services" {
-//  source                   = "git@github.com:hmcts/cnp-module-azure-media-services"
-//  location                 = var.location
-//  env                      = var.env
-//  common_tags              = var.common_tags
-//  account_tier             = var.sa_account_tier
-//  account_replication_type = var.sa_replication_type
-//}
