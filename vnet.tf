@@ -9,8 +9,8 @@ resource "azurerm_virtual_network" "vnet" {
     address_prefix = var.snet01_address_prefix
   }
 
-//  subnet {
-//    name           = "${var.product}-snet02-${var.env}"
-//    address_prefix = var.snet02_address_prefix
-//  }
+  subnet {
+    name           = "${var.product}-snet02-${var.env}"
+    address_prefix = var.snet02_address_prefix
+  }
 }
