@@ -1,7 +1,5 @@
-variable "sa_account_tier" {
-  default = "Premium"
-}
-
-variable "sa_replication_type" {
-  default = "GRS"
-}
+sa_account_tier = "Premium"
+sa_replication_type = "GRS"
+vnet_address_space = "10.50.13.128/25"
+snet01_address_prefix = "10.50.13.128/28"
+snet02_address_prefix = "10.50.13.192/26"

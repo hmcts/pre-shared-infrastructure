@@ -18,3 +18,9 @@ variable "sa_account_tier" {
 variable "sa_replication_type" {
   default = "LRS"
 }
+
+variable "vnet_address_space" {}
+
+variable "snet01_address_prefix" {}
+
+variable "snet02_address_prefix" {}
