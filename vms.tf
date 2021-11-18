@@ -14,6 +14,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_windows_virtual_machine" "vm" {
   count               = var.num_vid_edit_vms
   name                = "${var.product}-videditvm${count.index}-${var.env}"
+  computer_name       = "PREVIDED0${count.index}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = var.vid_edit_vm_spec
