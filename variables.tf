@@ -24,3 +24,10 @@ variable "vnet_address_space" {}
 variable "snet01_address_prefix" {}
 
 variable "snet02_address_prefix" {}
+
+variable "num_vid_edit_vms" {
+  default = 1
+}
+variable "vid_edit_vm_spec" {
+  default = "Standard_E4s_v3"
+}
