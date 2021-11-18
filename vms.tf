@@ -6,7 +6,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_virtual_network.vnet.subnet[1].id
+    subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[1]
     private_ip_address_allocation = "Dynamic"
   }
 }
