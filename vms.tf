@@ -13,10 +13,10 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "public"
-    public_ip_address_id          = azurerm_public_ip.pip[count.index].id
+    name                          = "internal"
     subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[1]
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.pip[count.index].id
   }
 }
 
