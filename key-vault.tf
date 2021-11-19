@@ -30,7 +30,7 @@ resource "random_password" "vm_password" {
 resource "azurerm_key_vault_secret" "vm_username_secret" {
   count        = var.num_vid_edit_vms
   name         = "videditvm${count.index}-username"
-  value        = random_string.vm_username[count.index].result
+  value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   key_vault_id = module.key-vault.key_vault_id
 }
 
