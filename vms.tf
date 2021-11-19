@@ -1,3 +1,11 @@
+resource "azurerm_public_ip" "pip" {
+  count               = var.num_vid_edit_vms
+  name                = "${var.product}-videditnic${count.index}pip-${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  allocation_method   = "Static"
+}
+
 resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
   name                = "${var.product}-videditvmnic${count.index}-${var.env}"
@@ -5,7 +13,8 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "internal"
+    name                          = "public"
+    public_ip_address_id          = azurerm_public_ip.pip[count.index].id
     subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[1]
     private_ip_address_allocation = "Dynamic"
   }
