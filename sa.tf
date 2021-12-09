@@ -24,7 +24,7 @@ module "final_storage_account" {
   sa_subnets               = []
   containers = [{
     name        = "final"
-    access_type = "blob"
+    access_type = "private"
   }]
 
   common_tags = var.common_tags
