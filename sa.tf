@@ -43,7 +43,6 @@ module "ams_storage_account" {
   account_replication_type = var.sa_replication_type
   sa_subnets = [
     data.azurerm_subnet.jenkins_subnet.id,
-    data.azurerm_subnet.pre_subnet01.id,
     azurerm_virtual_network.vnet.subnet[0].id,
     azurerm_virtual_network.vnet.subnet[1].id
   ]
