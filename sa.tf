@@ -22,7 +22,10 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   sa_subnets               = []
-  containers               = ["final"]
+  containers = map(object({
+    name        = "final"
+    access_type = "private"
+  }))
 
   common_tags = var.common_tags
 }
