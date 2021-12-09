@@ -14,3 +14,7 @@ resource "azurerm_virtual_network" "vnet" {
     address_prefix = var.snet02_address_prefix
   }
 }
+
+output "subnet01_id" {
+  value = azurerm_virtual_network.vnet.subnets[0]
+}
