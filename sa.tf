@@ -22,13 +22,9 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   sa_subnets               = []
+  containers               = ["final"]
 
   common_tags = var.common_tags
-}
-
-resource "azurerm_storage_container" "final_container" {
-  name                 = "final"
-  storage_account_name = module.final_storage_account.storageaccount_name
 }
 
 # Store the connection string for the SAs in KV
