@@ -27,11 +27,7 @@ module "ams_storage_account" {
   account_kind             = "StorageV2"
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
-  sa_subnets = [
-    data.azurerm_subnet.jenkins_subnet.id,
-    azurerm_virtual_network.vnet.subnet[0].id,
-    azurerm_virtual_network.vnet.subnet[1].id
-  ]
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
 
   common_tags = var.common_tags
 }
@@ -45,10 +41,7 @@ module "final_storage_account" {
   account_kind             = "StorageV2"
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
-  sa_subnets = [
-    data.azurerm_subnet.jenkins_subnet.id,
-    azurerm_virtual_network.vnet.subnet[1].id
-  ]
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
   containers = [{
     name        = "final"
     access_type = "private"
