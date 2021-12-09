@@ -31,3 +31,4 @@ variable "num_vid_edit_vms" {
 variable "vid_edit_vm_spec" {
   default = "Standard_E4s_v3"
 }
+variable "mgmt_subscription_id" {}
