@@ -1,6 +1,6 @@
 provider "azurerm" {
   alias                      = "mgmt"
-  subscription_id            = var.mgmt_subscription_id
+  subscription_id            = "6c4d2513-a873-41b4-afdd-b05a33206631"
   skip_provider_registration = true
   features {}
 }
@@ -8,7 +8,6 @@ provider "azurerm" {
 locals {
   mgmt_network_name    = "ss-ptl-vnet"
   mgmt_network_rg_name = "ss-ptl-network-rg"
-
 }
 
 data "azurerm_subnet" "jenkins_subnet" {
