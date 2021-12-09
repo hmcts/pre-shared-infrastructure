@@ -18,20 +18,6 @@ data "azurerm_subnet" "jenkins_subnet" {
   resource_group_name  = local.mgmt_network_rg_name
 }
 
-//data "azurerm_subnet" "pre_subnet01" {
-//  provider             = azurerm.mgmt
-//  name                 = "${var.product}-snet01-${var.env}"
-//  virtual_network_name = "${var.product}-vnet01-${var.env}"
-//  resource_group_name  = azurerm_resource_group.rg.name
-//}
-//
-//data "azurerm_subnet" "pre_subnet02" {
-//  provider             = azurerm.mgmt
-//  name                 = "${var.product}-snet02-${var.env}"
-//  virtual_network_name = "${var.product}-vnet01-${var.env}"
-//  resource_group_name  = azurerm_resource_group.rg.name
-//}
-
 module "ams_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
