@@ -1,7 +1,7 @@
 #!groovy
 import groovy.json.JsonSlurper
 
-@Library('Infrastructure') _
+@Library('Infrastructure@withParameterizedInfraPipeline') _
 
 properties([
   parameters([
