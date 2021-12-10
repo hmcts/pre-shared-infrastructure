@@ -7,7 +7,7 @@ provider "azurerm" {
 
 provider "azurerm" {
   alias                      = "sbox_mgmt"
-  subscription_id            = "a8140a9e-f1b0-481f-a4de-09e2ee23f7ab"
+  subscription_id            = "64b1c6d6-1481-44ad-b620-d8fe26a2c768"
   skip_provider_registration = true
   features {}
 }
@@ -15,8 +15,8 @@ provider "azurerm" {
 locals {
   mgmt_network_name    = "ss-ptl-vnet"
   mgmt_network_rg_name = "ss-ptl-network-rg"
-  sbox_mgmt_network_name    = "ss-sbox-vnet"
-  sbox_mgmt_network_rg_name = "ss-sbox-network-rg"
+  sbox_mgmt_network_name    = "ss-ptlsbox-vnet"
+  sbox_mgmt_network_rg_name = "ss-ptlsbox-network-rg"
 }
 
 data "azurerm_subnet" "jenkins_subnet" {
