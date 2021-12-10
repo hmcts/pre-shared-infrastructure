@@ -5,9 +5,18 @@ provider "azurerm" {
   features {}
 }
 
+provider "azurerm" {
+  alias                      = "sbox_mgmt"
+  subscription_id            = "a8140a9e-f1b0-481f-a4de-09e2ee23f7ab"
+  skip_provider_registration = true
+  features {}
+}
+
 locals {
   mgmt_network_name    = "ss-ptl-vnet"
   mgmt_network_rg_name = "ss-ptl-network-rg"
+  sbox_mgmt_network_name    = "ss-sbox-vnet"
+  sbox_mgmt_network_rg_name = "ss-sbox-network-rg"
 }
 
 data "azurerm_subnet" "jenkins_subnet" {
@@ -15,6 +24,13 @@ data "azurerm_subnet" "jenkins_subnet" {
   name                 = "iaas"
   virtual_network_name = local.mgmt_network_name
   resource_group_name  = local.mgmt_network_rg_name
+}
+
+data "azurerm_subnet" "sbox_jenkins_subnet" {
+  provider             = azurerm.sbox_mgmt
+  name                 = "iaas"
+  virtual_network_name = local.sbox_mgmt_network_name
+  resource_group_name  = local.sbox_mgmt_network_rg_name
 }
 
 module "ams_storage_account" {
@@ -27,7 +43,7 @@ module "ams_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
 //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
-  sa_subnets               = [data.azurerm_subnet.jenkins_subnet.id]
+  sa_subnets               = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.sbox_jenkins_subnet.id]
 
   common_tags = var.common_tags
 }
@@ -42,7 +58,7 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
 //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets               = [data.azurerm_subnet.jenkins_subnet.id]
+  sa_subnets               = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.sbox_jenkins_subnet.id]
   containers = [{
     name        = "final"
     access_type = "private"
