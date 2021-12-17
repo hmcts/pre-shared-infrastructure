@@ -13,7 +13,7 @@ module "key-vault" {
 }
 
 // Power App Permissions
-resource "azurerm_key_vault_access_policy" "product_team_access_policy" {
+resource "azurerm_key_vault_access_policy" "power_app_access" {
   key_vault_id = module.key-vault.key_vault_id
   object_id    = var.power_app_user_oid
   tenant_id    = data.azurerm_client_config.current.tenant_id
