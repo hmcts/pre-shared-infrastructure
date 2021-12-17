@@ -12,6 +12,41 @@ module "key-vault" {
   create_managed_identity = true
 }
 
+// Power App Permissions
+resource "azurerm_key_vault_access_policy" "product_team_access_policy" {
+  key_vault_id = module.key-vault.key_vault_id
+  object_id    = var.power_app_user_oid
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+
+  key_permissions = [
+    "list",
+    "update",
+    "create",
+    "import",
+    "delete",
+  ]
+
+  certificate_permissions = [
+    "list",
+    "update",
+    "create",
+    "import",
+    "delete",
+    "managecontacts",
+    "manageissuers",
+    "getissuers",
+    "listissuers",
+    "setissuers",
+    "deleteissuers",
+  ]
+
+  secret_permissions = [
+    "list",
+    "set",
+    "delete",
+  ]
+}
+
 // VM credentials
 
 resource "random_string" "vm_username" {

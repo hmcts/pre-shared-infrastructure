@@ -32,3 +32,6 @@ variable "vid_edit_vm_spec" {
   default = "Standard_E4s_v3"
 }
 variable "mgmt_subscription_id" {}
+variable "power_app_user_oid" {
+  default = "56a29187-3d5f-4262-99d6-c635776e0eac"
+}
