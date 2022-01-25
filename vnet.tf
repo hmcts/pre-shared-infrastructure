@@ -7,6 +7,8 @@ resource "azurerm_virtual_network" "vnet" {
   subnet {
     name           = "${var.product}-snet01-${var.env}"
     address_prefix = var.snet01_address_prefix
+    
+    enforce_private_link_endpoint_network_policies = true
   }
 
   subnet {
