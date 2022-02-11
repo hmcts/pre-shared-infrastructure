@@ -13,6 +13,8 @@ resource "azurerm_virtual_network" "vnet" {
     name           = "${var.product}-snet02-${var.env}"
     address_prefix = var.snet02_address_prefix
   }
+
+  common_tags = var.common_tags
 }
 
 //resource "azurerm_subnet" "ams_subnet" {
