@@ -25,6 +25,15 @@ variable "snet01_address_prefix" {}
 
 variable "snet02_address_prefix" {}
 
+variable "snet03_address_prefix" {}
+
+variable "snet04_address_prefix" {}
+
+variable "mgmt_net_name" {}
+
+variable mgmt_net_rg_name {}
+
+
 variable "num_vid_edit_vms" {
   default = 1
 }

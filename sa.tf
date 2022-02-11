@@ -13,10 +13,10 @@ provider "azurerm" {
 }
 
 locals {
-  mgmt_network_name         = "ss-ptl-vnet"
-  mgmt_network_rg_name      = "ss-ptl-network-rg"
-  sbox_mgmt_network_name    = "ss-ptlsbox-vnet"
-  sbox_mgmt_network_rg_name = "ss-ptlsbox-network-rg"
+  mgmt_network_name         =  var.mgmt_net_name 
+  mgmt_network_rg_name      =  var.mgmt_net_rg_name 
+  # sbox_mgmt_network_name    = "ss-ptlsbox-vnet"
+  # sbox_mgmt_network_rg_name = "ss-ptlsbox-network-rg"
 }
 
 data "azurerm_subnet" "jenkins_subnet" {
@@ -26,12 +26,12 @@ data "azurerm_subnet" "jenkins_subnet" {
   resource_group_name  = local.mgmt_network_rg_name
 }
 
-data "azurerm_subnet" "sbox_jenkins_subnet" {
-  provider             = azurerm.sbox_mgmt
-  name                 = "iaas"
-  virtual_network_name = local.sbox_mgmt_network_name
-  resource_group_name  = local.sbox_mgmt_network_rg_name
-}
+# data "azurerm_subnet" "sbox_jenkins_subnet" {
+#   provider             = azurerm.sbox_mgmt
+#   name                 = "iaas"
+#   virtual_network_name = local.sbox_mgmt_network_name
+#   resource_group_name  = local.sbox_mgmt_network_rg_name
+# }
 
 module "ams_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
@@ -43,7 +43,7 @@ module "ams_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.sbox_jenkins_subnet.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.jenkins_subnet.id]
 
   common_tags = var.common_tags
 }
@@ -58,7 +58,7 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.sbox_jenkins_subnet.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.jenkins_subnet.id]
   containers = [{
     name        = "final"
     access_type = "private"
