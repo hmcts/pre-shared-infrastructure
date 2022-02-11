@@ -67,7 +67,7 @@ module "final_storage_account" {
   common_tags = var.common_tags
 }
 
-module "final_storage_account" {
+module "sa_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
   storage_account_name     = replace("${var.product}sa${var.env}", "-", "")
