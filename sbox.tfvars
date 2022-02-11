@@ -1,3 +1,7 @@
 vnet_address_space    = "10.50.12.0/25"
 snet01_address_prefix = "10.50.12.0/28"
 snet02_address_prefix = "10.50.12.64/26"
+snet03_address_prefix = "10.50.12.0/28"
+snet04_address_prefix = "10.50.12.64/26"
+mgmt_net_name         = "ss-ptlsbox-vnet"
+mgmt_net_rg_name      = "ss-ptlsbox-network-rg"
