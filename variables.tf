@@ -7,6 +7,15 @@ variable "location" {
 variable "env" {}
 variable "jenkins_AAD_objectId" {}
 
+# variable "common_tags" {
+#   type = map(string({
+#     source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+#     environment = var.env
+#     product     = var.product
+#     builtFrom   = var.builtFrom
+#   }))
+# }
+
 variable "common_tags" {
   type = map(string)
 }
@@ -31,8 +40,7 @@ variable "snet04_address_prefix" {}
 
 variable "mgmt_net_name" {}
 
-variable mgmt_net_rg_name {}
-
+variable "mgmt_net_rg_name" {}
 
 variable "num_vid_edit_vms" {
   default = 1
