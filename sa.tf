@@ -70,7 +70,7 @@ module "final_storage_account" {
 module "sa_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
-  storage_account_name     = replace("${var.product}sa${var.env}", "-", "")
+  storage_account_name     = replace("${var.product}streamingsa${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_kind             = "StorageV2"
@@ -98,7 +98,7 @@ resource "azurerm_key_vault_secret" "final_storage_account_connection_string" {
 }
 
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
-  name         = "sa-storage-account-connection-string"
+  name         = "streaming-storage-account-connection-string"
   value        = module.final_storage_account.storageaccount_primary_connection_string
   key_vault_id = module.key-vault.key_vault_id
 }
@@ -111,6 +111,10 @@ output "final_storage_account_name" {
   value = module.final_storage_account.storageaccount_name
 }
 
+output "final_storage_account_name" {
+  value = module.streaming_storage_account.storageaccount_name
+}
+
 output "ams_storage_account_primary_key" {
   sensitive = true
   value     = module.ams_storage_account.storageaccount_primary_access_key
@@ -120,3 +124,8 @@ output "final_storage_account_primary_key" {
   sensitive = true
   value     = module.final_storage_account.storageaccount_primary_access_key
 }
+output "final_storage_account_primary_key" {
+  sensitive = true
+  value     = module.streaming_storage_account.storageaccount_primary_access_key
+}
+
