@@ -45,6 +45,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
     version   = "latest"
   }
 
- tags = var.common_tags
+  tags = var.common_tags
   
 }
