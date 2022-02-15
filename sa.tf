@@ -111,7 +111,7 @@ output "final_storage_account_name" {
   value = module.final_storage_account.storageaccount_name
 }
 
-output "final_storage_account_name" {
+output "streaming_storage_account_name" {
   value = module.streaming_storage_account.storageaccount_name
 }
 
@@ -124,8 +124,30 @@ output "final_storage_account_primary_key" {
   sensitive = true
   value     = module.final_storage_account.storageaccount_primary_access_key
 }
-output "final_storage_account_primary_key" {
+output "streaming_storage_account_primary_key" {
   sensitive = true
   value     = module.streaming_storage_account.storageaccount_primary_access_key
 }
 
+
+# ###################################################
+# #                PRIVATE ENDPOINT                 #
+# ###################################################
+# resource "azurerm_private_endpoint" "endpoint" {
+#   name                = local.endpoint_name
+#   location            = var.strLocation
+#   resource_group_name = var.rg_name
+#   subnet_id           = var.virtual_network_subnet_ids
+
+#   private_service_connection {
+#     name                           = local.service_connection_name
+#     private_connection_resource_id = azurerm_storage_account.storage.id
+#     is_manual_connection           = var.is_manual_connection
+#     subresource_names              = var.subResourceNames
+#   }
+
+#   private_dns_zone_group {
+#     name = lower(var.storage_account_name)
+#     private_dns_zone_ids = var.private_dns_zone_ids
+#   }
+# }
