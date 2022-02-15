@@ -1,6 +1,6 @@
 resource "azurerm_public_ip" "pip" {
   # count               = var.num_vid_edit_vms
-  name                = "${var.product}-videditnic${count.index}pip-${var.env}"
+  name                = "${var.product}-pip-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
@@ -50,11 +50,11 @@ resource "azurerm_windows_virtual_machine" "vm" {
     name                 = "${var.product}-videditvm${count.index}-${var.env}-os-disk"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
+    delete_data_disks_on_termination = true
+    delete_os_disk_on_termination    = true
   }
 
-  delete_data_disks_on_termination = true
-  delete_os_disk_on_termination    = true
-
+  
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
     offer     = "Windows-10"
@@ -84,4 +84,3 @@ resource "azurerm_bastion_host" "bastion" {
   }
   tags = var.common_tags
 }
-
