@@ -1,14 +1,14 @@
-# Generic locals
-locals {
-  common_tags = module.ctags.common_tags
-}
+# # Generic locals
+# locals {
+#   common_tags = module.ctags.common_tags
+# }
 
-module "ctags" {
-  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
-  environment = var.env
-  product     = var.product
-  builtFrom   = var.builtFrom
-}
+# module "ctags" {
+#   source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+#   environment = var.env
+#   product     = var.product
+#   builtFrom   = var.builtFrom
+# }
 
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.product}-vnet01-${var.env}"
@@ -35,7 +35,7 @@ resource "azurerm_virtual_network" "vnet" {
     address_prefix = var.snet04_address_prefix
   }
 
- tags = local.common_tags
+ tags = var.common_tags
 }
 
 //resource "azurerm_subnet" "ams_subnet" {
