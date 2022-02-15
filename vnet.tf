@@ -17,13 +17,22 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = [var.vnet_address_space]
 
   subnet {
-    name           = "${var.product}-snet01-${var.env}"
+    name           = "${var.product}-videoeditvm-snet-${var.env}"
     address_prefix = var.snet01_address_prefix
   }
 
   subnet {
-    name           = "${var.product}-snet02-${var.env}"
+    name           = "${var.product}-privatelink-snet-${var.env}"
     address_prefix = var.snet02_address_prefix
+  }
+  subnet {
+    name           = "AzureBastionSubnet" #"${var.product}-bastion-snet-${var.env}"
+    address_prefix = var.snet03_address_prefix
+  }
+
+   subnet {
+    name           = "${var.product}-data-gateway-snet-${var.env}"
+    address_prefix = var.snet04_address_prefix
   }
 
  tags = local.common_tags
