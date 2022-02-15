@@ -7,14 +7,6 @@ variable "location" {
 variable "env" {}
 variable "jenkins_AAD_objectId" {}
 
-# variable "common_tags" {
-#   type = map(string({
-#     source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
-#     environment = var.env
-#     product     = var.product
-#     builtFrom   = var.builtFrom
-#   }))
-# }
 
 variable "common_tags" {
   type = map(string)
