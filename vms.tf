@@ -50,8 +50,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
     name                 = "${var.product}-videditvm${count.index}-${var.env}-os-disk"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
-    delete_data_disks_on_termination = true
-    delete_os_disk_on_termination    = true
   }
 
   
