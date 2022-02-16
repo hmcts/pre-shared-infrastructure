@@ -67,7 +67,7 @@ module "final_storage_account" {
   common_tags = var.common_tags
 }
 
-module "sa_storage_account" {
+module "streaming_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
   storage_account_name     = replace("${var.product}streamingsa${var.env}", "-", "")
@@ -97,9 +97,9 @@ resource "azurerm_key_vault_secret" "final_storage_account_connection_string" {
   key_vault_id = module.key-vault.key_vault_id
 }
 
-resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
+resource "azurerm_key_vault_secret" "streaming_storage_account_connection_string" {
   name         = "streaming-storage-account-connection-string"
-  value        = module.final_storage_account.storageaccount_primary_connection_string
+  value        = module.streaming_storage_account.storageaccount_primary_connection_string
   key_vault_id = module.key-vault.key_vault_id
 }
 
