@@ -75,3 +75,25 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   value        = random_password.vm_password[count.index].result
   key_vault_id = module.key-vault.key_vault_id
 }
+
+###################################################
+#                PRIVATE ENDPOINT                 #
+###################################################
+# resource "azurerm_private_endpoint" "endpoint" {
+#   name                = local.endpoint_name
+#   location            = var.strLocation
+#   resource_group_name = var.rg_name
+#   subnet_id           = var.virtual_network_subnet_ids
+
+#   private_service_connection {
+#     name                           = local.service_connection_name
+#     private_connection_resource_id = azurerm_key_vault.vault.id
+#     is_manual_connection           = var.is_manual_connection
+#     subresource_names              = var.subResourceNames
+#   }
+
+#   private_dns_zone_group {
+#     name                 = lower(var.vault_name)
+#     private_dns_zone_ids = var.private_dns_zone_ids
+#   }
+# }
