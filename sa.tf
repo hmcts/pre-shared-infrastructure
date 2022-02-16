@@ -36,7 +36,7 @@ data "azurerm_subnet" "jenkins_subnet" {
 module "ams_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
-  storage_account_name     = replace("${var.product}amssa${var.env}", "-", "")
+  storage_account_name     = replace("${var.product}ams${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_kind             = "StorageV2"
@@ -51,7 +51,7 @@ module "ams_storage_account" {
 module "final_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
-  storage_account_name     = replace("${var.product}finalsa${var.env}", "-", "")
+  storage_account_name     = replace("${var.product}finals${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_kind             = "StorageV2"
@@ -70,7 +70,7 @@ module "final_storage_account" {
 module "streaming_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
-  storage_account_name     = replace("${var.product}streamingsa${var.env}", "-", "")
+  storage_account_name     = replace("${var.product}streaming${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_kind             = "StorageV2"
