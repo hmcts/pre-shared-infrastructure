@@ -7,7 +7,6 @@ resource "azurerm_public_ip" "pip" {
   tags                = var.common_tags
 }
 
-
 ###################################################
 #            NETWORK INTERFACE CARD               #
 ###################################################
@@ -22,9 +21,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[0]
     private_ip_address_allocation = "Dynamic"
   }
-
- 
-  tags                = var.common_tags
+   tags                = var.common_tags
 }
 
 ###################################################
@@ -64,7 +61,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
 #------------------------------------------------------###################
 # BASTION
 #------------------------------------------------------###################
-
 resource "azurerm_bastion_host" "bastion" {
   name                = "${var.product}-bastion-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
@@ -72,7 +68,7 @@ resource "azurerm_bastion_host" "bastion" {
 
   ip_configuration {
     name                          = "bastionpublic"
-    subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[2]
+    subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[1]
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
   tags = var.common_tags
