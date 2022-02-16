@@ -15,10 +15,10 @@ resource "azurerm_virtual_network" "vnet" {
     name           = "${var.product}-privatelink-snet-${var.env}"
     address_prefix = var.privatelink_snet_address
   }
-  subnet {
-    name           = "AzureBastionSubnet" 
-    address_prefix = var.bastion_snet_address
-  }
+  # subnet {
+  #   name           = "AzureBastionSubnet" 
+  #   address_prefix = var.bastion_snet_address
+  # }
 
    subnet {
     name           = "${var.product}-data-gateway-snet-${var.env}"
@@ -27,6 +27,14 @@ resource "azurerm_virtual_network" "vnet" {
 
  tags = var.common_tags
 }
+
+# resource "azurerm_subnet" "bastion" {
+#   name                 = "AzureBastionSubnet"
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   address_prefixes     = var.bastion_snet_address
+#   tags = var.common_tags
+# }
 
 //resource "azurerm_subnet" "ams_subnet" {
 //  name                 = "${var.product}-snet01-${var.env}"
