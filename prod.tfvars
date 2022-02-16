@@ -1,10 +1,10 @@
 sa_account_tier       = "Premium"
 sa_replication_type   = "GRS"
 vnet_address_space    = "10.101.3.0/24"
-snet01_address_prefix = "10.101.3.0/26"    #pre-video-edit-vm-prod
-snet02_address_prefix = "10.101.3.64/26"   #pre-privatelink-vm-prod
-snet01_address_prefix = "10.101.3.128/26"  #pre-bastion-prod
-snet02_address_prefix = "10.101.3.192/26"  #pre-data-gateway-prod
+video_edit_vm_snet_address = "10.101.3.0/26"    
+privatelink_snet_address = "10.101.3.64/26"   
+bastion_snet_address = "10.101.3.128/26"  
+data_gateway_snet_address = "10.101.3.192/26"  
 num_vid_edit_vms      = 0
 power_app_user_oid    = ""
 mgmt_net_name         = "ss-ptl-vnet"

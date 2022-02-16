@@ -1,6 +1,5 @@
 resource "azurerm_public_ip" "pip" {
-  # count               = var.num_vid_edit_vms
-  name                = "${var.product}-pip-${var.env}"
+   name                = "${var.product}-pip-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
@@ -23,12 +22,7 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = "Dynamic"
   }
 
-  # ip_configuration {
-  #   name                          = "public"
-  #   subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[1]
-  #   private_ip_address_allocation = "Dynamic"
-  #   public_ip_address_id          = azurerm_public_ip.pip[count.index].id
-  # }
+ 
   tags                = var.common_tags
 }
 
@@ -77,7 +71,7 @@ resource "azurerm_bastion_host" "bastion" {
 
   ip_configuration {
     name                          = "bastionpublic"
-    subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[2]
+    subnet_id                     = azurerm_virtual_network.vnet.subnet.AzureBastionSubnet.id
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
   tags = var.common_tags

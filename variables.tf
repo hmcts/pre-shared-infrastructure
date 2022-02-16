@@ -22,13 +22,13 @@ variable "sa_replication_type" {
 
 variable "vnet_address_space" {}
 
-variable "snet01_address_prefix" {}
+variable "video_edit_vm_snet_address" {}
 
-variable "snet02_address_prefix" {}
+variable "privatelink_snet_address" {}
 
-variable "snet03_address_prefix" {}
+variable "bastion_snet_address" {}
 
-variable "snet04_address_prefix" {}
+variable "data_gateway_snet_address" {}
 
 variable "mgmt_net_name" {}
 

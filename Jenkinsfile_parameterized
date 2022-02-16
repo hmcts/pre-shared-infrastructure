@@ -5,8 +5,8 @@ import groovy.json.JsonSlurper
 
 properties([
   parameters([
-    choice(name: 'ENVIRONMENT', choices:  'sbox\ndev\ntest\nstg\nprod', description: 'Environment where code should be build and deployed')
-    choice(name: 'SUBSCRIPTION', choices: 'sbox\ndev\ntest\nstg\nprod', description: 'Subscription where code should be deployed to')
+    choice(name: 'ENVIRONMENT', choices:  'sbox\ndev', description: 'Environment where code should be build and deployed')
+    choice(name: 'SUBSCRIPTION', choices: 'sbox\ndev', description: 'Subscription where code should be deployed to')
   ])
 ])
 
