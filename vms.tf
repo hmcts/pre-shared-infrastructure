@@ -70,7 +70,7 @@ resource "azurerm_subnet" "bastion" {
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = var.bastion_snet_address
-  tags = var.common_tags
+  
 }
 
 resource "azurerm_bastion_host" "bastion" {
