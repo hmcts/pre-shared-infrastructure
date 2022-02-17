@@ -7,4 +7,5 @@ resource "azurerm_media_services_account" "ams" {
     id         = module.ams_storage_account.storageaccount_id
     is_primary = true
   }
+  tags             = var.common_tags
 }
