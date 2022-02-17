@@ -62,7 +62,7 @@ module "final_storage_account" {
     access_type = "private"
   }]
 
-  tags = var.common_tags
+  common_tags = var.common_tags
 }
 
 module "streaming_storage_account" {
@@ -81,7 +81,7 @@ module "streaming_storage_account" {
     access_type = "private"
   }]
 
-  tags = var.common_tags
+  common_tags = var.common_tags
 }
 
 module "sa_storage_account" {
@@ -100,7 +100,7 @@ module "sa_storage_account" {
     access_type = "private"
   }]
 
- tags = var.common_tags
+ common_tags = var.common_tags
 }
 # Store the connection string for the SAs in KV
 resource "azurerm_key_vault_secret" "ams_storage_account_connection_string" {
