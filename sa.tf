@@ -46,24 +46,10 @@ module "ams_storage_account" {
   common_tags = var.common_tags
 }
 
-module "amssa_storage_account" {
-  source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-  env                      = var.env
-  storage_account_name     = replace("${var.product}amssa${var.env}", "-", "")
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_kind             = "StorageV2"
-  account_tier             = var.sa_account_tier
-  account_replication_type = var.sa_replication_type
-  //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.jenkins_subnet.id]
-
-  common_tags = var.common_tags
-}
 module "final_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
-  storage_account_name     = replace("${var.product}finals${var.env}", "-", "")
+  storage_account_name     = replace("${var.product}final${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_kind             = "StorageV2"
@@ -139,5 +125,3 @@ output "streaming_storage_account_primary_key" {
   sensitive = true
   value     = module.streaming_storage_account.storageaccount_primary_access_key
 }
-
-
