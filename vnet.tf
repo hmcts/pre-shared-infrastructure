@@ -7,14 +7,14 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = [var.vnet_address_space]
 
   subnet {
-    name           = "${var.product}-videoeditvm-snet-${var.env}"
+    name           = "${var.product}-videoeditpc-snet-${var.env}"
     address_prefix = var.video_edit_vm_snet_address
   }
 
   subnet {
-    name                                           = "${var.product}-privatelink-snet-${var.env}"
+    name                                           = "${var.product}-privtendptsnet-${var.env}"
     address_prefix                                 = var.privatelink_snet_address
-    enforce_private_link_endpoint_network_policies = true
+    # enforce_private_link_endpoint_network_policies = true
     # service_endpoints                              = ["Microsoft.Storage"]
   }
   subnet {
@@ -23,7 +23,7 @@ resource "azurerm_virtual_network" "vnet" {
   }
 
    subnet {
-    name           = "${var.product}-data-gateway-snet-${var.env}"
+    name           = "${var.product}-datagateway-snet-${var.env}"
     address_prefix = var.data_gateway_snet_address
   }
 
