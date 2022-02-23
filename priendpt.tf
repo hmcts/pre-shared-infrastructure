@@ -7,6 +7,8 @@ resource "azurerm_subnet" "storage" {
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = var.privatelink_snet_address
   enforce_private_link_endpoint_network_policies = true
+
+  tags = var.common_tags
   
 }
 
@@ -19,12 +21,16 @@ resource "azurerm_storage_account" "example" {
   account_kind              = "StorageV2"
   account_replication_type  = "LRS"
   enable_https_traffic_only = true
+
+  tags = var.common_tags
 }
 
 resource "azurerm_storage_container" "example" {
   name                  = "acctestcont"
   storage_account_name  = azurerm_storage_account.example.name
   container_access_type = "private"
+
+  tags = var.common_tags
   
 }
 
@@ -40,6 +46,6 @@ resource "azurerm_private_endpoint" "example" {
     private_connection_resource_id = azurerm_storage_account.example.id
     subresource_names              = ["blob"]
   }
-  
+ tags = var.common_tags 
 }
 
