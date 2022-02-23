@@ -58,7 +58,7 @@ resource "azurerm_private_endpoint" "amsendpoint" {
 
   private_service_connection {
     name                           = "${var.product}amsprivendpointservice_connection${var.env}" 
-    private_connection_resource_id = module.ams_storage_account.id
+    private_connection_resource_id = module.ams_storage_account.storage.id
     is_manual_connection           = false
     subresource_names              =  [ "blob" ]
   }
@@ -155,6 +155,11 @@ resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
 output "ams_storage_account_name" {
   value = module.ams_storage_account.storageaccount_name
 }
+
+output "ams_storage_account_id" {
+    value = module.ams_storage_account.storage.id
+}
+
 
 output "final_storage_account_name" {
   value = module.final_storage_account.storageaccount_name
