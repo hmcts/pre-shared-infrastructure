@@ -41,7 +41,7 @@ module "ams_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet.*.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet.*.id[0],azurerm_virtual_network.vnet.subnet.*.id[1],azurerm_virtual_network.vnet.subnet.*.id[2],azurerm_virtual_network.vnet.subnet.*.id[3]]
 
   common_tags = var.common_tags
 }
@@ -50,17 +50,19 @@ module "ams_storage_account" {
 ###################################################
 #                PRIVATE ENDPOINT                 #
 ###################################################
-resource "azurerm_private_endpoint" "amsendpoint" {
-  name                     = "${var.product}amsprivendpoint${var.env}"
+resource "azurerm_private_endpoint" "finalendpoint" {
+  name                     = "${var.product}finalprivendpoint${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[2]
 
   private_service_connection {
-    name                           = "${var.product}amsprivendpointservice_connection${var.env}" 
-    private_connection_resource_id = module.ams_storage_account.storage.id
+    name                           = "${var.product}finalpsc${var.env}" 
+    private_connection_resource_id = module.final_storage_account.id
     is_manual_connection           = false
     subresource_names              =  [ "blob" ]
+    depends_on = [module.final_storage_account]
+  
   }
 
 #   private_dns_zone_group {
@@ -81,7 +83,8 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.jenkins_subnet.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1)]
+  # enforce_private_link_endpoint_network_policies = false
   containers = [{
     name        = "final"
     access_type = "private"
