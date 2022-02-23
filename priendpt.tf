@@ -1,29 +1,3 @@
-provider "azurerm" {
-  alias                      = "mgmt"
-  subscription_id            = "6c4d2513-a873-41b4-afdd-b05a33206631"
-  skip_provider_registration = true
-  features {}
-}
-
-provider "azurerm" {
-  alias                      = "sbox_mgmt"
-  subscription_id            = "64b1c6d6-1481-44ad-b620-d8fe26a2c768"
-  skip_provider_registration = true
-  features {}
-}
-
-locals {
-  mgmt_network_name         =  var.mgmt_net_name 
-  mgmt_network_rg_name      =  var.mgmt_net_rg_name 
- }
-
-data "azurerm_subnet" "jenkins_subnet" {
-  provider             = azurerm.mgmt
-  name                 = "iaas"
-  virtual_network_name = local.mgmt_network_name
-  resource_group_name  = local.mgmt_network_rg_name
-}
-
 ###########################
 #
 ###################################
