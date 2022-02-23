@@ -14,8 +14,8 @@ resource "azurerm_virtual_network" "vnet" {
   subnet {
     name                                           = "${var.product}-privatelink-snet-${var.env}"
     address_prefix                                 = var.privatelink_snet_address
-    # enforce_private_link_endpoint_network_policies = true
-    service_endpoints                              = ["Microsoft.Storage"]
+    enforce_private_link_endpoint_network_policies = true
+    # service_endpoints                              = ["Microsoft.Storage"]
   }
   subnet {
     name           = "AzureBastionSubnet" 
