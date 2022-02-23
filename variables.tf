@@ -1,27 +1,47 @@
-
-variable "common_tags" {
-  type = map(string)
-}
-
-variable "product" {
-  default = "pre"
-}
-variable "env" {}
-variable "tenant_id" {}
+variable "product" {}
 
 variable "location" {
   default = "UK South"
 }
 
-variable "managed_identity_object_id" {
-  default = ""
+variable "env" {}
+variable "jenkins_AAD_objectId" {}
+
+
+variable "common_tags" {
+  type = map(string)
 }
 
-variable "jenkins_AAD_objectId" {
-  description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
+variable "sa_account_tier" {
+  default = "Standard"
 }
 
-variable "appinsights_location" {
-  default     = "West Europe"
-  description = "Location for Application Insights"
+variable "sa_replication_type" {
+  default = "LRS"
+}
+
+variable "vnet_address_space" {}
+
+variable "video_edit_vm_snet_address" {}
+
+variable "privatelink_snet_address" {}
+
+variable "bastion_snet_address" {}
+
+variable "data_gateway_snet_address" {}
+
+variable "mgmt_net_name" {}
+
+variable "mgmt_net_rg_name" {}
+
+variable "num_vid_edit_vms" {
+  default = 1
+}
+variable "vid_edit_vm_spec" {
+  default = "Standard_E2s_v4"
+}
+
+variable "mgmt_subscription_id" {}
+variable "power_app_user_oid" {
+  default = "56a29187-3d5f-4262-99d6-c635776e0eac"
 }
