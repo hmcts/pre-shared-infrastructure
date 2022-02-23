@@ -1,45 +1,54 @@
+# pre product infrastructure
 
-## Purpose
+Contains the the product infrastructure components per Environment for pre
 
-This is the repo to hold code for the infrastructure of Pre-recorded Evidence project.
-For more information head over to https://tools.hmcts.net/confluence/display/S28/Pre-Recorded+Evidence.
-
-## What's inside
-
-- Jenkins configurations
-- Terraform modules
-- Application configuration setup files
-
-## Plugins
-
-- TBC
+- Resource Group
 
 
 
-## Notes
+## Tooling
 
-- TBC
+All infrastructure is created via Terraform, using reusable modules.
 
-## Building and deploying the application
+They are discovered by using [GitHub search](https://github.com/hmcts/?q=cnp-module&type=&language=).
 
-- TBC
+## Getting started
 
-### Building the application
+You will likely want to install terraform,
 
-- TBC
+We recommend using [tfenv](https://github.com/tfutils/tfenv), as it will manage the terraform version and ensures you use the same version locally and on our build server.
 
+The terraform version is managed by `.terraform-version` file in the root of the repo, you can update this whenever you want.
 
-### Running the application
+## Lint
 
-- TBC
+Please run `terraform fmt` before submitting a pull request.
 
+We've included a [pre-commit](https://pre-commit.com/) file to help with this.
 
+Install it with:
+```shell
+$ brew install pre-commit
+# or
+$ pip3 install pre-commit
+```
 
-### Other
+then run:
+```command
+$ pre-commit install
+```
 
-- None
+## Workflow
 
-## License
+1. Make your changes locally
+2. Format your change with `terraform fmt` or the pre-commit hook
+3. Submit a pull request
+4. Check the terraform plan from the build link that will be posted on your PR
+5. Get someone else to review your PR
+6. Merge the PR
+7. It will automatically be deployed to AAT and Prod environments
+8. Once successful in AAT and Prod then merge your change to demo, ithc, and perftest branches.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+## LICENSE
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
