@@ -11,12 +11,12 @@ resource "azurerm_virtual_network" "vnet" {
     address_prefix = var.video_edit_vm_snet_address
   }
 
-  subnet {
-    name                                           = "${var.product}-privtendptsnet-${var.env}"
-    address_prefix                                 = var.privatelink_snet_address
-    # enforce_private_link_endpoint_network_policies = true
-    # service_endpoints                              = ["Microsoft.Storage"]
-  }
+  # subnet {
+  #   name                                           = "${var.product}-privtendptsnet-${var.env}"
+  #   address_prefix                                 = var.privatelink_snet_address
+  #   # enforce_private_link_endpoint_network_policies = true
+  #   # service_endpoints                              = ["Microsoft.Storage"]
+  # }
   subnet {
     name           = "AzureBastionSubnet" 
     address_prefix = var.bastion_snet_address

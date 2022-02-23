@@ -61,10 +61,10 @@ resource "azurerm_private_endpoint" "finalendpoint" {
     private_connection_resource_id = module.final_storage_account.id
     is_manual_connection           = false
     subresource_names              =  [ "blob" ]
-    depends_on = [module.final_storage_account]
+    
   
   }
-
+ depends_on = [module.final_storage_account.storageaccount_name]
 #   private_dns_zone_group {
 #     name = lower(var.storage_account_name)
 #     private_dns_zone_ids = var.private_dns_zone_ids
