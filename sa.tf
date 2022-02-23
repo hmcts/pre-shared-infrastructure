@@ -41,7 +41,7 @@ module "ams_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet.*.id[0],azurerm_virtual_network.vnet.subnet.*.id[1],azurerm_virtual_network.vnet.subnet.*.id[2],azurerm_virtual_network.vnet.subnet.*.id[3]]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet.*.id[0]]
 
   common_tags = var.common_tags
 }
@@ -83,7 +83,7 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1)]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id]
   # enforce_private_link_endpoint_network_policies = false
   containers = [{
     name        = "final"
