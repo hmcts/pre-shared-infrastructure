@@ -41,10 +41,35 @@ module "ams_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.jenkins_subnet.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet.*.id]
 
   common_tags = var.common_tags
 }
+
+
+###################################################
+#                PRIVATE ENDPOINT                 #
+###################################################
+resource "azurerm_private_endpoint" "amsendpoint" {
+  name                     = "${var.product}amsprivendpoint${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[2]
+
+  private_service_connection {
+    name                           = "${var.product}amsprivendpointservice_connection${var.env}" 
+    private_connection_resource_id = module.ams_storage_account.id
+    is_manual_connection           = false
+    subresource_names              =  [ "blob" ]
+  }
+
+#   private_dns_zone_group {
+#     name = lower(var.storage_account_name)
+#     private_dns_zone_ids = var.private_dns_zone_ids
+#   }
+ }
+
+
 
 module "final_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
