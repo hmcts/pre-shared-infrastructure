@@ -75,7 +75,7 @@ module "streaming_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_subnet.jenkins_subnet[*].id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_subnet.vnet.subnet[*].id]
   containers = [{
     name        = "final"
     access_type = "private"
@@ -94,7 +94,7 @@ module "sa_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, data.azurerm_subnet.vnet.*.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id,azurerm_subnet.vnet.subnet.*.id]
   containers = [{
     name        = "final"
     access_type = "private"
@@ -107,12 +107,12 @@ resource "azurerm_private_endpoint" "sa" {
   name                     = "${var.product}sape${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
-  subnet_id                = module.sa_storage_account.storageaccount_id
+  subnet_id                = azurerm_subnet.vnet.subnet.*.id[2]
 
   private_service_connection {
     name                           = "${var.product}sapsc${var.env}"
     is_manual_connection           = false
-    private_connection_resource_id = azurerm_storage_account.example.id
+    private_connection_resource_id = module.sa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
   common_tags = var.common_tags
@@ -154,6 +154,11 @@ output "final_storage_account_name" {
 output "final_storage_account_id" {
   value = module.final_storage_account.storageaccount_id
 }
+
+output "sa_storage_account_id" {
+  value = module.sa_storage_account.storageaccount_id
+}
+
 
 output "streaming_storage_account_name" {
   value = module.streaming_storage_account.storageaccount_name
