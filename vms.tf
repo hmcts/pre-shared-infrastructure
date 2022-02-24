@@ -8,7 +8,7 @@ resource "azurerm_public_ip" "pip" {
 }
 
 ###################################################
-#            NETWORK INTERFACE CARD               #
+#           VM NETWORK INTERFACE CARD               #
 ###################################################
 resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
