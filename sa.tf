@@ -75,7 +75,7 @@ module "streaming_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_subnet.vnet.subnet.*.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet.*.id]
   containers = [{
     name        = "final"
     access_type = "private"
@@ -94,7 +94,7 @@ module "sa_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   //  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_subnet.vnet.subnet.*.id]
+  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet[].id]
   containers = [{
     name        = "final"
     access_type = "private"
@@ -107,7 +107,7 @@ resource "azurerm_private_endpoint" "sa" {
   name                     = "${var.product}sape${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
-  subnet_id                = azurerm_subnet.vnet.subnet.*.id[2]
+  subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[2]
 
   private_service_connection {
     name                           = "${var.product}sapsc${var.env}"
