@@ -93,8 +93,8 @@ module "sa_storage_account" {
   account_kind             = "StorageV2"
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
-  # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet[*].id[3]]
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
+  #sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet[*].id[3]]
   containers = [{
     name        = "final"
     access_type = "private"
