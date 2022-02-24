@@ -115,7 +115,7 @@ resource "azurerm_private_endpoint" "sa" {
     private_connection_resource_id = module.sa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-  common_tags = var.common_tags
+#  tags = var.common_tags
 }
 
 # Store the connection string for the SAs in KV
