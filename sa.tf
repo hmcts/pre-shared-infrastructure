@@ -31,6 +31,9 @@ data "azurerm_subnet" "jenkins_subnet" {
 #   resource_group_name  = local.sbox_mgmt_network_rg_name
 # }
 
+###################################################
+#                 STORAGES               #
+###################################################
 module "ams_storage_account" {
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
@@ -55,8 +58,8 @@ module "final_storage_account" {
   account_kind             = "StorageV2"
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
-  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatelink_snet_address]
+  # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
   containers = [{
     name        = "final"
     access_type = "private"
@@ -74,45 +77,85 @@ module "streaming_storage_account" {
   account_kind             = "StorageV2"
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
-  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet.*.id]
+  # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
   containers = [{
-    name        = "final"
+    name        = "streaming"
     access_type = "private"
   }]
 
   common_tags = var.common_tags
 }
 
-module "sa_storage_account" {
-  source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-  env                      = var.env
-  storage_account_name     = replace("${var.product}sa${var.env}", "-", "")
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  account_kind             = "StorageV2"
-  account_tier             = var.sa_account_tier
-  account_replication_type = var.sa_replication_type
-  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  #sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, azurerm_virtual_network.vnet.subnet[*].id[3]]
-  containers = [{
-    name        = "final"
-    access_type = "private"
-  }]
+# module "sa_storage_account" {
+#   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+#   env                      = var.env
+#   storage_account_name     = replace("${var.product}sa${var.env}", "-", "")
+#   resource_group_name      = azurerm_resource_group.rg.name
+#   location                 = azurerm_resource_group.rg.location
+#   account_kind             = "StorageV2"
+#   account_tier             = var.sa_account_tier
+#   account_replication_type = var.sa_replication_type
+#   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
+#   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
+#   containers = [{
+#     name        = "final"
+#     access_type = "private"
+#   }]
 
- common_tags = var.common_tags
-}
+#  common_tags = var.common_tags
+# }
 
-resource "azurerm_private_endpoint" "sa" {
-  name                     = "${var.product}sape${var.env}"
+###################################################
+#                PRIVATE ENDPOINTS FOR STORAGES              #
+###################################################
+resource "azurerm_private_endpoint" "ams" {
+  name                     = "${var.product}ams-pe${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[3]
 
   private_service_connection {
-    name                           = "${var.product}sapsc${var.env}"
+    name                           = "${var.product}ams-psc${var.env}"
     is_manual_connection           = false
-    private_connection_resource_id = module.sa_storage_account.storageaccount_id
+    private_connection_resource_id = module.ams_storage_account.storageaccount_id
+    subresource_names              = ["blob"]
+  }
+#  tags = var.common_tags
+}
+
+
+###################################################
+#                PRIVATE ENDPOINTS FOR STORAGES              #
+###################################################
+resource "azurerm_private_endpoint" "final" {
+  name                     = "${var.product}final-pe${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[3]
+
+  private_service_connection {
+    name                           = "${var.product}final-psc${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.final_storage_account.storageaccount_id
+    subresource_names              = ["blob"]
+  }
+#  tags = var.common_tags
+}
+
+###################################################
+#                PRIVATE ENDPOINTS FOR STORAGES              #
+###################################################
+resource "azurerm_private_endpoint" "streaming" {
+  name                     = "${var.product}stream-pe${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[3]
+
+  private_service_connection {
+    name                           = "${var.product}stream-psc${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.streaming_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
 #  tags = var.common_tags
