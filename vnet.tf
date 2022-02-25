@@ -7,13 +7,17 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = [var.vnet_address_space]
 
   subnet {
-    name           = "${var.product}-videoeditvm-snet-${var.env}"
-    address_prefix = var.video_edit_vm_snet_address
+    name                  = "${var.product}-videoeditvm-snet-${var.env}"
+    address_prefix        = var.video_edit_vm_snet_address
+    enforce_private_link_endpoint_network_policies = false
   }
 
   subnet {
     name           = "${var.product}-privatelink-snet-${var.env}"
     address_prefix = var.privatelink_snet_address
+    service_endpoints     = ["Microsoft.Storage"]
+    # enforce_private_link_endpoint_network_policies = false
+  // enforce_private_link_service_network_policies = false
   }
   subnet {
     name           = "AzureBastionSubnet" 
@@ -46,6 +50,6 @@ resource "azurerm_virtual_network" "vnet" {
 
 
 
-# output "subnet_ids" {
-#    value = (azurerm_virtual_network.vnet.subnet)[*].id
-# }
+output "subnet_ids" {
+   value = azurerm_virtual_network.vnet.subnet[*].id
+}
