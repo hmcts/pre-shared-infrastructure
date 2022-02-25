@@ -94,7 +94,7 @@ module "streaming_storage_account" {
     access_type = "private"
   }]
 
-  depends_on = [azurerm_virtual_network.vnet.id]
+  depends_on = [azurerm_virtual_network.vnet.name]
   common_tags = var.common_tags
 }
 
