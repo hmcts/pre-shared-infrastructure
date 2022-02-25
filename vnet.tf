@@ -45,3 +45,7 @@ resource "azurerm_virtual_network" "vnet" {
 //}
 
 
+
+# output "subnet_ids" {
+#    value = (azurerm_virtual_network.vnet.subnet)[*].id
+# }
