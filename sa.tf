@@ -48,7 +48,7 @@ module "ams_storage_account" {
   ip_rules                 = []
   allow_blob_public_access = false
   default_action           = "Deny"
-  depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
+  # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   common_tags = var.common_tags
 }
 
@@ -71,7 +71,7 @@ module "final_storage_account" {
     access_type = "private"
   }]
 
-  depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
+  # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   common_tags = var.common_tags
 }
 
@@ -94,7 +94,7 @@ module "streaming_storage_account" {
     access_type = "private"
   }]
 
-  depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
+  depends_on = [azurerm_virtual_network.vnet.id]
   common_tags = var.common_tags
 }
 
