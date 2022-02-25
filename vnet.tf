@@ -12,8 +12,11 @@ resource "azurerm_virtual_network" "vnet" {
   }
 
   subnet {
-    name           = "${var.product}-privatelink-snet-${var.env}"
-    address_prefix = var.privatelink_snet_address
+    name           = "${var.product}-privatendpt-snet-${var.env}"
+    address_prefix = var.privatendpt_snet_address
+    service_endpoints    = ["Microsoft.Storage"]
+    # enforce_private_link_endpoint_network_policies = true
+    # enforce_private_link_service_network_policies = false
   }
   subnet {
     name           = "AzureBastionSubnet" 
@@ -21,7 +24,7 @@ resource "azurerm_virtual_network" "vnet" {
   }
 
    subnet {
-    name           = "${var.product}-data-gateway-snet-${var.env}"
+    name           = "${var.product}-datagateway-snet-${var.env}"
     address_prefix = var.data_gateway_snet_address
   }
 
@@ -40,12 +43,12 @@ resource "azurerm_virtual_network" "vnet" {
 //  name                 = "${var.product}-snet02-${var.env}"
 //  resource_group_name  = azurerm_resource_group.rg.name
 //  virtual_network_name = azurerm_virtual_network.vnet.name
-//  address_prefixes     = var.privatelink_snet_address
+//  address_prefixes     = var.privatendpt_snet_address
 //  service_endpoints    = ["Microsoft.Storage"]
 //}
 
 
 
-# output "subnet_ids" {
-#    value = (azurerm_virtual_network.vnet.subnet)[*].id
-# }
+output "subnet_ids" {
+   value = azurerm_virtual_network.vnet.subnet[*].id
+}
