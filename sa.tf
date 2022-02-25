@@ -45,7 +45,10 @@ module "ams_storage_account" {
   account_replication_type = var.sa_replication_type
   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
   # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatelink_snet_address]
-
+  ip_rules                 = []
+  allow_blob_public_access = false
+  default_action           = "Deny"
+  depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   common_tags = var.common_tags
 }
 
@@ -59,12 +62,15 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)ip_rules                 = []
+  allow_blob_public_access = false
+  default_action           = "Deny"
   containers = [{
-    name        = "final"
+    name        = "streaming"
     access_type = "private"
   }]
 
+  depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   common_tags = var.common_tags
 }
 
@@ -86,7 +92,8 @@ module "streaming_storage_account" {
     name        = "streaming"
     access_type = "private"
   }]
-  depends_on = [azurerm_virtual_network.vnet.subnet.*.id]
+
+  depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   common_tags = var.common_tags
 }
 
@@ -162,9 +169,6 @@ resource "azurerm_key_vault_secret" "streaming_storage_account_connection_string
   value        = module.streaming_storage_account.storageaccount_primary_connection_string
   key_vault_id = module.key-vault.key_vault_id
 }
-
-
-
 
 output "ams_storage_account_name" {
   value = module.ams_storage_account.storageaccount_name
