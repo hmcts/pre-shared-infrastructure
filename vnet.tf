@@ -48,7 +48,7 @@ resource "azurerm_subnet" "endpoint_subnet" {
  name                  = "${var.product}-privatendpt-snet-${var.env}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefix       = var.privatendpt_snet_address
+  address_prefixes       = [var.privatendpt_snet_address]
   service_endpoints    = ["Microsoft.Storage"]
   enforce_private_link_endpoint_network_policies = true
 }
