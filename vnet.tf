@@ -53,9 +53,9 @@ resource "azurerm_subnet" "endpoint_subnet" {
   enforce_private_link_endpoint_network_policies = true
 }
 
-output "subnet_ids" {
-   value = azurerm_virtual_network.vnet.subnet[*].id
-}
+# output "subnet_ids" {
+#    value = azurerm_virtual_network.vnet.subnet[*].id
+# }
 
 
 output "private_endpt_subnet_ids" {
