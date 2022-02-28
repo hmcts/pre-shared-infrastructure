@@ -18,10 +18,10 @@ resource "azurerm_virtual_network" "vnet" {
   #   # enforce_private_link_endpoint_network_policies = false
   # // enforce_private_link_service_network_policies = false
   # }
-  subnet {
-    name           = "AzureBastionSubnet" 
-    address_prefix = var.bastion_snet_address
-  }
+  # subnet {
+  #   name           = "AzureBastionSubnet" 
+  #   address_prefix = var.bastion_snet_address
+  # }
 
   #  subnet {
   #   name           = "${var.product}-data-gateway-snet-${var.env}"
@@ -77,9 +77,9 @@ resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
   address_prefixes       = [var.bastion_snet_address]
 }
 
-output "subnet_ids" {
-   value = azurerm_virtual_network.vnet.subnet[*].id
-}
+# output "subnet_ids" {
+#    value = azurerm_virtual_network.vnet.subnet[*].id
+# }
 
 
 output "private_endpt_subnet_ids" {
