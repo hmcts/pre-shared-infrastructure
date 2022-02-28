@@ -9,7 +9,6 @@ resource "azurerm_virtual_network" "vnet" {
   subnet {
     name                  = "${var.product}-videoeditvm-snet-${var.env}"
     address_prefix        = var.video_edit_vm_snet_address
-    enforce_private_link_endpoint_network_policies = false
   }
 
   # subnet {
