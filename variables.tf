@@ -24,7 +24,7 @@ variable "vnet_address_space" {}
 
 variable "video_edit_vm_snet_address" {}
 
-variable "privatelink_snet_address" {}
+variable "privatendpt_snet_address" {}
 
 variable "bastion_snet_address" {}
 
