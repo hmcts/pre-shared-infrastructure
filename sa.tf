@@ -44,7 +44,7 @@ module "ams_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id)
-  # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatelink_snet_address]
+  # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatendpt_snet_address]
   ip_rules                 = []
   allow_blob_public_access = false
   default_action           = "Deny"
@@ -105,7 +105,7 @@ resource "azurerm_private_endpoint" "ams" {
   name                     = "${var.product}ams-pe${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
-  subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[3]
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.product}ams-psc${var.env}"
@@ -124,7 +124,7 @@ resource "azurerm_private_endpoint" "final" {
   name                     = "${var.product}final-pe${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
-  subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[3]
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.product}final-psc${var.env}"
@@ -142,7 +142,7 @@ resource "azurerm_private_endpoint" "streaming" {
   name                     = "${var.product}stream-pe${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
-  subnet_id                = azurerm_virtual_network.vnet.subnet.*.id[3]
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.product}stream-psc${var.env}"
