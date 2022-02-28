@@ -43,7 +43,7 @@ module "ams_storage_account" {
   account_kind             = "StorageV2"
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
-  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id,azurerm_subnet.endpoint_subnet.id)
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id, [azurerm_subnet.endpoint_subnet.id])
   # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatendpt_snet_address]
   ip_rules                 = []
   allow_blob_public_access = false
@@ -62,7 +62,7 @@ module "final_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id,azurerm_subnet.endpoint_subnet.id)
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id, [azurerm_subnet.endpoint_subnet.id])
   ip_rules                 = []
   allow_blob_public_access = false
   default_action           = "Deny"
@@ -85,7 +85,7 @@ module "streaming_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id,azurerm_subnet.endpoint_subnet.id)
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], azurerm_virtual_network.vnet.subnet.*.id, [azurerm_subnet.endpoint_subnet.id])
   ip_rules                 = []
   allow_blob_public_access = false
   default_action           = "Deny"
