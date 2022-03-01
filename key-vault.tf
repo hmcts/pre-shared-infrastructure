@@ -93,7 +93,7 @@ resource "azurerm_private_endpoint" "keyvault_endpt" {
     private_connection_resource_id = module.key-vault.key_vault_id
     subresource_names              = ["Vault"]
   }
-
+tags = var.common_tags
 }
 #TODO
 
