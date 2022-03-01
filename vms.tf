@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[0]
+    subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
    tags                = var.common_tags
@@ -68,7 +68,7 @@ resource "azurerm_bastion_host" "bastion" {
 
   ip_configuration {
     name                          = "bastionpublic"
-    subnet_id                     = azurerm_virtual_network.vnet.subnet.*.id[1]
+    subnet_id                     = azurerm_subnet.AzureBastionSubnet_subnet.id
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
   tags = var.common_tags
