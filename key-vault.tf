@@ -82,17 +82,19 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
 
 
 resource "azurerm_private_endpoint" "keyvault_endpt" {
-  name                     = "${var.product}kv-pe${var.env}"
+  name                     = "${var.product}kv-pe-${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}kv-psc${var.env}"
+    name                           = "${var.product}kv-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.key-vault.key_vault_id
     subresource_names              = ["Vault"]
   }
+
+  tags = var.common_tags
 
 }
 #TODO
