@@ -18,11 +18,17 @@ locals {
  }
 
 data "azurerm_subnet" "jenkins_subnet" {
-  provider             = azurerm.mgmt
+  provider             = var.jenkins_env_mgmt
   name                 = "iaas"
   virtual_network_name = local.mgmt_network_name
   resource_group_name  = local.mgmt_network_rg_name
 }
+# data "azurerm_subnet" "jenkins_subnet" {
+#   provider             = azurerm.mgmt
+#   name                 = "iaas"
+#   virtual_network_name = local.mgmt_network_name
+#   resource_group_name  = local.mgmt_network_rg_name
+# }
 
 # data "azurerm_subnet" "sbox_jenkins_subnet" {
 #   provider             = azurerm.sbox_mgmt
