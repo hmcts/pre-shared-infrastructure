@@ -11,13 +11,12 @@ module "key-vault" {
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
   create_managed_identity = true
-
   network_acls {
-    bypass                     = ["AzureServices"]
-    default_action             = Deny
+    bypass                     = "AzureServices"
+    default_action             = "Deny"
     virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
     ip_rules                   = []
-  }
+   }
 }
 
 // Power App Permissions
