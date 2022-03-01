@@ -79,18 +79,23 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
 ###################################################
 #                PRIVATE ENDPOINT                 #
 ###################################################
-# resource "azurerm_private_endpoint" "endpoint" {
-#   name                = local.endpoint_name
-#   location            = var.strLocation
-#   resource_group_name = var.rg_name
-#   subnet_id           = var.virtual_network_subnet_ids
 
-#   private_service_connection {
-#     name                           = local.service_connection_name
-#     private_connection_resource_id = azurerm_key_vault.vault.id
-#     is_manual_connection           = var.is_manual_connection
-#     subresource_names              = var.subResourceNames
-#   }
+
+resource "azurerm_private_endpoint" "keyvault_endpt" {
+  name                     = "${var.product}kv-pe${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
+
+  private_service_connection {
+    name                           = "${var.product}kv-psc${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.key-vault.key_vault_id
+    subresource_names              = ["Vault"]
+  }
+
+}
+#TODO
 
 #   private_dns_zone_group {
 #     name                 = lower(var.vault_name)
