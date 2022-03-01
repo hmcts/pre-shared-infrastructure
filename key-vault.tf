@@ -2,6 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  name                    = "${var.product}-kv-${var.env}" 
   product                 = var.product
   env                     = var.env
   tenant_id               = data.azurerm_client_config.current.tenant_id
@@ -93,20 +94,20 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
 # #                PRIVATE ENDPOINT                 #
 # ###################################################
 
-resource "azurerm_private_endpoint" "keyvault_endpt" {
-  name                     = "${var.product}kv-pe${var.env}"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  subnet_id                = azurerm_subnet.endpoint_subnet.id
+# resource "azurerm_private_endpoint" "keyvault_endpt" {
+#   name                     = "${var.product}kv-pe${var.env}"
+#   resource_group_name      = azurerm_resource_group.rg.name
+#   location                 = azurerm_resource_group.rg.location
+#   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
-  private_service_connection {
-    name                           = "${var.product}kv-psc${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.key-vault.key_vault_id
-    subresource_names              = ["Vault"]
-  }
-tags = var.common_tags
-}
+#   private_service_connection {
+#     name                           = "${var.product}kv-psc${var.env}"
+#     is_manual_connection           = false
+#     private_connection_resource_id = module.key-vault.key_vault_id
+#     subresource_names              = ["Vault"]
+#   }
+# tags = var.common_tags
+# }
 # TODO
 
   #   private_dns_zone_group {
