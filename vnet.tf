@@ -61,28 +61,28 @@ resource "azurerm_virtual_network" "vnet" {
 # }
 
 
-resource "azurerm_subnet" "endpoint_subnet" {
- name                  = "${var.product}-privatendpt-snet-${var.env}"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes       = [var.privatendpt_snet_address]
-  service_endpoints    = ["Microsoft.Storage","Microsoft.KeyVault"]
-  enforce_private_link_endpoint_network_policies = true
-}
+# resource "azurerm_subnet" "endpoint_subnet" {
+#  name                  = "${var.product}-privatendpt-snet-${var.env}"
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   address_prefixes       = [var.privatendpt_snet_address]
+#   service_endpoints    = ["Microsoft.Storage","Microsoft.KeyVault"]
+#   enforce_private_link_endpoint_network_policies = true
+# }
 
-resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
- name                  = "AzureBastionSubnet"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes       = [var.bastion_snet_address]
-}
+# resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
+#  name                  = "AzureBastionSubnet"
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   address_prefixes       = [var.bastion_snet_address]
+# }
 
 # output "subnet_ids" {
 #    value = azurerm_virtual_network.vnet.subnet[*].id
 # }
 
 
-output "private_endpt_subnet_ids" {
-   value = azurerm_subnet.endpoint_subnet.id
-  #  "${data.azurerm_virtual_network.test.id}"
-}
+# output "private_endpt_subnet_ids" {
+#    value = azurerm_subnet.endpoint_subnet.id
+#   #  "${data.azurerm_virtual_network.test.id}"
+# }
