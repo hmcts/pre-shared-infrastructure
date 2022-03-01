@@ -60,16 +60,16 @@ resource "azurerm_public_ip" "pip" {
 
 #------------------------------------------------------###################
 # BASTION
-#------------------------------------------------------###################
-resource "azurerm_bastion_host" "bastion" {
-  name                = "${var.product}-bastion-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+# #------------------------------------------------------###################
+# resource "azurerm_bastion_host" "bastion" {
+#   name                = "${var.product}-bastion-${var.env}"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   location            = azurerm_resource_group.rg.location
 
-  ip_configuration {
-    name                          = "bastionpublic"
-    subnet_id                     = azurerm_subnet.AzureBastionSubnet_subnet.id
-    public_ip_address_id          = azurerm_public_ip.pip.id
-  }
-  tags = var.common_tags
-}
+#   ip_configuration {
+#     name                          = "bastionpublic"
+#     subnet_id                     = azurerm_subnet.AzureBastionSubnet_subnet.id
+#     public_ip_address_id          = azurerm_public_ip.pip.id
+#   }
+#   tags = var.common_tags
+# }
