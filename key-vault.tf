@@ -12,8 +12,14 @@ module "key-vault" {
   common_tags             = var.common_tags
   create_managed_identity = true
 
-  # timeouts {    create = "60m"    delete = "2h"  }
-  contact  {    email = "60m"    delete = "2h"  }
+  # timeouts {    
+  #     create = "60m"    
+  #     delete = "2h" 
+  #   }
+  contact  {    
+    email = "olu.ayodele@hmcts.net"   
+     
+    }
   # TODO
   ###################################################
 # #                PRIVATE ENDPOINT                 #
