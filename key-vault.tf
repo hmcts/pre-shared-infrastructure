@@ -16,9 +16,8 @@ module "key-vault" {
   #     create = "60m"    
   #     delete = "2h" 
   #   }
-  contact  {    
+contact  {    
     email = "olu.ayodele@hmcts.net"   
-     
     }
   # TODO
   ###################################################
