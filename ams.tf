@@ -14,6 +14,11 @@ resource "azurerm_media_services_account" "ams" {
   }
   tags             = var.common_tags
 }
+
+#   key_delivery_access_control {
+#     ip_allow_list = []
+#     default_action = Deny
+# }
 #####TODO
 # Modify the stroage account
 
