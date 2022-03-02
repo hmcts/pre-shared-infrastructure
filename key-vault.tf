@@ -12,13 +12,15 @@ module "key-vault" {
   common_tags             = var.common_tags
   create_managed_identity = true
 
-  # timeouts {    
-  #     create = "60m"    
-  #     delete = "2h" 
-  #   }
-contact  {    
-    email = "olu.ayodele@hmcts.net"   
+  timeouts {    
+      create = "30m"    
+      delete = "30m" 
+      read   = "10m"
+      update   = "30m"
     }
+# contact  {    
+#     email = "olu.ayodele@hmcts.net"   
+#     }
   # TODO
   ###################################################
 # #                PRIVATE ENDPOINT                 #
@@ -27,7 +29,7 @@ contact  {
   #   bypass                     = "AzureServices"
   #   default_action             = "Deny"
   #   virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
-  #   ip_rules                   = []
+  #   ip_rules                   = [data.azurerm_subnet.jenkins_subnet.id]
   #  }
 }
 
