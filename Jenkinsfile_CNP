@@ -3,6 +3,7 @@
 @Library("Infrastructure") _
 
 def product = "pre"
+def component = "shared-infrastructure"
 
 withInfraPipeline(product) {
 }
