@@ -139,13 +139,13 @@ module "streaming_storage_account" {
 #                PRIVATE ENDPOINTS FOR STORAGES    
 ###################################################
 resource "azurerm_private_endpoint" "streaming" {
-  name                     = "${var.product}stream-pe${var.env}"
+  name                     = "${var.product}stream-pe-${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}stream-psc${var.env}"
+    name                           = "${var.product}stream-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.streaming_storage_account.storageaccount_id
     subresource_names              = ["blob"]
@@ -154,11 +154,11 @@ resource "azurerm_private_endpoint" "streaming" {
 }
 
 # Store the connection string for the SAs in KV
-resource "azurerm_key_vault_secret" "ams_storage_account_connection_string" {
-  name         = "ams-storage-account-connection-string"
-  value        = module.ams_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
-}
+# resource "azurerm_key_vault_secret" "ams_storage_account_connection_string" {
+#   name         = "ams-storage-account-connection-string"
+#   value        = module.ams_storage_account.storageaccount_primary_connection_string
+#   key_vault_id = module.key-vault.key_vault_id
+# }
 resource "azurerm_key_vault_secret" "final_storage_account_connection_string" {
   name         = "final-storage-account-connection-string"
   value        = module.final_storage_account.storageaccount_primary_connection_string
@@ -171,9 +171,9 @@ resource "azurerm_key_vault_secret" "streaming_storage_account_connection_string
   key_vault_id = module.key-vault.key_vault_id
 }
 
-output "ams_storage_account_name" {
-  value = module.ams_storage_account.storageaccount_name
-}
+# output "ams_storage_account_name" {
+#   value = module.ams_storage_account.storageaccount_name
+# }
 
 output "final_storage_account_name" {
   value = module.final_storage_account.storageaccount_name
@@ -185,10 +185,10 @@ output "final_storage_account_id" {
 output "streaming_storage_account_name" {
   value = module.streaming_storage_account.storageaccount_name
 }
-output "ams_storage_account_primary_key" {
-  sensitive = true
-  value     = module.ams_storage_account.storageaccount_primary_access_key
-}
+# output "ams_storage_account_primary_key" {
+#   sensitive = true
+#   value     = module.ams_storage_account.storageaccount_primary_access_key
+# }
 
 output "final_storage_account_primary_key" {
   sensitive = true
