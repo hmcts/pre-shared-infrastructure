@@ -159,17 +159,17 @@ resource "azurerm_private_endpoint" "streaming" {
 #   value        = module.ams_storage_account.storageaccount_primary_connection_string
 #   key_vault_id = module.key-vault.key_vault_id
 # }
-resource "azurerm_key_vault_secret" "final_storage_account_connection_string" {
-  name         = "final-storage-account-connection-string"
-  value        = module.final_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
-}
+# resource "azurerm_key_vault_secret" "final_storage_account_connection_string" {
+#   name         = "final-storage-account-connection-string"
+#   value        = module.final_storage_account.storageaccount_primary_connection_string
+#   key_vault_id = module.key-vault.key_vault_id
+# }
 
-resource "azurerm_key_vault_secret" "streaming_storage_account_connection_string" {
-  name         = "streaming-storage-account-connection-string"
-  value        = module.streaming_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
-}
+# resource "azurerm_key_vault_secret" "streaming_storage_account_connection_string" {
+#   name         = "streaming-storage-account-connection-string"
+#   value        = module.streaming_storage_account.storageaccount_primary_connection_string
+#   key_vault_id = module.key-vault.key_vault_id
+# }
 
 # output "ams_storage_account_name" {
 #   value = module.ams_storage_account.storageaccount_name
