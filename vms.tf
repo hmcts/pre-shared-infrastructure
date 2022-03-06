@@ -34,8 +34,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = var.vid_edit_vm_spec
-  admin_username      = "videdit${count.index}_${random_string.vm_username[count.index].result}"
-  admin_password      = random_password.vm_password[count.index].result
+  admin_username      = "videdit${count.index}-pc-${var.env}"
+  #admin_username      = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+  #admin_password      = random_password.vm_password[count.index].result
+  admin_password      = "Pa55W0rd**2020"
   network_interface_ids = [azurerm_network_interface.nic[count.index].id,]
 
   os_disk {
