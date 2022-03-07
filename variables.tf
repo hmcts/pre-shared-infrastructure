@@ -20,6 +20,7 @@ variable "sa_replication_type" {
   default = "LRS"
 }
 variable "jenkins_env_mgmt" {} 
+
 variable "vnet_address_space" {}
 
 variable "video_edit_vm_snet_address" {}
