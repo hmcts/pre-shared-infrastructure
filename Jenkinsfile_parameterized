@@ -9,7 +9,7 @@ import groovy.json.JsonSlurper
 //     ])
 // ])
 
-// withParameterizedInfraPipeline(params.PRODUCT_NAME, 'sbox', 'sbox') {
+// withParameterizedInfraPipeline(params.PRODUCT_NAME, 'component', 'sbox') {
 // }
 properties([
   parameters([
@@ -18,8 +18,10 @@ properties([
   ])
 ])
 
+
+def component = "shared-infrastructure"
 def product = 'pre'
 
-withParameterizedInfraPipeline(product, params.ENVIRONMENT, params.SUBSCRIPTION) {
+withParameterizedInfraPipeline(product, component, 'sbox') {
     enableSlackNotifications('#pre-builds')
 }
