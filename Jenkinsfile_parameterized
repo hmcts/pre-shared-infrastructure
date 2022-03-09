@@ -11,12 +11,12 @@ import groovy.json.JsonSlurper
 
 // withParameterizedInfraPipeline(params.PRODUCT_NAME, 'component', 'sbox') {
 // }
-properties([
-  parameters([
-    choice(name: 'ENVIRONMENT', choices:  'sbox', description: 'Environment where code should be build and deployed')
-    choice(name: 'SUBSCRIPTION', choices: 'sbox', description: 'Subscription where code should be deployed to')
-  ])
-])
+// properties([
+//   parameters([
+//     choice(name: 'ENVIRONMENT', choices:  'sbox', description: 'Environment where code should be build and deployed')
+//     choice(name: 'SUBSCRIPTION', choices: 'sbox', description: 'Subscription where code should be deployed to')
+//   ])
+// ])
 
 
 def component = "shared-infrastructure"
