@@ -22,6 +22,6 @@ import groovy.json.JsonSlurper
 def component = "shared-infrastructure"
 def product = "pre"
 
-withParameterizedInfraPipeline(product,component,"sbox" ) {
+withParameterizedInfraPipeline(product,component,"sbox") {
     enableSlackNotifications('#pre-builds')
 }
