@@ -12,17 +12,7 @@ module "key-vault" {
   common_tags             = var.common_tags
   create_managed_identity = true
 
-  # TODO
-  ###################################################
-# #                PRIVATE ENDPOINT                 #
-# ###################################################
-  # network_acls {
-  #   bypass                     = "AzureServices"
-  #   default_action             = "Deny"
-  #   virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
-  #   ip_rules                   = []
-  #  }
-}
+
 
 // Power App Permissions
 resource "azurerm_key_vault_access_policy" "power_app_access" {
@@ -115,3 +105,14 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   #     private_dns_zone_ids = var.private_dns_zone_ids
   #   }
   # }
+  # TODO
+  ###################################################
+# #                PRIVATE ENDPOINT                 #
+# ###################################################
+  # network_acls {
+  #   bypass                     = "AzureServices"
+  #   default_action             = "Deny"
+  #   virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
+  #   ip_rules                   = []
+  #  }
+}
