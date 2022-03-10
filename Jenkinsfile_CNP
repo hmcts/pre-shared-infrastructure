@@ -4,5 +4,9 @@
 
 def product = "pre"
 
+def component = "shared-infrastructure"
+
+
 withInfraPipeline(product) {
+  enableSlackNotifications('#pre-builds')  
 }

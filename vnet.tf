@@ -24,7 +24,7 @@ resource "azurerm_virtual_network" "vnet" {
   # }
 
   #  subnet {
-  #   name           = "${var.product}-data-gateway-snet-${var.env}"
+  #   name           = "${var.product}-datagateway-snet-${var.env}"
   #   address_prefix = var.data_gateway_snet_address
   # }
 
@@ -42,23 +42,23 @@ resource "azurerm_virtual_network" "vnet" {
 
 
 #------------------------------------------------------###################
-# ENDPOINT SUBNET
+#SUBNET with ENDPOINT 
 #------------------------------------------------------###################
-# resource "azurerm_subnet" "datagateway_subnet" {
-#  name                  = "${var.product}-datagateway-snet-${var.env}"
-#   resource_group_name  = azurerm_resource_group.rg.name
-#   virtual_network_name = azurerm_virtual_network.vnet.name
-#   address_prefixes       = [var.data_gateway_snet_address]
-#   service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
-#  }
+resource "azurerm_subnet" "datagateway_subnet" {
+ name                  = "${var.product}-datagateway-snet-${var.env}"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes       = [var.data_gateway_snet_address]
+  service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
+ }
 
-# resource "azurerm_subnet" "videoeditvm_subnet" {
-#  name                  = "${var.product}-videoeditvm-snet-${var.env}"
-#   resource_group_name  = azurerm_resource_group.rg.name
-#   virtual_network_name = azurerm_virtual_network.vnet.name
-#   address_prefixes       = [var.video_edit_vm_snet_address]
-#   service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
-# }
+resource "azurerm_subnet" "videoeditvm_subnet" {
+ name                  = "${var.product}-videoeditvm-snet-${var.env}"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes       = [var.video_edit_vm_snet_address]
+  service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
+}
 
 
 resource "azurerm_subnet" "endpoint_subnet" {
@@ -82,7 +82,7 @@ resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
 # }
 
 
-output "private_endpt_subnet_ids" {
-   value = azurerm_subnet.endpoint_subnet.id
-  #  "${data.azurerm_virtual_network.test.id}"
-}
+# output "private_endpt_subnet_ids" {
+#    value = azurerm_subnet.endpoint_subnet.id
+#   #  "${data.azurerm_virtual_network.test.id}"
+# }

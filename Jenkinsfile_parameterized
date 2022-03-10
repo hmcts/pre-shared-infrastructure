@@ -3,14 +3,25 @@ import groovy.json.JsonSlurper
 
 @Library('Infrastructure') _
 
-properties([
-  parameters([
-    choice(name: 'ENVIRONMENT', choices:  'sbox\ndev', description: 'Environment where code should be build and deployed')
-    choice(name: 'SUBSCRIPTION', choices: 'sbox\ndev', description: 'Subscription where code should be deployed to')
-  ])
-])
+// properties([
+//     parameters([
+//         string(name: 'PRODUCT_NAME', defaultValue: 'pre', description: 'Pre-recorded Evidence')
+//     ])
+// ])
 
-def product = 'pre'
+// withParameterizedInfraPipeline(params.PRODUCT_NAME, 'component', 'sbox') {
+// }
+// properties([
+//   parameters([
+//     choice(name: 'ENVIRONMENT', choices:  'sbox', description: 'Environment where code should be build and deployed')
+//     choice(name: 'SUBSCRIPTION', choices: 'sbox', description: 'Subscription where code should be deployed to')
+//   ])
+// ])
 
-withParameterizedInfraPipeline(product, params.ENVIRONMENT, params.SUBSCRIPTION) {
+
+def component = "shared-infrastructure"
+def product = "pre"
+
+withInfraPipeline(product) {
+    enableSlackNotifications('#pre-builds')
 }
