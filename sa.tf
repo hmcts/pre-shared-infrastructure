@@ -1,9 +1,9 @@
-provider "azurerm" {
-  alias                      = "mgmt"
-  subscription_id            = "6c4d2513-a873-41b4-afdd-b05a33206631"
-  skip_provider_registration = true
-  features {}
-}
+# provider "azurerm" {
+#   alias                      = "mgmt"
+#   subscription_id            = "6c4d2513-a873-41b4-afdd-b05a33206631"
+#   skip_provider_registration = true
+#   features {}
+# }
 
 provider "azurerm" {
   alias                      = "sbox_mgmt"
@@ -18,11 +18,17 @@ locals {
  }
 
 data "azurerm_subnet" "jenkins_subnet" {
-  provider             = azurerm.mgmt
+  provider             = var.jenkins_env_mgmt
   name                 = "iaas"
   virtual_network_name = local.mgmt_network_name
   resource_group_name  = local.mgmt_network_rg_name
 }
+# data "azurerm_subnet" "jenkins_subnet" {
+#   provider             = azurerm.mgmt
+#   name                 = "iaas"
+#   virtual_network_name = local.mgmt_network_name
+#   resource_group_name  = local.mgmt_network_rg_name
+# }
 
 # data "azurerm_subnet" "sbox_jenkins_subnet" {
 #   provider             = azurerm.sbox_mgmt
@@ -99,58 +105,58 @@ module "streaming_storage_account" {
 }
 
 ###################################################
-#                PRIVATE ENDPOINTS FOR STORAGES              #
+#                PRIVATE ENDPOINTS FOR STORAGES   
 ###################################################
 resource "azurerm_private_endpoint" "ams" {
-  name                     = "${var.product}ams-pe${var.env}"
+  name                     = "${var.product}ams-pe-${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}ams-psc${var.env}"
+    name                           = "${var.product}ams-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.ams_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-#  tags = var.common_tags
+  tags = var.common_tags
 }
 
 
-###################################################
-#                PRIVATE ENDPOINTS FOR STORAGES              #
-###################################################
+# ###################################################
+# #                PRIVATE ENDPOINTS FOR STORAGES   
+# ###################################################
 resource "azurerm_private_endpoint" "final" {
-  name                     = "${var.product}final-pe${var.env}"
+  name                     = "${var.product}final-pe-${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}final-psc${var.env}"
+    name                           = "${var.product}final-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.final_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-#  tags = var.common_tags
+ tags = var.common_tags
 }
 
 ###################################################
-#                PRIVATE ENDPOINTS FOR STORAGES              #
+#                PRIVATE ENDPOINTS FOR STORAGES    
 ###################################################
 resource "azurerm_private_endpoint" "streaming" {
-  name                     = "${var.product}stream-pe${var.env}"
+  name                     = "${var.product}stream-pe-${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}stream-psc${var.env}"
+    name                           = "${var.product}stream-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.streaming_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-#  tags = var.common_tags
+ tags = var.common_tags
 }
 
 # Store the connection string for the SAs in KV

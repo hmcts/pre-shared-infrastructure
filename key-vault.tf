@@ -2,6 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  name                    = "${var.product}-kv-${var.env}" 
   product                 = var.product
   env                     = var.env
   tenant_id               = data.azurerm_client_config.current.tenant_id
@@ -10,7 +11,8 @@ module "key-vault" {
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
   create_managed_identity = true
-}
+
+
 
 // Power App Permissions
 resource "azurerm_key_vault_access_policy" "power_app_access" {
@@ -76,29 +78,41 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   key_vault_id = module.key-vault.key_vault_id
 }
 
-###################################################
-#                PRIVATE ENDPOINT                 #
-###################################################
 
 
-resource "azurerm_private_endpoint" "keyvault_endpt" {
-  name                     = "${var.product}kv-pe${var.env}"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
-  subnet_id                = azurerm_subnet.endpoint_subnet.id
+# ###################################################
+# #                PRIVATE ENDPOINT                 #
+# ###################################################
 
-  private_service_connection {
-    name                           = "${var.product}kv-psc${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.key-vault.key_vault_id
-    subresource_names              = ["Vault"]
-  }
-tags = var.common_tags
-}
-#TODO
+# resource "azurerm_private_endpoint" "keyvault_endpt" {
+#   name                     = "${var.product}kv-pe${var.env}"
+#   resource_group_name      = azurerm_resource_group.rg.name
+#   location                 = azurerm_resource_group.rg.location
+#   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
-#   private_dns_zone_group {
-#     name                 = lower(var.vault_name)
-#     private_dns_zone_ids = var.private_dns_zone_ids
+#   private_service_connection {
+#     name                           = "${var.product}kv-psc${var.env}"
+#     is_manual_connection           = false
+#     private_connection_resource_id = module.key-vault.key_vault_id
+#     subresource_names              = ["Vault"]
 #   }
+# tags = var.common_tags
 # }
+# TODO
+
+  #   private_dns_zone_group {
+  #     name                 = lower(var.vault_name)
+  #     private_dns_zone_ids = var.private_dns_zone_ids
+  #   }
+  # }
+  # TODO
+  ###################################################
+# #                PRIVATE ENDPOINT                 #
+# ###################################################
+  # network_acls {
+  #   bypass                     = "AzureServices"
+  #   default_action             = "Deny"
+  #   virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
+  #   ip_rules                   = []
+  #  }
+}
