@@ -127,13 +127,13 @@ resource "azurerm_private_endpoint" "ams" {
 # #                PRIVATE ENDPOINTS FOR STORAGES   
 # ###################################################
 resource "azurerm_private_endpoint" "final" {
-  name                     = "${var.product}final-pe${var.env}"
+  name                     = "${var.product}final-pe-${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}final-psc${var.env}"
+    name                           = "${var.product}final-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.final_storage_account.storageaccount_id
     subresource_names              = ["blob"]
@@ -145,13 +145,13 @@ resource "azurerm_private_endpoint" "final" {
 #                PRIVATE ENDPOINTS FOR STORAGES    
 ###################################################
 resource "azurerm_private_endpoint" "streaming" {
-  name                     = "${var.product}stream-pe${var.env}"
+  name                     = "${var.product}stream-pe-${var.env}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}stream-psc${var.env}"
+    name                           = "${var.product}stream-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.streaming_storage_account.storageaccount_id
     subresource_names              = ["blob"]
