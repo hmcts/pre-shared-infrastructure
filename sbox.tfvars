@@ -6,6 +6,5 @@ data_gateway_snet_address = "10.48.1.192/26"
 num_vid_edit_vms      = 1
 mgmt_net_name         = "ss-ptlsbox-vnet"
 mgmt_net_rg_name      = "ss-ptlsbox-network-rg"
-jenkins_env_mgmt      = "azurerm.sbox_mgmt"
 mgmt_subscription_id  = "64b1c6d6-1481-44ad-b620-d8fe26a2c768"
-jenkins_mgmt_env      = "sbox_mgmt"
+
