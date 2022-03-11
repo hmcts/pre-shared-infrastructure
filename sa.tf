@@ -6,7 +6,7 @@
 # }
 
 provider "azurerm" {
-  alias                      = "sbox_mgmt"
+  # alias                      = "sbox_mgmt"
   subscription_id            = var.mgmt_subscription_id
   skip_provider_registration = true
   features {}
@@ -18,7 +18,7 @@ locals {
  }
 
 data "azurerm_subnet" "jenkins_subnet" {
-  provider             = azurerm.sbox_mgmt
+  provider             = azurerm
   name                 = "iaas"
   virtual_network_name = local.mgmt_network_name
   resource_group_name  = local.mgmt_network_rg_name
