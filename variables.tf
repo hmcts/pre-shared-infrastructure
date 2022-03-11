@@ -1,10 +1,12 @@
-variable "product" {}
-
+variable "product" {
+  default = "pre"
+}
 variable "location" {
   default = "UK South"
 }
 
 variable "env" {}
+
 variable "jenkins_AAD_objectId" {}
 
 
@@ -42,7 +44,9 @@ variable "vid_edit_vm_spec" {
   default = "Standard_E2s_v4"
 }
 
-variable "mgmt_subscription_id" {}
+variable "mgmt_subscription_id" {
+  default = "6c4d2513-a873-41b4-afdd-b05a33206631"
+}
 variable "power_app_user_oid" {
   default = "56a29187-3d5f-4262-99d6-c635776e0eac"
 }
