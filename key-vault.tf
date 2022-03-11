@@ -50,7 +50,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 }
 
 // management Permissions
-resource "azurerm_key_vault_access_policy" "power_app_access" {
+resource "azurerm_key_vault_access_policy" "app_access" {
   key_vault_id    = module.key-vault.key_vault_id
   application_id  = var.app_id
   object_id       = var.app_oid
