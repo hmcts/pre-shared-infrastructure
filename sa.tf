@@ -1,6 +1,6 @@
 provider "azurerm" {
   alias                      = "mgmt"
-  subscription_id            = "6c4d2513-a873-41b4-afdd-b05a33206631"
+  subscription_id            = var.mgmt_subscription_id
   skip_provider_registration = true
   features {}
 }
