@@ -12,7 +12,7 @@ module "key-vault" {
   common_tags             = var.common_tags
   create_managed_identity = true
 
-
+}
 
 // Power App Permissions
 resource "azurerm_key_vault_access_policy" "power_app_access" {
