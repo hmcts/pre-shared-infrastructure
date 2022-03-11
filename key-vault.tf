@@ -60,7 +60,7 @@ resource "azurerm_key_vault_access_policy" "app_access" {
 
   certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
 
-  secret_permissions = [ "list", "set", "delete", ]
+  secret_permissions = [ "list", "set", "delete", "Get", ]
 }
 // VM credentials
 
