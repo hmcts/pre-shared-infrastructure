@@ -115,4 +115,3 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   #   virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
   #   ip_rules                   = []
   #  }
-}
