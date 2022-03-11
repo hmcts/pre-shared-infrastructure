@@ -17,7 +17,6 @@ variable "sa_account_tier" {
 variable "sa_replication_type" {
   default = "LRS"
 }
-variable "jenkins_env_mgmt" {} 
 
 variable "vnet_address_space" {}
 
@@ -41,7 +40,7 @@ variable "vid_edit_vm_spec" {
 }
 
 variable "mgmt_subscription_id" {}
-variable "mgmt_env" {}
+
 variable "power_app_user_oid" {
   default = "56a29187-3d5f-4262-99d6-c635776e0eac"
 }
