@@ -6,7 +6,27 @@ def product = "pre"
 
 def component = "shared-infrastructure"
 
+static String lockRg(String envName){
+  def lockScript = "environment='" +  envName + "';" +
+        'rgName="pre-sbox";' +
+        'lockName="${environment}-lock";' +
+        '' +
+        'az login --identity;' +
+        'az account set -s "DTS-SHAREDSERVICES-${environment}";' +
+        '' +
+        'az group lock create --lock-type CanNotDelete --name ${lockname}   --resource-group ${rgName}'
+        
+    return lockScript;
+}
+
+
 
 withInfraPipeline(product) {
-  enableSlackNotifications('#pre-builds')  
+  enableSlackNotifications('#pre-builds')
+
+  before('buildinfra:sbox') {
+    sh "echo 'lock RG Pre-sbox'"
+    sh lockRg("sbox")
+  }
+    
 }
