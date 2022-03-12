@@ -46,6 +46,8 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
     "list",
     "set",
     "delete",
+    "get",
+
   ]
 }
 
