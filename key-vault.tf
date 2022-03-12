@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  name                    = "${var.product}-kv2-${var.env}" 
+  name                    = "${var.product}-${var.env}" 
   product                 = var.product
   env                     = var.env
   tenant_id               = data.azurerm_client_config.current.tenant_id
@@ -55,7 +55,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 resource "azurerm_key_vault_access_policy" "app_access" {
   key_vault_id    = module.key-vault.key_vault_id
   application_id  = var.app_id
-  object_id       = var.app_oid
+  object_id       = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
   tenant_id       = data.azurerm_client_config.current.tenant_id
 
   key_permissions = [ "list","update","create","import","delete",]
@@ -63,6 +63,8 @@ resource "azurerm_key_vault_access_policy" "app_access" {
   certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
 
   secret_permissions = [ "list", "set", "delete", "Get", ]
+
+  storage_permissions = [ "list", "set", "delete", "Get", ]
 }
 // VM credentials
 
