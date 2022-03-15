@@ -1,0 +1,13 @@
+vnet_address_space    = "10.50.12.0/25"
+video_edit_vm_snet_address = "10.50.12.0/28"
+privatendpt_snet_address = "10.50.12.64/26"
+bastion_snet_address = "10.48.1.128/26"  
+data_gateway_snet_address = "10.48.1.192/26"
+num_vid_edit_vms      = 1
+mgmt_net_name         = "ss-ptlsbox-vnet"
+mgmt_net_rg_name      = "ss-ptlsbox-network-rg"
+jenkins_env_mgmt      = "azurerm.sbox_mgmt"
+mgmt_subscription_id  = "64b1c6d6-1481-44ad-b620-d8fe26a2c768"
+env                   = "sbox"
+app_id                = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
+app_oid               = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
