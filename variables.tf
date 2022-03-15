@@ -24,7 +24,6 @@ variable "sa_account_tier" {
 variable "sa_replication_type" {
   default = "LRS"
 }
-variable "jenkins_env_mgmt" {} 
 
 variable "vnet_address_space" {}
 
