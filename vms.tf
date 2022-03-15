@@ -94,61 +94,6 @@ resource "azurerm_network_interface" "dtgwnic" {
     private_ip_address_allocation = "Dynamic"
   }
    tags                = var.common_tags
-<<<<<<< HEAD
-=======
-}
-
-###################################################
-#                DATAGATEWAY VIRTUAL MACHINE                 #
-###################################################
-resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
-  count               = var.num_datagateway
-  zones               = 2
-  name                = "${var.product}dtgtwy${count.index}-${var.env}"
-  computer_name       = "PREDTGTW0${count.index}-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  size                = var.datagateway_spec
-  admin_username      = "Dtgtwy${count.index}_${random_string.vm_username[count.index].result}"
-  admin_password      = random_password.vm_password[count.index].result
-  network_interface_ids = [azurerm_network_interface.dtgwnic[count.index].id,]
-
-  os_disk {
-    name                 = "${var.product}-dtgtwy${count.index}-${var.env}-os-disk"
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
-  }
-  identity {
-    type = "SystemAssigned"
-  }
-  
-  source_image_reference {
-    publisher = "Windows Server 2019 Datacenter"
-    offer     = "WindowsServer"
-    sku       = "2019-datacenter-gensecond"
-    version   = "latest"
-  }
-
-  enable_automatic_updates = true
-  provision_vm_agent       = true  
-  tags                     = var.common_tags
-}
-
-resource "azurerm_managed_disk" "datadisk" {
-  name                 = "${var.product}-dtgtwy${count.index}-${var.env}-data-disk"
-  location             = azurerm_resource_group.rg.location
-  resource_group_name  = azurerm_resource_group.rg.name
-  storage_account_type = "Standard_LRS"
-  create_option        = "Empty"
-  disk_size_gb         = 100
-}
-
-resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
-  managed_disk_id    = azurerm_managed_disk.datadisk.id
-  virtual_machine_id = azurerm_virtual_machine.dtgtwy.id
-  lun                = "3"
-  caching            = "ReadWrite"
->>>>>>> sandbox-datagateway
 }
 
 ###################################################
