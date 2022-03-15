@@ -107,8 +107,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   size                = var.datagateway_spec
-  admin_username      = "Dtgtwy${count.index}_${random_string.vm_username[count.index].result}"
-  admin_password      = random_password.vm_password[count.index].result
+  admin_username      = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
+  admin_password      = random_password.dtgtwy_password[count.index].result
   network_interface_ids = [azurerm_network_interface.dtgwnic[count.index].id,]
 
   os_disk {
