@@ -7,4 +7,6 @@ num_vid_edit_vms      = 1
 mgmt_net_name         = "ss-ptlsbox-vnet"
 mgmt_net_rg_name      = "ss-ptlsbox-network-rg"
 mgmt_subscription_id  = "64b1c6d6-1481-44ad-b620-d8fe26a2c768"
-env = "sbox"
+env                   = "sbox"
+app_id                = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
+app_oid               = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
