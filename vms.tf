@@ -126,24 +126,33 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     sku       = "2019-datacenter-gensecond"
     version   = "latest"
   }
+  storage_data_disk {
+    name                      = "${var.product}-dtgtwy${count.index}-${var.env}-data-disk"
+    caching                   = ReadWrite
+    create_option             = Empty
+    disk_size_gb              = 100
+    lun                       = 3
+    managed_disk_type         = Standard_LRS
+    # write_accelerator_enabled = ""
+  }
   
   enable_automatic_updates = true
   provision_vm_agent       = true  
   tags                     = var.common_tags
 }
 
-resource "azurerm_managed_disk" "datadisk" {
-  name                 = "${var.product}-dtgtwy${count.index}-${var.env}-data-disk"
-  location             = azurerm_resource_group.rg.location
-  resource_group_name  = azurerm_resource_group.rg.name
-  storage_account_type = "Standard_LRS"
-  create_option        = "Empty"
-  disk_size_gb         = 100
-}
+# resource "azurerm_managed_disk" "datadisk" {
+#   name                 = "${var.product}-dtgtwy${count.index}-${var.env}-data-disk"
+#   location             = azurerm_resource_group.rg.location
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   storage_account_type = "Standard_LRS"
+#   create_option        = "Empty"
+#   disk_size_gb         = 100
+# }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
-  managed_disk_id    = azurerm_managed_disk.datadisk.id
-  virtual_machine_id = azurerm_virtual_machine.dtgtwy.id
-  lun                = "3"
-  caching            = "ReadWrite"
-}
+# resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
+#   managed_disk_id    = azurerm_managed_disk.datadisk.id
+#   virtual_machine_id = azurerm_virtual_machine.dtgtwy.id
+#   lun                = "3"
+#   caching            = "ReadWrite"
+# }
