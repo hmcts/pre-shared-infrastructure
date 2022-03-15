@@ -52,25 +52,25 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 }
 
 // Jenkins management Permissions
-resource "azurerm_key_vault_access_policy" "app_access" {
-  key_vault_id    = module.key-vault.key_vault_id
-  application_id  = var.app_id
-  object_id       = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
-  tenant_id       = data.azurerm_client_config.current.tenant_id
+# resource "azurerm_key_vault_access_policy" "jenkins_access" {
+#   key_vault_id    = module.key-vault.key_vault_id
+#   application_id  = var.app_id
+#   object_id       = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
+#   tenant_id       = data.azurerm_client_config.current.tenant_id
 
-  key_permissions = [ "list","update","create","import","delete",]
+#   key_permissions = [ "list","update","create","import","delete",]
 
-  certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
+#   certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
 
-  secret_permissions = [ "list", "set", "delete", "Get", ]
+#   secret_permissions = [ "list", "set", "delete", "Get", ]
 
-  storage_permissions = [ "list", "set", "delete", "Get", ]
-}
+#   storage_permissions = [ "list", "set", "delete", "Get", ]
+# }
 
 #####################################
 #    Managed Identity Access to KV
 #####################################
-resource "azurerm_key_vault_access_policy" "app_access" {
+resource "azurerm_key_vault_access_policy" "managedid_access" {
   key_vault_id    = module.key-vault.key_vault_id
   # application_id  = var.app_id
   object_id       = var.managed_oid
@@ -88,7 +88,7 @@ resource "azurerm_key_vault_access_policy" "app_access" {
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
 #####################################
-resource "azurerm_key_vault_access_policy" "app_access" {
+resource "azurerm_key_vault_access_policy" "dts_pre_access" {
   key_vault_id    = module.key-vault.key_vault_id
   # application_id  = var.app_id
   object_id       = var.dts_pre_oid 
@@ -106,7 +106,7 @@ resource "azurerm_key_vault_access_policy" "app_access" {
 #####################################
 #    DTS CFT Developers| Members Access to KV
 #####################################
-resource "azurerm_key_vault_access_policy" "app_access" {
+resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
   key_vault_id    = module.key-vault.key_vault_id
   # application_id  = var.app_id
   object_id       = var.dts_cft_developers_oid
@@ -148,6 +148,23 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   value        = random_password.vm_password[count.index].result
   key_vault_id = module.key-vault.key_vault_id
 }
+
+
+resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
+  count        = var.num_vid_edit_vms
+  name         = "Dtgtwy${count.index}-username"
+  value        = "Dtgtwy${count.index}_${random_string.vm_username[count.index].result}"
+  key_vault_id = module.key-vault.key_vault_id
+}
+
+resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
+  count        = var.num_vid_edit_vms
+  name         = "Dtgtwy${count.index}-password"
+  value        = random_password.vm_password[count.index].result
+  key_vault_id = module.key-vault.key_vault_id
+}
+
+
 
 
 
