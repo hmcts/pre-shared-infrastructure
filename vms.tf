@@ -144,7 +144,7 @@ resource "azurerm_managed_disk" "datadisk" {
 resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
   count              = var.num_datagateway
   managed_disk_id    = azurerm_managed_disk.datadisk.*.id[count.index]
-  virtual_machine_id = azurerm_virtual_machine.dtgtwy.*.id[count.index]
+  virtual_machine_id = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   lun                = "3"
   caching            = "ReadWrite"
 }
