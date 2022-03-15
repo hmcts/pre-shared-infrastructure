@@ -101,7 +101,7 @@ resource "azurerm_network_interface" "dtgwnic" {
 ###################################################
 resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   count               = var.num_datagateway
-  zones               = 2
+  zone                = 2
   name                = "${var.product}dtgtwy${count.index}-${var.env}"
   computer_name       = "PREDTGTW0${count.index}-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
@@ -133,7 +133,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 }
 
 resource "azurerm_managed_disk" "datadisk" {
-  name                 = "${var.product}-dtgtwy${count.index}-${var.env}-data-disk"
+  name                 = "${azurerm_windows_virtual_machine.dtgtwyvm.name}-data-disk"
   location             = azurerm_resource_group.rg.location
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "Standard_LRS"
