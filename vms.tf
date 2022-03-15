@@ -121,12 +121,11 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   }
   
   source_image_reference {
-    publisher = "Windows Server 2019 Datacenter"
+    publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
     sku       = "2019-datacenter-gensecond"
     version   = "latest"
   }
-
   enable_automatic_updates = true
   provision_vm_agent       = true  
   tags                     = var.common_tags
