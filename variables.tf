@@ -5,6 +5,9 @@ variable "location" {
   default = "UK South"
 }
 
+variable "subscription" {
+  default = ""
+}
 variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
@@ -42,10 +45,20 @@ variable "num_vid_edit_vms" {
 variable "vid_edit_vm_spec" {
   default = "Standard_E2s_v4"
 }
-
-variable "mgmt_subscription_id" {
-  default = "6c4d2513-a873-41b4-afdd-b05a33206631"
+variable "num_datagateway" {
+  default = 2
 }
+variable "datagateway_spec" {
+  default = "Standard_F8s_v2"
+}
+
+variable "mgmt_subscription_id" {}
 variable "power_app_user_oid" {
   default = "56a29187-3d5f-4262-99d6-c635776e0eac"
+}
+variable "app_oid" {
+  default = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
+}
+variable "app_id" {
+  default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
 }
