@@ -90,7 +90,7 @@ resource "azurerm_network_interface" "dtgwnic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
+    subnet_id                     = azurerm_subnet.datagateway_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
    tags                = var.common_tags
@@ -133,7 +133,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 }
 
 resource "azurerm_managed_disk" "datadisk" {
-  name                 = "${azurerm_windows_virtual_machine.dtgtwyvm.name}-data-disk"
+  count                = var.num_datagateway
+  name                 = "${var.product}-dtgtwy${count.index}-${var.env})-data-disk"
   location             = azurerm_resource_group.rg.location
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "Standard_LRS"
@@ -142,8 +143,9 @@ resource "azurerm_managed_disk" "datadisk" {
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
-  managed_disk_id    = azurerm_managed_disk.datadisk.id
-  virtual_machine_id = azurerm_virtual_machine.dtgtwy.id
+  count              = var.num_datagateway
+  managed_disk_id    = azurerm_managed_disk.datadisk.*.id[count.index]
+  virtual_machine_id = azurerm_virtual_machine.dtgtwy.*.id[count.index]
   lun                = "3"
   caching            = "ReadWrite"
 }

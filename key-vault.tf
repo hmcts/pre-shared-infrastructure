@@ -51,7 +51,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   ]
 }
 
-// management Permissions
+// Jenkins management Permissions
 resource "azurerm_key_vault_access_policy" "app_access" {
   key_vault_id    = module.key-vault.key_vault_id
   application_id  = var.app_id
@@ -65,6 +65,60 @@ resource "azurerm_key_vault_access_policy" "app_access" {
   secret_permissions = [ "list", "set", "delete", "Get", ]
 
   storage_permissions = [ "list", "set", "delete", "Get", ]
+}
+
+#####################################
+#    Managed Identity Access to KV
+#####################################
+resource "azurerm_key_vault_access_policy" "app_access" {
+  key_vault_id    = module.key-vault.key_vault_id
+  # application_id  = var.app_id
+  object_id       = var.managed_oid
+  tenant_id       = data.azurerm_client_config.current.tenant_id
+
+  key_permissions = [ "list","get",]
+
+  certificate_permissions = [ "list", "get", "getissuers", "listissuers", ]
+
+  secret_permissions = [ "list", "Get", ]
+
+  storage_permissions = [ "list", "Get", ]
+}
+
+#####################################
+#    DTS Pre-recorded Evidence | Members Access to KV
+#####################################
+resource "azurerm_key_vault_access_policy" "app_access" {
+  key_vault_id    = module.key-vault.key_vault_id
+  # application_id  = var.app_id
+  object_id       = var.dts_pre_oid 
+  tenant_id       = data.azurerm_client_config.current.tenant_id
+
+  key_permissions = [ "list","get",]
+
+  certificate_permissions = [ "list", "get", "getissuers", "listissuers", ]
+
+  secret_permissions = [ "list", "Get", ]
+
+  storage_permissions = [ "list", "Get", ]
+}
+
+#####################################
+#    DTS CFT Developers| Members Access to KV
+#####################################
+resource "azurerm_key_vault_access_policy" "app_access" {
+  key_vault_id    = module.key-vault.key_vault_id
+  # application_id  = var.app_id
+  object_id       = var.dts_cft_developers_oid
+  tenant_id       = data.azurerm_client_config.current.tenant_id
+
+  key_permissions = [ "list","get",]
+
+  certificate_permissions = [ "list", "get", "getissuers", "listissuers", ]
+
+  secret_permissions = [ "list", "Get", ]
+
+  storage_permissions = [ "list", "Get", ]
 }
 // VM credentials
 
