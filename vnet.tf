@@ -77,12 +77,3 @@ resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
   address_prefixes       = [var.bastion_snet_address]
 }
 
-# output "subnet_ids" {
-#    value = azurerm_virtual_network.vnet.subnet[*].id
-# }
-
-
-# output "private_endpt_subnet_ids" {
-#    value = azurerm_subnet.endpoint_subnet.id
-#   #  "${data.azurerm_virtual_network.test.id}"
-# }

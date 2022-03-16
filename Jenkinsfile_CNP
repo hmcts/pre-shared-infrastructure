@@ -19,14 +19,45 @@ static String lockRg(String envName){
     return lockScript;
 }
 
+static String unlockRg(String envName){
+  def unlockScript = "environment='" +  envName + "';" +
+        'rgName="pip-ss-${environment}-rg";' +
+        'lockName="${environment}-lock";' +
+        '' +
+        'az login --identity;' +
+        'az account set -s "DTS-SHAREDSERVICES-${environment}";' +
+        '' +
+        'echo "Get ${lockName} lock from ${rgName}";' +
+        'lock=$(az lock list --resource-group ${rgName} --query "[? contains(name, \'${lockName}\')].{name:name}" -o tsv);' +
+        '' +
+        '$($lock != "" && echo "Delete Lock ${lockName} on ${rgName}"; az lock delete --name ${lockName} --resource-group ${rgName} || echo "${lockName} on ${rgName} not found")'
 
+    return unlockScript;
+}
+
+def branchesToSync = ['demo']
 
 withInfraPipeline(product) {
   enableSlackNotifications('#pre-builds')
+  syncBranchesWithMaster(branchesToSync)
+    onMaster() {
+      env.ENV = 'stg'
+    }
+    onPR() {
+      env.ENV = 'dev'
+    }
+    onDemo {
+      env.ENV = 'demo'
+    }
 
-  before('buildinfra:sbox') {
-    sh "echo 'lock RG Pre-sbox'"
-    sh lockRg("sbox")
+  // before('buildinfra:sbox') {
+  //   sh "echo 'lock RG Pre-sbox'"
+  //   sh lockRg("sbox")
+  // }
+
+  before('buildinfra:stg') {
+    sh "echo 'unlock RG stg'"
+    sh unlockRg("stg")
   }
     
 }
