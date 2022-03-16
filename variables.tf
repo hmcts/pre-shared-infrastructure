@@ -56,9 +56,13 @@ variable "mgmt_subscription_id" {}
 variable "power_app_user_oid" {
   default = "56a29187-3d5f-4262-99d6-c635776e0eac"
 }
-variable "app_oid" {
+variable "jenkins_ptlsbox_oid" {
   default = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
 }
-variable "app_id" {
+variable "jenkins_ptlsbox_appid" {
   default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
 }
+variable "managed_oid" {}
+variable "dts_pre_oid" {}
+variable "dts_cft_developers_oid" {}
+variable "dts_pre_project_admin" {}
