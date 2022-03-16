@@ -112,7 +112,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   network_interface_ids = [azurerm_network_interface.dtgwnic[count.index].id,]
 
   os_disk {
-    name                 = "${var.product}-dtgtwy${count.index}-${var.env}-os-disk"
+    name                 = "${var.product}-dtgtwy${count.index}-os-disk-${var.env}"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
@@ -133,12 +133,13 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 
 resource "azurerm_managed_disk" "datadisk" {
   count                = var.num_datagateway
-  name                 = "${var.product}-dtgtwy${count.index}-${var.env})-data-disk"
+  name                 = "${var.product}-dtgtwy${count.index}-data-disk-${var.env}"
   location             = azurerm_resource_group.rg.location
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = 100
+  tags                 = var.common_tags
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
