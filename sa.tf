@@ -55,10 +55,10 @@ module "ams_storage_account" {
   allow_blob_public_access = false
   default_action           = "Deny"
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
-  containers = [{
-    name        = "ams"
-    access_type = "private"
-  }]
+  # containers = [{
+  #   name        = "ams"
+  #   access_type = "private"
+  # }]
   common_tags = var.common_tags
 }
 
