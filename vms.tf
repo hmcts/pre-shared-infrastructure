@@ -58,7 +58,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   network_interface_ids = [azurerm_network_interface.nic[count.index].id,]
 
   os_disk {
-    name                 = "${var.product}-videditvm${count.index}-${var.env}-os-disk"
+    name                 = "${var.product}-videditvm${count.index}-os-disk-${var.env}-"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
