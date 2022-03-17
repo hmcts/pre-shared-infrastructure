@@ -52,21 +52,21 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   ]
 }
 
-# // Jenkins management Permissions
-# resource "azurerm_key_vault_access_policy" "jenkins_access" {
-#   key_vault_id    = module.key-vault.key_vault_id
-#   # application_id  = var.app_id
-#   object_id       = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
-#   tenant_id       = data.azurerm_client_config.current.tenant_id
+// Jenkins management Permissions
+resource "azurerm_key_vault_access_policy" "jenkins_access" {
+  key_vault_id    = module.key-vault.key_vault_id
+  # application_id  = var.app_id
+  object_id       = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
+  tenant_id       = data.azurerm_client_config.current.tenant_id
 
-#   key_permissions = [ "list","update","create","import","delete", "Get" ]
+  key_permissions = [ "list","update","create","import","delete", "Get" ]
 
-#   certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
+  certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
 
-#   secret_permissions = [ "list", "set", "delete", "Get", ]
+  secret_permissions = [ "list", "set", "delete", "Get", ]
 
-#   storage_permissions = [ "list", "set", "delete", "Get", ]
-# }
+  storage_permissions = [ "list", "set", "delete", "Get", ]
+}
 
 #####################################
 #    Managed Identity Access to KV

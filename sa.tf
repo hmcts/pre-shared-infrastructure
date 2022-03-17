@@ -54,7 +54,7 @@ module "ams_storage_account" {
   # ip_rules                 = []
   # allow_blob_public_access = false
   # default_action           = "Deny"
-
+  # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   # containers = [{
   #   name        = "ams"
   #   access_type = "private"
