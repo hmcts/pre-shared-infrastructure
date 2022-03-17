@@ -55,10 +55,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
   size                = var.vid_edit_vm_spec
   admin_username      = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password      = random_password.vm_password[count.index].result
-  network_interface_ids = [azurerm_network_interface.nic[count.index].id,]
+  network_interface_ids = [azurerm_network_interface.nic[count.index].id]
 
   os_disk {
-    name                 = "${var.product}-videditvm${count.index}-os-disk-${var.env}-"
+    name                 = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
@@ -109,10 +109,10 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   size                = var.datagateway_spec
   admin_username      = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
   admin_password      = random_password.dtgtwy_password[count.index].result
-  network_interface_ids = [azurerm_network_interface.dtgwnic[count.index].id,]
+  network_interface_ids = [azurerm_network_interface.dtgwnic[count.index].id]
 
   os_disk {
-    name                 = "${var.product}-dtgtwy${count.index}-os-disk-${var.env}"
+    name                 = "${var.product}-dtgtwy${count.index}-osdisk-${var.env}"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
@@ -133,7 +133,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 
 resource "azurerm_managed_disk" "datadisk" {
   count                = var.num_datagateway
-  name                 = "${var.product}-dtgtwy${count.index}-data-disk-${var.env}"
+  name                 = "${var.product}-dtgtwy${count.index}-datadisk-${var.env}"
   location             = azurerm_resource_group.rg.location
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "Standard_LRS"
