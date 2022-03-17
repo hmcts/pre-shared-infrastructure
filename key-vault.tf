@@ -75,7 +75,7 @@ resource "azurerm_key_vault_access_policy" "managedid_access" {
   key_permissions         = [ "list","update","create","import","delete", "Get",]
   certificate_permissions = [ "list", "get", "getissuers", "listissuers", ]
   secret_permissions      = [ "list", "set", "delete", "Get", ]
-  storage_permissions     = [ "list", "Get", ]
+  storage_permissions     = [ "list", "set", "delete", "Get", ]
 }
 
 #####################################
