@@ -1,4 +1,4 @@
-vnet_address_space          = "10.70.21.0/25"
+vnet_address_space          = "10.70.21.0/24"
 video_edit_vm_snet_address  = "10.70.21.0/26"
 privatendpt_snet_address    = "10.70.21.64/26"
 bastion_snet_address        = "10.70.21.128/26"  
