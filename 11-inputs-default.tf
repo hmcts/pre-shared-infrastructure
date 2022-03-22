@@ -6,19 +6,19 @@ variable "service_shortname" {
   default = "pre"
 }
 
-variable "private_endpoint_private_dns_zones" {
-  default = [
-    "privatelink.database.windows.net",
-    "privatelink.blob.core.windows.net",
-    "privatelink.vaultcore.azure.net",
-    "privatelink.datafactory.azure.net",
-    "privatelink.postgres.database.azure.com",
-    "privatelink.dev.azuresynapse.net",
-    "privatelink.sql.azuresynapse.net",
-    "privatelink.redis.cache.windows.net",
-    "privatelink.service.signalr.net",
-  ]
-}
+# variable "private_endpoint_private_dns_zones" {
+#   default = [
+#     "privatelink.database.windows.net",
+#     "privatelink.blob.core.windows.net",
+#     "privatelink.vaultcore.azure.net",
+#     "privatelink.datafactory.azure.net",
+#     "privatelink.postgres.database.azure.com",
+#     "privatelink.dev.azuresynapse.net",
+#     "privatelink.sql.azuresynapse.net",
+#     "privatelink.redis.cache.windows.net",
+#     "privatelink.service.signalr.net",
+#   ]
+# }
 
 locals {
   hub = {
