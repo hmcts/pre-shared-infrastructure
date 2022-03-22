@@ -90,7 +90,10 @@ resource "random_password" "vm_password" {
   count            = var.num_vid_edit_vms
   length           = 16
   special          = true
-  override_special = "_%@$"
+  override_special = "#$%&@()_[]{}<>:?"
+  min_upper = 1
+  min_lower = 1
+  min_numeric = 1
 }
 
 resource "azurerm_key_vault_secret" "vm_username_secret" {
@@ -117,7 +120,10 @@ resource "random_password" "dtgtwy_password" {
   count            = var.num_datagateway
   length           = 16
   special          = true
-  override_special = "_%@$"
+  override_special = "$%&@()-_=+[]{}<>:?"
+  min_upper = 1
+  min_lower = 1
+  min_numeric = 1
 }
 
 resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
