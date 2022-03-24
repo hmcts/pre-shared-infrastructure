@@ -18,7 +18,7 @@
 # Modify the stroage account
 
 
-resource "azurerm_media_transform " "analysevideo" {
+resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
@@ -32,7 +32,7 @@ resource "azurerm_media_transform " "analysevideo" {
   }
 }
 
-resource "azurerm_media_transform " "EncodeToMP4" {
+resource "azurerm_media_transform" "EncodeToMP4" {
   name                        = "EncodeToMP4"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
