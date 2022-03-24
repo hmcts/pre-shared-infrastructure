@@ -14,9 +14,6 @@
   }
   tags             = var.common_tags
 }
-#####TODO
-# Modify the stroage account
-
 
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
