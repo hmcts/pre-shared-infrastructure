@@ -39,21 +39,21 @@ def branchesToSync = ['demo']
 
 withInfraPipeline(product) {
   enableSlackNotifications('#pre-builds')
-  syncBranchesWithMaster(branchesToSync)
-    onMaster() {
-      env.ENV = 'stg'
-    }
-    onPR() {
-      env.ENV = 'dev'
-    }
-    onDemo {
-      env.ENV = 'demo'
-    }
+  // syncBranchesWithMaster(branchesToSync)
+  //   onMaster() {
+  //     env.ENV = 'stg'
+  //   }
+  //   onPR() {
+  //     env.ENV = 'dev'
+  //   }
+  //   onDemo {
+  //     env.ENV = 'demo'
+  //   }
 
-  // before('buildinfra:sbox') {
-  //   sh "echo 'lock RG Pre-sbox'"
-  //   sh lockRg("sbox")
-  // }
+  // // before('buildinfra:sbox') {
+  // //   sh "echo 'lock RG Pre-sbox'"
+  // //   sh lockRg("sbox")
+  // // }
 
   before('buildinfra:stg') {
     sh "echo 'unlock RG stg'"
