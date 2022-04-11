@@ -87,6 +87,7 @@ module "ingestsa_storage_account" {
   account_replication_type = var.sa_replication_type
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+
   ip_rules                 =  [
                             "20.49.145.249/32",
                             "20.49.166.40/32",
@@ -117,6 +118,7 @@ module "ingestsa_storage_account" {
                             "51.143.208.216/29",
                             "51.145.104.29/32",
                             ]
+
 
   #TODO
   # ip_rules                 = []
