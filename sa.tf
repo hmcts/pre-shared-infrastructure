@@ -87,6 +87,7 @@ module "ingestsa_storage_account" {
   account_replication_type = var.sa_replication_type
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+  ip_rules                 = var.powerplatform_uksouth
   
   #TODO
   # ip_rules                 = []
