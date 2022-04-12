@@ -118,6 +118,7 @@ module "ingestsa_storage_account" {
                             # "51.145.104.29/32",
                             # ]
 
+
   #TODO
   # ip_rules                 = []
   # allow_blob_public_access = false
