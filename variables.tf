@@ -75,7 +75,8 @@ variable "ip_rules" {
 
 variable "allow_nested_items_to_be_public" {
   description = "(Optional) Allow or disallow public access to all blobs or containers in the storage account. Defaults to false."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 variable "powerplatform_uksouth" {
   description = "PowerPlatformInfra.UKSouth"
