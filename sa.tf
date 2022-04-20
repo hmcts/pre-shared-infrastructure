@@ -42,7 +42,7 @@ module "sa_storage_account" {
   #TODO
   # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatendpt_snet_address], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id]
   # ip_rules                 = []
-  # allow_blob_public_access = false
+  # allow_nested_items_to_be_public = false
   # default_action           = "Deny"
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   # containers = [{
@@ -66,7 +66,7 @@ module "finalsa_storage_account" {
   allow_nested_items_to_be_public = var.allow_nested_items_to_be_public
   #TODO
   # ip_rules                 = []
-  # allow_blob_public_access = false
+  # allow_nested_items_to_be_public = false
   # default_action           = "Deny"
   # containers = [{
   #   name        = "finalsa"
@@ -93,7 +93,7 @@ module "ingestsa_storage_account" {
 
   #TODO
   # ip_rules                 = []
-  # allow_blob_public_access = false
+  # allow_nested_items_to_be_public = false
   # default_action           = "Deny"
   # containers = [{
   #   name        = "ingestsa"
