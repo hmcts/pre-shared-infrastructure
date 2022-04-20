@@ -72,6 +72,11 @@ variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth - List of public IP addresses which will have access to storage account."
   default     = ["20.49.145.249/32"]
 }
+
+variable "allow_blob_public_access" {
+  description = "(Optional) Allow or disallow public access to all blobs or containers in the storage account. Defaults to false."
+  default     = "false"
+}
 variable "powerplatform_uksouth" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)

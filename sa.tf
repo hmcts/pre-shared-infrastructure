@@ -37,6 +37,7 @@ module "sa_storage_account" {
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id],[azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+  allow_nested_items_to_be_public = var.allow_nested_items_to_be_public
   
   #TODO
   # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatendpt_snet_address], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id]
@@ -62,7 +63,7 @@ module "finalsa_storage_account" {
   account_replication_type = var.sa_replication_type
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.))
   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
-  
+  allow_nested_items_to_be_public = var.allow_nested_items_to_be_public
   #TODO
   # ip_rules                 = []
   # allow_blob_public_access = false
@@ -88,6 +89,7 @@ module "ingestsa_storage_account" {
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
   sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   ip_rules                 = var.ip_rules
+  allow_nested_items_to_be_public = var.allow_nested_items_to_be_public
 
   #TODO
   # ip_rules                 = []
