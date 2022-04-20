@@ -73,7 +73,7 @@ variable "ip_rules" {
   default     = ["20.49.145.249/32"]
 }
 
-variable "allow_blob_public_access" {
+variable "allow_nested_items_to_be_public" {
   description = "(Optional) Allow or disallow public access to all blobs or containers in the storage account. Defaults to false."
   default     = "false"
 }
