@@ -67,6 +67,11 @@ variable "dts_pre_oid" {}
 variable "dts_cft_developers_oid" {}
 variable "dts_pre_project_admin" {}
 
+variable "ip_rules" {
+  type        = list(string)
+  description = "PowerPlatformInfra.UKSouth - List of public IP addresses which will have access to storage account."
+  default     = ["20.49.145.249/32"]
+}
 variable "powerplatform_uksouth" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
