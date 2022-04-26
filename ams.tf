@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
  resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
   location            = azurerm_resource_group.rg.location
@@ -43,7 +43,7 @@ resource "azurerm_media_transform" "EncodeToMP4" {
     }
   }
 }
-=======
+
 #  resource "azurerm_media_services_account" "ams" {
 #   name                = "${var.product}ams${var.env}"
 #   location            = azurerm_resource_group.rg.location
@@ -88,4 +88,4 @@ resource "azurerm_media_transform" "EncodeToMP4" {
 #     }
 #   }
 # }
->>>>>>> 3600a7c3714149221b52e1fc0eaf347ae99e3de2
+
