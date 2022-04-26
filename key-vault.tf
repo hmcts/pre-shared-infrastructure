@@ -10,7 +10,7 @@ module "key-vault" {
   resource_group_name     = azurerm_resource_group.rg.name
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
-  create_managed_identity = true
+  Create_managed_identity = true
 
 }
 
@@ -19,9 +19,9 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   key_vault_id = module.key-vault.key_vault_id
   object_id    = var.power_app_user_oid
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  key_permissions         = [ "list", "update", "create", "import", "delete", "Get", ]
-  certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
-  secret_permissions      = [ "list", "set", "delete", "get", ]
+  key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get", ]
+  certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "Managecontacts", "Manageissuers", "Getissuers", "Listissuers", "Setissuers", "Deleteissuers", ]
+  secret_permissions      = [ "List", "set", "Delete", "Get", ]
 }
 
 
@@ -31,24 +31,24 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   # application_id        = var.app_id
 #   object_id               = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
 #   tenant_id               = data.azurerm_client_config.current.tenant_id
-#   key_permissions         = [ "list","update","create","import","delete", "Get" ]
-#   certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
-#   secret_permissions      = [ "list", "set", "delete", "Get", ]
-#   storage_permissions     = [ "list", "set", "delete", "Get", ]
+#   key_permissions         = [ "List","Update","Create","Import","Delete", "Get" ]
+#   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "managecontacts", "manageissuers", "Getissuers", "Listissuers", "setissuers", "Deleteissuers", ]
+#   secret_permissions      = [ "List", "set", "Delete", "Get", ]
+#   storage_permissions     = [ "List", "set", "Delete", "Get", ]
 # }
 
 #####################################
 #    Managed Identity Access to KV
 #####################################
-resource "azurerm_key_vault_access_policy" "managedid_access" {
+resource "azurerm_key_vault_access_policy" "mi_access" {
   key_vault_id            = module.key-vault.key_vault_id
   # application_id        = var.app_id
   object_id               = var.managed_oid
   tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = [ "list","update","create","import","delete", "Get",]
-  certificate_permissions = [ "list", "get", "getissuers", "listissuers", ]
-  secret_permissions      = [ "list", "set", "delete", "Get", ]
-  storage_permissions     = [ "list", "set", "delete", "Get", ]
+  key_permissions         = [ "List","Update","Create","Import","Delete", "Get",]
+  certificate_permissions = [ "List", "Get", "Getissuers", "Listissuers", ]
+  secret_permissions      = [ "List", "set", "Delete", "Get", ]
+  storage_permissions     = [ "List", "set", "Delete", "Get", ]
 }
 
 #####################################
@@ -59,10 +59,10 @@ resource "azurerm_key_vault_access_policy" "dts_pre_access" {
   # application_id        = var.app_id
   object_id               = var.dts_pre_oid 
   tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = [ "list","get",]
-  certificate_permissions = [ "list", "get", "getissuers", "listissuers", ]
-  secret_permissions      = [ "list", "Get", ]
-  storage_permissions     = [ "list", "Get", ]
+  key_permissions         = [ "List","Get",]
+  certificate_permissions = [ "List", "Get", "Getissuers", "Listissuers", ]
+  secret_permissions      = [ "List", "Get", ]
+  storage_permissions     = [ "List", "Get", ]
 }
 
 #####################################
@@ -73,10 +73,10 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
   # application_id        = var.app_id
   object_id               = var.dts_cft_developers_oid
   tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = [ "list","get",]
-  certificate_permissions = [ "list", "get", "getissuers", "listissuers", ]
-  secret_permissions      = [ "list", "Get", ]
-  storage_permissions     = [ "list", "Get", ]
+  key_permissions         = [ "List","Get",]
+  certificate_permissions = [ "List", "Get", "Getissuers", "Listissuers", ]
+  secret_permissions      = [ "List", "Get", ]
+  storage_permissions     = [ "List", "Get", ]
 }
 // VM credentials
 
