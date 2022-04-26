@@ -20,8 +20,8 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   object_id    = var.power_app_user_oid
   tenant_id    = data.azurerm_client_config.current.tenant_id
   key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get", ]
-  certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "Managecontacts", "Manageissuers", "Getissuers", "Listissuers", "Setissuers", "Deleteissuers", ]
-  secret_permissions      = [ "List", "set", "Delete", "Get", ]
+  certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
+  secret_permissions      = [ "List", "Set", "Delete", "Get", ]
 }
 
 
@@ -32,9 +32,9 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   object_id               = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
 #   tenant_id               = data.azurerm_client_config.current.tenant_id
 #   key_permissions         = [ "List","Update","Create","Import","Delete", "Get" ]
-#   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "managecontacts", "manageissuers", "Getissuers", "Listissuers", "setissuers", "Deleteissuers", ]
-#   secret_permissions      = [ "List", "set", "Delete", "Get", ]
-#   storage_permissions     = [ "List", "set", "Delete", "Get", ]
+#   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
+#   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
+#   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
 # }
 
 #####################################
@@ -46,9 +46,9 @@ resource "azurerm_key_vault_access_policy" "mi_access" {
   object_id               = var.managed_oid
   tenant_id               = data.azurerm_client_config.current.tenant_id
   key_permissions         = [ "List","Update","Create","Import","Delete", "Get",]
-  certificate_permissions = [ "List", "Get", "Getissuers", "Listissuers", ]
-  secret_permissions      = [ "List", "set", "Delete", "Get", ]
-  storage_permissions     = [ "List", "set", "Delete", "Get", ]
+  certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
+  secret_permissions      = [ "List", "Set", "Delete", "Get", ]
+  storage_permissions     = [ "List", "Set", "Delete", "Get", ]
 }
 
 #####################################
@@ -60,7 +60,7 @@ resource "azurerm_key_vault_access_policy" "dts_pre_access" {
   object_id               = var.dts_pre_oid 
   tenant_id               = data.azurerm_client_config.current.tenant_id
   key_permissions         = [ "List","Get",]
-  certificate_permissions = [ "List", "Get", "Getissuers", "Listissuers", ]
+  certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
   secret_permissions      = [ "List", "Get", ]
   storage_permissions     = [ "List", "Get", ]
 }
@@ -74,7 +74,7 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
   object_id               = var.dts_cft_developers_oid
   tenant_id               = data.azurerm_client_config.current.tenant_id
   key_permissions         = [ "List","Get",]
-  certificate_permissions = [ "List", "Get", "Getissuers", "Listissuers", ]
+  certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
   secret_permissions      = [ "List", "Get", ]
   storage_permissions     = [ "List", "Get", ]
 }
