@@ -10,7 +10,7 @@ module "key-vault" {
   resource_group_name     = azurerm_resource_group.rg.name
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
-  Create_managed_identity = true
+  create_managed_identity = true
 
 }
 
