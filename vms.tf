@@ -139,7 +139,7 @@ resource "azurerm_managed_disk" "datadisk" {
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = 100
-  zone                = [2]
+  zone                 = "2"
   tags                 = var.common_tags
 }
 
