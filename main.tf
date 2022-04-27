@@ -12,12 +12,12 @@ resource "azurerm_resource_group" "rg" {
 }
 
 #Role Assignment for Managed Identity
-resource "azurerm_role_assignment" "pre_managedidentity" {
-  scope                            = azurerm_resource_group.rg.id
-  role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = var.pre_mi_principal_id
-  skip_service_principal_aad_check = true
-}
+# resource "azurerm_role_assignment" "pre_managedidentity" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = var.pre_mi_principal_id
+#   skip_service_principal_aad_check = true
+# }
 # Object ID: d055ba21-5814-4278-8752-aaffa7eaac62
 
     # "properties": {  "name": "pre-sbox-mi",
