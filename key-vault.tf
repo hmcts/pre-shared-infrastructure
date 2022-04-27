@@ -1,10 +1,10 @@
 data "azurerm_client_config" "current" {}
 
-data "azurerm_user_assigned_identity" "pre-identity" {
- name                     = "${var.product}-${var.env}-mi"
- resource_group_name      = "managed-identities-${var.env}-rg"
- common_tags              = var.common_tags
-}
+# data "azurerm_user_assigned_identity" "pre-identity" {
+#  name                     = "${var.product}-${var.env}-mi"
+#  resource_group_name      = "managed-identities-${var.env}-rg"
+#  common_tags              = var.common_tags
+# }
 
 
 module "key-vault" {
@@ -148,12 +148,12 @@ resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
   key_vault_id = module.key-vault.key_vault_id
 }
 
-module "claim-store-vault" { 
-  source                      = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  #...
-  managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity.principal_id]
-  common_tags                 = var.common_tags
-}
+# module "claim-store-vault" { 
+#   source                      = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+#   #...
+#   managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity.principal_id]
+#   common_tags                 = var.common_tags
+# }
 
 
 # TODO
