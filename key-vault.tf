@@ -43,7 +43,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
 #   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
 #   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
-}
+# }
 
 # #####################################
 # #    Managed Identity Access to KV
