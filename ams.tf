@@ -12,7 +12,6 @@
 #     type         = "ManagedIdentity" 
 #  }
 
- storage_authentication_type   = "ManagedIdentity"
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id 
     is_primary = true
@@ -25,6 +24,8 @@
   tags         = var.common_tags
 }
 
+#  storage_authentication_type   = "System"
+ storage_authentication_type   = "ManagedIdentity"
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
   resource_group_name         = azurerm_resource_group.rg.name
