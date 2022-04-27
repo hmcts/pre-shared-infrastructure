@@ -1,5 +1,3 @@
-
-
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.product}-vnet01-${var.env}"
   location            = azurerm_resource_group.rg.location
