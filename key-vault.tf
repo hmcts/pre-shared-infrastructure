@@ -90,7 +90,7 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
 #####################################
 #    DTS PRE Admin
 #####################################
-resource "azurerm_key_vault_access_policy" "dts_pre_app_admin  _access" {
+resource "azurerm_key_vault_access_policy" "dts_pre_app_admin_access" {
   key_vault_id            = module.key-vault.key_vault_id
   # application_id        = var.app_id
   object_id               = var.dts_pre_app_admin  
