@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 #Role Assignment for Managed Identity
-resource "azurerm_role_assignment" "demo" {
+resource "azurerm_role_assignment" "pre_managedidentity" {
   scope                            = azurerm_resource_group.rg.id
   role_definition_name             = "Storage Blob Data Contributor"
   principal_id                     = var.pre_mi_principal_id
