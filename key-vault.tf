@@ -30,6 +30,9 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get", ]
   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
+
+  depends_on = [ module.key-vault]
+
 }
 
 
