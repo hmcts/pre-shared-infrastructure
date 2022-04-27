@@ -31,7 +31,7 @@ resource "azurerm_key_vault_access_policy" "jenkins_access" {
   # application_id        = var.app_id
   object_id               = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
   tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = [ "List", "Update", "Create"," Import", "Delete", "Get" ]
+  key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get" ]
   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
