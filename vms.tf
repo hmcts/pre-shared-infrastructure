@@ -24,6 +24,8 @@ resource "azurerm_bastion_host" "bastion" {
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
   tags = var.common_tags
+
+  depends_on = [ module.key-vault]
 }
 
 ###################################################
@@ -74,6 +76,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates = true
   provision_vm_agent       = true  
   tags                     = var.common_tags
+
+  depends_on = [ module.key-vault]
 }
 
 
@@ -129,6 +133,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   enable_automatic_updates = true
   provision_vm_agent       = true  
   tags                     = var.common_tags
+
+  depends_on = [ module.key-vault]
 }
 
 resource "azurerm_managed_disk" "datadisk" {
