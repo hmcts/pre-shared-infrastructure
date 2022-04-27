@@ -1,8 +1,9 @@
 data "azurerm_client_config" "current" {}
 
 data "azurerm_user_assigned_identity" "pre-identity" {
- name                = "${var.product}-${var.env}-mi"
- resource_group_name = "managed-identities-${var.env}-rg"
+ name                     = "${var.product}-${var.env}-mi"
+ resource_group_name      = "managed-identities-${var.env}-rg"
+ common_tags              = var.common_tags
 }
 
 
@@ -17,7 +18,7 @@ module "key-vault" {
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
   create_managed_identity = true
-  purge_protection_enabled    = false
+  # purge_protection_enabled    = false
 
 }
 
@@ -148,9 +149,10 @@ resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
 }
 
 module "claim-store-vault" { 
-  source              = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  source                      = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   #...
   managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity.principal_id]
+  common_tags                 = var.common_tags
 }
 
 
