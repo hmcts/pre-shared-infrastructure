@@ -11,7 +11,7 @@
 #     tenant_id    = var.pre_mi_tenant_id
 #     type         = "ManagedIdentity" 
 #  }
-  storage_authentication_type   = "SystemAssigned"
+  storage_authentication_type   = "System"
   # storage_authentication_type   = "ManagedIdentity"
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id 
