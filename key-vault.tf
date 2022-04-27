@@ -86,6 +86,33 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
   secret_permissions      = [ "List", "Get", ]
   storage_permissions     = [ "List", "Get", ]
 }
+
+#####################################
+#    DTS PRE Admin
+#####################################
+resource "azurerm_key_vault_access_policy" "dts_pre_app_admin  _access" {
+  key_vault_id            = module.key-vault.key_vault_id
+  # application_id        = var.app_id
+  object_id               = var.dts_pre_app_admin  
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  key_permissions         = [ "List","Get",]
+  certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
+  secret_permissions      = [ "List", "Get", ]
+  storage_permissions     = [ "List", "Get", ]
+}
+
+
+// DevopsAdmin Permissions
+resource "azurerm_key_vault_access_policy" "devops_access" {
+  key_vault_id            = module.key-vault.key_vault_id
+  # application_id        = var.app_id
+  object_id               = var.devops_admin
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get" ]
+  certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
+  secret_permissions      = [ "List", "Set", "Delete", "Get", ]
+  storage_permissions     = [ "List", "Set", "Delete", "Get", ]
+}
 // VM credentials
 
 resource "random_string" "vm_username" {
