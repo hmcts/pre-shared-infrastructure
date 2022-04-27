@@ -11,6 +11,7 @@ module "key-vault" {
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
   create_managed_identity = true
+  # purge_protection_enabled    = false
 
 }
 
