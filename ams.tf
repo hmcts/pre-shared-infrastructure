@@ -3,14 +3,14 @@
   location                      = "UKwest"
   resource_group_name           = azurerm_resource_group.rg.name
   
-  # identity {
-  #   type = "SystemAssigned"
-  # } 
- identity {
-    principal_id = var.pre_mi_principal_id
-    tenant_id    = var.pre_mi_tenant_id
-    type         = "ManagedIdentity" 
- }
+  identity {
+    type = "SystemAssigned"
+  } 
+#  identity {
+#     principal_id = var.pre_mi_principal_id
+#     tenant_id    = var.pre_mi_tenant_id
+#     type         = "ManagedIdentity" 
+#  }
 
  storage_authentication_type   = "ManagedIdentity"
   storage_account {
