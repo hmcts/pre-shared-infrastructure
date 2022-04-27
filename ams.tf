@@ -3,7 +3,9 @@
   location                      = "UKwest"
   resource_group_name           = azurerm_resource_group.rg.name
   storage_authentication_type   = "ManagedIdentity"
-
+  identity {
+    type = "SystemAssigned"
+  } 
 
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id 
@@ -17,11 +19,6 @@
   tags         = var.common_tags
 }
 
- identity {
-   type   = "SystemAssigned"
- }           
-
- 
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
   resource_group_name         = azurerm_resource_group.rg.name
@@ -49,6 +46,13 @@ resource "azurerm_media_transform" "EncodeToMP4" {
     }
   }
 }
+
+#Role Assignment
+# resource "azurerm_role_assignment" "demo" {
+#   scope                            = azurerm_media_services_account.demo.id
+#   role_definition_name             = "Contributor"
+#   principal_id                     = azurerm_function_app.demo.identity[0].principal_id
+#   skip_service_principal_aad_check = true
 
 # #  resource "azurerm_media_services_account" "ams" {
 # #   name                = "${var.product}ams${var.env}"
