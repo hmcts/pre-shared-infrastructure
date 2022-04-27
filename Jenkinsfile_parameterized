@@ -3,25 +3,33 @@ import groovy.json.JsonSlurper
 
 @Library('Infrastructure') _
 
-// properties([
-//     parameters([
-//         string(name: 'PRODUCT_NAME', defaultValue: 'pre', description: 'Pre-recorded Evidence')
-//     ])
-// ])
+properties([
+  parameters([
+    string(name: 'PRODUCT_NAME', defaultValue: 'pre', description: 'Pre-recorded Evidence')
+  ])
+])
 
-// withParameterizedInfraPipeline(params.PRODUCT_NAME, 'component', 'sbox') {
-// }
-// properties([
-//   parameters([
-//     choice(name: 'ENVIRONMENT', choices:  'sbox', description: 'Environment where code should be build and deployed')
-//     choice(name: 'SUBSCRIPTION', choices: 'sbox', description: 'Subscription where code should be deployed to')
-//   ])
-// ])
-
-
-def component = "shared-infrastructure"
-def product = "pre"
-
-withInfraPipeline(product) {
-    enableSlackNotifications('#pre-builds')
+withParameterizedInfraPipeline(params.PRODUCT_NAME, 'sbox', 'sbox') {
 }
+// // properties([
+// //     parameters([
+// //         string(name: 'PRODUCT_NAME', defaultValue: 'pre', description: 'Pre-recorded Evidence')
+// //     ])
+// // ])
+
+// // withParameterizedInfraPipeline(params.PRODUCT_NAME, 'component', 'sbox') {
+// // }
+// // properties([
+// //   parameters([
+// //     choice(name: 'ENVIRONMENT', choices:  'sbox', description: 'Environment where code should be build and deployed')
+// //     choice(name: 'SUBSCRIPTION', choices: 'sbox', description: 'Subscription where code should be deployed to')
+// //   ])
+// // ])
+
+
+// def component = "shared-infrastructure"
+// def product = "pre"
+
+// withInfraPipeline(product) {
+//     enableSlackNotifications('#pre-builds')
+
