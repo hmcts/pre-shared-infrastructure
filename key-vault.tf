@@ -1,8 +1,8 @@
 data "azurerm_client_config" "current" {}
 
 data "azurerm_user_assigned_identity" "pre-identity" {
- name                     = "pre-demo-mi"
- resource_group_name      = "managed-identities-demo-rg"
+ name                     = "${var.product}-${var.env}-mi"
+ resource_group_name      = "managed-identities-${var.env}-rg"
  common_tags              = var.common_tags
 }
 
@@ -123,7 +123,10 @@ resource "azurerm_key_vault_access_policy" "devops_access" {
 module "claim-store-vault" { 
   source                      = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   #...
-  managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity[0].principal_id]
+  product                     = var.product
+  env                         = var.env
+  resource_group_name         = azurerm_resource_group.rg.name
+  managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity.principal_id]
   common_tags                 = var.common_tags
 }
 // VM credentials
