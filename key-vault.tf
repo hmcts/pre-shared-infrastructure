@@ -1,10 +1,8 @@
 data "azurerm_client_config" "current" {}
 
 data "azurerm_user_assigned_identity" "pre-identity" {
- name                     = "${var.product}-${var.env}-mi"
-  product                 = var.product
-  env                     = var.env
- resource_group_name      = "managed-identities-${var.env}-rg"
+ name                     = "pre-demo-mi"
+ resource_group_name      = "managed-identities-demo-rg"
  common_tags              = var.common_tags
 }
 
