@@ -1,14 +1,14 @@
 data "azurerm_client_config" "current" {}
 
-data "azurerm_user_assigned_identity" "pre-identity" {
- name                     = "${var.product}-${var.env}-mi"
- resource_group_name      = "managed-identities-${var.env}-rg"
- common_tags              = var.common_tags
-}
+# data "azurerm_user_assigned_identity" "pre-identity" {
+#  name                     = "${var.product}-${var.env}-mi"
+#  resource_group_name      = "managed-identities-${var.env}-rg"
+#  common_tags              = var.common_tags
+# }
 
 
 module "key-vault" {
-  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=kv_networkacls"
   name                    = "${var.product}-${var.env}" 
   product                 = var.product
   env                     = var.env
@@ -18,7 +18,8 @@ module "key-vault" {
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
   create_managed_identity = true
-  # purge_protection_enabled    = false
+  network_acls_allowed_ip_ranges = [ concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])]
+  purge_protection_enabled    = true
 
 }
 
@@ -120,15 +121,15 @@ resource "azurerm_key_vault_access_policy" "devops_access" {
 # #####################################
 # #    Managed Identity Access to KV
 # #####################################
-module "claim-store-vault" { 
-  source                      = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  #...
-  product                     = var.product
-  env                         = var.env
-  resource_group_name         = azurerm_resource_group.rg.name
-  managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity.principal_id]
-  common_tags                 = var.common_tags
-}
+# module "claim-store-vault" { 
+#   source                      = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+#   #...
+#   product                     = var.product
+#   env                         = var.env
+#   resource_group_name         = azurerm_resource_group.rg.name
+#   managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity.principal_id]
+#   common_tags                 = var.common_tags
+# }
 // VM credentials
 
 resource "random_string" "vm_username" {
