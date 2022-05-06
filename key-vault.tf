@@ -19,7 +19,7 @@ module "key-vault" {
   common_tags             = var.common_tags
   create_managed_identity = true
   network_acls_allowed_subnet_id = [concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])]
-  purge_protection_enabled    = true
+  # purge_protection_enabled    = true
 
 }
 
