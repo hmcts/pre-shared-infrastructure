@@ -1,33 +1,22 @@
+resource "azurerm_network_ddos_protection_plan" "pre-ddos" {
+  name                = "pre-ddos-protection-plan"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  tags = var.common_tags
+}
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.product}-vnet01-${var.env}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   address_space       = [var.vnet_address_space]
-
-  # subnet {
-  #   name                  = "${var.product}-videoeditvm-snet-${var.env}"
-  #   address_prefix        = var.video_edit_vm_snet_address
-  # }
-
-  # subnet {
-  #   name           = "${var.product}-privatendpt-snet-${var.env}"
-  #   address_prefix = var.privatendpt_snet_address
-  #   service_endpoints     = ["Microsoft.Storage"]
-  #   # enforce_private_link_endpoint_network_policies = false
-  # // enforce_private_link_service_network_policies = false
-  # }
-  # subnet {
-  #   name           = "AzureBastionSubnet" 
-  #   address_prefix = var.bastion_snet_address
-  # }
-
-  #  subnet {
-  #   name           = "${var.product}-datagateway-snet-${var.env}"
-  #   address_prefix = var.data_gateway_snet_address
-  # }
-
+  ddos_protection_plan {
+    id          = azurerm_network_ddos_protection_plan.pre-ddos.id
+    enable      = true
+  }
+  
  tags = var.common_tags
 }
+
 
 //resource "azurerm_subnet" "sa_subnet" {
 //  name                 = "${var.product}-snet01-${var.env}"
