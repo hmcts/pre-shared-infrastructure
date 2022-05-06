@@ -1,12 +1,5 @@
 data "azurerm_client_config" "current" {}
 
-# data "azurerm_user_assigned_identity" "pre-identity" {
-#  name                     = "${var.product}-${var.env}-mi"
-#  resource_group_name      = "managed-identities-${var.env}-rg"
-#  common_tags              = var.common_tags
-# }
-
-
 module "key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=kv_networkacls"
   name                    = "${var.product}-${var.env}" 
@@ -118,18 +111,6 @@ resource "azurerm_key_vault_access_policy" "devops_access" {
   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
 }
 
-# #####################################
-# #    Managed Identity Access to KV
-# #####################################
-# module "claim-store-vault" { 
-#   source                      = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-#   #...
-#   product                     = var.product
-#   env                         = var.env
-#   resource_group_name         = azurerm_resource_group.rg.name
-#   managed_identity_object_ids = [data.azurerm_user_assigned_identity.pre-identity.principal_id]
-#   common_tags                 = var.common_tags
-# }
 
 // VM credentials
 
@@ -174,9 +155,9 @@ resource "random_password" "dtgtwy_password" {
   length           = 16
   special          = true
   override_special = "$%&@()-_=+[]{}<>:?"
-  min_upper = 1
-  min_lower = 1
-  min_numeric = 1
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
 }
 
 resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
