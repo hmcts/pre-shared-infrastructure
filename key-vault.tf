@@ -223,7 +223,7 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 }
 
 resource "azurerm_key_vault_access_policy" "pre-kv-user" {
-  key_vault_id = azurerm_key_vault.example.id
+  key_vault_id = module.key-vault.key_vault_id
 
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = data.azurerm_client_config.current.object_id
