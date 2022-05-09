@@ -174,7 +174,66 @@ resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
   key_vault_id = module.key-vault.key_vault_id
 }
 
+#################################
+##  Disk Encryption 
+###############################
 
+resource "azurerm_key_vault_key" "pre_kv_key" {
+  name         = "pre-des-key"
+  key_vault_id = module.key-vault.key_vault_id
+  key_type     = "RSA"
+  key_size     = 2048
+
+  depends_on = [
+    azurerm_key_vault_access_policy.pre-kv-user
+  ]
+
+  key_opts = [
+    "decrypt",
+    "encrypt",
+    "sign",
+    "unwrapKey",
+    "verify",
+    "wrapKey",
+  ]
+}
+
+resource "azurerm_disk_encryption_set" "pre-des" {
+  name                = "pre-des"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  key_vault_key_id    = module.key-vault.key_vault_id
+
+  identity {
+    type = "SystemAssigned"
+  }
+}
+
+resource "azurerm_key_vault_access_policy" "pre-des-disk" {
+  key_vault_id = module.key-vault.key_vault_id
+
+  tenant_id = azurerm_disk_encryption_set.pre-des.identity.0.tenant_id
+  object_id = azurerm_disk_encryption_set.pre-des.identity.0.principal_id
+
+  key_permissions = [
+    "Get",
+    "WrapKey",
+    "UnwrapKey"
+  ]
+}
+
+resource "azurerm_key_vault_access_policy" "pre-kv-user" {
+  key_vault_id = azurerm_key_vault.example.id
+
+  tenant_id = data.azurerm_client_config.current.tenant_id
+  object_id = data.azurerm_client_config.current.object_id
+
+  key_permissions = [
+    "get",
+    "create",
+    "delete"
+  ]
+}
 
 
 # TODO

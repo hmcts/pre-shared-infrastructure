@@ -60,9 +60,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
   network_interface_ids = [azurerm_network_interface.nic[count.index].id]
 
   os_disk {
-    name                 = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    name                    = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
+    caching                 = "ReadWrite"
+    storage_account_type    = "Standard_LRS"
+    disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   }
 
   
@@ -119,6 +120,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     name                 = "${var.product}-dtgtwy${count.index}-osdisk-${var.env}"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
+    disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   }
   identity {
     type = "SystemAssigned"
@@ -146,6 +148,7 @@ resource "azurerm_managed_disk" "datadisk" {
   create_option        = "Empty"
   disk_size_gb         = 100
   zone                 = "2"
+  disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   tags                 = var.common_tags
 }
 
