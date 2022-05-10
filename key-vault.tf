@@ -209,7 +209,7 @@ resource "azurerm_disk_encryption_set" "pre-des" {
 }
 
 resource "azurerm_key_vault_access_policy" "pre-des-disk" {
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = module.key-vault.kv.id
 
   tenant_id = azurerm_disk_encryption_set.pre-des.identity.0.tenant_id
   object_id = azurerm_disk_encryption_set.pre-des.identity.0.principal_id
