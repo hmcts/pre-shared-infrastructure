@@ -206,6 +206,7 @@ resource "azurerm_disk_encryption_set" "pre-des" {
   identity {
     type = "SystemAssigned"
   }
+  tags                = var.common_tags
 }
 
 resource "azurerm_key_vault_access_policy" "pre-des-disk" {
