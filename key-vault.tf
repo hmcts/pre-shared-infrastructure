@@ -202,14 +202,14 @@ resource "azurerm_disk_encryption_set" "pre-des" {
   name                = "pre-des"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  key_vault_key_id    = module.key-vault.0.id
+  key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
   identity {
     type = "SystemAssigned"
   }
 }
 
 resource "azurerm_key_vault_access_policy" "pre-des-disk" {
-  key_vault_id = module.key-vault.key_vault_id #module.key-vault.kv.id
+  key_vault_id = module.key-vault.key_vault_id
 
   tenant_id = azurerm_disk_encryption_set.pre-des.identity.0.tenant_id
   object_id = azurerm_disk_encryption_set.pre-des.identity.0.principal_id
