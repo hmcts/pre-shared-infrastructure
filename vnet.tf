@@ -1,18 +1,18 @@
-resource "azurerm_network_ddos_protection_plan" "pre-ddos" {
-  name                = "pre-ddos-protection-plan"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  tags = var.common_tags
-}
+# resource "azurerm_network_ddos_protection_plan" "pre-ddos" {
+#   name                = "pre-ddos-protection-plan"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   location            = azurerm_resource_group.rg.location
+#   tags = var.common_tags
+# }
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.product}-vnet01-${var.env}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  address_space       = [var.vnet_address_space]
-  ddos_protection_plan {
-    id          = azurerm_network_ddos_protection_plan.pre-ddos.id
-    enable      = true
-  }
+  # address_space       = [var.vnet_address_space]
+  # ddos_protection_plan {
+  #   id          = azurerm_network_ddos_protection_plan.pre-ddos.id
+  #   enable      = true
+  # }
   
  tags = var.common_tags
 }
