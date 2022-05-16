@@ -17,7 +17,6 @@ resource "azurerm_virtual_network" "vnet" {
  tags = var.common_tags
 }
 
-
 //resource "azurerm_subnet" "sa_subnet" {
 //  name                 = "${var.product}-snet01-${var.env}"
 //  resource_group_name  = azurerm_resource_group.rg.name
