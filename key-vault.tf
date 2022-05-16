@@ -15,7 +15,6 @@ module "key-vault" {
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
 
-
 }
 
 // Power App Permissions
