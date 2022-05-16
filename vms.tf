@@ -24,6 +24,8 @@ resource "azurerm_bastion_host" "bastion" {
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
   tags = var.common_tags
+
+  depends_on = [ module.key-vault]
 }
 
 ###################################################
@@ -58,9 +60,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
   network_interface_ids = [azurerm_network_interface.nic[count.index].id]
 
   os_disk {
-    name                 = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    name                    = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
+    caching                 = "ReadWrite"
+    storage_account_type    = "Standard_LRS"
+    disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   }
 
   
@@ -74,6 +77,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates = true
   provision_vm_agent       = true  
   tags                     = var.common_tags
+
+  depends_on = [ module.key-vault]
 }
 
 
@@ -115,6 +120,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     name                 = "${var.product}-dtgtwy${count.index}-osdisk-${var.env}"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
+    disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   }
   identity {
     type = "SystemAssigned"
@@ -129,6 +135,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   enable_automatic_updates = true
   provision_vm_agent       = true  
   tags                     = var.common_tags
+
+  depends_on = [ module.key-vault]
 }
 
 resource "azurerm_managed_disk" "datadisk" {
@@ -139,7 +147,8 @@ resource "azurerm_managed_disk" "datadisk" {
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
   disk_size_gb         = 100
-  zones                = [2]
+  zone                 = "2"
+  disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   tags                 = var.common_tags
 }
 
