@@ -23,8 +23,8 @@
   #     tenant_id    = azurerm_media_services_account.ams.identity[0].tenant_id
   #     type         = "ManagedIdentity" 
   # }
-  storage_authentication_type   = "ManagedIdentity"
-  # storage_authentication_type   = "System"
+  # storage_authentication_type   = "ManagedIdentity"
+  storage_authentication_type   = "System"
   tags         = var.common_tags
   
 }
