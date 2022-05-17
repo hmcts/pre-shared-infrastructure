@@ -1,3 +1,7 @@
+ data "azurerm_user_assigned_identity" "managed-identity" {
+  name                = "${var.product}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+}
  resource "azurerm_media_services_account" "ams" {
   name                          = "${var.product}ams${var.env}"
   location                      = "UKwest"
@@ -33,7 +37,7 @@
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
   scope                            = azurerm_resource_group.rg.id
   role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = azurerm_media_services_account.ams.identity[0].principal_id #var.pre_mi_principal_id
+  principal_id                     = [azurerm_media_services_account.ams.identity[0].principal_id, data.azurerm_user_assigned_identity.managed-identity.principal_id] #var.pre_mi_principal_id
   skip_service_principal_aad_check = true
 }
 
