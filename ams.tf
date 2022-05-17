@@ -1,7 +1,3 @@
- data "azurerm_user_assigned_identity" "managed-identity" {
-  name                = "${var.product}-${var.env}-mi"
-  resource_group_name = "managed-identities-${var.env}-rg"
-}
  resource "azurerm_media_services_account" "ams" {
   name                          = "${var.product}ams${var.env}"
   location                      = "UKwest"
