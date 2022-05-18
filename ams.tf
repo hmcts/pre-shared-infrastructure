@@ -50,10 +50,10 @@ resource "azurerm_role_assignment" "pre_amsreader_mi" {
   depends_on = [
     azurerm_media_services_account.ams
   ]
-
+}
 
 resource "azurerm_media_transform" "analysevideo" {
-  name                        = "AnalyseVideo"
+  name                        = "AnalyseVideos"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
   description                 = "pre-AnalyseVideo"
@@ -70,7 +70,7 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   name                        = "EncodeToMP4"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
-  description                 = "PRE-EncodeToMP4"
+  description                 = "pre-EncodeToMP4"
   output {
     relative_priority = "Normal"
     on_error_action   = "ContinueJob"
