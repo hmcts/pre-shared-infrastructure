@@ -35,7 +35,7 @@ resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
   principal_id                     = azurerm_media_services_account.ams.identity[0].principal_id #var.pre_mi_principal_id
   skip_service_principal_aad_check = true
   depends_on = [
-    azurerm_media_services_account.ams.id
+    azurerm_media_services_account.ams
   ]
 }
 
@@ -47,7 +47,7 @@ resource "azurerm_role_assignment" "pre_amsreader_mi" {
   skip_service_principal_aad_check = true
   
   depends_on = [
-    azurerm_media_services_account.ams.id
+    azurerm_media_services_account.ams
   ]
 }
 resource "azurerm_media_transform" "EncodeToMP4" {
