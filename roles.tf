@@ -20,25 +20,25 @@ resource "azurerm_role_assignment" "pre_reader_mi" {
   skip_service_principal_aad_check = true
 }
 
-resource "azurerm_role_assignment" "pre_power_app_blob" {
-  scope                            = azurerm_resource_group.rg.id
-  role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = var.power_app_user_oid  
-  skip_service_principal_aad_check = true
-}
+# resource "azurerm_role_assignment" "pre_power_app_blob" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = var.power_app_user_oid  
+#   skip_service_principal_aad_check = true
+# }
 
-resource "azurerm_role_assignment" "pre_power_app_user" {
-  scope                            = azurerm_resource_group.rg.id
-  role_definition_name             = "User Administrator"
-  principal_id                     = var.power_app_user_oid 
-  skip_service_principal_aad_check = true
-}
+# resource "azurerm_role_assignment" "pre_power_app_user" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "User Administrator"
+#   principal_id                     = var.power_app_user_oid 
+#   skip_service_principal_aad_check = true
+# }
 
-resource "azurerm_role_assignment" "pre_power_app_user_access" {
-  scope                            = azurerm_resource_group.rg.id
-  role_definition_name             = "User Access Administrator"
-  principal_id                     = var.power_app_user_oid 
-  skip_service_principal_aad_check = true
-}
+# resource "azurerm_role_assignment" "pre_power_app_user_access" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "User Access Administrator"
+#   principal_id                     = var.power_app_user_oid 
+#   skip_service_principal_aad_check = true
+# }
 
 
