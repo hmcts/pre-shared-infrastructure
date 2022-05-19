@@ -30,33 +30,6 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 
 }
 
-
-# // Jenkins management Permissions
-# resource "azurerm_key_vault_access_policy" "jenkins_access" {
-#   key_vault_id            = module.key-vault.key_vault_id
-#   # application_id        = var.app_id
-#   object_id               = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01" 
-#   tenant_id               = data.azurerm_client_config.current.tenant_id
-#   key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get" ]
-#   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
-#   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
-#   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
-# }
-
-# #####################################
-# #    Managed Identity Access to KV
-# #####################################
-# resource "azurerm_key_vault_access_policy" "mi_access" {
-#   key_vault_id            = module.key-vault.key_vault_id
-#   # application_id        = var.app_id
-#   object_id               = var.managed_oid
-#   tenant_id               = data.azurerm_client_config.current.tenant_id
-#   key_permissions         = [ "List","Update","Create","Import","Delete", "Get",]
-#   certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
-#   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
-#   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
-# }
-
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
 #####################################
@@ -88,10 +61,10 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
 #####################################
 #    DTS PRE Admin
 #####################################
-resource "azurerm_key_vault_access_policy" "dts_pre_app_admin_access" {
+resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
   key_vault_id            = module.key-vault.key_vault_id
   # application_id        = var.app_id
-  object_id               = var.dts_pre_app_admin  
+  object_id               = var.dts_pre_project_admin
   tenant_id               = data.azurerm_client_config.current.tenant_id
   key_permissions         = [ "List","Get",]
   certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
@@ -145,35 +118,6 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   key_vault_id = module.key-vault.key_vault_id
 }
 
-resource "random_string" "dtgtwy_username" {
-  count   = var.num_datagateway
-  length  = 4
-  special = false
-}
-
-resource "random_password" "dtgtwy_password" {
-  count            = var.num_datagateway
-  length           = 16
-  special          = true
-  override_special = "$%&@()-_=+[]{}<>:?"
-  min_upper        = 1
-  min_lower        = 1
-  min_numeric      = 1
-}
-
-resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
-  count        = var.num_datagateway
-  name         = "Dtgtwy${count.index}-username"
-  value        = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
-  key_vault_id = module.key-vault.key_vault_id
-}
-
-resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
-  count        = var.num_datagateway
-  name         = "Dtgtwy${count.index}-password"
-  value        = random_password.dtgtwy_password[count.index].result
-  key_vault_id = module.key-vault.key_vault_id
-}
 
 #################################
 ##  Disk Encryption 
@@ -200,7 +144,7 @@ resource "azurerm_key_vault_key" "pre_kv_key" {
 }
 
 resource "azurerm_disk_encryption_set" "pre-des" {
-  name                = "pre-des"
+  name                = "pre-des-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
