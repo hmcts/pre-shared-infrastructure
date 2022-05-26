@@ -41,10 +41,6 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
   #TODO
-  # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatendpt_snet_address], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id]
-  # ip_rules                 = []
-  # allow_blob_public_access = false
-  # default_action           = "Deny"
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   # containers = [{
   #   name        = "sa"
@@ -84,35 +80,35 @@ module "finalsa_storage_account" {
   depends_on = [ module.key-vault]
 }
 
-# module "ingestsa_storage_account" {
-#   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-#   env                             = var.env
-#   storage_account_name            = replace("${var.product}ingestsa${var.env}", "-", "")
-#   resource_group_name             = azurerm_resource_group.rg.name
-#   location                        = "UKWest" #As recommended by MS azurerm_resource_group.rg.location
-#   account_kind                    = "StorageV2"
-#   account_tier                    = var.sa_account_tier
-#   account_replication_type        = var.sa_replication_type
-#   # sa_subnets                    = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-#   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
-#   allow_nested_items_to_be_public = false
-#   ip_rules                        = var.ip_rules
-#   default_action                  = "Deny" 
+module "ingestsa_storage_account" {
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                             = var.env
+  storage_account_name            = replace("${var.product}ingestsa${var.env}", "-", "")
+  resource_group_name             = azurerm_resource_group.rg.name
+  location                        = "UKWest" #As recommended by MS azurerm_resource_group.rg.location
+  account_kind                    = "StorageV2"
+  account_tier                    = var.sa_account_tier
+  account_replication_type        = var.sa_replication_type
+  # sa_subnets                    = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
+  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+  allow_nested_items_to_be_public = false
+  ip_rules                        = var.ip_rules
+  default_action                  = "Deny" 
 
-  #TODO
-  # ip_rules                 = []
-  # allow_blob_public_access = false
-  # default_action           = "Deny"
-  # containers = [{
-  #   name        = "ingestsa"
-  #   access_type = "private"
-  # }]
+  ## TODO
+  ## ip_rules                 = []
+  ## allow_blob_public_access = false
+  ## default_action           = "Deny"
+  ## containers = [{
+ # ##   name        = "ingestsa"
+ # #   access_type = "private"
+  ## }]
 
-  # depends_on = [azurerm_virtual_network.vnet.name]
-#   common_tags = var.common_tags
+  depends_on = [ module.key-vault]
+  common_tags = var.common_tags
 
-#   depends_on = [ module.key-vault ]
-# }
+
+  }
 
 # ###################################################
 # #                PRIVATE ENDPOINTS FOR STORAGES   
@@ -181,11 +177,11 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
   key_vault_id = module.key-vault.key_vault_id
 }
 
-# resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
-#   name         = "ingestsa-storage-account-connection-string"
-#   value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
-#   key_vault_id = module.key-vault.key_vault_id
-# }
+resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
+  name         = "ingestsa-storage-account-connection-string"
+  value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
+  key_vault_id = module.key-vault.key_vault_id
+}
 
 output "sa_storage_account_name" {
   value = module.sa_storage_account.storageaccount_name
@@ -198,9 +194,9 @@ output "finalsa_storage_account_name" {
 output "finalsa_storage_account_id" {
   value = module.finalsa_storage_account.storageaccount_id
 }
-# output "ingestsa_storage_account_name" {
-#   value = module.ingestsa_storage_account.storageaccount_name
-# }
+output "ingestsa_storage_account_name" {
+  value = module.ingestsa_storage_account.storageaccount_name
+}
 
 output "sa_storage_account_primary_key" {
   sensitive = true
@@ -211,7 +207,7 @@ output "finalsa_storage_account_primary_key" {
   sensitive = true
   value     = module.finalsa_storage_account.storageaccount_primary_access_key
  }
-# output "ingestsa_storage_account_primary_key" {
-#   sensitive = true
-#   value     = module.ingestsa_storage_account.storageaccount_primary_access_key
-# }
+output "ingestsa_storage_account_primary_key" {
+  sensitive = true
+  value     = module.ingestsa_storage_account.storageaccount_primary_access_key
+}
