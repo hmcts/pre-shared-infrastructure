@@ -7,15 +7,15 @@
     type = "SystemAssigned"
   } 
 
-  storage_account {
-    id         = module.ingestsa_storage_account.storageaccount_id 
-    is_primary = true
-    
-  }
+  # storage_account {
+  #   id         = module.ingestsa_storage_account.storageaccount_id 
+  #   is_primary = false
+   
+  # }
 
   storage_account {
     id         = module.finalsa_storage_account.storageaccount_id 
-    is_primary = false
+    is_primary = true
     
   }
  
