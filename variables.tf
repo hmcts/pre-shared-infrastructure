@@ -44,7 +44,7 @@ variable "num_vid_edit_vms" {
 }
 variable "vid_edit_vm_spec" {
   default = "Standard_E2s_v5"
-# }
+ }
 # variable "num_datagateway" {
 #   default = 2
 # }
