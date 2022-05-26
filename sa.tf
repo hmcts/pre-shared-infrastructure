@@ -210,7 +210,7 @@ output "sa_storage_account_primary_key" {
 output "finalsa_storage_account_primary_key" {
   sensitive = true
   value     = module.finalsa_storage_account.storageaccount_primary_access_key
-# }
+ }
 # output "ingestsa_storage_account_primary_key" {
 #   sensitive = true
 #   value     = module.ingestsa_storage_account.storageaccount_primary_access_key
