@@ -43,14 +43,14 @@ variable "num_vid_edit_vms" {
   default = 1
 }
 variable "vid_edit_vm_spec" {
-  default = "Standard_E2s_v4"
-}
-variable "num_datagateway" {
-  default = 2
-}
-variable "datagateway_spec" {
-  default = "Standard_F8s_v2"
-}
+  default = "Standard_E2s_v5"
+# }
+# variable "num_datagateway" {
+#   default = 2
+# }
+# variable "datagateway_spec" {
+#   default = "Standard_F8s_v2"
+# }
 
 variable "mgmt_subscription_id" {}
 variable "power_app_user_oid" {
