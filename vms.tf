@@ -64,9 +64,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   #  ultra_ssd_enabled   =  true
   # }
   
-  
-
-  os_disk {
+    os_disk {
     name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
     caching                   = "ReadWrite"
     storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
@@ -86,7 +84,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   provision_vm_agent       = true  
   tags                     = var.common_tags
 
-  depends_on = [ module.key-vault]
+  depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des]
 }
 
 resource "azurerm_managed_disk" "datadisk" {
