@@ -67,7 +67,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
       name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
       caching                   = "ReadWrite"
       storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
-      disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
+      # disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
       write_accelerator_enabled = true
     }
 
