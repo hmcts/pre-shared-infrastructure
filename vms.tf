@@ -29,20 +29,20 @@ resource "azurerm_bastion_host" "bastion" {
 
 ###################################################
 #            Editing NETWORK INTERFACE CARD               #
-###################################################
-resource "azurerm_network_interface" "nics" {
-  count               = var.num_vid_edit_vms
-  name                = "${var.product}-videditvmnic${count.index}-${var.env}"
-  location            = "UK West"
-  resource_group_name = azurerm_resource_group.rg.name
+# ###################################################
+# resource "azurerm_network_interface" "nics" {
+#   count               = var.num_vid_edit_vms
+#   name                = "${var.product}-videditvmnic${count.index}-${var.env}"
+#   location            = "UK West"
+#   resource_group_name = azurerm_resource_group.rg.name
 
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
-    private_ip_address_allocation = "Dynamic"
-  }
-   tags                = var.common_tags
-}
+#   ip_configuration {
+#     name                          = "internal"
+#     subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
+#     private_ip_address_allocation = "Dynamic"
+#   }
+#    tags                = var.common_tags
+# }
 
 # ###################################################
 # #                 Editing VIRTUAL MACHINE                 #
