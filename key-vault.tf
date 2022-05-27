@@ -222,8 +222,7 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
     "UnwrapKey"
   ]
 }
-'/subscriptions/3eec5bde-7feb-4566-bfb6-805df6e10b90/resourceGroups/pre-test/providers/Microsoft.Compute/diskEncryptionSets/pre-des'
-/subscriptions/3eec5bde-7feb-4566-bfb6-805df6e10b90/resourceGroups/pre-test/providers/Microsoft.Compute/diskEncryptionSets/pre-des
+
 # resource "azurerm_key_vault_access_policy" "pre-kv-user" {
 #   key_vault_id = module.key-vault.key_vault_id
 
