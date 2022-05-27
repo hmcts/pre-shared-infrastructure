@@ -68,7 +68,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
       caching                   = "ReadWrite"
       storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
       # disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
-      write_accelerator_enabled = true
+      # write_accelerator_enabled = true
     }
 
   
