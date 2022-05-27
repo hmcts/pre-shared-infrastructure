@@ -33,7 +33,7 @@ resource "azurerm_bastion_host" "bastion" {
 ###################################################
 resource "azurerm_network_interface" "edtvmnic" {
   count               = var.num_vid_edit_vms
-  name                = "${var.product}-videditvmnic${count.index}-${var.env}"
+  name                = "${var.product}-edtvmnic${count.index}-${var.env}"
   location            = "UKWest"
   resource_group_name = azurerm_resource_group.rg.name
 
