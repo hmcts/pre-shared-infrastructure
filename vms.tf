@@ -41,7 +41,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
-   tags                = var.common_tags
+   tags                = var.common_tagsindex + 1}
 }
 
 ###################################################
@@ -50,13 +50,13 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_windows_virtual_machine" "vm" {
   count                       = var.num_vid_edit_vms
   name                        = "${var.product}-videditvm${count.index + 1}-${var.env}"
-  computer_name               = "PREVIDED0${count.index}-${var.env}"
+  computer_name               = "PREVIDED0${count.index + 1}-${var.env}"
   resource_group_name         = azurerm_resource_group.rg.name
-  location                    = "Uk West"
+  location                    = "UkWest"
   size                        = var.vid_edit_vm_spec
   admin_username              = "videdit${count.index + 1}_${random_string.vm_username[count.index].result}"
-  admin_password              = random_password.vm_password[count.index+ 1].result
-  network_interface_ids       = [azurerm_network_interface.nic[count.index + 1].id]
+  admin_password              = random_password.vm_password[count.index].result
+  network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
   encryption_at_host_enabled  = true
 
   # additional_capabilities {
@@ -67,7 +67,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     name                      = "${var.product}-videditvm${count.index + 1}-osdisk-${var.env}"
     caching                   = "ReadWrite"
     storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
-    # disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
+    disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
     write_accelerator_enabled = true
   }
 
@@ -103,8 +103,8 @@ resource "azurerm_managed_disk" "datadisk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
   count              = var.num_vid_edit_vms
-  managed_disk_id    = azurerm_managed_disk.datadisk.*.id[count.index + 1]
-  virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index + 1]
+  managed_disk_id    = azurerm_managed_disk.datadisk.*.id[count.index]
+  virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
   lun                = "3"
   caching            = "ReadWrite"
 }
@@ -116,7 +116,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 # ###################################################
 # resource "azurerm_network_interface" "dtgwnic" {
 #   count               = var.num_datagateway
-#   name                = "${var.product}-dtgwnic${count.index}-${var.env}"
+#   name                = "${var.product}-dtgwnic${count.index + 1}-${var.env}"
 #   location            = azurerm_resource_group.rg.location
 #   resource_group_name = azurerm_resource_group.rg.name
 
@@ -129,7 +129,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 # }
 # resource "azurerm_managed_disk" "datadisk" {
 #   count                = var.num_datagateway
-#   name                 = "${var.product}-dtgtwy${count.index}-datadisk-${var.env}"
+#   name                 = "${var.product}-dtgtwy${count.index + 1}-datadisk-${var.env}"
 #   location             = azurerm_resource_group.rg.location
 #   resource_group_name  = azurerm_resource_group.rg.name
 #   storage_account_type = "Standard_LRS"
@@ -154,17 +154,17 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 # resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 #   count               = var.num_datagateway
 #   zone                = 2
-#   name                = "${var.product}dtgtwy${count.index}-${var.env}"
-#   computer_name       = "PREDTGTW0${count.index}-${var.env}"
+#   name                = "${var.product}dtgtwy${count.index + 1}-${var.env}"
+#   computer_name       = "PREDTGTW0${count.index + 1}-${var.env}"
 #   resource_group_name = azurerm_resource_group.rg.name
 #   location            = azurerm_resource_group.rg.location
 #   size                = var.datagateway_spec
-#   admin_username      = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
+#   admin_username      = "Dtgtwy${count.index + 1}_${random_string.dtgtwy_username[count.index].result}"
 #   admin_password      = random_password.dtgtwy_password[count.index].result
 #   network_interface_ids = [azurerm_network_interface.dtgwnic[count.index].id]
 
 #   os_disk {
-#     name                 = "${var.product}-dtgtwy${count.index}-osdisk-${var.env}"
+#     name                 = "${var.product}-dtgtwy${count.index + 1}-osdisk-${var.env}"
 #     caching              = "ReadWrite"
 #     storage_account_type = "Standard_LRS"
 #     disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
