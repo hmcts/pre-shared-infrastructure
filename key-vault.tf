@@ -237,7 +237,7 @@ resource "azurerm_disk_encryption_set" "pre-des-west" {
   tags                = var.common_tags
 }
 
-resource "azurerm_key_vault_access_policy" "pre-des-disk" {
+resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
   key_vault_id = module.key-vault.key_vault_id
 
   tenant_id = azurerm_disk_encryption_set.pre-des-west.identity.0.tenant_id
