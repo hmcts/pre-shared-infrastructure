@@ -223,18 +223,18 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
   ]
 }
 
-resource "azurerm_key_vault_access_policy" "pre-deskv-user" {
-  key_vault_id = module.key-vault.key_vault_id
+# resource "azurerm_key_vault_access_policy" "pre-deskv-user" {
+#   key_vault_id = module.key-vault.key_vault_id
 
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = data.azurerm_client_config.current.object_id
+#   tenant_id = data.azurerm_client_config.current.tenant_id
+#   object_id = data.azurerm_client_config.current.object_id
 
-  key_permissions = [
-    "Get",
-    "Create",
-    "Delete"
-  ]
-}
+#   key_permissions = [
+#     "Get",
+#     "Create",
+#     "Delete"
+#   ]
+# }
 
 
 # TODO
