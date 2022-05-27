@@ -49,15 +49,15 @@ resource "azurerm_network_interface" "nic" {
 #                 Editing VIRTUAL MACHINE                 #
 ###################################################
 resource "azurerm_windows_virtual_machine" "vm" {
-  count                 = var.num_vid_edit_vms
-  name                  = "${var.product}-videditvm${count.index}-${var.env}"
-  computer_name         = "PREVIDED0${count.index}-${var.env}"
-  resource_group_name   = azurerm_resource_group.rg.name
-  location              = "UkWest"
-  size                  = var.vid_edit_vm_spec
-  admin_username        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
-  admin_password        = random_password.vm_password[count.index].result
-  network_interface_ids = [azurerm_network_interface.nic[count.index].id]
+  count                       = var.num_vid_edit_vms
+  name                        = "${var.product}-videditvm${count.index}-${var.env}"
+  computer_name               = "PREVIDED0${count.index}-${var.env}"
+  resource_group_name         = azurerm_resource_group.rg.name
+  location                    = "UkWest"
+  size                        = var.vid_edit_vm_spec
+  admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+  admin_password              = random_password.vm_password[count.index].result
+  network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
   encryption_at_host_enabled  = true
 
   # additional_capabilities {
@@ -68,7 +68,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
     caching                   = "ReadWrite"
     storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
-    disk_encryption_set_id    = "/subscriptions/3eec5bde-7feb-4566-bfb6-805df6e10b90/resourceGroups/pre-test/providers/Microsoft.Compute/diskEncryptionSets/pre-des"#azurerm_disk_encryption_set.pre-des.id
+    # disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
     write_accelerator_enabled = true
   }
 
