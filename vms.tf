@@ -90,7 +90,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
 }
 
-resource "azurerm_managed_disk" "datadisk" {
+resource "azurerm_managed_disk" "vmdatadisk" {
   count                   = var.num_vid_edit_vms
   name                    = "${var.product}-videditvm${count.index}-datadisk-${var.env}"
   location                = azurerm_resource_group.rg.location
@@ -106,7 +106,7 @@ resource "azurerm_managed_disk" "datadisk" {
 
 resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
   count              = var.num_vid_edit_vms
-  managed_disk_id    = azurerm_managed_disk.datadisk.*.id[count.index]
+  managed_disk_id    = azurerm_managed_disk.vmdatadisk.*.id[count.index]
   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
   lun                = "3"
   caching            = "ReadWrite"
