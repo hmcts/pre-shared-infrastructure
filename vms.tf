@@ -41,7 +41,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
-   tags                = var.common_tagsindex
+   tags                = var.common_tags
 }
 
 ###################################################
