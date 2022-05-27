@@ -57,7 +57,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
-  encryption_at_host_enabled  = true
+  # encryption_at_host_enabled  = true
 
   # additional_capabilities {
   #  ultra_ssd_enabled   =  true
@@ -67,8 +67,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
       name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
       caching                   = "ReadWrite"
       storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
-      # disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
-      # write_accelerator_enabled = true
+      disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
+      write_accelerator_enabled = true
     }
 
   
