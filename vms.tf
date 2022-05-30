@@ -107,9 +107,9 @@ resource "azurerm_windows_virtual_machine" "edtvm" {
 ##################################################
 ##           Editing NETWORK INTERFACE CARD               #
 ###################################################
-resource "azurerm_network_interface" "nic" {
+resource "azurerm_network_interface" "nics" {
   count               = var.num_vid_edit_vms
-  name                = "${var.product}-videditvmnic${count.index}-${var.env}"
+  name                = "${var.product}-videditvmnics${count.index}-${var.env}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
