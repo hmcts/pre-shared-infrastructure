@@ -36,7 +36,7 @@ resource "azurerm_network_interface" "edtvmnic" {
   name                = "${var.product}-edtvmnic${count.index}-${var.env}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-
+  # enable_accelerated_networking  = true
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
@@ -103,7 +103,6 @@ resource "azurerm_windows_virtual_machine" "edtvm" {
 
   depends_on = [ module.key-vault]
 }
-
 
 ##################################################
 ##           Editing NETWORK INTERFACE CARD               #
@@ -266,4 +265,5 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 
 #   depends_on = [ module.key-vault]
 # }
+
 
