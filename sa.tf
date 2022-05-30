@@ -41,10 +41,6 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
   #TODO
-  # sa_subnets = [data.azurerm_subnet.jenkins_subnet.id, var.video_edit_vm_snet_address,var.privatendpt_snet_address], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id]
-  # ip_rules                 = []
-  # allow_blob_public_access = false
-  # default_action           = "Deny"
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   # containers = [{
   #   name        = "sa"
@@ -98,20 +94,21 @@ module "ingestsa_storage_account" {
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
-  #TODO
-  # ip_rules                 = []
-  # allow_blob_public_access = false
-  # default_action           = "Deny"
-  # containers = [{
-  #   name        = "ingestsa"
-  #   access_type = "private"
-  # }]
 
-  # depends_on = [azurerm_virtual_network.vnet.name]
-  common_tags = var.common_tags
+  ## TODO
+  ## ip_rules                 = []
+  ## allow_blob_public_access = false
+  ## default_action           = "Deny"
+  ## containers = [{
+ # ##   name        = "ingestsa"
+ # #   access_type = "private"
+  ## }]
 
   depends_on = [ module.key-vault]
-}
+  common_tags = var.common_tags
+
+
+  }
 
 # ###################################################
 # #                PRIVATE ENDPOINTS FOR STORAGES   
@@ -209,7 +206,7 @@ output "sa_storage_account_primary_key" {
 output "finalsa_storage_account_primary_key" {
   sensitive = true
   value     = module.finalsa_storage_account.storageaccount_primary_access_key
-}
+ }
 output "ingestsa_storage_account_primary_key" {
   sensitive = true
   value     = module.ingestsa_storage_account.storageaccount_primary_access_key

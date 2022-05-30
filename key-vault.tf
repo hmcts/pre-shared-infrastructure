@@ -14,6 +14,7 @@ module "key-vault" {
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
+  network_acls_allowed_ip_ranges = [ "90.243.1.130" ]
 
 }
 
@@ -119,6 +120,37 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
 }
 
 
+# resource "random_string" "dtgtwy_username" {
+#   count   = var.num_datagateway
+#   length  = 4
+#   special = false
+# }
+
+# resource "random_password" "dtgtwy_password" {
+#   count            = var.num_datagateway
+#   length           = 16
+#   special          = true
+#   override_special = "$%&@()-_=+[]{}<>:?"
+#   min_upper        = 1
+#   min_lower        = 1
+#   min_numeric      = 1
+# }
+
+# resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
+#   count        = var.num_datagateway
+#   name         = "Dtgtwy${count.index}-username"
+#   value        = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
+#   key_vault_id = module.key-vault.key_vault_id
+# }
+
+# resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
+#   count        = var.num_datagateway
+#   name         = "Dtgtwy${count.index}-password"
+#   value        = random_password.dtgtwy_password[count.index].result
+#   key_vault_id = module.key-vault.key_vault_id
+# }
+
+
 #################################
 ##  Disk Encryption 
 ###############################
@@ -144,7 +176,7 @@ resource "azurerm_key_vault_key" "pre_kv_key" {
 }
 
 resource "azurerm_disk_encryption_set" "pre-des" {
-  name                = "pre-des-${var.env}"
+  name                = "pre-des"#"pre-des-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
@@ -168,6 +200,47 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 }
 
 # resource "azurerm_key_vault_access_policy" "pre-kv-user" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = data.azurerm_client_config.current.tenant_id
+#   object_id = var.jenkins_AAD_objectId # data.azurerm_client_config.current.object_id
+
+#   key_permissions = [
+#     "Get",
+#     "Create",
+#     "Delete",
+#     "WrapKey",
+#     "UnwrapKey"
+#   ]
+# }
+
+
+#### West
+
+# resource "azurerm_disk_encryption_set" "pre-des-west" {
+#   name                = "pre-des-west-${var.env}"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   location            = "UKWest"
+#   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
+#   identity {
+#     type = "SystemAssigned"
+#   }
+#   tags                = var.common_tags
+# }
+
+# resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = azurerm_disk_encryption_set.pre-des-west.identity.0.tenant_id
+#   object_id = azurerm_disk_encryption_set.pre-des-west.identity.0.principal_id
+
+#   key_permissions = [
+#     "Get",
+#     "WrapKey",
+#     "UnwrapKey"
+#   ]
+# }
+# resource "azurerm_key_vault_access_policy" "pre-deskv-user" {
 #   key_vault_id = module.key-vault.key_vault_id
 
 #   tenant_id = data.azurerm_client_config.current.tenant_id
