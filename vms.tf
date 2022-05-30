@@ -69,15 +69,15 @@ resource "azurerm_virtual_machine_data_disk_attachment" "edtvm" {
 #                EDIT VIRTUAL MACHINE                 #
 ###################################################
 resource "azurerm_windows_virtual_machine" "edtvm" {
-  count               = var.num_vid_edit_vms
+  count                 = var.num_vid_edit_vms
   # zone                = 2
-  name                = "${var.product}edtvm${count.index}-${var.env}"
-  computer_name       = "PREEDTVM0${count.index}-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  size                = var.vid_edit_vm_spec
-  admin_username      = "videdit${count.index}_${random_string.vm_username[count.index].result}"
-  admin_password      = random_password.vm_password[count.index].result
+  name                  = "${var.product}edtvm${count.index}-${var.env}"
+  computer_name         = "PREEDTVM0${count.index}-${var.env}"
+  resource_group_name   = azurerm_resource_group.rg.name
+  location              = azurerm_resource_group.rg.location
+  size                  = var.vid_edit_vm_spec
+  admin_username        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+  admin_password        = random_password.vm_password[count.index].result
   network_interface_ids = [azurerm_network_interface.edtvmnic[count.index].id]
 
   os_disk {
