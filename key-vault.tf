@@ -14,6 +14,7 @@ module "key-vault" {
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
+  network_acls_allowed_ip_ranges = [ "90.243.1.130" ]
 
 }
 
@@ -144,6 +145,8 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   value        = random_password.vm_password[count.index].result
   key_vault_id = module.key-vault.key_vault_id
 }
+
+
 
 # resource "random_string" "dtgtwy_username" {
 #   count   = var.num_datagateway
