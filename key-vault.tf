@@ -120,35 +120,35 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
 }
 
 
-# resource "random_string" "dtgtwy_username" {
-#   count   = var.num_datagateway
-#   length  = 4
-#   special = false
-# }
+resource "random_string" "dtgtwy_username" {
+  count   = var.num_datagateway
+  length  = 4
+  special = false
+}
 
-# resource "random_password" "dtgtwy_password" {
-#   count            = var.num_datagateway
-#   length           = 16
-#   special          = true
-#   override_special = "$%&@()-_=+[]{}<>:?"
-#   min_upper        = 1
-#   min_lower        = 1
-#   min_numeric      = 1
-# }
+resource "random_password" "dtgtwy_password" {
+  count            = var.num_datagateway
+  length           = 16
+  special          = true
+  override_special = "$%&@()-_=+[]{}<>:?"
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
+}
 
-# resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
-#   count        = var.num_datagateway
-#   name         = "Dtgtwy${count.index}-username"
-#   value        = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
-#   key_vault_id = module.key-vault.key_vault_id
-# }
+resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
+  count        = var.num_datagateway
+  name         = "Dtgtwy${count.index}-username"
+  value        = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
+  key_vault_id = module.key-vault.key_vault_id
+}
 
-# resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
-#   count        = var.num_datagateway
-#   name         = "Dtgtwy${count.index}-password"
-#   value        = random_password.dtgtwy_password[count.index].result
-#   key_vault_id = module.key-vault.key_vault_id
-# }
+resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
+  count        = var.num_datagateway
+  name         = "Dtgtwy${count.index}-password"
+  value        = random_password.dtgtwy_password[count.index].result
+  key_vault_id = module.key-vault.key_vault_id
+}
 
 
 #################################
