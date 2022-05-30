@@ -10,7 +10,7 @@
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id 
     is_primary = true
-    
+   
   }
 
   storage_account {

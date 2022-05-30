@@ -40,11 +40,11 @@ variable "mgmt_net_name" {}
 variable "mgmt_net_rg_name" {}
 
 variable "num_vid_edit_vms" {
-  default = 1
+  default = 2
 }
 variable "vid_edit_vm_spec" {
   default = "Standard_E2s_v4"
-}
+ }
 variable "num_datagateway" {
   default = 2
 }
@@ -118,5 +118,10 @@ variable "ip_rules" {
                 "51.140.148.0/28",
                 "51.140.211.0/28",
                 "51.140.212.224/27",
+                "86.24.226.11", #Chris
+                "82.21.185.208", # Oli
+                "62.31.90.131", #Indy
+                "82.44.92.214", #Shehreem
+                "82.12.61.131", #Ayisha
                 ]
 }
