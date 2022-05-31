@@ -5,13 +5,6 @@ provider "azurerm" {
   features {}
 }
 
-# provider "azurerm" {
-#   alias                      = "sbox_mgmt"
-#   subscription_id            = var.mgmt_subscription_id
-#   skip_provider_registration = true
-#   features {}
-# }
-
 locals {
   mgmt_network_name         =  var.mgmt_net_name 
   mgmt_network_rg_name      =  var.mgmt_net_rg_name 
@@ -40,6 +33,7 @@ module "sa_storage_account" {
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
+  enable_data_protection          = true
   #TODO
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   # containers = [{
