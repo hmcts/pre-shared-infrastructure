@@ -59,6 +59,7 @@ module "finalsa_storage_account" {
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
+  enable_data_protection          = true
   #TODO
   # ip_rules                 = []
   # allow_blob_public_access = false
@@ -88,6 +89,7 @@ module "ingestsa_storage_account" {
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
+  enable_data_protection          = true
 
   ## TODO
   ## ip_rules                 = []
