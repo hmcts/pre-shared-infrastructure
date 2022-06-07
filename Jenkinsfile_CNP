@@ -50,6 +50,10 @@ withInfraPipeline(product) {
   //     env.ENV = 'demo'
   //   }
 
+  // before('buildinfra:sbox') {
+  //   sh "echo 'lock RG Pre-sbox'"
+  //   sh lockRg("sbox")
+  // }
 
 
   before('buildinfra:stg') {
