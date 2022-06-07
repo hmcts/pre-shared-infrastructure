@@ -20,16 +20,49 @@ module "key-vault" {
 
 // Power App Permissions
 resource "azurerm_key_vault_access_policy" "power_app_access" {
-  key_vault_id            = module.key-vault.key_vault_id
-  object_id               = var.power_app_user_oid
-  tenant_id               = data.azurerm_client_config.current.tenant_id
+  key_vault_id = module.key-vault.key_vault_id
+  object_id    = var.power_app_user_oid
+  tenant_id    = data.azurerm_client_config.current.tenant_id
   key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get", ]
   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
-
-  depends_on = [ module.key-vault]
-
 }
+
+
+# // Jenkins management Permissions
+# resource "azurerm_key_vault_access_policy" "jenkins_access" {
+#   key_vault_id            = module.key-vault.key_vault_id
+#   # application_id        = var.app_id
+#   object_id               = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+#   key_permissions         = [ "list","update","create","import","delete", "Get" ]
+#   certificate_permissions = [ "list", "update", "create", "import", "delete", "managecontacts", "manageissuers", "getissuers", "listissuers", "setissuers", "deleteissuers", ]
+#   secret_permissions      = [ "list", "set", "delete", "Get", ]
+#   storage_permissions     = [ "list", "set", "delete", "Get", ]
+# }
+
+#####################################
+# #    Managed Identity Access to KV
+# #####################################
+# resource "azurerm_key_vault_access_policy" "managedid_access" {
+
+#   key_vault_id            = module.key-vault.key_vault_id
+#   object_id               = var.power_app_user_oid
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+
+#   key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get", ]
+#   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
+#   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
+
+#   depends_on = [ module.key-vault]
+
+
+#   key_permissions         = [ "List","Update","Create","Import","Delete", "Get",]
+#   certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
+#   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
+#   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
+
+# }
 
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
@@ -57,6 +90,7 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
   certificate_permissions = [ "List", "Get", "GetIssuers", "ListIssuers", ]
   secret_permissions      = [ "List", "Get", ]
   storage_permissions     = [ "List", "Get", ]
+
 }
 
 #####################################
