@@ -55,6 +55,7 @@ withInfraPipeline(product) {
   //   sh lockRg("sbox")
   // }
 
+
   before('buildinfra:stg') {
     sh "echo 'unlock RG stg'"
     sh unlockRg("stg")
