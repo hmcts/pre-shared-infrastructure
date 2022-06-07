@@ -1,4 +1,4 @@
-resource "azurerm_virtual_network_peering" "initiator-To-target" {
+resource "azurerm_virtual_network_peering" "initiator-to-target" {
   provider = azurerm.initiator
 
   name                         = var.initiator_peer_name
@@ -10,7 +10,7 @@ resource "azurerm_virtual_network_peering" "initiator-To-target" {
 
 }
 
-resource "azurerm_virtual_network_peering" "target-To-initiator" {
+resource "azurerm_virtual_network_peering" "target-to-initiator" {
   provider = azurerm.target
 
   name                         = var.target_peer_name
