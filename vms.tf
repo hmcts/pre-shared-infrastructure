@@ -28,81 +28,81 @@ resource "azurerm_bastion_host" "bastion" {
 }
 
 
-###################################################
-#            Editting VM NETWORK INTERFACE CARD               #
-###################################################
-resource "azurerm_network_interface" "edtvmnic" {
-  count               = var.num_vid_edit_vms
-  name                = "${var.product}-edtvmnic${count.index}-${var.env}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  # enable_accelerated_networking  = true
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
-    private_ip_address_allocation = "Dynamic"
-  }
-   tags                = var.common_tags
-}
-resource "azurerm_managed_disk" "edtvmdatadisk" {
-  count                = var.num_vid_edit_vms
-  name                 = "${var.product}-videdit${count.index}-datadisk-${var.env}"
-  location             = azurerm_resource_group.rg.location
-  resource_group_name  = azurerm_resource_group.rg.name
-  storage_account_type = "StandardSSD_LRS"
-  create_option        = "Empty"
-  disk_size_gb         = 1000
-  # zone                 = "2"
-  disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
-  tags                 = var.common_tags
-}
+# ###################################################
+# #            Editting VM NETWORK INTERFACE CARD               #
+# ###################################################
+# resource "azurerm_network_interface" "edtvmnic" {
+#   count               = var.num_vid_edit_vms
+#   name                = "${var.product}-edtvmnic${count.index}-${var.env}"
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
+#   # enable_accelerated_networking  = true
+#   ip_configuration {
+#     name                          = "internal"
+#     subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
+#     private_ip_address_allocation = "Dynamic"
+#   }
+#    tags                = var.common_tags
+# }
+# resource "azurerm_managed_disk" "edtvmdatadisk" {
+#   count                = var.num_vid_edit_vms
+#   name                 = "${var.product}-videdit${count.index}-datadisk-${var.env}"
+#   location             = azurerm_resource_group.rg.location
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   storage_account_type = "StandardSSD_LRS"
+#   create_option        = "Empty"
+#   disk_size_gb         = 1000
+#   # zone                 = "2"
+#   disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
+#   tags                 = var.common_tags
+# }
 
-resource "azurerm_virtual_machine_data_disk_attachment" "edtvm" {
-  count              = var.num_vid_edit_vms
-  managed_disk_id    = azurerm_managed_disk.edtvmdatadisk.*.id[count.index]
-  virtual_machine_id = azurerm_windows_virtual_machine.edtvm.*.id[count.index]
-  lun                = "3"
-  caching            = "ReadWrite"
-}
+# resource "azurerm_virtual_machine_data_disk_attachment" "edtvm" {
+#   count              = var.num_vid_edit_vms
+#   managed_disk_id    = azurerm_managed_disk.edtvmdatadisk.*.id[count.index]
+#   virtual_machine_id = azurerm_windows_virtual_machine.edtvm.*.id[count.index]
+#   lun                = "3"
+#   caching            = "ReadWrite"
+# }
 
-###################################################
-#                EDIT VIRTUAL MACHINE                 #
-###################################################
-resource "azurerm_windows_virtual_machine" "edtvm" {
-  count                 = var.num_vid_edit_vms
-  # zone                = 2
-  name                  = "${var.product}edtvm${count.index}-${var.env}"
-  computer_name         = "PREEDTVM0${count.index}-${var.env}"
-  resource_group_name   = azurerm_resource_group.rg.name
-  location              = azurerm_resource_group.rg.location
-  size                  = var.vid_edit_vm_spec
-  admin_username        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
-  admin_password        = random_password.vm_password[count.index].result
-  network_interface_ids = [azurerm_network_interface.edtvmnic[count.index].id]
+# ###################################################
+# #                EDIT VIRTUAL MACHINE                 #
+# ###################################################
+# resource "azurerm_windows_virtual_machine" "edtvm" {
+#   count                 = var.num_vid_edit_vms
+#   # zone                = 2
+#   name                  = "${var.product}edtvm${count.index}-${var.env}"
+#   computer_name         = "PREEDTVM0${count.index}-${var.env}"
+#   resource_group_name   = azurerm_resource_group.rg.name
+#   location              = azurerm_resource_group.rg.location
+#   size                  = var.vid_edit_vm_spec
+#   admin_username        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+#   admin_password        = random_password.vm_password[count.index].result
+#   network_interface_ids = [azurerm_network_interface.edtvmnic[count.index].id]
 
-  os_disk {
-    name                 = "${var.product}-edtvm${count.index}-osdisk-${var.env}"
-    caching              = "ReadWrite"
-    storage_account_type = "StandardSSD_LRS"
-    disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
-  }
-  identity {
-    type = "SystemAssigned"
-  }
+#   os_disk {
+#     name                 = "${var.product}-edtvm${count.index}-osdisk-${var.env}"
+#     caching              = "ReadWrite"
+#     storage_account_type = "StandardSSD_LRS"
+#     disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
+#   }
+#   identity {
+#     type = "SystemAssigned"
+#   }
   
-  source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2019-datacenter-gensecond"
-    version   = "latest"
-  }
-  enable_automatic_updates = true
-  provision_vm_agent       = true  
-  timezone                 = "GMT Standard Time"
-  tags                     = var.common_tags
+#   source_image_reference {
+#     publisher = "MicrosoftWindowsServer"
+#     offer     = "WindowsServer"
+#     sku       = "2019-datacenter-gensecond"
+#     version   = "latest"
+#   }
+#   enable_automatic_updates = true
+#   provision_vm_agent       = true  
+#   timezone                 = "GMT Standard Time"
+#   tags                     = var.common_tags
 
-  depends_on = [ module.key-vault]
-}
+#   depends_on = [ module.key-vault]
+# }
 
 ##################################################
 ##           Editing NETWORK INTERFACE CARD               #
