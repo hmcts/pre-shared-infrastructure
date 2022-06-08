@@ -24,10 +24,10 @@ terraform {
 }
 
 resource "azurerm_resource_provider_registration" "EncryptionAtHost" {
-  name = "Microsoft.Compute"
-    feature {
-    name       = "EncryptionAtHost"
-    registered = true
-  }
+  name = "Microsoft.Compute/EncryptionAtHost"
+  #   feature {
+  #   name       = "EncryptionAtHost"
+  #   registered = true
+  # }
 }
 
