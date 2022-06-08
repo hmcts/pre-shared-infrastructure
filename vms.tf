@@ -109,7 +109,7 @@ resource "azurerm_bastion_host" "bastion" {
 ###################################################
 resource "azurerm_network_interface" "nics" {
   count               = var.num_vid_edit_vms
-  name                = "${var.product}-videditvmnic${count.index}-${var.env}"
+  name                = "${var.product}-edtvmnic${count.index}-${var.env}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -120,9 +120,29 @@ resource "azurerm_network_interface" "nics" {
   }
    tags                = var.common_tags
 }
+resource "azurerm_managed_disk" "edtvmdatadisk" {
+  count                = var.num_vid_edit_vms
+  name                 = "${var.product}-videdit${count.index}-datadisk-${var.env}"
+  location             = azurerm_resource_group.rg.location
+  resource_group_name  = azurerm_resource_group.rg.name
+  storage_account_type = "StandardSSD_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 1000
+  # zone                 = "2"
+  disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
+  tags                 = var.common_tags
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "edtvm" {
+  count              = var.num_vid_edit_vms
+  managed_disk_id    = azurerm_managed_disk.edtvmdatadisk.*.id[count.index]
+  virtual_machine_id = azurerm_windows_virtual_machine.edtvm.*.id[count.index]
+  lun                = "3"
+  caching            = "ReadWrite"
+}
 
 ###################################################
-#                 Editing VIRTUAL MACHINE                 #
+#                EDIT VIRTUAL MACHINE                 #
 ###################################################
 resource "azurerm_windows_virtual_machine" "vm" {
   count                       = var.num_vid_edit_vms
