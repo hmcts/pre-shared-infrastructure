@@ -18,7 +18,7 @@
     is_primary = false
  }
  
-  storage_authentication_type   = "ManagedIdentity"
+  # storage_authentication_type   = "ManagedIdentity"
   # storage_authentication_type   = "System"
   lifecycle {
     ignore_changes= [storage_authentication_type,identity]
