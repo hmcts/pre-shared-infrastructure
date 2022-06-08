@@ -266,4 +266,16 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 #   depends_on = [ module.key-vault]
 # }
 
+# resource "azurerm_managed_disk" "datadisk" {
+#   count                = var.num_datagateway
+#   name                 = "${var.product}-dtgtwy${count.index}-datadisk-${var.env}"
+#   location             = azurerm_resource_group.rg.location
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   storage_account_type = "Standard_LRS"
+#   create_option        = "Empty"
+#   disk_size_gb         = 100
+#   zone                 = 2
+#   tags                 = var.common_tags
+# }
+
 
