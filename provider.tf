@@ -12,6 +12,7 @@ terraform {
 }
 
 provider "azurerm" {
+  skip_provider_registration = "true"
   features {
     key_vault {
       purge_soft_delete_on_destroy = true
@@ -23,11 +24,11 @@ terraform {
   backend "azurerm" {}
 }
 
-resource "azurerm_resource_provider_registration" "EncryptionAtHost" {
-  name = "Microsoft.Compute/EncryptionAtHost"
-  #   feature {
-  #   name       = "EncryptionAtHost"
-  #   registered = true
-  # }
-}
+# resource "azurerm_resource_provider_registration" "EncryptionAtHost" {
+#   name = "Microsoft.Compute/EncryptionAtHost"
+#   #   feature {
+#   #   name       = "EncryptionAtHost"
+#   #   registered = true
+#   # }
+# }
 
