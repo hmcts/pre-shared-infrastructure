@@ -20,16 +20,12 @@ module "key-vault" {
 
 // Power App Permissions
 resource "azurerm_key_vault_access_policy" "power_app_access" {
-
-  key_vault_id            = module.key-vault.key_vault_id
-  object_id               = var.power_app_user_oid
-  tenant_id               = data.azurerm_client_config.current.tenant_id
+  key_vault_id = module.key-vault.key_vault_id
+  object_id    = var.power_app_user_oid
+  tenant_id    = data.azurerm_client_config.current.tenant_id
   key_permissions         = [ "List", "Update", "Create", "Import", "Delete", "Get", ]
   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
-
-  depends_on = [ module.key-vault]
-
 }
 
 
@@ -67,7 +63,6 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
 
 # }
-
 
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
@@ -113,7 +108,6 @@ resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
 }
 
 
-
 // DevopsAdmin Permissions
 resource "azurerm_key_vault_access_policy" "devops_access" {
   key_vault_id            = module.key-vault.key_vault_id
@@ -125,7 +119,6 @@ resource "azurerm_key_vault_access_policy" "devops_access" {
   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
 }
-
 
 
 // VM credentials
@@ -177,23 +170,12 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
 #   min_numeric      = 1
 # }
 
-
 # resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
 #   count        = var.num_datagateway
 #   name         = "Dtgtwy${count.index}-username"
 #   value        = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
 #   key_vault_id = module.key-vault.key_vault_id
 # }
-
-
-
-# resource "azurerm_key_vault_secret" "dtgtwy_username_secret" {
-#   count        = var.num_datagateway
-#   name         = "Dtgtwy${count.index}-username"
-#   value        = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
-#   key_vault_id = module.key-vault.key_vault_id
-# }
-
 
 # resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
 #   count        = var.num_datagateway
@@ -266,6 +248,44 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 #   ]
 # }
 
+
+#### West
+
+# resource "azurerm_disk_encryption_set" "pre-des-west" {
+#   name                = "pre-des-west-${var.env}"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   location            = "UKWest"
+#   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
+#   identity {
+#     type = "SystemAssigned"
+#   }
+#   tags                = var.common_tags
+# }
+
+# resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = azurerm_disk_encryption_set.pre-des-west.identity.0.tenant_id
+#   object_id = azurerm_disk_encryption_set.pre-des-west.identity.0.principal_id
+
+#   key_permissions = [
+#     "Get",
+#     "WrapKey",
+#     "UnwrapKey"
+#   ]
+# }
+# resource "azurerm_key_vault_access_policy" "pre-deskv-user" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = data.azurerm_client_config.current.tenant_id
+#   object_id = data.azurerm_client_config.current.object_id
+
+#   key_permissions = [
+#     "Get",
+#     "Create",
+#     "Delete"
+#   ]
+# }
 
 #### West
 
