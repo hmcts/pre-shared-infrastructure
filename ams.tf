@@ -53,24 +53,6 @@ resource "azurerm_role_assignment" "pre_amsreader_mi" {
 }
 
 resource "azurerm_media_transform" "analysevideo" {
-  name                        = "AnalyseVideos"
-  resource_group_name         = azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
-  description                 = "pre-AnalyseVideo"
-  output {
-    relative_priority = "Normal"
-    on_error_action   = "ContinueJob"
-    builtin_preset {
-      preset_name = "H264SingleBitrate1080p"
-    }
-  }
-
-
-  
-  tags             = var.common_tags
-}
-
-resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
