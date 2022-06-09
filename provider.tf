@@ -24,6 +24,12 @@ terraform {
   backend "azurerm" {}
 }
 
+# resource "null_resource" "PowerShellScriptRunFirstTimeOnly" {
+#     provisioner "local-exec" {
+#         inline = [Register-AzProviderFeature -FeatureName "EncryptionAtHost" -ProviderNamespace "Microsoft.Compute" ]
+#         interpreter = ["PowerShell", "-Command"]
+#     }
+# }
 # resource "azurerm_resource_provider_registration" "EncryptionAtHost" {
 #   name = "Microsoft.Compute/EncryptionAtHost"
 #   #   feature {
