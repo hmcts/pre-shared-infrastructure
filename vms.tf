@@ -111,7 +111,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 }
 
 resource "azurerm_security_center_server_vulnerability_assessment_virtual_machine" "va" {
-  virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  virtual_machine_id = azurerm_windows_virtual_machine.vm[count.index].id
 }
 
 # resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
