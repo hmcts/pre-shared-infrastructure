@@ -3,9 +3,9 @@
   location                      = "UKwest"
   resource_group_name           = azurerm_resource_group.rg.name
   
-  identity {
-    type = "SystemAssigned"
-  } 
+  # identity {
+  #   type = "SystemAssigned"
+  # } 
 
 
   storage_account {
@@ -20,11 +20,41 @@
  
   # storage_authentication_type   = "ManagedIdentity"
   # storage_authentication_type   = "System"
-  lifecycle {
-    ignore_changes= [storage_authentication_type,identity]
-  }
+  # lifecycle {
+  #   ignore_changes= [storage_authentication_type,identity]
+  # }
   tags         = var.common_tags
   
+}
+
+resource "azurerm_media_transform" "analysevideo" {
+  name                        = "AnalyseVideo"
+  resource_group_name         = azurerm_resource_group.rg.name
+  media_services_account_name = azurerm_media_services_account.ams.name
+  description                 = "Analyse Video"
+  output {
+    relative_priority = "Normal"
+    on_error_action   = "ContinueJob"
+    builtin_preset {
+      preset_name = "H264SingleBitrate1080p"
+    }
+  }
+}
+
+
+resource "azurerm_media_transform" "EncodeToMP4" {
+  name                        = "EncodeToMP4"
+  resource_group_name         = azurerm_resource_group.rg.name
+  media_services_account_name = azurerm_media_services_account.ams.name
+
+  description                 = "Encode To MP4"
+  output {
+    relative_priority = "Normal"
+    on_error_action   = "ContinueJob"
+    builtin_preset {
+      preset_name = "H264SingleBitrate1080p"
+    }
+  }
 }
 
 # #Storage Blob Data Contributor Role Assignment for Managed Identity
@@ -50,34 +80,3 @@ resource "azurerm_role_assignment" "pre_amsreader_mi" {
     azurerm_media_services_account.ams
   ]
 }
-
-resource "azurerm_media_transform" "analysevideo" {
-  name                        = "AnalyseVideo"
-  resource_group_name         = azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
-  description                 = "AnalyseVideo"
-  output {
-    relative_priority = "Normal"
-    on_error_action   = "ContinueJob"
-    builtin_preset {
-      preset_name = "H264SingleBitrate1080p"
-    }
-  }
-}
-
-
-resource "azurerm_media_transform" "EncodeToMP4" {
-  name                        = "EncodeToMP4"
-  resource_group_name         = azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
-
-  description                 = "EncodeToMP4"
-  output {
-    relative_priority = "Normal"
-    on_error_action   = "ContinueJob"
-    builtin_preset {
-      preset_name = "H264SingleBitrate1080p"
-    }
-  }
-}
-
