@@ -70,6 +70,8 @@ variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
 variable "devops_admin" {}
+variable "providernamespace" {}
+variable "featurename" {}
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
