@@ -169,26 +169,26 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
   ]
 }
 
-# ###################################################
-# #                MI access & permission               #
-# ###################################################
-# #Storage Blob Data Contributor Role Assignment for Managed Identity
+# # ###################################################
+# # #                MI access & permission               #
+# # ###################################################
+# # #Storage Blob Data Contributor Role Assignment for Managed Identity
 
-resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
-  scope                            = azurerm_resource_group.rg.id
-  role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = module.key-vault.managed_identity_objectid
-  skip_service_principal_aad_check = true
-}
+# resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = module.key-vault.managed_identity_objectid
+#   skip_service_principal_aad_check = true
+# }
 
-#Reader Role Assignment for Managed Identity
-resource "azurerm_role_assignment" "pre_amsreader_mi" {
-  scope                            = azurerm_resource_group.rg.id
-  role_definition_name             = "Reader"
-  principal_id                     = module.key-vault.managed_identity_objectid
-  skip_service_principal_aad_check = true
+# #Reader Role Assignment for Managed Identity
+# resource "azurerm_role_assignment" "pre_amsreader_mi" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "Reader"
+#   principal_id                     = module.key-vault.managed_identity_objectid
+#   skip_service_principal_aad_check = true
   
-}
+# }
 
 # TODO
 
