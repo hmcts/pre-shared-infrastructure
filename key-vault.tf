@@ -177,7 +177,7 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
   scope                            = azurerm_resource_group.rg.id
   role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = azurerm_user_assigned_identity.managed_identity.*.principal_id
+  principal_id                     = module.key-vault.managed_identity_objectid
   skip_service_principal_aad_check = true
 }
 
@@ -185,7 +185,7 @@ resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
 resource "azurerm_role_assignment" "pre_amsreader_mi" {
   scope                            = azurerm_resource_group.rg.id
   role_definition_name             = "Reader"
-  principal_id                     = azurerm_user_assigned_identity.managed_identity.*.principal_id
+  principal_id                     = module.key-vault.managed_identity_objectid
   skip_service_principal_aad_check = true
   
 }
