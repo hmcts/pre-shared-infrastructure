@@ -28,7 +28,7 @@ resource "azurerm_bastion_host" "bastion" {
 }
 
 
- provisioner "local-exec" {
+provisioner "local-exec" {
     command = "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-${var.subscription} Register-AzProviderFeature -FeatureName ${var.featureName} -ProviderNamespace ${var.ProviderNamespace }"
   }
 
