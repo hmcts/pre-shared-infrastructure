@@ -79,9 +79,9 @@ resource "azurerm_media_transform" "EncodeToMP4" {
 #   ]
 # }
 
-resource "null_resource" "amsmi" {
-    provisioner "local-exec" { 
-        command = ".'${path.module}\\pre.ps1' -amsname azurerm_media_services_account.ams.name -rg azurerm_resource_group.rg.name -mi data.azurerm_user_assigned_identity.managed-identity.principal_id  "
-        interpreter = ["PowerShell", "-Command"]
-    }
-}
+# resource "null_resource" "amsmi" {
+#     provisioner "local-exec" { 
+#         command = ".'${path.module}\\pre.ps1' -amsname azurerm_media_services_account.ams.name -rg azurerm_resource_group.rg.name -mi data.azurerm_user_assigned_identity.managed-identity.principal_id  "
+#         interpreter = ["PowerShell", "-Command"]
+#     }
+# }
