@@ -27,11 +27,11 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
-locals {
-  tenantId             = data.azurerm_client_config.current.tenant_id
-  clientId             = data.azurerm_client_config.current.CLIENT_id
-  secret               = data.azurerm_client_config.current.CLIENT_SECRET
-  }
+# locals {
+#   tenantId             = data.azurerm_client_config.current.tenant_id
+#   clientId             = data.azurerm_client_config.current.CLIENT_id
+#   secret               = data.azurerm_client_config.current.CLIENT_SECRET
+#   }
 
 # # data.azurerm_client_config.current.tenant_id
 # # $subscriptionId = $env:ARM_SUBSCRIPTION_ID
