@@ -29,7 +29,7 @@ resource "azurerm_bastion_host" "bastion" {
 
 resource "null_resource" "azcli_exec" {
   provisioner "local-exec" {
-    command = "Register-AzProviderFeature -FeatureName ${var.featurename} -ProviderNamespace ${var.providernamespace }"
+    command = "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
   }
 }
 # ###################################################
