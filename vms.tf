@@ -27,21 +27,28 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
+locals {
+  tenantId             = data.azurerm_client_config.current.tenant_id
+  clientId             = data.azurerm_client_config.current.CLIENT_id
+  secret               = data.azurerm_client_config.current.CLIENT_SECRET
+  }
+
+# data.azurerm_client_config.current.tenant_id
 # $subscriptionId = $env:ARM_SUBSCRIPTION_ID
 # $tenantId = $env:ARM_TENANT_ID
 # $clientId = $env:ARM_CLIENT_ID
 # $secret = $env:ARM_CLIENT_SECRET
 
-# az.cmd login --service-principal --username $clientId --password $secret --tenant $tenantId
+# az.cmd login --service-principal --username locals.clientId --password locals.secret --tenant locals.tenantId
 
-# resource "null_resource" "azcli_exec" {
-#   provisioner "local-exec" {
-#     command = "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-${var.subscription} & az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
+resource "null_resource" "azcli_exec" {
+  provisioner "local-exec" {
+    command = "az.cmd login --service-principal --username ${local.clientId} --password ${local.secret} --tenant ${local.tenantId} && az set -s ${var.subscription} && az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
     
-#     # "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
-# # "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
-#   }
-# }
+    # "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
+# "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
+  }
+}
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
 # ###################################################
