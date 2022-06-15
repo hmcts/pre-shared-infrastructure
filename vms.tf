@@ -27,14 +27,21 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
-resource "null_resource" "azcli_exec" {
-  provisioner "local-exec" {
-    command = "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-${var.subscription} & az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
+# $subscriptionId = $env:ARM_SUBSCRIPTION_ID
+# $tenantId = $env:ARM_TENANT_ID
+# $clientId = $env:ARM_CLIENT_ID
+# $secret = $env:ARM_CLIENT_SECRET
+
+# az.cmd login --service-principal --username $clientId --password $secret --tenant $tenantId
+
+# resource "null_resource" "azcli_exec" {
+#   provisioner "local-exec" {
+#     command = "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-${var.subscription} & az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
     
-    # "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
-# "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
-  }
-}
+#     # "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
+# # "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
+#   }
+# }
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
 # ###################################################
