@@ -27,11 +27,12 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
-# resource "null_resource" "azcli_exec" {
-#   provisioner "local-exec" {
-#     command = "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
-#   }
-# }
+resource "null_resource" "azcli_exec" {
+  provisioner "local-exec" {
+    command = "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
+# "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
+  }
+}
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
 # ###################################################
