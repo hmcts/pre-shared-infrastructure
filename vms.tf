@@ -27,11 +27,11 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
-resource "null_resource" "azcli_exec" {
-  provisioner "local-exec" {
-    command = "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
-  }
-}
+# resource "null_resource" "azcli_exec" {
+#   provisioner "local-exec" {
+#     command = "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
+#   }
+# }
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
 # ###################################################
@@ -59,7 +59,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
-  encryption_at_host_enabled  = true
+  # encryption_at_host_enabled  = true
 
   # additional_capabilities {
   #  ultra_ssd_enabled   =  true
