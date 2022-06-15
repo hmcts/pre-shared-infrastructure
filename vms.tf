@@ -29,7 +29,9 @@ resource "azurerm_bastion_host" "bastion" {
 
 resource "null_resource" "azcli_exec" {
   provisioner "local-exec" {
-    command = "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
+    command = "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-${var.subscription} & az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
+    
+    # "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
 # "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
   }
 }
