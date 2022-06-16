@@ -88,8 +88,9 @@ resource "azurerm_media_transform" "EncodeToMP4" {
 
 resource "null_resource" "azcli_exec2" {
   provisioner "local-exec" {
-    command = " az ams account identity assign --name azurerm_media_services_account.ams.name -g azurerm_resource_group.rg.name --user-assigned data.azurerm_user_assigned_identity.managed-identity.principal_id  "
+    command = " sudo az update --yes && az ams account identity assign --name azurerm_media_services_account.ams.name -g azurerm_resource_group.rg.name --user-assigned data.azurerm_user_assigned_identity.managed-identity.principal_id  "
   }
 }
 
 # && az ams account storage set-authentication -n azurerm_media_services_account.ams.name -g azurerm_resource_group.rg.name --user-assigned data.azurerm_user_assigned_identity.managed-identity.principal_id --storage-auth ManagedIdentity
+
