@@ -135,9 +135,10 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 #   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
 # }
 
-# resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
-#   virtual_machine_id = azurerm_windows_virtual_machine.vm.id
-# }
+resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
+  count                  = var.num_vid_edit_vms
+  virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
+}
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
   count                  = var.num_vid_edit_vms
