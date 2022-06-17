@@ -134,7 +134,15 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 # resource "azurerm_security_center_server_vulnerability_assessment_virtual_machine" "va" {
 #   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
 # }
-
+resource "azurerm_virtual_machine_extension" "vmextension" {
+  name                 = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}ext"
+  count                = var.num_vid_edit_vms
+  virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher            = "Microsoft.Azure.Security"
+  type                 = "IaaSAntimalware"
+  type_handler_version = "2.0"
+  auto_upgrade_minor_version = true
+}
 resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
   count                  = var.num_vid_edit_vms
   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
