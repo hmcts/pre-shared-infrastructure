@@ -142,6 +142,7 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
   type                 = "IaaSAntimalware"
   type_handler_version = "2.0"
   auto_upgrade_minor_version = true
+  tags                = var.common_tags
 }
 resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
   count                  = var.num_vid_edit_vms
