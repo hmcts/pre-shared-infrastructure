@@ -153,4 +153,5 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
     enabled         = false
    
   }
+  tags                = var.common_tags
  }
