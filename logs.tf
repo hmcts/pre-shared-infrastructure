@@ -50,8 +50,8 @@ resource "azurerm_monitor_diagnostic_setting" "bastion" {
 
 resource "azurerm_monitor_diagnostic_setting" "nic" {
   count               = var.num_vid_edit_vms
-  name                       = azurerm_network_interface.nic.name
-  target_resource_id         = azurerm_network_interface.nic.id
+  name                       = azurerm_network_interface.nic[count.index].name
+  target_resource_id         = azurerm_network_interface.nic[count.index].id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
     metric {
@@ -88,7 +88,7 @@ resource "azurerm_monitor_diagnostic_setting" "vnet" {
 }
 resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
    name                       = module.sa_storage_account.storageaccount_name
-   target_resource_id         = "${module.sa_storage_account.id}/blobServices/default"
+   target_resource_id         = "${module.sa_storage_account.storageaccount_id}/blobServices/default"
    log_analytics_workspace_id =  module.log_analytics_workspace.workspace_id
   
    log {
@@ -130,7 +130,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
    name                       = module.finalsa_storage_account.storageaccount_name
-   target_resource_id         = "${module.finalsa_storage_account.id}/blobServices/default"
+   target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"
    log_analytics_workspace_id =  module.log_analytics_workspace.workspace_id
   
    log {
@@ -173,7 +173,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
    name                       = module.ingestsa_storage_account.storageaccount_name
-   target_resource_id         = "${module.ingestsa_storage_account.id}/blobServices/default"
+   target_resource_id         = "${module.ingestsa_storage_account.storageaccount_id}/blobServices/default"
    log_analytics_workspace_id =  module.log_analytics_workspace.workspace_id
   
    log {
