@@ -135,7 +135,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 #   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
 # }
 resource "azurerm_virtual_machine_extension" "vmextension" {
-  name                 = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}ext"
+  name                 = "azurerm_windows_virtual_machine.vm.*.id[count.index]ext"
   count                = var.num_vid_edit_vms
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
   publisher            = "Microsoft.Azure.Security"
