@@ -140,7 +140,7 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
   publisher            = "Microsoft.Azure.Security"
   type                 = "IaaSAntimalware"
-  type_handler_version = "2.0"
+  type_handler_version = "1.3"
   auto_upgrade_minor_version = true
   settings = <<SETTINGS
     {
@@ -166,6 +166,12 @@ resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
 }
 
+
+resource "azurerm_advanced_threat_protection" "example" {
+  count                  = var.num_vid_edit_vms
+  target_resource_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  enabled            = true
+}
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
   count                  = var.num_vid_edit_vms
   virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
