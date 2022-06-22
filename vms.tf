@@ -142,6 +142,23 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
   type                 = "IaaSAntimalware"
   type_handler_version = "2.0"
   auto_upgrade_minor_version = true
+  settings = <<SETTINGS
+    {
+    "AntimalwareEnabled": true,
+    "RealtimeProtectionEnabled": "true",
+    "ScheduledScanSettings": {
+    "isEnabled": "true",
+    "day": "1",
+    "time": "120",
+    "scanType": "Quick"
+    },
+    "Exclusions": {
+    "Extensions": "",
+    "Paths": "",
+    "Processes": ""
+    }
+    }
+SETTINGS
   tags                = var.common_tags
 }
 resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
@@ -165,3 +182,4 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
   }
   tags                = var.common_tags
  }
+
