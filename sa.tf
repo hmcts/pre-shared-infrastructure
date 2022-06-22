@@ -179,31 +179,38 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
   key_vault_id = module.key-vault.key_vault_id
 }
 
-output "sa_storage_account_name" {
-  value = module.sa_storage_account.storageaccount_name
+resource "azurerm_advanced_threat_protection" "tp" {
+  target_resource_id     = module.finalsa_storage_account.storageaccount_id
+  enabled            = true
 }
 
-output "finalsa_storage_account_name" {
-  value = module.finalsa_storage_account.storageaccount_name
-}
 
-output "finalsa_storage_account_id" {
-  value = module.finalsa_storage_account.storageaccount_id
-}
-output "ingestsa_storage_account_name" {
-  value = module.ingestsa_storage_account.storageaccount_name
-}
 
-output "sa_storage_account_primary_key" {
-  sensitive = true
-  value     = module.sa_storage_account.storageaccount_primary_access_key
-}
+# output "sa_storage_account_name" {
+#   value = module.sa_storage_account.storageaccount_name
+# }
 
-output "finalsa_storage_account_primary_key" {
-  sensitive = true
-  value     = module.finalsa_storage_account.storageaccount_primary_access_key
- }
-output "ingestsa_storage_account_primary_key" {
-  sensitive = true
-  value     = module.ingestsa_storage_account.storageaccount_primary_access_key
-}
+# output "finalsa_storage_account_name" {
+#   value = module.finalsa_storage_account.storageaccount_name
+# }
+
+# output "finalsa_storage_account_id" {
+#   value = module.finalsa_storage_account.storageaccount_id
+# }
+# output "ingestsa_storage_account_name" {
+#   value = module.ingestsa_storage_account.storageaccount_name
+# }
+
+# output "sa_storage_account_primary_key" {
+#   sensitive = true
+#   value     = module.sa_storage_account.storageaccount_primary_access_key
+# }
+
+# output "finalsa_storage_account_primary_key" {
+#   sensitive = true
+#   value     = module.finalsa_storage_account.storageaccount_primary_access_key
+#  }
+# output "ingestsa_storage_account_primary_key" {
+#   sensitive = true
+#   value     = module.ingestsa_storage_account.storageaccount_primary_access_key
+# }
