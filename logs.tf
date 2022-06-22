@@ -48,6 +48,47 @@ resource "azurerm_monitor_diagnostic_setting" "bastion" {
   }
 }
 
+
+
+resource "azurerm_monitor_diagnostic_setting" "bastionpip" {
+  name                       = azurerm_public_ip.pip.name
+  target_resource_id         = azurerm_public_ip.pip.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "DDoSProtectionNotifications"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+ log {
+    category = "DDoSMitigationFlowLogs"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  log {
+    category = "DDoSMitigationReports"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+    metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled =  true
+      days    = 14
+    }
+  }
+}
+
 resource "azurerm_monitor_diagnostic_setting" "nic" {
   count               = var.num_vid_edit_vms
   name                       = azurerm_network_interface.nic[count.index].name
