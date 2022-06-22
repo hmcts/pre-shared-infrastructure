@@ -179,10 +179,10 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
   key_vault_id = module.key-vault.key_vault_id
 }
 
-resource "azurerm_advanced_threat_protection" "tp" {
-  target_resource_id     = module.finalsa_storage_account.storageaccount_id
-  enabled            = true
-}
+# resource "azurerm_advanced_threat_protection" "tp" {
+#   target_resource_id     = module.finalsa_storage_account.storageaccount_id
+#   enabled            = true
+# }
 
 
 
