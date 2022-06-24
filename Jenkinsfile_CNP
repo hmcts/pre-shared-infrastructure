@@ -21,7 +21,7 @@ static String lockRg(String envName){
 
 static String unlockRg(String envName){
   def unlockScript = "environment='" +  envName + "';" +
-        'rgName="pip-ss-${environment}-rg";' +
+        'rgName="pre-${environment}";' +
         'lockName="${environment}-lock";' +
         '' +
         'az login --identity;' +
