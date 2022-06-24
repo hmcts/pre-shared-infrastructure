@@ -26,7 +26,7 @@ module "key-vault2" {
   resource_group_name     = azurerm_resource_group.rg.name
   product_group_name      = "DTS Pre-recorded Evidence"
   common_tags             = var.common_tags
-  create_managed_identity = true
+  create_managed_identity = false
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
