@@ -15,9 +15,9 @@ module "key-vault" {
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
   network_acls_allowed_ip_ranges = [ "90.247.65.225" ]
-  lifecycle {
-    ignore_changes= [purge_protection_enabled ]
-  }
+  # lifecycle {
+  #   ignore_changes= [purge_protection_enabled ]
+  # }
 }
 
 # module "key-vault2" {
