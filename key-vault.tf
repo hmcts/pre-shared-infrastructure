@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  name                    = var.env == "prod" ? "${var.product}-kv-${var.env}" : "${var.product}-${var.env}"
+  name                    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   product                 = var.product
   env                     = var.env
   tenant_id               = data.azurerm_client_config.current.tenant_id
@@ -15,11 +15,6 @@ module "key-vault" {
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
   network_acls_allowed_ip_ranges = [ "90.247.65.225" ]
-
-  # lifecycle {
-  #   ignore_changes= [purge_protection_enabled ]
-  # }
-
 
 }
 
