@@ -2,22 +2,6 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  name                    = "${var.product}-${var.env}" 
-  product                 = var.product
-  env                     = var.env
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  object_id               = var.jenkins_AAD_objectId
-  resource_group_name     = azurerm_resource_group.rg.name
-  product_group_name      = "DTS Pre-recorded Evidence"
-  common_tags             = var.common_tags
-  create_managed_identity = true
-  network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
-  purge_protection_enabled    = true
-  network_acls_default_action = "Deny"
-  network_acls_allowed_ip_ranges = [ "90.247.65.225" ]
-}
-module "key-vault2" {
-  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name                    = "${var.product}-kv-${var.env}" 
   product                 = var.product
   env                     = var.env
@@ -31,8 +15,25 @@ module "key-vault2" {
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
   network_acls_allowed_ip_ranges = [ "90.247.65.225" ]
-
 }
+
+# module "key-vault2" {
+#   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+#   name                    = "${var.product}-kv-${var.env}" 
+#   product                 = var.product
+#   env                     = var.env
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+#   object_id               = var.jenkins_AAD_objectId
+#   resource_group_name     = azurerm_resource_group.rg.name
+#   product_group_name      = "DTS Pre-recorded Evidence"
+#   common_tags             = var.common_tags
+#   create_managed_identity = true
+#   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+#   purge_protection_enabled    = true
+#   network_acls_default_action = "Deny"
+#   network_acls_allowed_ip_ranges = [ "90.247.65.225" ]
+
+# }
 // Power App Permissions
 resource "azurerm_key_vault_access_policy" "power_app_access" {
   key_vault_id = module.key-vault.key_vault_id
