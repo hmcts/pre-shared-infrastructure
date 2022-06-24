@@ -15,7 +15,6 @@ module "key-vault" {
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
   network_acls_allowed_ip_ranges = [ "90.247.65.225" ]
-
 }
 
 // Power App Permissions
