@@ -19,9 +19,24 @@ static String lockRg(String envName){
     return lockScript;
 }
 
-static String unlockRg(String envName){
-  def unlockScript = "environment='" +  envName + "';" +
+static String addamsid(String envName){
+  def amsstorageid = "environment='" +  envName + "';" +
         'rgName="pip-ss-${environment}-rg";' +
+        'lockName="${environment}-lock";' +
+        '' +
+        'az login --identity;' +
+        'az account set -s "DTS-SHAREDSERVICES-${environment}";' +
+        '' +
+        'az ams account identity assign -n preams${env}} -g pre-${env} --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${env}/resourcegroups/managed-identities-${env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${env}-mi";' +
+        'az ams account storage set-authentication --storage-auth ManagedIdentity --user-assigned "/subscriptions/DTS-SHAREDSERVICES-$env/resourcegroups/managed-identities-$env-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-$env-mi" --account-name preams$env --resource-group pre-$env;' 
+        
+    return amsstorageid;
+}
+
+static String unlockRg(String envName){
+  def unlockScript= 
+        "environment='" +  envName + "';" +
+        'rgName="pre-${environment}";' +
         'lockName="${environment}-lock";' +
         '' +
         'az login --identity;' +
@@ -34,7 +49,6 @@ static String unlockRg(String envName){
 
     return unlockScript;
 }
-
 def branchesToSync = ['demo']
 
 withInfraPipeline(product) {
@@ -50,7 +64,10 @@ withInfraPipeline(product) {
   //     env.ENV = 'demo'
   //   }
 
-
+  before('buildinfra:demo') {
+    sh "echo 'AMS ID'"
+    sh addamsid("demo")
+  }
 
 
   before('buildinfra:stg') {
