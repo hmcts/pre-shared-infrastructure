@@ -67,7 +67,7 @@ withInfraPipeline(product) {
 
   
     before('buildinfra:demo') {
-    sh "az login --identity;az account set -s "DTS-SHAREDSERVICES-demo";az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
+    sh "az login --identity;az account set -s DTS-SHAREDSERVICES-demo;az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
     }
     
     after('buildinfra:demo') {
