@@ -85,22 +85,22 @@ withInfraPipeline(product) {
 
   before('buildinfra:test') {
     sh "echo 'Enable VM disk Encrypt'"  
-    sh encrypthost("test")
+    sh encrypthost("PROD)
   }
   
   after('buildinfra:test') {
     sh "echo 'Enable AMS ID'"
-    sh addamsid("test")
+    sh addamsid("TEST")
   }
 
   before('buildinfra:prod') {
     sh "echo 'Enable Encrypt'"  
-    sh encrypthost("prod")
+    sh encrypthost("PROD")
   }
   
   after('buildinfra:prod') {
     sh "echo 'Enable AMS ID'"
-    sh addamsid("prod")
+    sh addamsid("PROD")
   }
   // before('buildinfra:stg') {
   //   sh "echo 'unlock RG stg'"
