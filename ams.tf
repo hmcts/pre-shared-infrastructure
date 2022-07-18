@@ -63,11 +63,11 @@ resource "null_resource" "amsid" {
 
   depends_on = [azurerm_media_services_account.ams]
  provisioner "local-exec" {
-   command =  <<-EOT 
+   command = <<EOF
     az ams account identity assign --name azurerm_media_services_account.ams.name -g azurerm_resource_group.rg.name --user-assigned data.azurerm_user_assigned_identity.managed-identity.principal_id
 		az ams account storage set-authentication --account-name azurerm_media_services_account.ams.name -g azurerm_resource_group.rg.name --user-assigned data.azurerm_user_assigned_identity.managed-identity.principal_id --storage-auth ManagedIdentity --storage-account-id module.ingestsa_storage_account.storageaccount_id
     az ams account storage set-authentication --account-name azurerm_media_services_account.ams.name -g azurerm_resource_group.rg.name --user-assigned data.azurerm_user_assigned_identity.managed-identity.principal_id --storage-auth ManagedIdentity --storage-account-id module.finalsa_storage_account.storageaccount_id
-EOT
+   EOF
  }
 tags         = var.common_tags 
 }
