@@ -60,9 +60,9 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   location                      = "${var.location}"
   resource_group_name           = azurerm_resource_group.rg.name
   
-  # identity {
-  #   type = "SystemAssigned"
-  # } 
+  identity {
+    type = "SystemAssigned"
+  } 
 
 
   storage_account {
@@ -117,7 +117,7 @@ resource "null_resource" "amsid" {
   #   always_run = timestamp()
   # }
 
-  depends_on = [azurerm_media_services_account.ams]
+  depends_on = [azurerm_media_services_account.ams02]
  provisioner "local-exec" {
    command = <<EOF
     az login --identity
