@@ -25,10 +25,10 @@ static String addamsid(String envName){
 }
 withParameterizedInfraPipeline(params.PRODUCT_NAME, 'sbox', 'sbox') {
  
-  after('buildinfra:sbox') {
-    sh "echo 'amsid'"
-    sh addamsid("sbox")
-  }
+  // after('buildinfra:sbox') {
+  //   sh "echo 'amsid'"
+  //   sh addamsid("sbox")
+  // }
 
 
 }
