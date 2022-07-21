@@ -1,0 +1,187 @@
+##------------------------------------------------------###################
+##BASTION
+##------------------------------------------------------###################
+resource "azurerm_public_ip" "pip02" {
+  name                = "${var.product}-bastionpip-${var.env}"
+  resource_group_name = azurerm_resource_group.rg02.name
+  location            = azurerm_resource_group.rg.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  tags                = var.common_tags
+}
+
+##------------------------------------------------------###################
+##BASTION
+##------------------------------------------------------###################
+resource "azurerm_bastion_host" "bastion02" {
+  name                = "${var.product}-bastion-${var.env}"
+  resource_group_name = azurerm_resource_group.rg02.name
+  location            = azurerm_resource_group.rg.location
+
+  ip_configuration {
+    name                          = "bastionpublic"
+    subnet_id                     = azurerm_subnet.AzureBastionSubnet02_subnet.id
+    public_ip_address_id          = azurerm_public_ip.pip02.id
+  }
+  tags = var.common_tags
+
+}
+
+# locals {
+#   tenantId             = data.azurerm_client_config.current.tenant_id
+#   clientId             = data.azurerm_client_config.current.CLIENT_id
+#   secret               = data.azurerm_client_config.current.CLIENT_SECRET
+#   }
+
+# # data.azurerm_client_config.current.tenant_id
+# # $subscriptionId = $env:ARM_SUBSCRIPTION_ID
+# # $tenantId = $env:ARM_TENANT_ID
+# # $clientId = $env:ARM_CLIENT_ID
+# # $secret = $env:ARM_CLIENT_SECRET
+
+# # az.cmd login --service-principal --username locals.clientId --password locals.secret --tenant locals.tenantId
+
+# resource "null_resource" "azcli_exec" {
+#   provisioner "local-exec" {
+#     command = "az.cmd login --service-principal --username ${local.clientId} --password ${local.secret} --tenant ${local.tenantId} && az set -s ${var.subscription} && az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
+    
+#     # "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
+# # "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
+#   }
+# }
+# ###################################################
+# #                EDIT VIRTUAL MACHINE                 #
+# ###################################################
+
+resource "azurerm_network_interface" "Vid02nic" {
+  count               = var.num_vid_edit_vms
+  name                = "${var.product}-videditnic${count.index}-${var.env}"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg02.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.videoeditvm02_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+   tags                = var.common_tags
+}
+resource "azurerm_windows_virtual_machine" "vm02" {
+  count                       = var.num_vid_edit_vms
+  name                        = "${var.product}-videditvm02${count.index}-${var.env}"
+  computer_name               = "PREVIDED0${count.index}-${var.env}"
+  resource_group_name         = azurerm_resource_group.rg02.name
+  location                    = azurerm_resource_group.rg.location
+  size                        = var.vid_edit_vm_spec
+  admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+  admin_password              = random_password.vm_password[count.index].result
+  network_interface_ids       = [azurerm_network_interface.Vid02nic[count.index].id]
+  # encryption_at_host_enabled  = true
+
+  # additional_capabilities {
+  #  ultra_ssd_enabled   =  true
+  # }
+  
+  os_disk {
+    name                      = "${var.product}-videditvm02${count.index}-osdisk-${var.env}"
+    caching                   = "ReadWrite"
+    storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
+    disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
+    # write_accelerator_enabled = true
+  }
+
+  
+  source_image_reference {
+    publisher = "MicrosoftWindowsDesktop"
+    offer     = "Windows-10"
+    sku       = "20h1-pro-g2"
+    version   = "latest"
+  }
+  # identity {
+  #   type = "SystemAssigned"
+  #   }
+
+  timezone                 = "GMT Standard Time"
+  enable_automatic_updates = true
+  provision_vm_agent       = true  
+  tags                     = var.common_tags
+
+  depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
+}
+
+resource "azurerm_managed_disk" "vmdatadisk02" {
+  count                   = var.num_vid_edit_vms
+  name                    = "${var.product}-videditvm02${count.index}-datadisk-${var.env}"
+  location                = azurerm_resource_group.rg.location
+  resource_group_name     = azurerm_resource_group.rg02.name
+  storage_account_type    = "StandardSSD_LRS"
+  create_option           = "Empty"
+  disk_size_gb            = 1000
+  disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
+  tags                    = var.common_tags
+
+     
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk02" {
+  count              = var.num_vid_edit_vms
+  managed_disk_id    = azurerm_managed_disk.vmdatadisk02.*.id[count.index]
+  virtual_machine_id = azurerm_windows_virtual_machine.vm02.*.id[count.index]
+  lun                = "3"
+  caching            = "ReadWrite"
+}
+
+# resource "azurerm_security_center_server_vulnerability_assessment_virtual_machine" "va" {
+#   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
+# }
+resource "azurerm_virtual_machine_extension" "vmextension02" {
+  name                 = "preeditvmext"
+  count                = var.num_vid_edit_vms
+  virtual_machine_id   = azurerm_windows_virtual_machine.vm02.*.id[count.index]
+  publisher            = "Microsoft.Azure.Security"
+  type                 = "IaaSAntimalware"
+  type_handler_version = "1.3"
+  auto_upgrade_minor_version = true
+  settings = <<SETTINGS
+    {
+    "AntimalwareEnabled": true,
+    "RealtimeProtectionEnabled": "true",
+    "ScheduledScanSettings": {
+    "isEnabled": "true",
+    "day": "1",
+    "time": "120",
+    "scanType": "Quick"
+    },
+    "Exclusions": {
+    "Extensions": "",
+    "Paths": "",
+    "Processes": ""
+    }
+    }
+SETTINGS
+  tags                = var.common_tags
+}
+resource "azurerm_security_center_server_vulnerability_assessment" "vul02" {
+  count                  = var.num_vid_edit_vms
+  virtual_machine_id = azurerm_windows_virtual_machine.vm02.*.id[count.index]
+}
+
+
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm02" {
+  count                  = var.num_vid_edit_vms
+  virtual_machine_id     = azurerm_windows_virtual_machine.vm02.*.id[count.index]
+  location               = azurerm_resource_group.rg.location
+  enabled                = true
+
+  daily_recurrence_time = "1800"
+  timezone              = "GMT Standard Time"
+
+
+  notification_settings {
+    enabled         = false
+   
+  }
+  tags                = var.common_tags
+ }
+

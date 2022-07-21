@@ -11,6 +11,12 @@ resource "azurerm_resource_group" "rg" {
   tags     = var.common_tags
 }
 
+resource "azurerm_resource_group" "rg02" {
+  name     = "${var.product}-02-${var.env}"
+  location = var.location
+  tags     = var.common_tags
+}
+
 #Role Assignment for Managed Identity
 # resource "azurerm_role_assignment" "pre_managedidentity" {
 #   scope                            = azurerm_resource_group.rg.id
