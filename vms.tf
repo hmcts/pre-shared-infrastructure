@@ -223,7 +223,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
     disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
-  # }
+  }
   # identity {
   #   type = "SystemAssigned"
   # }
