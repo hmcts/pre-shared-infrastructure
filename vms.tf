@@ -289,7 +289,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
 SETTINGS
   tags                = var.common_tags
 }
-resource "azurerm_security_center_server_vulnerability_assessment" "vulneass" {
-  count                  = var.num_datagateway
-  virtual_machine_id = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-}
+# resource "azurerm_security_center_server_vulnerability_assessment" "vulneass" {
+#   count                  = var.num_datagateway
+#   virtual_machine_id = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+# }
