@@ -240,7 +240,6 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 
   depends_on = [ module.key-vault]
 }
-}
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   count                = var.num_datagateway
