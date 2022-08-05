@@ -76,27 +76,58 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
-   # (Optional) To enable Azure Monitoring and install log analytics agents
-  # (Optional) Specify `storage_account_name` to save monitoring logs to storage.   
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
+  
+#    # (Optional) To enable Azure Monitoring and install log analytics agents
+#   # (Optional) Specify `storage_account_name` to save monitoring logs to storage.   
+#   log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
 
-  # Deploy log analytics agents to virtual machine. 
-  # Log analytics workspace customer id and primary shared key required.
-  deploy_log_analytics_agent                 = true
-  log_analytics_customer_id                  = azurerm_log_analytics_workspace.law.workspace_id
-  log_analytics_workspace_primary_shared_key = azurerm_log_analytics_workspace.law.primary_shared_key
+#   # Deploy log analytics agents to virtual machine. 
+#   # Log analytics workspace customer id and primary shared key required.
+#   deploy_log_analytics_agent                 = true
+#   log_analytics_customer_id                  = azurerm_log_analytics_workspace.law.workspace_id
+#   log_analytics_workspace_primary_shared_key = azurerm_log_analytics_workspace.law.primary_shared_key
 
-  # encryption_at_host_enabled  = true
+#   # encryption_at_host_enabled  = true
 
-  # additional_capabilities {
-  #  ultra_ssd_enabled   =  true
-  # }
+#   # additional_capabilities {
+#   #  ultra_ssd_enabled   =  true
+#   # }
   
 
-  # Add logging and monitoring
+#   # Add logging and monitoring
 
 
-# This extension is needed for other extensions
+# # This extension is needed for other extensions
+
+  os_disk {
+    name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
+    caching                   = "ReadWrite"
+    storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
+    disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
+    # write_accelerator_enabled = true
+  }
+
+  
+  source_image_reference {
+    publisher = "MicrosoftWindowsDesktop"
+    offer     = "Windows-10"
+    sku       = "20h1-pro-g2"
+    version   = "latest"
+  }
+  # identity {
+  #   type = "SystemAssigned"
+  #   }
+
+  timezone                     = "GMT Standard Time"
+  enable_automatic_updates     = true
+  provision_vm_agent           = true  
+  allow_extension_operations   = true
+  patch_mode                   = "AutomaticByOS"
+  tags                         = var.common_tags
+
+  depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
+}
+
 resource "azurerm_virtual_machine_extension" "daa-agent" {
   name                       = "DependencyAgentWindows"
   count                      = var.num_vid_edit_vms
@@ -146,32 +177,6 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
       "workspaceKey": "${azurerm_log_analytics_workspace.law.primary_shared_key}"
     }
   PROTECTED_SETTINGS
-}
-  os_disk {
-    name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
-    caching                   = "ReadWrite"
-    storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
-    disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
-    # write_accelerator_enabled = true
-  }
-
-  
-  source_image_reference {
-    publisher = "MicrosoftWindowsDesktop"
-    offer     = "Windows-10"
-    sku       = "20h1-pro-g2"
-    version   = "latest"
-  }
-  # identity {
-  #   type = "SystemAssigned"
-  #   }
-
-  timezone                 = "GMT Standard Time"
-  enable_automatic_updates = true
-  provision_vm_agent       = true  
-  tags                     = var.common_tags
-
-  depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
 }
 
 resource "azurerm_managed_disk" "vmdatadisk" {
