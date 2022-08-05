@@ -72,6 +72,15 @@ variable "dts_pre_app_admin" {}
 variable "devops_admin" {}
 variable "providernamespace" {}
 variable "featurename" {}
+variable "lawSku" {
+    type = string 
+    default = "PerGB2018"
+}
+
+variable "lawRetention" {
+    type = number
+    default = "30" 
+}
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
