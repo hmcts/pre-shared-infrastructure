@@ -76,12 +76,77 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
+   # (Optional) To enable Azure Monitoring and install log analytics agents
+  # (Optional) Specify `storage_account_name` to save monitoring logs to storage.   
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
+
+  # Deploy log analytics agents to virtual machine. 
+  # Log analytics workspace customer id and primary shared key required.
+  deploy_log_analytics_agent                 = true
+  log_analytics_customer_id                  = azurerm_log_analytics_workspace.law.workspace_id
+  log_analytics_workspace_primary_shared_key = azurerm_log_analytics_workspace.law.primary_shared_key
+
   # encryption_at_host_enabled  = true
 
   # additional_capabilities {
   #  ultra_ssd_enabled   =  true
   # }
   
+
+  # Add logging and monitoring
+
+
+# This extension is needed for other extensions
+resource "azurerm_virtual_machine_extension" "daa-agent" {
+  name                       = "DependencyAgentWindows"
+  count                      = var.num_vid_edit_vms
+  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
+  type                       = "DependencyAgentWindows"
+  type_handler_version       = "9.10"
+  automatic_upgrade_enabled  = true
+  auto_upgrade_minor_version = true
+}
+
+
+# Add logging and monitoring extensions
+resource "azurerm_virtual_machine_extension" "monitor-agent" {
+  depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
+  name                  = "AzureMonitorWindowsAgent"
+  count                      = var.num_vid_edit_vms
+  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher             = "Microsoft.Azure.Monitor"
+  type                  = "AzureMonitorWindowsAgent"
+  type_handler_version  =  "1.5"
+  automatic_upgrade_enabled  = true
+  auto_upgrade_minor_version = true
+}
+
+
+resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
+  depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
+  name                  = "MicrosoftMonitoringAgent"  # Must be called this
+  count                      = var.num_vid_edit_vms
+  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher             = "Microsoft.EnterpriseCloud.Monitoring"
+  type                  = "MicrosoftMonitoringAgent"
+  type_handler_version  =  "1.0"
+  # Not yet supported
+  # automatic_upgrade_enabled  = true
+  # auto_upgrade_minor_version = true
+  settings = <<SETTINGS
+    {
+        "workspaceId": "${azurerm_log_analytics_workspace.law.id}",
+        "azureResourceId": "${azurerm_windows_virtual_machine.vm.*.id[count.index]}",
+        "stopOnMultipleConnections": "false"
+    }
+  SETTINGS
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+      "workspaceKey": "${azurerm_log_analytics_workspace.law.primary_shared_key}"
+    }
+  PROTECTED_SETTINGS
+}
   os_disk {
     name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
     caching                   = "ReadWrite"
