@@ -137,6 +137,7 @@ resource "azurerm_virtual_machine_extension" "daa-agent" {
   type_handler_version       = "9.10"
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
+  tags                    = var.common_tags
 }
 
 
@@ -151,6 +152,7 @@ resource "azurerm_virtual_machine_extension" "monitor-agent" {
   type_handler_version  =  "1.5"
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
+  tags                    = var.common_tags
 }
 
 
@@ -162,6 +164,7 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
   publisher             = "Microsoft.EnterpriseCloud.Monitoring"
   type                  = "MicrosoftMonitoringAgent"
   type_handler_version  =  "1.0"
+  tags                    = var.common_tags
   # Not yet supported
   # automatic_upgrade_enabled  = true
   # auto_upgrade_minor_version = true
