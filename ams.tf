@@ -3,9 +3,9 @@
   location                      = "UKwest"
   resource_group_name           = azurerm_resource_group.rg.name
   
-  identity {
-    type = "SystemAssigned"
-  } 
+  # identity {
+  #   type = "SystemAssigned"
+  # } 
 
 
   storage_account {
@@ -20,9 +20,9 @@
  
   # storage_authentication_type   = "ManagedIdentity"
   # storage_authentication_type   = "System"
-  # lifecycle {
-  #   ignore_changes= [storage_authentication_type,identity]
-  # }
+  lifecycle {
+    ignore_changes= [storage_authentication_type,identity]
+  }
   tags         = var.common_tags
   
 }
@@ -60,9 +60,9 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   location                      = "${var.location}"
   resource_group_name           = azurerm_resource_group.rg.name
   
-  identity {
-    type = "SystemAssigned"
-  } 
+  # identity {
+  #   type = "SystemAssigned"
+  # } 
 
 
   storage_account {
