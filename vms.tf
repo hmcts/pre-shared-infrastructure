@@ -208,33 +208,33 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 #   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
 # }
 
-# resource "azurerm_virtual_machine_extension" "vmextension" {
-#   name                 = "IaaSAntimalware"
-#   count                = var.num_vid_edit_vms
-#   virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
-#   publisher            = "Microsoft.Azure.Security"
-#   type                 = "IaaSAntimalware"
-#   type_handler_version = "1.3"
-#   auto_upgrade_minor_version = true
-#   settings = <<SETTINGS
-#     {
-#     "AntimalwareEnabled": true,
-#     "RealtimeProtectionEnabled": "true",
-#     "ScheduledScanSettings": {
-#     "isEnabled": "true",
-#     "day": "1",
-#     "time": "120",
-#     "scanType": "Quick"
-#     },
-#     "Exclusions": {
-#     "Extensions": "",
-#     "Paths": "",
-#     "Processes": ""
-#     }
-#     }
-# SETTINGS
-#   tags                = var.common_tags
-# }
+resource "azurerm_virtual_machine_extension" "vmextension" {
+  name                 = "IaaSAntimalware"
+  count                = var.num_vid_edit_vms
+  virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher            = "Microsoft.Azure.Security"
+  type                 = "IaaSAntimalware"
+  type_handler_version = "1.3"
+  auto_upgrade_minor_version = true
+  settings = <<SETTINGS
+    {
+    "AntimalwareEnabled": true,
+    "RealtimeProtectionEnabled": "true",
+    "ScheduledScanSettings": {
+    "isEnabled": "true",
+    "day": "1",
+    "time": "120",
+    "scanType": "Quick"
+    },
+    "Exclusions": {
+    "Extensions": "",
+    "Paths": "",
+    "Processes": ""
+    }
+    }
+SETTINGS
+  tags                = var.common_tags
+}
 # resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
 #   count                  = var.num_vid_edit_vms
 #   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
@@ -300,7 +300,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   }
   # identity {
   #   type = "SystemAssigned"
-  # }
+  # }module
 
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
@@ -336,33 +336,33 @@ resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
   caching            = "ReadWrite"
 }
 
-resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
-  name                 = "IaaSAntimalware"
-  count                = var.num_datagateway
-  virtual_machine_id   = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-  publisher            = "Microsoft.Azure.Security"
-  type                 = "IaaSAntimalware"
-  type_handler_version = "1.3"
-  auto_upgrade_minor_version = true
-  settings = <<SETTINGS
-    {
-    "AntimalwareEnabled": true,
-    "RealtimeProtectionEnabled": "true",
-    "ScheduledScanSettings": {
-    "isEnabled": "true",
-    "day": "1",
-    "time": "120",
-    "scanType": "Quick"
-    },
-    "Exclusions": {
-    "Extensions": "",
-    "Paths": "",
-    "Processes": ""
-    }
-    }
-SETTINGS
-  tags                = var.common_tags
-}
+# resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
+#   name                 = "IaaSAntimalware"
+#   count                = var.num_datagateway
+#   virtual_machine_id   = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+#   publisher            = "Microsoft.Azure.Security"
+#   type                 = "IaaSAntimalware"
+#   type_handler_version = "1.3"
+#   auto_upgrade_minor_version = true
+#   settings = <<SETTINGS
+#     {
+#     "AntimalwareEnabled": true,
+#     "RealtimeProtectionEnabled": "true",
+#     "ScheduledScanSettings": {
+#     "isEnabled": "true",
+#     "day": "1",
+#     "time": "120",
+#     "scanType": "Quick"
+#     },
+#     "Exclusions": {
+#     "Extensions": "",
+#     "Paths": "",
+#     "Processes": ""
+#     }
+#     }
+# SETTINGS
+#   tags                = var.common_tags
+# }
 # resource "azurerm_security_center_server_vulnerability_assessment" "vulneass" {
 #   count                  = var.num_datagateway
 #   virtual_machine_id = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
@@ -399,8 +399,8 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
 # resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
 #   depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
 #   name                  = "MicrosoftMonitoringAgent"  # Must be called this
-#   count                      = var.num_vid_edit_vms
-#   virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+#   count                 = var.num_vid_edit_vms
+#   virtual_machine_id    = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
 #   publisher             = "Microsoft.EnterpriseCloud.Monitoring"
 #   type                  = "MicrosoftMonitoringAgent"
 #   type_handler_version  =  "1.0"
