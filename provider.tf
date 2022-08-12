@@ -24,6 +24,12 @@ terraform {
   backend "azurerm" {}
 }
 
+
+provider "azurerm" {
+  alias           = "oms"
+  subscription_id = modules.log_analytics_workspace.subscription_id
+}
+
 # resource "null_resource" "PowerShellScriptRunFirstTimeOnly" {
 #     provisioner "local-exec" {
 #         command = "Register-AzProviderFeature -FeatureName "EncryptionAtHost" -ProviderNamespace "Microsoft.Compute" "
