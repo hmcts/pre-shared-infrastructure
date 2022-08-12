@@ -28,6 +28,7 @@ terraform {
 provider "azurerm" {
   alias           = "oms"
   subscription_id = module.log_analytics_workspace.subscription_id
+  features {}
 }
 
 # resource "null_resource" "PowerShellScriptRunFirstTimeOnly" {
