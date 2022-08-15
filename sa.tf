@@ -34,6 +34,9 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
   enable_data_protection          = true
+  identity {
+    type = "SystemAssigned"
+  }
   #TODO
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   # containers = [{
