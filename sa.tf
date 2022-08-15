@@ -21,7 +21,7 @@ data "azurerm_subnet" "jenkins_subnet" {
 #                 STORAGES               #
 ###################################################
 module "sa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=storagewithidentity"
   env                             = var.env
   storage_account_name            = replace("${var.product}sa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
@@ -34,9 +34,7 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny" 
   enable_data_protection          = true
-  identity {
-    type = "SystemAssigned"
-  }
+
   #TODO
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   # containers = [{
