@@ -122,7 +122,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates     = true
   provision_vm_agent           = true  
   allow_extension_operations   = true
-  patch_mode                   = "AutomaticByOS"
+  patch_mode                   = "AutomaticByPlatform"
+  hotpatching_enabled          = true
   tags                         = var.common_tags
 
   depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]

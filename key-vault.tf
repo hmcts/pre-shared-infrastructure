@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 module "key-vault" {
-  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=kvwithstorage"
   name                    = "${var.product}-${var.env}" 
   product                 = var.product
   env                     = var.env
@@ -28,16 +28,16 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
 }
 
-# // storage management Permissions
-# resource "azurerm_key_vault_access_policy" "storage" {
-#   key_vault_id       = module.key-vault.key_vault_id
-#   tenant_id          = data.azurerm_client_config.current.tenant_id
-#   object_id          = [module.sa_storage_account.storageaccount_identity] # .0.principal_id
+// storage management Permissions
+resource "azurerm_key_vault_access_policy" "storage" {
+  key_vault_id       = module.key-vault.key_vault_id
+  tenant_id          = data.azurerm_client_config.current.tenant_id
+  object_id          = [module.sa_storage_account.storageaccount_identity] # .0.principal_id
 
-#   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
-#   secret_permissions = ["Get"]
-#   depends_on         = [module.sa_storage_account,module.key-vault]
-# }
+  key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+  secret_permissions = ["Get"]
+  depends_on         = [module.sa_storage_account,module.key-vault]
+}
 
 resource "azurerm_storage_account_customer_managed_key" "storagekey" {
   storage_account_id            = module.sa_storage_account.storageaccount_id
@@ -52,7 +52,7 @@ resource "azurerm_key_vault_managed_storage_account" "managedstorage" {
   key_vault_id                  = module.key-vault.key_vault_id
   storage_account_key           = "key2"
   regenerate_key_automatically  = true
-  regeneration_period           = "P90D"
+  regeneration_period           = "P1D"
   depends_on                    = [module.sa_storage_account,module.key-vault]
   # key_vault_id                 = azurerm_key_vault.example.id
   # storage_account_id           = azurerm_storage_account.example.id
