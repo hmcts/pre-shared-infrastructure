@@ -50,7 +50,7 @@ resource "azurerm_key_vault_managed_storage_account" "managedstorage" {
   name                         = "pre-managedstorage"
   storage_account_id            = module.sa_storage_account.storageaccount_id
   key_vault_id                  = module.key-vault.key_vault_id
-  storage_account_key           = module.sa_storage_account.storageaccount_secondary_access_key
+  storage_account_key           = "key2"
   regenerate_key_automatically  = true
   regeneration_period           = "P90D"
   depends_on                    = [module.sa_storage_account,module.key-vault]
