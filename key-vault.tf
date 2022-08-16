@@ -30,21 +30,23 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 
 # // storage management Permissions
 resource "azurerm_key_vault_access_policy" "storage" {
-  key_vault_id = module.key-vault.key_vault_id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = module.sa_storage_account.identity.0.principal_id
+  key_vault_id       = module.key-vault.key_vault_id
+  tenant_id          = data.azurerm_client_config.current.tenant_id
+  object_id          = module.sa_storage_account.identity.0.principal_id
 
   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
+  depends_on         = [module.sa_storage_account,module.key-vault]
 }
 
 resource "azurerm_storage_account_customer_managed_key" "storagekey" {
-  storage_account_id = module.sa_storage_account.id
-  key_vault_id       = module.key-vault.key_vault_id
-  key_name           = azurerm_key_vault_key.pre_kv_key.name
-  storage_account_key          = "key2"
-  regenerate_key_automatically = true
-  regeneration_period          = "P90D"
+  storage_account_id            = module.sa_storage_account.id
+  key_vault_id                  = module.key-vault.key_vault_id
+  key_name                      = azurerm_key_vault_key.pre_kv_key.name
+  storage_account_key           = "key2"
+  regenerate_key_automatically  = true
+  regeneration_period           = "P90D"
+  depends_on                    = [module.sa_storage_account,module.key-vault]
 }
 
 # // Jenkins management Permissions
