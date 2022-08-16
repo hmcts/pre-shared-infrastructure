@@ -32,7 +32,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 resource "azurerm_key_vault_access_policy" "storage" {
   key_vault_id       = module.key-vault.key_vault_id
   tenant_id          = data.azurerm_client_config.current.tenant_id
-  object_id          = module.sa_storage_account.identity.0.principal_id
+  object_id          = module.sa_storage_account.storageaccount_identity.0.principal_id
 
   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
@@ -40,10 +40,10 @@ resource "azurerm_key_vault_access_policy" "storage" {
 }
 
 resource "azurerm_storage_account_customer_managed_key" "storagekey" {
-  storage_account_id            = module.sa_storage_account.id
+  storage_account_id            = module.sa_storage_account.storageaccount_id
   key_vault_id                  = module.key-vault.key_vault_id
   key_name                      = azurerm_key_vault_key.pre_kv_key.name
-  storage_account_key           = "key2"
+  storage_account_key           = module.sa_storage_account.storageaccount_secondary_access_key
   regenerate_key_automatically  = true
   regeneration_period           = "P90D"
   depends_on                    = [module.sa_storage_account,module.key-vault]
