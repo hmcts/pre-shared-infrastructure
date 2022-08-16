@@ -43,10 +43,22 @@ resource "azurerm_storage_account_customer_managed_key" "storagekey" {
   storage_account_id            = module.sa_storage_account.storageaccount_id
   key_vault_id                  = module.key-vault.key_vault_id
   key_name                      = azurerm_key_vault_key.pre_kv_key.name
+  depends_on                    = [module.sa_storage_account,module.key-vault]
+}
+
+resource "azurerm_key_vault_managed_storage_account" "managedstorage" {
+  name                         = "pre-managedstorage"
+  storage_account_id            = module.sa_storage_account.storageaccount_id
+  key_vault_id                  = module.key-vault.key_vault_id
   storage_account_key           = module.sa_storage_account.storageaccount_secondary_access_key
   regenerate_key_automatically  = true
   regeneration_period           = "P90D"
   depends_on                    = [module.sa_storage_account,module.key-vault]
+  # key_vault_id                 = azurerm_key_vault.example.id
+  # storage_account_id           = azurerm_storage_account.example.id
+  # storage_account_key          = "key1"
+  # regenerate_key_automatically = false
+  # regeneration_period          = "P1D"
 }
 
 # // Jenkins management Permissions
