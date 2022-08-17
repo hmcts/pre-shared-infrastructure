@@ -54,11 +54,6 @@ resource "azurerm_key_vault_managed_storage_account" "managedstorage" {
   regenerate_key_automatically  = true
   regeneration_period           = "P1D"
   depends_on                    = [module.sa_storage_account,module.key-vault]
-  # key_vault_id                 = azurerm_key_vault.example.id
-  # storage_account_id           = azurerm_storage_account.example.id
-  # storage_account_key          = "key1"
-  # regenerate_key_automatically = false
-  # regeneration_period          = "P1D"
 }
 
 # // Jenkins management Permissions

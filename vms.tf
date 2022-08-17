@@ -97,7 +97,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 #   # Add logging and monitoring
 
 
-# # This extension is needed for other extensions
+
 
   os_disk {
     name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
@@ -129,6 +129,32 @@ resource "azurerm_windows_virtual_machine" "vm" {
   depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
 }
 
+# # Datadisk 
+resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
+  count              = var.num_vid_edit_vms
+  managed_disk_id    = azurerm_managed_disk.vmdatadisk.*.id[count.index]
+  virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  lun                = "3"
+  caching            = "ReadWrite"
+}
+
+## Managed Disk
+resource "azurerm_managed_disk" "vmdatadisk" {
+  count                   = var.num_vid_edit_vms
+  name                    = "${var.product}-videditvm${count.index}-datadisk-${var.env}"
+  location                = azurerm_resource_group.rg.location
+  resource_group_name     = azurerm_resource_group.rg.name
+  storage_account_type    = "StandardSSD_LRS"
+  create_option           = "Empty"
+  disk_size_gb            = 1000
+  disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
+  tags                    = var.common_tags
+
+     
+}
+
+
+# # This extension is needed for other extensions
 resource "azurerm_virtual_machine_extension" "daa-agent" {
   name                       = "DependencyAgentWindows"
   count                      = var.num_vid_edit_vms
@@ -142,7 +168,7 @@ resource "azurerm_virtual_machine_extension" "daa-agent" {
 }
 
 
-# Add logging and monitoring extensions
+## Add logging and monitoring extensions
 resource "azurerm_virtual_machine_extension" "monitor-agent" {
   depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
   name                  = "AzureMonitorWindowsAgent"
@@ -183,27 +209,7 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
   PROTECTED_SETTINGS
 }
 
-resource "azurerm_managed_disk" "vmdatadisk" {
-  count                   = var.num_vid_edit_vms
-  name                    = "${var.product}-videditvm${count.index}-datadisk-${var.env}"
-  location                = azurerm_resource_group.rg.location
-  resource_group_name     = azurerm_resource_group.rg.name
-  storage_account_type    = "StandardSSD_LRS"
-  create_option           = "Empty"
-  disk_size_gb            = 1000
-  disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
-  tags                    = var.common_tags
 
-     
-}
-
-resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
-  count              = var.num_vid_edit_vms
-  managed_disk_id    = azurerm_managed_disk.vmdatadisk.*.id[count.index]
-  virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  lun                = "3"
-  caching            = "ReadWrite"
-}
 
 # resource "azurerm_security_center_server_vulnerability_assessment_virtual_machine" "va" {
 #   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
@@ -421,6 +427,9 @@ resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
     }
   PROTECTED_SETTINGS
+  # lifecycle {
+  #   ignore_changes= [ ]
+  # }
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
