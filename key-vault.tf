@@ -29,15 +29,15 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 }
 
 // storage management Permissions
-resource "azurerm_key_vault_access_policy" "storage" {
-  key_vault_id       = module.key-vault.key_vault_id
-  tenant_id          = data.azurerm_client_config.current.tenant_id
-  object_id          = module.sa_storage_account.storageaccount_identity
+# resource "azurerm_key_vault_access_policy" "storage" {
+#   key_vault_id       = module.key-vault.key_vault_id
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   object_id          = module.sa_storage_account.storageaccount_identity
 
-  key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
-  secret_permissions = ["Get"]
-  depends_on         = [module.sa_storage_account,module.key-vault]
-}
+#   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+#   secret_permissions = ["Get"]
+#   depends_on         = [module.sa_storage_account,module.key-vault]
+# }
 
 resource "azurerm_storage_account_customer_managed_key" "storagekey" {
   storage_account_id            = module.sa_storage_account.storageaccount_id
