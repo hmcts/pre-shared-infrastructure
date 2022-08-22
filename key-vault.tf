@@ -62,6 +62,46 @@ resource "azurerm_role_assignment" "kv-mi" {
   principal_id         = data.azuread_service_principal.kv.id
 }
 
+resource "azurerm_key_vault_managed_storage_account_sas_token_definition" "kvsas" {
+  name                       = "pre-managedstorage-kvsas"
+  validity_period            = "P1D"
+  managed_storage_account_id = module.sa_storage_account.storageaccount_id
+  sas_template_uri           = data.azurerm_storage_account_sas.example.sas
+  sas_type                   = "account"
+}
+
+
+data "azurerm_storage_account_sas" "storagesas" {
+  connection_string = module.ingestsa_storage_account.storageaccount_primary_connection_string
+  https_only        = true
+
+  resource_types {
+    service   = true
+    container = false
+    object    = false
+  }
+
+  services {
+    blob  = true
+    queue = false
+    table = false
+    file  = false
+  }
+
+  start  = "2021-04-30T00:00:00Z"
+  expiry = "2023-04-30T00:00:00Z"
+
+  permissions {
+    read    = true
+    write   = true
+    delete  = false
+    list    = true
+    add     = true
+    create  = true
+    update  = false
+    process = false
+  }
+}
 # // Jenkins management Permissions
 # resource "azurerm_key_vault_access_policy" "jenkins_access" {
 #   key_vault_id            = module.key-vault.key_vault_id
