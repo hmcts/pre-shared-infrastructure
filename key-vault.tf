@@ -95,11 +95,13 @@ data "azurerm_storage_account_sas" "storagesas" {
     read    = true
     write   = true
     delete  = false
-    list    = true
+    list    = false
     add     = true
     create  = true
     update  = false
     process = false
+    tag     = false
+    filter  = false
   }
 }
 # // Jenkins management Permissions
