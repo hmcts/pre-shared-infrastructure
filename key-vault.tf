@@ -66,7 +66,7 @@ resource "azurerm_key_vault_managed_storage_account_sas_token_definition" "kvsas
   name                       = "pre-managedstorage-kvsas"
   validity_period            = "P1D"
   managed_storage_account_id = module.sa_storage_account.storageaccount_id
-  sas_template_uri           = data.azurerm_storage_account_sas.example.sas
+  sas_template_uri           = data.azurerm_storage_account_sas.storagesas.sas
   sas_type                   = "account"
 }
 
