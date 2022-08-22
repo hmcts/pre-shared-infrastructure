@@ -31,6 +31,11 @@ provider "azurerm" {
   features {}
 }
 
+data "azuread_service_principal" "kv" {
+  # display_name = "Azure Key Vault"
+  application_id = "cfa8b339-82a2-471a-a3c9-0fc0be7a4093"
+}
+
 # resource "null_resource" "PowerShellScriptRunFirstTimeOnly" {
 #     provisioner "local-exec" {
 #         command = "Register-AzProviderFeature -FeatureName "EncryptionAtHost" -ProviderNamespace "Microsoft.Compute" "

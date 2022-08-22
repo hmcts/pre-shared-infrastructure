@@ -56,6 +56,12 @@ resource "azurerm_key_vault_managed_storage_account" "managedstorage" {
   depends_on                    = [module.sa_storage_account,module.key-vault]
 }
 
+resource "azurerm_role_assignment" "kv-mi" {
+  scope                = module.sa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Key Operator Service Role"
+  principal_id         = data.azuread_service_principal.kv.id
+}
+
 # // Jenkins management Permissions
 # resource "azurerm_key_vault_access_policy" "jenkins_access" {
 #   key_vault_id            = module.key-vault.key_vault_id
