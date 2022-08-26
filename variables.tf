@@ -136,3 +136,14 @@ variable "ip_rules" {
                 "82.12.61.131", #Ayisha
                 ]
 }
+
+variable "schedules" {
+  type = list(object({
+    name      = string
+    frequency = string
+    interval  = number
+    run_time  = string
+    start_vm  = bool
+  }))
+  default = []
+}

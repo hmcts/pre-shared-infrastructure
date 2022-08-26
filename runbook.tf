@@ -1,5 +1,4 @@
 resource "azurerm_automation_account" "vm-start-stop" {
-
   name                = "${var.product}-${var.environment}-aa"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -7,10 +6,10 @@ resource "azurerm_automation_account" "vm-start-stop" {
 
  identity {
     type         = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.mi.id]
+    identity_ids = [module.key-vault.managed_identity_id]
   }
 
-  tags = var.tags
+  tags = var.common_tags
 }
 
 module "vm_automation" {
@@ -20,8 +19,23 @@ module "vm_automation" {
   env                     = var.env
   location                = var.location
   automation_account_name = azurerm_automation_account.vm-start-stop.name
-  tags                    = var.tags
-  schedules               = var.schedules
+  tags                    = var.common_tags
+  schedules               =  [
+                      {
+                        name        = "vm-on"
+                        frequency   = "Day"
+                        interval    = 1
+                        run_time    = "06:00:00"
+                        start_vm    = true
+                      },
+                      {
+                        name        = "vm-off"
+                        frequency   = "Day"
+                        interval    = 1
+                        run_time    = "18:00:00"
+                        start_vm    = false
+                      }
+                     ]
   resource_group_name     = azurerm_resource_group.rg.name
   vm_names = [azurerm_windows_virtual_machine.vm.*.name[count.index] ,azurerm_windows_virtual_machine.dtgtwyvm.*.name[count.index] ]
 #     for wowza_vm in azurerm_linux_virtual_machine.wowza : wowza_vm.name
