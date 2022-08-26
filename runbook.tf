@@ -1,5 +1,5 @@
 resource "azurerm_automation_account" "vm-start-stop" {
-  name                = "${var.product}-${var.environment}-aa"
+  name                = "${var.product}-${var.env}-aa"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   sku_name            = "Basic"
@@ -40,7 +40,7 @@ module "vm_automation" {
   vm_names = [azurerm_windows_virtual_machine.vm.*.name[count.index] ,azurerm_windows_virtual_machine.dtgtwyvm.*.name[count.index] ]
 #     for wowza_vm in azurerm_linux_virtual_machine.wowza : wowza_vm.name
 #   ]
-  mi_principal_id         = azurerm_user_assigned_identity.mi.principal_id
+  mi_principal_id         = module.key-vault.managed_identity_objectid
 }
 
 
