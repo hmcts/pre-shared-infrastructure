@@ -40,10 +40,11 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 # }
 
 resource "azurerm_storage_account_customer_managed_key" "storagekey" {
-  storage_account_id            = module.sa_storage_account.storageaccount_id
-  key_vault_id                  = module.key-vault.key_vault_id
-  key_name                      = azurerm_key_vault_key.pre_kv_key.name
-  depends_on                    = [module.sa_storage_account,module.key-vault]
+  storage_account_id          = module.sa_storage_account.storageaccount_id
+  key_vault_id                = module.key-vault.key_vault_id
+  key_name                    = azurerm_key_vault_key.pre_kv_key.name
+  key_version                 = "1"
+  depends_on                  = [module.sa_storage_account,module.key-vault]
 }
 
 resource "azurerm_key_vault_managed_storage_account" "managedstorage" {

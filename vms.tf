@@ -448,3 +448,5 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
   }
   tags                = var.common_tags
  }
+
+
