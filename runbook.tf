@@ -37,7 +37,7 @@ module "vm_automation" {
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names = [azurerm_windows_virtual_machine.vm.*.name ,azurerm_windows_virtual_machine.dtgtwyvm.[count.index].name ]
+  vm_names = [azurerm_windows_virtual_machine.vm.*.name ,azurerm_windows_virtual_machine.dtgtwyvm.name ]
 #     for wowza_vm in azurerm_linux_virtual_machine.wowza : wowza_vm.name
 #   ]
   mi_principal_id         = module.key-vault.managed_identity_objectid
