@@ -6,7 +6,7 @@ resource "azurerm_automation_account" "vm-start-stop" {
 
  identity {
     type         = "UserAssigned"
-    identity_ids = [module.key-vault.managed_identity_id]
+    identity_ids = module.key-vault.managed_identity_id
   }
 
   tags = var.common_tags
@@ -37,7 +37,7 @@ module "vm_automation" {
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names = [azurerm_windows_virtual_machine.vm.*.name[count.index] ,azurerm_windows_virtual_machine.dtgtwyvm.*.name[count.index] ]
+  vm_names = [azurerm_windows_virtual_machine.vm.*.name ,azurerm_windows_virtual_machine.dtgtwyvm.[count.index].name ]
 #     for wowza_vm in azurerm_linux_virtual_machine.wowza : wowza_vm.name
 #   ]
   mi_principal_id         = module.key-vault.managed_identity_objectid
