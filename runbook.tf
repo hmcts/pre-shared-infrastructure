@@ -38,7 +38,7 @@ module "vm_automation" {
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
   vm_names = azurerm_windows_virtual_machine.vm.*.name #},${azurerm_windows_virtual_machine.dtgtwyvm.*.name} ]
-  mi_principal_id         = module.key-vault.managed_identity_objectid
+  # mi_principal_id         = module.key-vault.managed_identity_objectid
 }
 
 
