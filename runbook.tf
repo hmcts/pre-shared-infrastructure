@@ -15,7 +15,7 @@ resource "azurerm_automation_account" "vm-start-stop" {
 module "vm_automation" {
   source = "git::https://github.com/hmcts/cnp-module-automation-runbook-start-stop-vm"
 
-  product                 = "pre"
+  product                 = var.product
   env                     = var.env
   location                = var.location
   automation_account_name = azurerm_automation_account.vm-start-stop.name
@@ -37,8 +37,8 @@ module "vm_automation" {
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names = azurerm_windows_virtual_machine.vm.*.name #},${azurerm_windows_virtual_machine.dtgtwyvm.*.name} ]
-  # mi_principal_id         = module.key-vault.managed_identity_objectid
+  vm_names = ["${azurerm_windows_virtual_machine.vm.*.name},${azurerm_windows_virtual_machine.dtgtwyvm.*.name} "]
+  mi_principal_id         = module.key-vault.managed_identity_objectid
 }
 
 
