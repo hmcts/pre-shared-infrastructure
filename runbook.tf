@@ -13,8 +13,8 @@ resource "azurerm_automation_account" "vm-start-stop" {
 }
 
 module "vm_automation" {
-  editvmcount = var.num_vid_edit_vms
-  dtgtwycount = var.num_datagateway
+  # editvmcount = var.num_vid_edit_vms
+  # dtgtwycount = var.num_datagateway
   source = "git::https://github.com/hmcts/cnp-module-automation-runbook-start-stop-vm"
 
   product                 = var.product
