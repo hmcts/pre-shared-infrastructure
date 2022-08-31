@@ -35,8 +35,7 @@ module "automation_runbook_sas_token_renewal" {
 
   name                = "rotate-sas-tokens-${each.value.storage_account}"
   resource_group_name = azurerm_resource_group.rg.name
-  account-connection-string
-
+ 
   environment = var.env
 
   storage_account_name = each.value.storage_account
