@@ -1,4 +1,4 @@
-resource "azurerm_automation_account" "vm-start-stop" {
+resource "azurerm_automation_account" "pre-aa" {
   name                = "${var.product}-${var.env}-aa"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -8,7 +8,14 @@ resource "azurerm_automation_account" "vm-start-stop" {
     type         = "UserAssigned"
     identity_ids = module.key-vault.managed_identity_id
   }
-
+#  identity {
+#     type = "SystemAssigned, UserAssigned"
+#     identity_ids = [
+#       data.azurerm_user_assigned_identity.managed_identity_objectid,
+#       data.azurerm_user_assigned_identity.apim_mi.id,
+#       var.jenkins_mi_resource_id
+#     ]
+#   }
   tags = var.common_tags
 }
 
@@ -20,7 +27,7 @@ module "vm_automation" {
   product                 = var.product
   env                     = var.env
   location                = var.location
-  automation_account_name = azurerm_automation_account.vm-start-stop.name
+  automation_account_name = azurerm_automation_account.pre-aa.name
   tags                    = var.common_tags
   schedules               =  [
                       {
