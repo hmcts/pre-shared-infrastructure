@@ -8,8 +8,7 @@ resource "azurerm_automation_account" "pre-aa" {
     type         = "SystemAssigned,UserAssigned"
     identity_ids = [
       module.key-vault.managed_identity_id
-      var.jenkins_mi_resource_id
-    ]
+      ]
   }
 #  identity {
 #     type = "SystemAssigned, UserAssigned"
