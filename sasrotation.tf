@@ -1,5 +1,5 @@
 locals {
-  key_vault_name = "module.key-vault.key_vault_name"
+#   key_vault_name = "module.key-vault.key_vault_name"
   sa_list        = toset(["sa_storage_account.storage_account_name", "finalsa_storage_account.storage_account_name", "ingestsa_storage_account"])
 }
 
@@ -33,8 +33,9 @@ module "automation_runbook_sas_token_renewal" {
   for_each = var.sas_tokens
   source   = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
-  name                = "rotate-sas-tokens-${each.value.storage_account}-${each.value.container}-${each.value.blob}-${each.value.permissions}"
+  name                = "rotate-sas-tokens-${each.value.storage_account}"
   resource_group_name = azurerm_resource_group.rg.name
+  account-connection-string
 
   environment = var.env
 
@@ -42,8 +43,8 @@ module "automation_runbook_sas_token_renewal" {
 #   container_name       = each.value.container
 #   blob_name            = each.value.blob
 
-  key_vault_name = local.key_vault_name
-  secret_name    = "${var.product}-${each.value.container}-${each.value.blob}-${each.value.permissions}"
+  key_vault_name = module.key-vault.key_vault_name
+  secret_name    = "${var.product}-${each.value.storage_account}-sas"
 
   expiry_date = timeadd(timestamp(), "24h") #each.value.expiry_date
 
