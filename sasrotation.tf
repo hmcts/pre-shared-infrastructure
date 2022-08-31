@@ -30,22 +30,22 @@ resource "azurerm_role_assignment" "aa_to_sa" {
 }
 
 module "automation_runbook_sas_token_renewal" {
-  for_each = var.sas_tokens
-  source   = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
+#   for_each             = var.sas_tokens
+  source               = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
-  name                = "rotate-sas-tokens-${each.value.storage_account}"
-  resource_group_name = azurerm_resource_group.rg.name
+  name                 = "rotate-sas-tokens-${each.value.storage_account}"
+  resource_group_name  = azurerm_resource_group.rg.name
  
-  environment = var.env
+  environment          = var.env
 
   storage_account_name = each.value.storage_account
 #   container_name       = each.value.container
 #   blob_name            = each.value.blob
 
-  key_vault_name = module.key-vault.key_vault_name
-  secret_name    = "${var.product}-${each.value.storage_account}-sas"
+  key_vault_name       = module.key-vault.key_vault_name
+  secret_name          = "${var.product}-${each.value.storage_account}-sas"
 
-  expiry_date = timeadd(timestamp(), "24h") #each.value.expiry_date
+  expiry_date          = timeadd(timestamp(), "24h") #each.value.expiry_date
 
   automation_account_name = azurerm_automation_account.pre-aa.identity.name
 
