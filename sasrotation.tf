@@ -47,7 +47,7 @@ module "automation_runbook_sas_token_renewal" {
 
   expiry_date          = timeadd(timestamp(), "24h") #each.value.expiry_date
 
-  automation_account_name = azurerm_automation_account.pre-aa.identity.name
+  automation_account_name = azurerm_automation_account.pre-aa.name
 
   tags = var.common_tags
 
