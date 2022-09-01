@@ -313,15 +313,20 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 
 ### Dynatrace
 
+
+# data "azurerm_key_vault" "keyvault" {
+#   name                = module.key-vault.key_vault_name
+#   resource_group_name = azurerm_resource_group.rg.name
+# }
 data "azurerm_key_vault_secret" "dynatrace-token" {
   name      = "dynatrace-oneagent-token"
-  vault_uri = module.key_vault.key_vault_uri
-}
+  key_vault_id = module.key-vault.key_vault_id
+  }
 
 data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
   name      = "dynatrace-oneagent-tenant-id"
-  vault_uri = module.key_vault.key_vault_uri
-}
+  key_vault_id = module.key-vault.key_vault_id
+  }
 
 
 # resource "azurerm_key_vault_access_policy" "pre-kv-user" {
