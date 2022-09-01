@@ -293,7 +293,9 @@ module "dynatrace-oneagent" {
 
 #   tags = var.common_tags
 # }
-
+####
+## DataGateway VMs
+####
 ###################################################
 #            Datagateway NETWORK INTERFACE CARD               #
 ###################################################
@@ -404,7 +406,7 @@ SETTINGS
 
 resource "azurerm_virtual_machine_extension" "dtgtwydaa-agent" {
   name                       = "DependencyAgentWindows"
-  count                      = var.num_vid_edit_vms
+  count                      = var.num_datagateway
   virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
   type                       = "DependencyAgentWindows"
@@ -419,7 +421,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwydaa-agent" {
 resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
   depends_on = [  azurerm_virtual_machine_extension.dtgtwydaa-agent  ]
   name                  = "AzureMonitorWindowsAgent"
-  count                      = var.num_vid_edit_vms
+  count                      = var.num_datagateway
   virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   publisher             = "Microsoft.Azure.Monitor"
   type                  = "AzureMonitorWindowsAgent"
@@ -433,7 +435,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
 resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
   depends_on = [  azurerm_virtual_machine_extension.dtgtwydaa-agent  ]
   name                  = "MicrosoftMonitoringAgent"  # Must be called this
-  count                 = var.num_vid_edit_vms
+  count                 = var.num_datagateway
   virtual_machine_id    = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   publisher             = "Microsoft.EnterpriseCloud.Monitoring"
   type                  = "MicrosoftMonitoringAgent"
@@ -459,8 +461,19 @@ resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
   }
 }
 
+module "dynatrace-oneagent-dtgtway" {
+  
+  source               = "github.com/hmcts/terraform-module-dynatrace-oneagent"
+  count                = var.num_datagateway
+  tenant_id            = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+  token                = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
+  virtual_machine_os   = "windows"
+  virtual_machine_type = "vm"
+  virtual_machine_id   = "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}"
+}
+
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
-  count                  = var.num_vid_edit_vms
+  count                  = var.num_datagateway
   virtual_machine_id     = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   location               = azurerm_resource_group.rg.location
   enabled                = true
