@@ -8,14 +8,10 @@ resource "azurerm_automation_account" "pre-aa" {
     type         = "SystemAssigned, UserAssigned"
     identity_ids = module.key-vault.managed_identity_id
     }
-#  identity {
-#     type = "SystemAssigned, UserAssigned"
-#     identity_ids = [
-#       data.azurerm_user_assigned_identity.managed_identity_objectid,
-#       data.azurerm_user_assigned_identity.apim_mi.id,
-#       var.jenkins_mi_resource_id
-#     ]
-#   }
+  lifecycle {
+    ignore_changes= [ identity ]
+  }
+
   tags = var.common_tags
 }
 
