@@ -122,7 +122,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates     = true
   provision_vm_agent           = true  
   allow_extension_operations   = true
-  patch_mode                   = "AutomaticByOS"
+  # patch_mode                   = "AutomaticByOS"
   hotpatching_enabled          = true
   tags                         = var.common_tags
 
@@ -344,9 +344,15 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     sku       = "2019-datacenter-gensecond"
     version   = "latest"
   }
-  enable_automatic_updates = true
-  provision_vm_agent       = true  
-  tags                     = var.common_tags
+  timezone                     = "GMT Standard Time"
+  enable_automatic_updates     = true
+  provision_vm_agent           = true  
+  allow_extension_operations   = true
+  patch_mode                   = "AutomaticByOS"
+  hotpatching_enabled          = true
+  tags                         = var.common_tags
+
+ 
 
   depends_on = [ module.key-vault]
 }
@@ -457,7 +463,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
     }
   PROTECTED_SETTINGS
   lifecycle {
-    ignore_changes= [ settings ]
+    ignore_changes= [name ]
   }
 }
 
