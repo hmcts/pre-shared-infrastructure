@@ -271,8 +271,8 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
 module "dynatrace-oneagent" {
   source = "github.com/hmcts/terraform-module-dynatrace-oneagent"
 
-  tenant_id            = "{tenant_id}"
-  token                = "{token}"
+  tenant_id            = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+  token                = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
   virtual_machine_os   = "windows"
   virtual_machine_type = "vm"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id
