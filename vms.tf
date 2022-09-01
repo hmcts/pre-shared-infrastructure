@@ -122,7 +122,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates     = true
   provision_vm_agent           = true  
   allow_extension_operations   = true
-  patch_mode                   = "AutomaticByPlatform"
+  patch_mode                   = "AutomaticByOS"
   hotpatching_enabled          = true
   tags                         = var.common_tags
 
@@ -454,9 +454,9 @@ resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
     }
   PROTECTED_SETTINGS
-  # lifecycle {
-  #   ignore_changes= [ ]
-  # }
+  lifecycle {
+    ignore_changes= [ settings ]
+  }
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
