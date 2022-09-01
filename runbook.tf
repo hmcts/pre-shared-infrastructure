@@ -6,10 +6,8 @@ resource "azurerm_automation_account" "pre-aa" {
 
  identity {
     type         = "SystemAssigned,UserAssigned"
-    identity_ids = [
-      module.key-vault.managed_identity_id
-      ]
-  }
+    identity_ids = module.key-vault.managed_identity_id
+    }
 #  identity {
 #     type = "SystemAssigned, UserAssigned"
 #     identity_ids = [
