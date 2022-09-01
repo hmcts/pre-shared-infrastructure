@@ -275,7 +275,7 @@ module "dynatrace-oneagent" {
   token                = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
   virtual_machine_os   = "windows"
   virtual_machine_type = "vm"
-  virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id
+  virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id}"
 }
 
 # resource "azurerm_virtual_machine_extension" "dynatrace_oneagent" {
