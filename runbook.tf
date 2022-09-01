@@ -1,19 +1,24 @@
-resource "azurerm_automation_account" "pre-aa" {
+data "azurerm_automation_account" "pre-aa" {
   name                = "${var.product}-${var.env}-aa"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  sku_name            = "Basic"
-
- identity {
-    type         = "SystemAssigned, UserAssigned"
-    identity_ids = module.key-vault.managed_identity_id
-    }
-  lifecycle {
-    ignore_changes= [ identity ]
-  }
-
-  tags = var.common_tags
 }
+# resource "azurerm_automation_account" "pre-aa" {
+#   name                = "${var.product}-${var.env}-aa"
+#   location            = var.location
+#   resource_group_name = azurerm_resource_group.rg.name
+#   sku_name            = "Basic"
+
+#  identity {
+#     type         = "SystemAssigned, UserAssigned"
+#     identity_ids = module.key-vault.managed_identity_id
+#     }
+#   lifecycle {
+#     ignore_changes= [ identity ]
+#   }
+
+#   tags = var.common_tags
+# }
 
 module "vm_automation" {
   # editvmcount = var.num_vid_edit_vms

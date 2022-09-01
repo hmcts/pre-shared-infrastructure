@@ -274,15 +274,15 @@ module "log_analytics_workspace" {
 
 # }
 
-resource "azurerm_log_analytics_solution" "vminsights" {
-  provider              = azurerm.oms
-  solution_name         = "vminsights"
-  resource_group_name   = module.log_analytics_workspace.resource_group_name
-  location              = var.location
-  workspace_resource_id = data.azurerm_log_analytics_workspace.loganalytics.workspace_id
-  workspace_name        = module.log_analytics_workspace.name
-  plan {
-    publisher = "Microsoft"
-    product   = "VMInsights"
-  }
-}
+# resource "azurerm_log_analytics_solution" "vminsights" {
+#   provider              = azurerm.oms
+#   solution_name         = "vminsights"
+#   resource_group_name   = module.log_analytics_workspace.resource_group_name
+#   location              = var.location
+#   workspace_resource_id = data.azurerm_log_analytics_workspace.loganalytics.workspace_id
+#   workspace_name        = module.log_analytics_workspace.name
+#   plan {
+#     publisher = "Microsoft"
+#     product   = "VMInsights"
+#   }
+# }
