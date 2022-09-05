@@ -5,17 +5,17 @@ locals {
     for_each            = local.sa_list
     "rota-rl" = {
       permissions     = "rl"
-      storage_account = each.value
+      storage_account = "presasbox"
       container       = ""
       blob            = ""
-      expiry_date     = timeadd(timestamp(), "167h")
+      expiry_date     = timeadd(timestamp(), "24h")
     },
     "rota-rlw" = {
       permissions     = "rlw"
-      storage_account = each.value
+      storage_account = "presasbox"
       container       = ""
       blob            = ""
-      expiry_date     = timeadd(timestamp(), "167h")
+      expiry_date     = timeadd(timestamp(), "24h")
     }
   }
 }
