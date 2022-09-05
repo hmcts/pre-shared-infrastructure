@@ -34,7 +34,7 @@ resource "azurerm_role_assignment" "aa_to_sa" {
 }
 
 module "automation_runbook_sas_token_renewal" {
-  for_each             = var.sas_tokens
+  for_each             = local.sas_tokens
   source               = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
   name                 = "rotate-sas-tokens-${each.value.storage_account}"
