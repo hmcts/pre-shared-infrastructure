@@ -123,7 +123,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   provision_vm_agent           = true  
   allow_extension_operations   = true
   # patch_mode                   = "AutomaticByOS"
-  hotpatching_enabled          = true
+  # # hotpatching_enabled          = true
   tags                         = var.common_tags
 
   depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
@@ -349,7 +349,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   provision_vm_agent           = true  
   allow_extension_operations   = true
   # patch_mode                   = "AutomaticByOS"
-  hotpatching_enabled          = true
+  # hotpatching_enabled          = true
   tags                         = var.common_tags
 
  
