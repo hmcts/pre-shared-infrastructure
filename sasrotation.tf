@@ -1,6 +1,6 @@
 locals {
 #   key_vault_name = "module.key-vault.key_vault_name"
-  sa_list        = toset(["${module.sa_storage_account.storage_account_name}", "${module.finalsa_storage_account.storage_account_name}", "${module.ingestsa_storage_account.storage_account_name}"])
+  sa_list        = toset(["prefinalsasbox", "presasbox", "preingestsasbox"])
   sas_tokens = {
     for_each            = local.sa_list
     "rota-rl" = {
