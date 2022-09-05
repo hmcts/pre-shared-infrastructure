@@ -1,20 +1,24 @@
 locals {
 #   key_vault_name = "module.key-vault.key_vault_name"
-  sa_list        = toset(["sa_storage_account.storage_account_name", "finalsa_storage_account.storage_account_name", "ingestsa_storage_account"])
+  sa_list        = toset(["${module.sa_storage_account.storage_account_name}", "${module.finalsa_storage_account.storage_account_name}", "${module.ingestsa_storage_account.storage_account_name}"])
+  sas_tokens = {
+    for_each            = local.sa_list
+    "rota-rl" = {
+      permissions     = "rl"
+      storage_account = each.value
+      container       = ""
+      blob            = ""
+      expiry_date     = timeadd(timestamp(), "167h")
+    },
+    "rota-rlw" = {
+      permissions     = "rlw"
+      storage_account = each.value
+      container       = ""
+      blob            = ""
+      expiry_date     = timeadd(timestamp(), "167h")
+    }
+  }
 }
-
-# resource "azurerm_automation_account" "hmi_automation" {
-#   name                = var.name
-#   location            = var.location
-#   resource_group_name = var.resource_group
-#   sku_name            = var.automation_account_sku_name
-
-#   identity {
-#     type = "SystemAssigned"
-#   }
-
-#   tags = var.common_tags
-# }
 
 data "azurerm_storage_account" "sa" {
   for_each            = local.sa_list
@@ -30,7 +34,7 @@ resource "azurerm_role_assignment" "aa_to_sa" {
 }
 
 module "automation_runbook_sas_token_renewal" {
-#   for_each             = var.sas_tokens
+  for_each             = var.sas_tokens
   source               = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
   name                 = "rotate-sas-tokens-${each.value.storage_account}"
