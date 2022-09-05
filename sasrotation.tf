@@ -37,7 +37,7 @@ module "automation_runbook_sas_token_renewal" {
   for_each             = local.sas_tokens
   source               = "git::https://github.com/hmcts/cnp-module-automation-runbook-sas-token-renewal?ref=master"
 
-  name                 = "rotate-sas-tokens-${each.value}"
+  name                 = "rotate-sas-tokens-presasbox"
   resource_group_name  = azurerm_resource_group.rg.name
  
   environment          = var.env
@@ -47,7 +47,7 @@ module "automation_runbook_sas_token_renewal" {
 #   blob_name            = each.value.blob
 
   key_vault_name       = module.key-vault.key_vault_name
-  secret_name          = "${var.product}-${each.value}-sas"
+  secret_name          = "${var.product}-presasbox-sas"
 
   expiry_date          = timeadd(timestamp(), "24h") #each.value.expiry_date
 
