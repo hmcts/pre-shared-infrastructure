@@ -547,29 +547,29 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
 
 
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
-  count                  = var.num_vid_edit_vms
-  virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  location               = azurerm_resource_group.rg.location
-  enabled                = true
+# resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
+#   count                  = var.num_vid_edit_vms
+#   virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   location               = azurerm_resource_group.rg.location
+#   enabled                = true
 
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
+#   daily_recurrence_time = "1800"
+#   timezone              = "GMT Standard Time"
 
 
-  notification_settings {
-    enabled         = false
+#   notification_settings {
+#     enabled         = false
    
-  }
-  tags                = var.common_tags
- }
+#   }
+#   tags                = var.common_tags
+#  }
 
 
-data "azurerm_log_analytics_workspace" "loganalytics" {
-  provider            = azurerm.oms
-  name                = module.log_analytics_workspace.name
-  resource_group_name = module.log_analytics_workspace.resource_group_name
-}
+# data "azurerm_log_analytics_workspace" "loganalytics" {
+#   provider            = azurerm.oms
+#   name                = module.log_analytics_workspace.name
+#   resource_group_name = module.log_analytics_workspace.resource_group_name
+# }
 
 data "azurerm_key_vault_secret" "kv" {
   name                = module.key-vault.key_vault_name
