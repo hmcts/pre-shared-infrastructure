@@ -1,3 +1,5 @@
+
+
 ##------------------------------------------------------###################
 ##BASTION
 ##------------------------------------------------------###################
@@ -170,28 +172,28 @@ resource "azurerm_virtual_machine_extension" "daa-agent" {
 
 ## Add logging and monitoring extensions
 resource "azurerm_virtual_machine_extension" "monitor-agent" {
-  depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
-  name                  = "AzureMonitorWindowsAgent"
+  depends_on                 = [  azurerm_virtual_machine_extension.daa-agent  ]
+  name                       = "AzureMonitorWindowsAgent"
   count                      = var.num_vid_edit_vms
   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  publisher             = "Microsoft.Azure.Monitor"
-  type                  = "AzureMonitorWindowsAgent"
-  type_handler_version  =  "1.5"
+  publisher                  = "Microsoft.Azure.Monitor"
+  type                       = "AzureMonitorWindowsAgent"
+  type_handler_version       =  "1.5"
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
-  tags                    = var.common_tags
+  tags                       = var.common_tags
 }
 
 
 resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
-  depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
-  name                  = "MicrosoftMonitoringAgent"  # Must be called this
+  depends_on                 = [  azurerm_virtual_machine_extension.daa-agent  ]
+  name                       = "MicrosoftMonitoringAgent"  # Must be called this
   count                      = var.num_vid_edit_vms
   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  publisher             = "Microsoft.EnterpriseCloud.Monitoring"
-  type                  = "MicrosoftMonitoringAgent"
-  type_handler_version  =  "1.0"
-  tags                    = var.common_tags
+  publisher                  = "Microsoft.EnterpriseCloud.Monitoring"
+  type                       = "MicrosoftMonitoringAgent"
+  type_handler_version       =  "1.0"
+  tags                       = var.common_tags
   # Not yet supported
   # automatic_upgrade_enabled  = true
   # auto_upgrade_minor_version = true
