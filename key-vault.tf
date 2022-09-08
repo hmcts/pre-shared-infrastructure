@@ -348,7 +348,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 
 #   tenant_id = data.azurerm_client_config.current.tenant_id
 #   object_id = var.jenkins_AAD_objectId # data.azurerm_client_config.current.object_id
-=======
+
 # # ###################################################
 # # #                MI access & permission               #
 # # ###################################################
