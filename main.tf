@@ -12,6 +12,7 @@ resource "azurerm_resource_group" "rg" {
   
 }
 
+
 # resource "azurerm_resource_group" "rg" {
 #   count = var.env == "sbox" ? 2 : 1
 #   name     = var.env == "sbox" ? local.resource_group_name-00${count.index} : local.resource_group_name
@@ -39,5 +40,6 @@ resource "azurerm_resource_group" "rg" {
     #     "tenantId": "531ff96d-0ae9-462a-8d2d-bec7c0b42082",
     #     "principalId": "eb4aa503-5ffa-49ef-a69d-221e90eaf236",
     #     "clientId": "fbdb4489-f3dd-4762-a32c-8ccb680691c6"
+
 
 
