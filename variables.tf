@@ -43,7 +43,7 @@ variable "num_vid_edit_vms" {
   default = 2
 }
 variable "vid_edit_vm_spec" {
-  default = "Standard_E2s_v4"
+  default = "Standard_E4s_v4"
  }
 variable "num_datagateway" {
   default = 2
@@ -70,6 +70,17 @@ variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
 variable "devops_admin" {}
+variable "providernamespace" {}
+variable "featurename" {}
+variable "lawSku" {
+    type = string 
+    default = "PerGB2018"
+}
+
+variable "lawRetention" {
+    type = number
+    default = "30" 
+}
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
@@ -124,4 +135,15 @@ variable "ip_rules" {
                 "82.44.92.214", #Shehreem
                 "82.12.61.131", #Ayisha
                 ]
+}
+
+variable "schedules" {
+  type = list(object({
+    name      = string
+    frequency = string
+    interval  = number
+    run_time  = string
+    start_vm  = bool
+  }))
+  default = []
 }

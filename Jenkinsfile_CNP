@@ -93,6 +93,7 @@ withInfraPipeline(product) {
   //   sh addamsid("TEST")
   // }
 
+
   // before('buildinfra:prod') {
   //   sh "echo 'Enable Encrypt'"  
   //   sh encrypthost("PROD")
