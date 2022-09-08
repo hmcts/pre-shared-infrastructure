@@ -243,8 +243,8 @@ module "dynatrace-oneagent" {
   
   source               = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master" 
   count                = var.num_vid_edit_vms
-  tenant_id            = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
-  token                = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
+  tenant_id            = "${data.azurerm_key_vault_secret.kv.dynatrace-token.value}"
+  token                = "${data.azurerm_key_vault_secret.kv.dynatrace-tenant-id.value}"
   virtual_machine_os   = "windows"
   virtual_machine_type = "vm"
   virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
