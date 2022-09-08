@@ -29,6 +29,7 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
+
 # locals {
 #   tenantId             = data.azurerm_client_config.current.tenant_id
 #   clientId             = data.azurerm_client_config.current.CLIENT_id
@@ -51,6 +52,7 @@ resource "azurerm_bastion_host" "bastion" {
 # # "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
 #   }
 # }
+
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
 # ###################################################
@@ -78,10 +80,14 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
+
   
 #    # (Optional) To enable Azure Monitoring and install log analytics agents
 #   # (Optional) Specify `storage_account_name` to save monitoring logs to storage.   
 #   log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
+=======
+  encryption_at_host_enabled  = false
+
 
 #   # Deploy log analytics agents to virtual machine. 
 #   # Log analytics workspace customer id and primary shared key required.
@@ -170,6 +176,7 @@ resource "azurerm_virtual_machine_extension" "daa-agent" {
 }
 
 
+
 ## Add logging and monitoring extensions
 resource "azurerm_virtual_machine_extension" "monitor-agent" {
   depends_on                 = [  azurerm_virtual_machine_extension.daa-agent  ]
@@ -182,10 +189,39 @@ resource "azurerm_virtual_machine_extension" "monitor-agent" {
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
   tags                       = var.common_tags
+
+# # This extension is needed for other extensions
+resource "azurerm_virtual_machine_extension" "daa-agent" {
+  name                       = "DependencyAgentWindows"
+  count                      = var.num_vid_edit_vms
+  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
+  type                       = "DependencyAgentWindows"
+  type_handler_version       = "9.10"
+  automatic_upgrade_enabled  = true
+  auto_upgrade_minor_version = true
+  tags                    = var.common_tags
+}
+
+
+## Add logging and monitoring extensions
+resource "azurerm_virtual_machine_extension" "monitor-agent" {
+  depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
+  name                  = "AzureMonitorWindowsAgent"
+  count                      = var.num_vid_edit_vms
+  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher             = "Microsoft.Azure.Monitor"
+  type                  = "AzureMonitorWindowsAgent"
+  type_handler_version  =  "1.5"
+  automatic_upgrade_enabled  = true
+  auto_upgrade_minor_version = true
+  tags                    = var.common_tags
+
 }
 
 
 resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
+
   depends_on                 = [  azurerm_virtual_machine_extension.daa-agent  ]
   name                       = "MicrosoftMonitoringAgent"  # Must be called this
   count                      = var.num_vid_edit_vms
@@ -194,6 +230,16 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
   type                       = "MicrosoftMonitoringAgent"
   type_handler_version       =  "1.0"
   tags                       = var.common_tags
+
+  depends_on = [  azurerm_virtual_machine_extension.daa-agent  ]
+  name                  = "MicrosoftMonitoringAgent"  # Must be called this
+  count                      = var.num_vid_edit_vms
+  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  publisher             = "Microsoft.EnterpriseCloud.Monitoring"
+  type                  = "MicrosoftMonitoringAgent"
+  type_handler_version  =  "1.0"
+  tags                    = var.common_tags
+
   # Not yet supported
   # automatic_upgrade_enabled  = true
   # auto_upgrade_minor_version = true
@@ -215,6 +261,7 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
 
 # resource "azurerm_security_center_server_vulnerability_assessment_virtual_machine" "va" {
 #   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
+
 # }
 
 resource "azurerm_virtual_machine_extension" "vmextension" {
@@ -294,6 +341,7 @@ module "dynatrace-oneagent" {
 #   settings                   = local.dynatrace_settings
 
 #   tags = var.common_tags
+
 # }
 ####
 ## DataGateway VMs
@@ -359,6 +407,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   depends_on = [ module.key-vault]
 }
 
+
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   count                = var.num_datagateway
   name                 = "${var.product}dtgtwy${count.index}-datadisk-${var.env}"
@@ -384,6 +433,12 @@ resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
   name                 = "IaaSAntimalware"
   count                = var.num_datagateway
   virtual_machine_id   = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+
+resource "azurerm_virtual_machine_extension" "vmextension" {
+  name                 = "IaaSAntimalware"
+  count                = var.num_vid_edit_vms
+  virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
+
   publisher            = "Microsoft.Azure.Security"
   type                 = "IaaSAntimalware"
   type_handler_version = "1.3"
@@ -407,6 +462,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
 SETTINGS
   tags                = var.common_tags
 }
+
 # resource "azurerm_security_center_server_vulnerability_assessment" "vulneass" {
 #   count                  = var.num_datagateway
 #   virtual_machine_id = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
@@ -496,5 +552,58 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
   }
   tags                = var.common_tags
  }
+
+# resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
+#   count                  = var.num_vid_edit_vms
+#   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
+# }
+
+
+
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
+  count                  = var.num_vid_edit_vms
+  virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  location               = azurerm_resource_group.rg.location
+  enabled                = true
+
+  daily_recurrence_time = "1800"
+  timezone              = "GMT Standard Time"
+
+
+  notification_settings {
+    enabled         = false
+   
+  }
+  tags                = var.common_tags
+ }
+
+
+data "azurerm_log_analytics_workspace" "loganalytics" {
+  provider            = azurerm.oms
+  name                = module.log_analytics_workspace.name
+  resource_group_name = module.log_analytics_workspace.resource_group_name
+}
+
+data "azurerm_key_vault_secret" "kv" {
+  name                = module.key-vault.key_vault_name
+  key_vault_id        = module.key-vault.key_vault_id
+  # resource_group_name = azurerm_resource_group.rg.name
+}
+
+
+
+##DynaTrace
+
+module "dynatrace-oneagent" {
+  
+  source               = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master" 
+  count                = var.num_vid_edit_vms
+  tenant_id            = "${data.azurerm_key_vault_secret.kv.dynatrace-token.value}"
+  token                = "${data.azurerm_key_vault_secret.kv.dynatrace-tenant-id.value}"
+  virtual_machine_os   = "windows"
+  virtual_machine_type = "vm"
+  virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+}
+
 
 

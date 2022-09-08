@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
-  name                    = "${var.product}-${var.env}" 
+  name                    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   product                 = var.product
   env                     = var.env
   tenant_id               = data.azurerm_client_config.current.tenant_id
@@ -14,8 +14,7 @@ module "key-vault" {
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
-  network_acls_allowed_ip_ranges = [ "90.243.1.130", "90.247.65.225" ]
-
+  network_acls_allowed_ip_ranges = [ "80.44.26.160" ]
 }
 
 // Power App Permissions
@@ -27,6 +26,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   certificate_permissions = [ "List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
   secret_permissions      = [ "List", "Set", "Delete", "Get", ]
 }
+
 
 // storage management Permissions
 # resource "azurerm_key_vault_access_policy" "storage" {
@@ -151,6 +151,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 
 # }
 
+
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
 #####################################
@@ -242,6 +243,7 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
 
 ## Datagateway
 
+
 resource "random_string" "dtgtwy_username" {
   count   = var.num_datagateway
   length  = 4
@@ -322,6 +324,7 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 }
 
 
+
 ### Dynatrace
 
 
@@ -345,29 +348,29 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 
 #   tenant_id = data.azurerm_client_config.current.tenant_id
 #   object_id = var.jenkins_AAD_objectId # data.azurerm_client_config.current.object_id
+=======
+# # ###################################################
+# # #                MI access & permission               #
+# # ###################################################
+# # #Storage Blob Data Contributor Role Assignment for Managed Identity
 
-#   key_permissions = [
-#     "Get",
-#     "Create",
-#     "Delete",
-#     "WrapKey",
-#     "UnwrapKey"
-#   ]
+
+# resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = module.key-vault.managed_identity_objectid
+#   skip_service_principal_aad_check = true
 # }
 
-
-#### West
-
-# resource "azurerm_disk_encryption_set" "pre-des-west" {
-#   name                = "pre-des-west-${var.env}"
-#   resource_group_name = azurerm_resource_group.rg.name
-#   location            = "UKWest"
-#   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
-#   identity {
-#     type = "SystemAssigned"
-#   }
-#   tags                = var.common_tags
+# #Reader Role Assignment for Managed Identity
+# resource "azurerm_role_assignment" "pre_amsreader_mi" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "Reader"
+#   principal_id                     = module.key-vault.managed_identity_objectid
+#   skip_service_principal_aad_check = true
+  
 # }
+
 
 # resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
 #   key_vault_id = module.key-vault.key_vault_id
@@ -465,6 +468,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #     "Delete"
 #   ]
 # }
+
 
 
 # TODO
