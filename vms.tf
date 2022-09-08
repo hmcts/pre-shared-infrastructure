@@ -230,6 +230,11 @@ data "azurerm_log_analytics_workspace" "loganalytics" {
   resource_group_name = module.log_analytics_workspace.resource_group_name
 }
 
+data "azurerm_key_vault_secret" "kv" {
+  name                = module.key_vault.key_vault_name
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
 
 
 ##DynaTrace
