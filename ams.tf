@@ -84,38 +84,38 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   tags         = var.common_tags
   
 }
-resource "azurerm_media_transform" "analysevideo" {
-  name                        = "AnalyseVideo"
-  resource_group_name         = azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
+# resource "azurerm_media_transform" "analysevideo" {
+#   name                        = "AnalyseVideo"
+#   resource_group_name         = azurerm_resource_group.rg.name
+#   media_services_account_name = azurerm_media_services_account.ams.name
 
-  description                 = "Analyse Video"
-  output {
-    relative_priority = "Normal"
-    on_error_action   = "ContinueJob"
-    builtin_preset {
-      preset_name = "H264SingleBitrate1080p"
-    }
-  }
-}
-
-
-
-resource "azurerm_media_transform" "EncodeToMP4" {
-  name                        = "EncodeToMP4"
-  resource_group_name         = azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
+#   description                 = "Analyse Video"
+#   output {
+#     relative_priority = "Normal"
+#     on_error_action   = "ContinueJob"
+#     builtin_preset {
+#       preset_name = "H264SingleBitrate1080p"
+#     }
+#   }
+# }
 
 
-  description                 = "Encode To MP4"
-  output {
-    relative_priority = "Normal"
-    on_error_action   = "ContinueJob"
-    builtin_preset {
-      preset_name = "H264SingleBitrate1080p"
-    }
-  }
-}
+
+# resource "azurerm_media_transform" "EncodeToMP4" {
+#   name                        = "EncodeToMP4"
+#   resource_group_name         = azurerm_resource_group.rg.name
+#   media_services_account_name = azurerm_media_services_account.ams.name
+
+
+#   description                 = "Encode To MP4"
+#   output {
+#     relative_priority = "Normal"
+#     on_error_action   = "ContinueJob"
+#     builtin_preset {
+#       preset_name = "H264SingleBitrate1080p"
+#     }
+#   }
+# }
 
 
 resource "null_resource" "amsid" {
@@ -129,8 +129,8 @@ resource "null_resource" "amsid" {
     az login --identity
     az account set -s dts-sharedservices-${var.env}
     echo "ams account identity assign"
-    # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+    az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+    # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
     EOF
    }
     # echo "ams account storage"
