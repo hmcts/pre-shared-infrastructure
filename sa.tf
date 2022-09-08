@@ -21,7 +21,7 @@ data "azurerm_subnet" "jenkins_subnet" {
 #                 STORAGES               #
 ###################################################
 module "sa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=storagewithidentity"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = replace("${var.product}sa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
