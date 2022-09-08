@@ -231,7 +231,7 @@ data "azurerm_log_analytics_workspace" "loganalytics" {
 }
 
 data "azurerm_key_vault_secret" "kv" {
-  name                = module.key_vault.key_vault_name
+  name                = module.key-vault.key_vault_name
   resource_group_name = azurerm_resource_group.rg.name
 }
 
