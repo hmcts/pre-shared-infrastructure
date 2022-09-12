@@ -334,7 +334,7 @@ data "azurerm_key_vault" "keyvault" {
 }
 data "azurerm_key_vault_secret" "dynatrace-token" {
   name      = "dynatrace-token"
-  key_vault_id = data.azurerm_key_vault.keyvault.id #"${module.key-vault.key_vault_id}"
+  key_vault_id = "${module.key-vault.key_vault_id}"
   }
 
 data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
