@@ -301,6 +301,7 @@ module "dynatrace-oneagent" {
   virtual_machine_os   = "windows"
   virtual_machine_type = "vm"
   virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+  tags                 = var.common_tags
 }
 
 # resource "azurerm_virtual_machine_extension" "dynatrace_oneagent" {
@@ -504,6 +505,7 @@ module "dynatrace-oneagent-dtgtway" {
   virtual_machine_os   = "windows"
   virtual_machine_type = "vm"
   virtual_machine_id   = "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}"
+  tags                 = var.common_tags
 }
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
