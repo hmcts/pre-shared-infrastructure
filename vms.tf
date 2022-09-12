@@ -1,5 +1,3 @@
-
-
 ##------------------------------------------------------###################
 ##BASTION
 ##------------------------------------------------------###################
@@ -19,6 +17,13 @@ resource "azurerm_bastion_host" "bastion" {
   name                = "${var.product}-bastion-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
+  sku                 = "Standard"
+
+  ##TBD
+  # ip_connect_enabled  = true
+  # scale_units         = 2
+  # shareable_link_enabled = true
+  # tunneling_enabled   = true
 
   ip_configuration {
     name                          = "bastionpublic"
@@ -30,28 +35,6 @@ resource "azurerm_bastion_host" "bastion" {
 }
 
 
-# locals {
-#   tenantId             = data.azurerm_client_config.current.tenant_id
-#   clientId             = data.azurerm_client_config.current.CLIENT_id
-#   secret               = data.azurerm_client_config.current.CLIENT_SECRET
-#   }
-
-# # data.azurerm_client_config.current.tenant_id
-# # $subscriptionId = $env:ARM_SUBSCRIPTION_ID
-# # $tenantId = $env:ARM_TENANT_ID
-# # $clientId = $env:ARM_CLIENT_ID
-# # $secret = $env:ARM_CLIENT_SECRET
-
-# # az.cmd login --service-principal --username locals.clientId --password locals.secret --tenant locals.tenantId
-
-# resource "null_resource" "azcli_exec" {
-#   provisioner "local-exec" {
-#     command = "az.cmd login --service-principal --username ${local.clientId} --password ${local.secret} --tenant ${local.tenantId} && az set -s ${var.subscription} && az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
-    
-#     # "az feature registration create --name EncryptionAtHost --namespace Microsoft.Compute"
-# # "Register-AzProviderFeature -FeatureName \"EncryptionAtHost\" -ProviderNamespace \"Microsoft.Compute\" "
-#   }
-# }
 
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
