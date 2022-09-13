@@ -292,64 +292,65 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
 
 ##DynaTrace
 
-module "dynatrace-oneagent" {
+# module "dynatrace-oneagent" {
   
-  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
-  count                      = var.num_vid_edit_vms
-  tenant_id                  = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
-  token                      = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
-  virtual_machine_os         = "windows"
-  virtual_machine_type       = "vm"
-  virtual_machine_id         = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
-  auto_upgrade_minor_version = true
-  hostgroup                  = var.product
-  tags                       = var.common_tags
-}
-
-
-# module "virtual_machine_bootstrap" {
-#   source = "github.com/hmcts/terraform-module-vm-bootstrap"
-
-#   depends_on = [
-#     azurerm_windows_virtual_machine.jumpbox
-#   ]
-
-#   # General
-#   os_type              = "Windows"
-#   virtual_machine_id   = azurerm_windows_virtual_machine.jumpbox.id
-#   virtual_machine_type = "vm"
-
-#   # Custom Script
-#   additional_script_path = "${path.module}/ConfigureJumpbox.ps1"
-
-#   # Dynatrace OneAgent
-#   dynatrace_hostgroup = "Platform_Operation_Jumpboxes"
-#   dynatrace_tenant_id = var.dynatrace_tenant_id
-#   dynatrace_token     = data.azurerm_key_vault_secret.token.value
-#   dynatrace_server    = var.dynatrace_server
-
-#   # Splunk UF
-#   splunk_username     = data.azurerm_key_vault_secret.splunk_username.value
-#   splunk_password     = data.azurerm_key_vault_secret.splunk_password.value
-#   splunk_pass4symmkey = data.azurerm_key_vault_secret.splunk_pass4symmkey.value
-
-#   # Tenable Nessus
-#   nessus_server = var.nessus_server
-#   nessus_key    = data.azurerm_key_vault_secret.nessus_agent_key.value
-#   nessus_groups = "Platform-Operation-Bastions"
-
-#   azure_monitor_type_handler_version = "1.6"
+#   source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
+#   count                      = var.num_vid_edit_vms
+#   tenant_id                  = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+#   token                      = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
+#   virtual_machine_os         = "windows"
+#   virtual_machine_type       = "vm"
+#   virtual_machine_id         = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+#   auto_upgrade_minor_version = true
+#   hostgroup                  = var.product
+#   tags                       = var.common_tags
 # }
-# resource "azurerm_virtual_machine_extension" "dynatrace_oneagent" {
-#   count = var.install_dynatrace_oneagent == true && var.virtual_machine_type == "vm" ? 1 : 0
 
-#   name                       = "Dynatrace"
-#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id #[count.index]
+
+module "virtual_machine_bootstrap" {
+  count                      = var.num_vid_edit_vms
+  source = "github.com/hmcts/terraform-module-vm-bootstrap"
+
+  depends_on = [
+    azurerm_windows_virtual_machine.vm
+  ]
+
+  # General
+  os_type              = "Windows"
+  virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+  virtual_machine_type = "vm"
+
+  # Custom Script
+  # additional_script_path = "${path.module}/ConfigureJumpbox.ps1"
+
+  # Dynatrace OneAgent
+  dynatrace_hostgroup = "Platform_Operation_Jumpboxes"
+  dynatrace_tenant_id = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
+  dynatrace_token     = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+  dynatrace_server    = var.dynatrace_server
+
+  # # Splunk UF
+  # splunk_username     = data.azurerm_key_vault_secret.splunk_username.value
+  # splunk_password     = data.azurerm_key_vault_secret.splunk_password.value
+  # splunk_pass4symmkey = data.azurerm_key_vault_secret.splunk_pass4symmkey.value
+
+  # # Tenable Nessus
+  # nessus_server = var.nessus_server
+  # nessus_key    = data.azurerm_key_vault_secret.nessus_agent_key.value
+  # nessus_groups = "Platform-Operation-Bastions"
+
+  azure_monitor_type_handler_version = "1.6"
+}
+# resource "azurerm_virtual_machine_extension" "dynatrace_oneagent" {
+#   count                      = var.num_vid_edit_vms #var.install_dynatrace_oneagent == true && var.virtual_machine_type == "vm" ? 1 : 0
+
+#   name                       = "Dynatrace-2"
+#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
 #   publisher                  = "dynatrace.ruxit"
-#   type                       = lower(var.os_type) == "linux" ? "oneAgentLinux" : lower(var.os_type) == "windows" ? "oneAgentWindows" : null
-#   type_handler_version       = var.dynatrace_type_handler_version
-#   auto_upgrade_minor_version = var.dynatrace_auto_upgrade_minor_version
-#   automatic_upgrade_enabled  = var.dynatrace_automatic_upgrade_enabled
+#   type                       = "oneAgentWindows"
+#   type_handler_version       = "2.3"
+#   auto_upgrade_minor_version = true
+#   automatic_upgrade_enabled  = true
 #   settings                   = local.dynatrace_settings
 
 #   tags = var.common_tags
