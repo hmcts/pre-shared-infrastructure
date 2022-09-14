@@ -1,6 +1,6 @@
 #Create Azure Network Security Group With The Appropriate Security Rules
 resource "azurerm_network_security_group" "bastionnsg" {
-  name                          = "${pre}-nsg-${env}"
+  name                          = "${var.product}-nsg-${var.env}"
   location                      = azurerm_resource_group.rg.location
   resource_group_name           = azurerm_resource_group.rg.name
 
