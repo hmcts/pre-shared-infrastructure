@@ -16,9 +16,16 @@ resource "azurerm_public_ip" "pip" {
 ##BASTION
 ##------------------------------------------------------###################
 resource "azurerm_bastion_host" "bastion" {
-  name                = "${var.product}-bastion-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  name                   = "${var.product}-bastion-${var.env}"
+  resource_group_name    = azurerm_resource_group.rg.name
+  location               = azurerm_resource_group.rg.location
+  copy_paste_enabled     = true
+  file_copy_enabled      = true
+  sku                    = "Standard"
+  ip_connect_enabled     = true
+  scale_units            = 2
+  shareable_link_enabled = true
+  tunneling_enabled      = true
 
   ip_configuration {
     name                          = "bastionpublic"
