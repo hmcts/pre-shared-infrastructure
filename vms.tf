@@ -85,28 +85,15 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
+  encryption_at_host_enabled  = true
+
   
-#    # (Optional) To enable Azure Monitoring and install log analytics agents
-#   # (Optional) Specify `storage_account_name` to save monitoring logs to storage.   
-#   log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
-
-#   # Deploy log analytics agents to virtual machine. 
-#   # Log analytics workspace customer id and primary shared key required.
-#   deploy_log_analytics_agent                 = true
-#   log_analytics_customer_id                  = azurerm_log_analytics_workspace.law.workspace_id
-#   log_analytics_workspace_primary_shared_key = azurerm_log_analytics_workspace.law.primary_shared_key
-
-#   # encryption_at_host_enabled  = true
+ # encryption_at_host_enabled  = true
 
 #   # additional_capabilities {
 #   #  ultra_ssd_enabled   =  true
 #   # }
   
-
-#   # Add logging and monitoring
-
-
-
 
   os_disk {
     name                      = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
@@ -286,6 +273,10 @@ module "dynatrace-oneagent" {
   virtual_machine_os   = "windows"
   virtual_machine_type = "vm"
   virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+    lifecycle {
+    replace_triggered_by = [
+      azurerm_windows_virtual_machine.vm.*.id[count.index]
+    ]
 }
 
 # resource "azurerm_virtual_machine_extension" "dynatrace_oneagent" {
