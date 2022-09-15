@@ -141,7 +141,7 @@ resource "null_resource" "amsid" {
 resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
   scope                            = azurerm_resource_group.rg.id
   role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = module.key-vault.managed_identity_objectid #azurerm_media_services_account.ams.identity[0].principal_id #var.pre_mi_principal_id
+  principal_id                     = "module.key-vault.managed_identity_objectid" #azurerm_media_services_account.ams.identity[0].principal_id #var.pre_mi_principal_id
   skip_service_principal_aad_check = true
   depends_on = [
     azurerm_media_services_account.ams
@@ -152,7 +152,7 @@ resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
 resource "azurerm_role_assignment" "pre_amsreader_mi" {
   scope                            = azurerm_resource_group.rg.id
   role_definition_name             = "Reader"
-  principal_id                     = azurerm_media_services_account.ams.identity[0].principal_id # var.pre_mi_principal_id 
+  principal_id                     ="module.key-vault.managed_identity_objectid" # azurerm_media_services_account.ams.identity[0].principal_id # var.pre_mi_principal_id 
   skip_service_principal_aad_check = true
   
   depends_on = [
