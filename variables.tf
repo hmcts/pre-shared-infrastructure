@@ -147,3 +147,10 @@ variable "schedules" {
   }))
   default = []
 }
+
+variable "server" {
+  default = null
+}
+variable "hostgroup" {
+  default = null
+}
