@@ -256,49 +256,7 @@ module "dynatrace-oneagent" {
 
 }
 
-# module "virtual_machine_bootstrap" {
-#   count  = var.num_vid_edit_vms
-#   source = "github.com/hmcts/terraform-module-vm-bootstrap"
 
-#   # General
-#   os_type              = "Windows"
-#   virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
-#   virtual_machine_type = "vm"
-
-#   # # Custom Script
-#   # additional_script_path = "${path.module}/ConfigureBastion.sh"
-
-#   # Dynatrace OneAgent
-#   dynatrace_hostgroup = "PRE"
-#   dynatrace_tenant_id =  "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
-#   dynatrace_token     =  "${data.azurerm_key_vault_secret.dynatrace-token.value}"
-#   dynatrace_server    = var.dynatrace_server
-
-#   # # Splunk UF
-#   # splunk_username     = data.azurerm_key_vault_secret.splunk_username.value
-#   # splunk_password     = data.azurerm_key_vault_secret.splunk_password.value
-#   # splunk_pass4symmkey = data.azurerm_key_vault_secret.splunk_pass4symmkey.value
-
-#   # # Tenable Nessus
-#   # nessus_server = var.nessus_server
-#   # nessus_key    = data.azurerm_key_vault_secret.nessus_agent_key.value
-#   # nessus_groups = "Platform-Operation-Bastions"
-# }
-
-# # resource "azurerm_virtual_machine_extension" "dynatrace_oneagent" {
-# #   count = var.install_dynatrace_oneagent == true && var.virtual_machine_type == "vm" ? 1 : 0
-
-# #   name                       = "Dynatrace"
-# #   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id #[count.index]
-# #   publisher                  = "dynatrace.ruxit"
-#   type                       = lower(var.os_type) == "linux" ? "oneAgentLinux" : lower(var.os_type) == "windows" ? "oneAgentWindows" : null
-#   type_handler_version       = var.dynatrace_type_handler_version
-#   auto_upgrade_minor_version = var.dynatrace_auto_upgrade_minor_version
-#   automatic_upgrade_enabled  = var.dynatrace_automatic_upgrade_enabled
-#   settings                   = local.dynatrace_settings
-
-#   tags = var.common_tags
-# }
 ####
 ## DataGateway VMs
 ####
@@ -444,45 +402,49 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
 }
 
 
-# resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
-#   depends_on = [  azurerm_virtual_machine_extension.dtgtwydaa-agent  ]
-#   name                  = "MicrosoftMonitoringAgent"  # Must be called this
-#   count                 = var.num_datagateway
-#   virtual_machine_id    = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-#   publisher             = "Microsoft.EnterpriseCloud.Monitoring"
-#   type                  = "MicrosoftMonitoringAgent"
-#   type_handler_version  =  "1.0"
-#   tags                    = var.common_tags
-#   # Not yet supported
-#   # automatic_upgrade_enabled  = true
-#   # auto_upgrade_minor_version = true
-#   settings = <<SETTINGS
-#     {
-#         "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
-#         "azureResourceId": "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}",
-#         "stopOnMultipleConnections": "false"
-#     }
-#   SETTINGS
-#   protected_settings = <<PROTECTED_SETTINGS
-#     {
-#       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
-#     }
-#   PROTECTED_SETTINGS
-#   lifecycle {
-#     ignore_changes= [name ]
-#   }
-# }
+resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
+  depends_on = [  azurerm_virtual_machine_extension.dtgtwydaa-agent  ]
+  name                  = "MicrosoftMonitoringAgent"  # Must be called this
+  count                 = var.num_datagateway
+  virtual_machine_id    = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+  publisher             = "Microsoft.EnterpriseCloud.Monitoring"
+  type                  = "MicrosoftMonitoringAgent"
+  type_handler_version  =  "1.0"
+  tags                    = var.common_tags
+  # Not yet supported
+  # automatic_upgrade_enabled  = true
+  # auto_upgrade_minor_version = true
+  settings = <<SETTINGS
+    {
+        "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
+        "azureResourceId": "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}",
+        "stopOnMultipleConnections": "false"
+    }
+  SETTINGS
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+      "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
+    }
+  PROTECTED_SETTINGS
+  lifecycle {
+    ignore_changes= [name ]
+  }
+}
 
-# module "dynatrace-oneagent-dtgtway" {
+module "dynatrace-oneagent-dtgtway" {
   
-#   source               = "github.com/hmcts/terraform-module-dynatrace-oneagent"
-#   count                = var.num_datagateway
-#   tenant_id            = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
-#   token                = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
-#   virtual_machine_os   = "windows"
-#   virtual_machine_type = "vm"
-#   virtual_machine_id   = "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}"
-# }
+  source                     = "github.com/hmcts/terraform-module-dynatrace-oneagent"
+  count                      = var.num_datagateway
+  tenant_id                  = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
+  token                      = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+  virtual_machine_os         = "Windows"
+  virtual_machine_type       = "vm"
+  virtual_machine_id         = "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}"
+  auto_upgrade_minor_version = true
+  server                     = var.server
+  hostgroup                  = var.hostgroup
+  
+}
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
   count                  = var.num_datagateway
