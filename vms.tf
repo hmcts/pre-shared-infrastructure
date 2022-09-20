@@ -293,17 +293,19 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
 
 module "dynatrace-oneagent" {
   
-  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
-  count                      = var.num_vid_edit_vms
-  tenant_id                  = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
-  token                      = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
-  virtual_machine_os         = "windows"
-  virtual_machine_type       = "vm"
-  virtual_machine_id         = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+  source               = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
+  count                = var.num_vid_edit_vms
+  tenant_id            = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
+  token                =  "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+  virtual_machine_os   = "windows"
+  virtual_machine_type = "vm"
+  virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
   auto_upgrade_minor_version = true
-  hostgroup                  = var.product
-  tags                       = var.common_tags
+  server                     = var.server
+  hostgroup                  = var.hostgroup
+
 }
+
 
 
 
