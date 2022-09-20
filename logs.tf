@@ -1,3 +1,8 @@
+data "azurerm_log_analytics_workspace" "loganalytics" {
+  provider            = azurerm.oms
+  name                = module.log_analytics_workspace.name
+  resource_group_name = module.log_analytics_workspace.resource_group_name
+}
 resource "azurerm_monitor_diagnostic_setting" "ams" {
   name                       = azurerm_media_services_account.ams.name
   target_resource_id         = azurerm_media_services_account.ams.id
@@ -255,6 +260,29 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
  }
  
 module "log_analytics_workspace" {
-  source      = "git::https://github.com/hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
+  source      = "git@github.com:hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
   environment = var.env
 }
+
+# resource "azurerm_log_analytics_workspace" "law" {
+#   name                = module.log_analytics_workspace.name
+#   location            = var.location
+#   resource_group_name = azurerm_resource_group.rg.name #module.log_analytics_workspace.resource_group_name
+#   sku                 = var.lawSku
+#   retention_in_days   = var.lawRetention
+#   tags                = var.common_tags
+
+# }
+
+# resource "azurerm_log_analytics_solution" "vminsights" {
+#   provider              = azurerm.oms
+#   solution_name         = "vminsights"
+#   resource_group_name   = module.log_analytics_workspace.resource_group_name
+#   location              = var.location
+#   workspace_resource_id = data.azurerm_log_analytics_workspace.loganalytics.workspace_id
+#   workspace_name        = module.log_analytics_workspace.name
+#   plan {
+#     publisher = "Microsoft"
+#     product   = "VMInsights"
+#   }
+# }

@@ -9,8 +9,23 @@ resource "azurerm_resource_group" "rg" {
   name     = local.resource_group_name
   location = var.location
   tags     = var.common_tags
+  
 }
 
+# resource "azurerm_resource_group" "rg" {
+#   count = var.env == "sbox" ? 2 : 1
+#   name     = var.env == "sbox" ? local.resource_group_name-00${count.index} : local.resource_group_name
+#   location = var.location
+#   tags     = var.common_tags
+# }
+
+
+# resource "azurerm_resource_group" "rg2" {
+#   count = 2  
+#   name     = "${var.product}-rg00-${count.index}-${var.env}"
+#   location = var.location
+#   tags     = var.common_tags
+# }
 #Role Assignment for Managed Identity
 # resource "azurerm_role_assignment" "pre_managedidentity" {
 #   scope                            = azurerm_resource_group.rg.id
