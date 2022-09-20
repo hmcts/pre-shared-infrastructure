@@ -304,6 +304,8 @@ module "dynatrace-oneagent" {
   server                     = var.server
   hostgroup                  = var.hostgroup
 
+  tags                = var.common_tags
+
 }
 
 
