@@ -315,9 +315,6 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   # patch_mode                   = "AutomaticByOS"
   # hotpatching_enabled          = true
   tags                         = var.common_tags
-
- 
-
   depends_on = [ module.key-vault]
 }
 
