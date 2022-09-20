@@ -154,3 +154,10 @@ variable "dynatrace_server" {
   type        = string
   default     = null
 }
+
+variable "server" {
+  default = null
+}
+variable "hostgroup" {
+  default = null
+}
