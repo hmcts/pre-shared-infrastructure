@@ -103,6 +103,7 @@ withInfraPipeline(product) {
   //   sh "echo 'Enable AMS ID'"
   //   sh addamsid("PROD")
   // }
+  
   // before('buildinfra:stg') {
   //   sh "echo 'unlock RG stg'"
   //   sh unlockRg("stg")
