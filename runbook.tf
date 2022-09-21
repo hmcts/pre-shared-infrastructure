@@ -43,9 +43,31 @@ module "vm_automation" {
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
   vm_names = azurerm_windows_virtual_machine.vm.*.name
-  mi_principal_id         =  "module.key-vault.managed_identity_objectid"
+  mi_principal_id         =  "${module.key-vault.managed_identity_id}"
 }
 
+resource "azurerm_log_analytics_linked_service" "la_linked_service" {
+  resource_group_name = azurerm_resource_group.rg.name
+  workspace_id        = module.log_analytics_workspace.workspace_id
+  read_access_id      = azurerm_automation_account.pre-aa.id
+}
+
+
+resource "azurerm_log_analytics_solution" "update_solution" {
+  solution_name         = "Updates"
+  location              = var.location
+  resource_group_name   = module.log_analytics_workspace.resource_group_name
+  workspace_resource_id = module.log_analytics_workspace.workspace_id
+  workspace_name        = module.log_analytics_workspace.name
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/Updates"
+  }
+  depends_on = [
+    azurerm_log_analytics_linked_service.la_linked_service
+  ]
+
+}
 
 # data "azurerm_automation_account" "pre-aa" {
 #   name                = "${var.product}-${var.env}-aa"
