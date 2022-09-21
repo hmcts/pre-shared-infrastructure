@@ -47,7 +47,7 @@ module "vm_automation" {
 }
 
 resource "azurerm_log_analytics_linked_service" "la_linked_service" {
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = module.log_analytics_workspace.resource_group_name
   workspace_id        = module.log_analytics_workspace.workspace_id
   read_access_id      = azurerm_automation_account.pre-aa.id
 }
