@@ -93,6 +93,7 @@ withInfraPipeline(product) {
   //   sh addamsid("TEST")
   // }
 
+
   // before('buildinfra:prod') {
   //   sh "echo 'Enable Encrypt'"  
   //   sh encrypthost("PROD")
@@ -102,6 +103,7 @@ withInfraPipeline(product) {
   //   sh "echo 'Enable AMS ID'"
   //   sh addamsid("PROD")
   // }
+  
   // before('buildinfra:stg') {
   //   sh "echo 'unlock RG stg'"
   //   sh unlockRg("stg")
