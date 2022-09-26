@@ -39,3 +39,4 @@ resource "azurerm_virtual_machine_extension" "jumpbox_aad" {
 #     azurerm_virtual_machine_extension.joinactivedirectory[0]
 #   ]
 }
+
