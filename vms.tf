@@ -87,9 +87,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
     sku       = "20h1-pro-g2"
     version   = "latest"
   }
-  # identity {
-  #   type = "SystemAssigned"
-  #   }
+ identity {
+    type         = "SystemAssigned, UserAssigned"
+    identity_ids = module.key-vault.managed_identity_id
+    }
 
   timezone                     = "GMT Standard Time"
   enable_automatic_updates     = true
@@ -300,7 +301,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   }
   # identity {
   #   type = "SystemAssigned"
-  # }module
+  # }
 
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
