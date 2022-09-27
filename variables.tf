@@ -161,10 +161,10 @@ variable "hostgroup" {
 #   default = "cnp-core-infra"
 # }
 
-# variable "cnp_vault_sub" {
-#   type = string
-#   default = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
-# }
+variable "cnp_vault_sub" {
+  type = string
+  default = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+}
 
 # variable "dynatrace_tenant_id" {
 #   type = string
