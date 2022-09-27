@@ -43,6 +43,11 @@ data "azuread_service_principal" "kv" {
   application_id = "cfa8b339-82a2-471a-a3c9-0fc0be7a4093"
 }
 
+provider "azurerm" {
+  features {}
+  alias           = "loganalytics"
+  subscription_id = local.log_analytics_workspace[[for x in keys(local.log_analytics_env_mapping) : x if contains(local.log_analytics_env_mapping[x], var.env)][0]].subscription_id
+}
 
 # data "azurerm_key_vault" "cnp_vault" {
 #   provider            = azurerm.cnp
