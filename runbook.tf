@@ -5,7 +5,7 @@ resource "azurerm_automation_account" "pre-aa" {
   sku_name            = "Basic"
 
  identity {
-    type         = "SystemAssigned, UserAssigned"
+    type         = "UserAssigned"
     identity_ids = module.key-vault.managed_identity_id
     }
   # lifecycle {
@@ -43,7 +43,7 @@ module "vm_automation" {
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
   vm_names                = azurerm_windows_virtual_machine.vm.*.name
-  mi_principal_id         = azurerm_automation_account.pre-aa.identity[0].principal_id 
+  mi_principal_id         = azurerm_automation_account.pre-aa.identity[1].principal_id 
   # "module.key-vault.managed_identity_id" 
 }
 
