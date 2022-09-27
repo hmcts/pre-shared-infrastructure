@@ -46,11 +46,11 @@ module "vm_automation" {
   mi_principal_id         =  "module.key-vault.managed_identity_id"
 }
 
-resource "azurerm_log_analytics_linked_service" "la_linked_service" {
-  resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
-  workspace_id        = module.log_analytics_workspace.workspace_id
-  read_access_id      = azurerm_automation_account.pre-aa.id
-}
+# resource "azurerm_log_analytics_linked_service" "la_linked_service" {
+#   resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
+#   workspace_id        = module.log_analytics_workspace.workspace_id
+#   read_access_id      = azurerm_automation_account.pre-aa.id
+# }
 
 
 resource "azurerm_log_analytics_solution" "update_solution" {
@@ -63,9 +63,9 @@ resource "azurerm_log_analytics_solution" "update_solution" {
     publisher = "Microsoft"
     product   = "OMSGallery/Updates"
   }
-  depends_on = [
-    azurerm_log_analytics_linked_service.la_linked_service
-  ]
+  # depends_on = [
+  #   azurerm_log_analytics_linked_service.la_linked_service
+  # ]
 
 }
 
