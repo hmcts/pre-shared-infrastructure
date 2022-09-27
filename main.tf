@@ -12,6 +12,7 @@ resource "azurerm_resource_group" "rg" {
   
 }
 
+
 # resource "azurerm_resource_group" "rg" {
 #   count = var.env == "sbox" ? 2 : 1
 #   name     = var.env == "sbox" ? local.resource_group_name-00${count.index} : local.resource_group_name
