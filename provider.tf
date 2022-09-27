@@ -44,18 +44,19 @@ data "azuread_service_principal" "kv" {
 }
 
 
-data "azurerm_key_vault" "cnp_vault" {
-  provider            = azurerm.cnp
-  name                = "infra-vault-${local.dynatrace_env}"
-  resource_group_name = var.cnp_vault_rg
-}
+# data "azurerm_key_vault" "cnp_vault" {
+#   provider            = azurerm.cnp
+#   name                = "infra-vault-${local.dynatrace_env}"
+#   resource_group_name = var.cnp_vault_rg
+# }
 
-data "azurerm_key_vault_secret" "token" {
-  provider = azurerm.cnp
+# data "azurerm_key_vault_secret" "token" {
+#   provider = azurerm.cnp
 
-  name         = "dynatrace-${local.dynatrace_env}-token"
-  key_vault_id = data.azurerm_key_vault.cnp_vault.id
-}
+#   name         = "dynatrace-${local.dynatrace_env}-token"
+#   key_vault_id = data.azurerm_key_vault.cnp_vault.id
+# }
+
 # resource "null_resource" "PowerShellScriptRunFirstTimeOnly" {
 #     provisioner "local-exec" {
 #         command = "Register-AzProviderFeature -FeatureName "EncryptionAtHost" -ProviderNamespace "Microsoft.Compute" "
