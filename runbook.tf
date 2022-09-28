@@ -5,7 +5,7 @@ resource "azurerm_automation_account" "pre-aa" {
   sku_name            = "Basic"
 
  identity {
-    type         = "UserAssigned"
+    type         = "SystemAssinged, UserAssigned"
     identity_ids = module.key-vault.managed_identity_id
     }
   # lifecycle {
@@ -30,7 +30,7 @@ module "vm_automation" {
                         name        = "vm-on"
                         frequency   = "Day"
                         interval    = 1
-                        run_time    = "06:00:00"
+                        run_time    = "12:30:00"
                         start_vm    = true
                       },
                       {
