@@ -4,6 +4,10 @@
   resource_group_name = "managed-identities-${var.env}-rg"
 }
 
+# DTS-PRE-VideoEditing-SecurityGroup-
+data "azuread_groups" "groups" {
+  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+}
 
 #Storage Blob Data Contributor Role Assignment for Managed Identity
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
@@ -32,6 +36,13 @@ resource "azurerm_role_assignment" "vm_user" {
   role_definition_name             = "Virtual Machine User Login"
   principal_id                     = azurerm_automation_account.pre-aa.identity[0].principal_id 
   skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "vmuser" {
+  for_each             = toset(data.azuread_groups.groups.object_ids)
+  scope                = azurerm_resource_group.tenable_rg.id
+  role_definition_name = "Virtual Machine User Login"
+  principal_id         = each.value
 }
 
 # resource "azurerm_role_assignment" "pre_power_app_blob" {

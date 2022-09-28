@@ -30,7 +30,7 @@ module "vm_automation" {
                         name        = "vm-on"
                         frequency   = "Day"
                         interval    = 1
-                        run_time    = "13:00:00"
+                        run_time    = "13:30:00"
                         start_vm    = true
                       },
                       {
