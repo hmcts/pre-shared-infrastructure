@@ -6,7 +6,8 @@ resource "azurerm_automation_account" "pre-aa" {
 
  identity {
     type         = "SystemAssigned"
-?
+    # UserAssigned"
+    # identity_ids = module.key-vault.managed_identity_id
     }
   # lifecycle {
   #   ignore_changes= [ name]
@@ -30,7 +31,7 @@ module "vm_automation" {
                         name        = "vm-on"
                         frequency   = "Day"
                         interval    = 1
-                        run_time    = "12:00:00"
+                        run_time    = "13:00:00"
                         start_vm    = true
                       },
                       {
