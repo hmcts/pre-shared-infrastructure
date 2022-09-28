@@ -61,6 +61,8 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   resource_group_name           = azurerm_resource_group.rg.name
   
   # identity {
+   #   principal_id 
+ #     tenant_id 
   #   type = "SystemAssigned"
   # } 
 
@@ -83,6 +85,40 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   tags         = var.common_tags
   
 }
+
+resource "azapi_update_resource" "ams" {
+  type        = "Microsoft.Media/mediaservices@2021-06-01"
+  resource_id = azurerm_media_services_account.ams02.id
+ 
+  body = jsonencode({
+    identity = {
+      "type" = "UserAssigned",
+      "userAssignedIdentities" = "${module.key-vault.managed_identity_objectid}"
+    }
+  })
+}
+
+# resource "azapi_update_resource" "test" {
+#   type        = "Microsoft.Media/mediaservices@2021-06-01"
+#   resource_id = azurerm_media_services_account.example.id
+ 
+#   body = jsonencode({
+#     properties = {
+#       storageAuthentication = "ManagedIdentity"
+#       storageAccounts = [
+#         {
+#           id   = azurerm_storage_account.example.id
+           
+#           type = "Primary"
+#           identity = {
+#             userAssignedIdentity      = azurerm_user_assigned_identity.example.id
+#             useSystemAssignedIdentity = "false"
+#           }
+#         }
+#       ]
+#     }
+#   })
+# }
 resource "azurerm_media_transform" "analysevideo02" {
   name                        = "AnalyseVideos"
   resource_group_name         = azurerm_resource_group.rg.name
