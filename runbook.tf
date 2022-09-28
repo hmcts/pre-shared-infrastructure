@@ -13,7 +13,7 @@ resource "azurerm_automation_account" "pre-aa" {
 module "vm_automation" {
   # editvmcount = var.num_vid_edit_vms
   # dtgtwycount = var.num_datagateway
-  source = "git::https://github.com/hmcts/cnp-module-automation-runbook-start-stop-vm"
+  source = "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
 
   product                 = var.product
   env                     = var.env
