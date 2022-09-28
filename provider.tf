@@ -8,9 +8,14 @@ terraform {
       source = "hashicorp/random"
       version = ">= 2.2.0"
     }
+    azapi = {
+      source = "Azure/azapi"
+    }
   }
 }
 
+provider "azapi" {
+}
 provider "azurerm" {
   skip_provider_registration = true
   features {
