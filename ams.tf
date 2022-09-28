@@ -93,7 +93,7 @@ resource "azapi_update_resource" "ams" {
   body = jsonencode({
     identity = {
       "type" = "UserAssigned",
-      "userAssignedIdentities" = "${module.key-vault.managed_identity_objectid}"
+      "userAssignedIdentities" = module.key-vault.managed_identity_objectid
     }
   })
 }
