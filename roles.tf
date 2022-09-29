@@ -46,17 +46,18 @@ resource "azurerm_role_assignment" "vmuser_login" {
 }
 
 resource "azurerm_role_assignment" "vmnic_reader" {
-  count                = var.num_vid_edit_vms
+  
   for_each             = toset(data.azuread_groups.groups.object_ids)
+  count                = var.num_vid_edit_vms
   scope                = [azurerm_network_interface.nic[count.index].id]
   role_definition_name = "Reader"
   principal_id         = each.value
 }
 
 resource "azurerm_role_assignment" "vm_reader" {
-  count                = var.num_vid_edit_vms
+  # count                = var.num_vid_edit_vms
   for_each             = toset(data.azuread_groups.groups.object_ids)
-  scope                = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  scope                = azurerm_windows_virtual_machine.vm.*.id #[count.index]
   role_definition_name = "Reader"
   principal_id         = each.value
 }
