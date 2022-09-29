@@ -47,7 +47,7 @@ resource "azurerm_role_assignment" "vmuser_login" {
 
 resource "azurerm_role_assignment" "vmnic_reader" {
   count                = var.num_vid_edit_vms
-  scope                = [azurerm_network_interface.nic[count.index].id]
+  scope                = azurerm_network_interface.nic[count.index].id
   role_definition_name = "Reader"
   principal_id         = data.azuread_groups.groups.id
 }
