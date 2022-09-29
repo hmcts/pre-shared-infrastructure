@@ -6,7 +6,7 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
   type                       = "AADLoginForWindows"
   type_handler_version       = "1.0"
   auto_upgrade_minor_version = true
-
+  tags                       = var.common_tags
 #   depends_on = [
 #     azurerm_virtual_machine_extension.joinactivedirectory[0]
 #   ]
