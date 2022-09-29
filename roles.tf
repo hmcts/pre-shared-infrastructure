@@ -55,7 +55,7 @@ resource "azurerm_role_assignment" "vmnic_reader" {
 resource "azurerm_role_assignment" "vm_reader" {
   count                = var.num_vid_edit_vms
   # for_each             = toset(data.azuread_groups.groups.object_ids)
-  scope                = azurerm_windows_virtual_machine.vm.*.id #[count.index]
+  scope                = azurerm_windows_virtual_machine.vm.*.id[count.index]
   role_definition_name = "Reader"
   principal_id         = data.azuread_groups.groups.id
 }
