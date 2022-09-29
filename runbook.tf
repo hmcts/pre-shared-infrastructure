@@ -6,7 +6,7 @@ resource "azurerm_automation_account" "pre-aa" {
 
  identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = data.azurerm_user_assigned_identity.managed-identity.principal_id
+    identity_ids = "${data.azurerm_user_assigned_identity.managed-identity.principal_id}"
     }
   # lifecycle {
   #   ignore_changes= [ name]
