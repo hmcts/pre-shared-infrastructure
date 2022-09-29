@@ -48,8 +48,8 @@ resource "azurerm_role_assignment" "vmuser_login" {
 resource "azurerm_role_assignment" "vmnic_reader" {
   
   for_each             = toset(data.azuread_groups.groups.object_ids)
-  count                = var.num_vid_edit_vms
-  scope                = [azurerm_network_interface.nic[count.index].id]
+  # count                = var.num_vid_edit_vms
+  scope                = azurerm_network_interface.nic.*.id
   role_definition_name = "Reader"
   principal_id         = each.value
 }
