@@ -93,7 +93,8 @@ resource "azapi_update_resource" "ams" {
   body = jsonencode({
     identity = {
       "type" = "UserAssigned",
-      "userAssignedIdentities" = module.key-vault.managed_identity_objectid
+      "userAssignedIdentities" = "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+    # eb4aa503-5ffa-49ef-a69d-221e90eaf236
     }
   })
 }
