@@ -5,9 +5,7 @@
 }
 
 # DTS-PRE-VideoEditing-SecurityGroup-
-data "azuread_groups" "groups" {
-  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
-}
+
 
 #Storage Blob Data Contributor Role Assignment for Managed Identity
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
