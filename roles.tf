@@ -4,7 +4,6 @@
   resource_group_name = "managed-identities-${var.env}-rg"
 }
 
-
 data "azuread_groups" "groups" {
   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
@@ -39,10 +38,6 @@ resource "azurerm_role_assignment" "vm_user_aa" {
 }
 
 # DTS-PRE-VideoEditing-SecurityGroup-
-data "azuread_groups" "groups" {
-  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
-}
-
 resource "azurerm_role_assignment" "vmuser_login" {
   for_each             = toset(data.azuread_groups.groups.object_ids)
   scope                = azurerm_resource_group.rg.id
