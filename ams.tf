@@ -86,43 +86,43 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   
 }
 
-resource "azapi_update_resource" "ams" {
-  type        = "Microsoft.Media/mediaservices@2021-11-01"
-  resource_id = azurerm_media_services_account.ams02.id
+# resource "azapi_update_resource" "ams" {
+#   type        = "Microsoft.Media/mediaservices@2021-11-01"
+#   resource_id = azurerm_media_services_account.ams02.id
  
-  body = jsonencode({
-    identity = {
-      "type" = "UserAssigned",
-      "userAssignedIdentities" = "data.azurerm_user_assigned_identity.managed-identity.name" 
-      #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
-      # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    # eb4aa503-5ffa-49ef-a69d-221e90eaf236
-    # principal_id                     = "module.key-vault.managed_identity_objectid"
-    }
-  })
-}
+#   body = jsonencode({
+#     identity = {
+#       "type" = "UserAssigned",
+#       "userAssignedIdentities" = "data.azurerm_user_assigned_identity.managed-identity.name" 
+#       #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
+#       # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+#     # eb4aa503-5ffa-49ef-a69d-221e90eaf236
+#     # principal_id                     = "module.key-vault.managed_identity_objectid"
+#     }
+#   })
+# }
 
-resource "azapi_update_resource" "ams_auth" {
-  type        = "Microsoft.Media/mediaservices@2021-06-01"
-  resource_id = azurerm_media_services_account.ams02.id
+# resource "azapi_update_resource" "ams_auth" {
+#   type        = "Microsoft.Media/mediaservices@2021-06-01"
+#   resource_id = azurerm_media_services_account.ams02.id
  
-  body = jsonencode({
-    properties = {
-      storageAuthentication = "ManagedIdentity"
-      storageAccounts = [
-        {
-          id   = module.ingestsa02_storage_account.storageaccount_id 
+#   body = jsonencode({
+#     properties = {
+#       storageAuthentication = "ManagedIdentity"
+#       storageAccounts = [
+#         {
+#           id   = module.ingestsa02_storage_account.storageaccount_id 
            
-          type = "Primary"
-          identity = {
-            userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
-            useSystemAssignedIdentity = "false"
-          }
-        }
-      ]
-    }
-  })
-}
+#           type = "Primary"
+#           identity = {
+#             userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
+#             useSystemAssignedIdentity = "false"
+#           }
+#         }
+#       ]
+#     }
+#   })
+# }
 resource "azurerm_media_transform" "analysevideo02" {
   name                        = "AnalyseVideos"
   resource_group_name         = azurerm_resource_group.rg.name
