@@ -19,7 +19,7 @@ resource "azurerm_automation_account" "pre-aa" {
 module "vm_automation" {
   # editvmcount = var.num_vid_edit_vms
   # dtgtwycount = var.num_datagateway
-  for_each = toset( ["${azurerm_windows_virtual_machine.vm.*.namevm}", "${azurerm_windows_virtual_machine.dtgtwyvm.*.namevm}"] )
+  for_each = toset( ["${azurerm_windows_virtual_machine.vm.*.name}", "${azurerm_windows_virtual_machine.dtgtwyvm.*.name}"] )
   source = "git::https://github.com/hmcts/cnp-module-automation-runbook-start-stop-vm"
 
   product                 = var.product
