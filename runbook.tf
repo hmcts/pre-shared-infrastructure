@@ -32,7 +32,7 @@ module "vm_automation" {
                         name        = "vm-on"
                         frequency   = "Day"
                         interval    = 1
-                        run_time    = "13:00:00"
+                        run_time    = "06:00:00"
                         start_vm    = true
                       },
                       {
@@ -44,7 +44,7 @@ module "vm_automation" {
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names                = azurerm_windows_virtual_machine.dtgtwyvm.*.name # "${azurerm_windows_virtual_machine.dtgtwyvm.*.name}"]
+  vm_names                = tolist([azurerm_windows_virtual_machine.vm.*.name, "${azurerm_windows_virtual_machine.dtgtwyvm.*.name}"])
   mi_principal_id         = azurerm_automation_account.pre-aa.identity[0].principal_id 
  
 }
