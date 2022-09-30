@@ -19,7 +19,7 @@ resource "azurerm_automation_account" "pre-aa" {
 module "vm_automation" {
   # editvmcount = var.num_vid_edit_vms
   # dtgtwycount = var.num_datagateway
-  for_each = toset( ["vm", "dtgtwyvm"] )
+  for_each = toset( ["${azurerm_windows_virtual_machine.vm.*.namevm}", "${azurerm_windows_virtual_machine.dtgtwyvm.*.namevm}"] )
   source = "git::https://github.com/hmcts/cnp-module-automation-runbook-start-stop-vm"
 
   product                 = var.product
@@ -44,7 +44,7 @@ module "vm_automation" {
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names                = "azurerm_windows_virtual_machine.${each.key}.*.name"
+  vm_names                = each.value
   mi_principal_id         = azurerm_automation_account.pre-aa.identity[0].principal_id 
  
 }
