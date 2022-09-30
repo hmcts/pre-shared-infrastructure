@@ -65,7 +65,7 @@ module "vm_automation_dtgtwy" {
                         name        = "vm-on"
                         frequency   = "Day"
                         interval    = 1
-                        run_time    = "13:00:00"
+                        run_time    = "06:00:00"
                         start_vm    = true
                       },
                       {

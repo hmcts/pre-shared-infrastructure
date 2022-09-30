@@ -5,7 +5,7 @@
 }
 
 data "azuread_groups" "groups" {
-  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+  display_names = var.env == "stg" ? ["DTS-PRE-VideoEditing-SecurityGroup-staging"] : ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
 #Storage Blob Data Contributor Role Assignment for Managed Identity
