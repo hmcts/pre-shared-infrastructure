@@ -299,10 +299,10 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     storage_account_type = "Standard_LRS"
     disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   }
-  # identity {
-  #   type = "SystemAssigned"
-  # }
-
+   identity {
+    type         = "SystemAssigned, UserAssigned"
+    identity_ids = module.key-vault.managed_identity_id
+    }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
