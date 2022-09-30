@@ -87,13 +87,13 @@ resource "azurerm_media_transform" "EncodeToMP4" {
 }
 
 resource "azapi_update_resource" "ams" {
-  type        = "Microsoft.Media/mediaservices@2021-06-01"
+  type        = "Microsoft.Media/mediaservices@2021-11-01"
   resource_id = azurerm_media_services_account.ams02.id
  
   body = jsonencode({
     identity = {
-      "type" = "UserAssigned"
-      "userAssignedIdentity" =  data.azurerm_user_assigned_identity.managed-identity.principal_id
+      "type" = "UserAssigned",
+      "userAssignedIdentities" = "data.azurerm_user_assigned_identity.managed-identity.name" 
       #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
       # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
     # eb4aa503-5ffa-49ef-a69d-221e90eaf236
