@@ -76,10 +76,10 @@ module "finalsa_storage_account" {
   depends_on = [ module.key-vault]
 }
 
-module "ingestsa_storage_account" {
+module "finalsa02_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = replace("${var.product}ingestsa${var.env}", "-", "")
+  storage_account_name            = replace("${var.product}ingestsa02${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = "UKWest" #As recommended by MS azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
@@ -111,7 +111,7 @@ module "ingestsa_storage_account" {
 #   count                    = "${len(var.pre_storage)}"
 #   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
 #   env                      = var.env
-#   storage_account_name     = replace("${var.product}${count.index+1}0${var.env}", "-", "")
+#   storage_account_name     = replace("${var.product}${count.index+1}02${var.env}", "-", "")
 #   resource_group_name      = azurerm_resource_group.rg.name
 #   location                 = "${var.location}" #As recommended by MS
 #   account_kind             = "StorageV2"
@@ -137,6 +137,35 @@ module "ingestsa_storage_account" {
 
 #   depends_on = [ module.key-vault]
 # }
+module "ingestsa02_storage_account" {
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                             = var.env
+  storage_account_name            = replace("${var.product}ingestsa02${var.env}", "-", "")
+  resource_group_name             = azurerm_resource_group.rg.name
+  location                        = "${var.location}"#As recommended by MS azurerm_resource_group.rg.location
+  account_kind                    = "StorageV2"
+  account_tier                    = var.sa_account_tier
+  account_replication_type        = var.sa_replication_type
+  # sa_subnets                    = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
+  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+  allow_nested_items_to_be_public = false
+  ip_rules                        = var.ip_rules
+  default_action                  = "Deny" 
+  enable_data_protection          = true
+
+  ## TODO
+  ## ip_rules                 = []
+  ## allow_blob_public_access = false
+  ## default_action           = "Deny"
+  ## containers = [{
+ # ##   name        = "ingestsa"
+ # #   access_type = "private"
+  ## }]
+
+  depends_on = [ module.key-vault]
+  common_tags = var.common_tags
+  }
+
 
 module "ingestsa02_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
@@ -165,8 +194,6 @@ module "ingestsa02_storage_account" {
 
   depends_on = [ module.key-vault]
   common_tags = var.common_tags
-
-
   }
 # ###################################################
 # #                PRIVATE ENDPOINTS FOR STORAGES   
@@ -223,7 +250,6 @@ module "ingestsa02_storage_account" {
 #  tags = var.common_tags
 # }
 
-#element ...
 # Store the connection string for the SAs in KV
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
   name         = "sa-storage-account-connection-string"
