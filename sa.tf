@@ -79,7 +79,7 @@ module "finalsa_storage_account" {
 module "finalsa02_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = replace("${var.product}ingestsa02${var.env}", "-", "")
+  storage_account_name            = replace("${var.product}finalsa02${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = "UKWest" #As recommended by MS azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
@@ -137,10 +137,10 @@ module "finalsa02_storage_account" {
 
 #   depends_on = [ module.key-vault]
 # }
-module "ingestsa02_storage_account" {
+module "sa02_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = replace("${var.product}ingestsa02${var.env}", "-", "")
+  storage_account_name            = replace("${var.product}sa02${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = "${var.location}"#As recommended by MS azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
