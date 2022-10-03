@@ -107,10 +107,11 @@ module "ingestsa_storage_account" {
 
   }
 
-module "finalsa02_storage_account" {
+module "pre_02_storage_account" {
+  count                    = "${len(var.pre_storage)}"
   source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                      = var.env
-  storage_account_name     = replace("${var.product}finalsa02${var.env}", "-", "")
+  storage_account_name     = replace("${var.product}${count.index+1}0${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = "${var.location}" #As recommended by MS
   account_kind             = "StorageV2"
@@ -222,6 +223,7 @@ module "ingestsa02_storage_account" {
 #  tags = var.common_tags
 # }
 
+#element ...
 # Store the connection string for the SAs in KV
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
   name         = "sa-storage-account-connection-string"
