@@ -155,9 +155,9 @@ variable "hostgroup" {
   default = null
 }
 
-variable "pre_storage" {
-  default = [sa,finalsa,ingestsa]
-  }
+# variable "pre_storage" {
+#   default = ["sa","finalsa","ingestsa"]
+#   }
 # # Dynatrace OneAgent
 # variable "cnp_vault_rg" {
 #   type = string
