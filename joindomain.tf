@@ -39,4 +39,20 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 #     azurerm_virtual_machine_extension.joinactivedirectory[0]
 #   ]
 }
+# TODO aad group ID 
+resource "azurerm_role_assignment" "rbac_user_login" {
+  for_each             = toset(data.azuread_groups.groups.object_ids)
+  principal_id         = each.value
+  scope                = azurerm_windows_virtual_machine.vm.*.id
+  role_definition_name = "Virtual Machine User Login"
+}
+
+
+#DTS Pre-recorded Evidence
+resource "azurerm_role_assignment" "rbac_admin_login" {
+  for_each             = toset(data.azuread_groups.pre-groups.object_ids)
+  principal_id         = each.value
+  scope                = azurerm_windows_virtual_machine.vm.id
+  role_definition_name = "Virtual Machine Administrator Login"
+}
 

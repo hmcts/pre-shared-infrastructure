@@ -8,6 +8,9 @@ data "azuread_groups" "groups" {
   display_names = var.env == "stg" ? ["DTS-PRE-VideoEditing-SecurityGroup-staging"] : ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
+data "azuread_groups" "pre-groups" {
+  display_names = ["DTS Pre-recorded Evidence"] 
+}
 #Storage Blob Data Contributor Role Assignment for Managed Identity
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
   scope                            = azurerm_resource_group.rg.id

@@ -27,7 +27,7 @@ module "vnet_peer_hub_prod" {
 
   providers = {
     azurerm           = azurerm
-    azurerm.initiator = azurerm.soc
+    azurerm.initiator = azurerm
     azurerm.target    = azurerm.hub-prod
   }
 }
@@ -49,8 +49,8 @@ module "vnet_peer_hub_nonprod" {
     var.environment
   )
 
-  initiator_vnet                = azurerm_virtual_network.virtual_network.name
-  initiator_vnet_resource_group = azurerm_virtual_network.virtual_network.resource_group_name
+  initiator_vnet                = azurerm_virtual_network.vnet.name
+  initiator_vnet_resource_group = azurerm_virtual_network.vnet.resource_group_name
   initiator_vnet_subscription   = var.subscription_id
 
   target_vnet                = local.hub["nonprod"][each.key].name
@@ -59,7 +59,7 @@ module "vnet_peer_hub_nonprod" {
 
   providers = {
     azurerm           = azurerm
-    azurerm.initiator = azurerm.soc
+    azurerm.initiator = azurerm
     azurerm.target    = azurerm.hub-nonprod
   }
 }
@@ -81,8 +81,8 @@ module "vnet_peer_hub_sbox" {
     var.environment
   )
 
-  initiator_vnet                = azurerm_virtual_network.virtual_network.name
-  initiator_vnet_resource_group = azurerm_virtual_network.virtual_network.resource_group_name
+  initiator_vnet                = azurerm_virtual_network.vnet.name
+  initiator_vnet_resource_group = azurerm_virtual_network.vnet.resource_group_name
   initiator_vnet_subscription   = var.subscription_id
 
   target_vnet                = local.hub["sbox"][each.key].name
@@ -91,7 +91,7 @@ module "vnet_peer_hub_sbox" {
 
   providers = {
     azurerm           = azurerm
-    azurerm.initiator = azurerm.soc
+    azurerm.initiator = azurerm
     azurerm.target    = azurerm.hub-sbox
   }
 }
@@ -108,8 +108,8 @@ module "vnet_peer_vpn" {
     var.environment
   )
 
-  initiator_vnet                = azurerm_virtual_network.virtual_network.name
-  initiator_vnet_resource_group = azurerm_virtual_network.virtual_network.resource_group_name
+  initiator_vnet                = azurerm_virtual_network.vnet.name
+  initiator_vnet_resource_group = azurerm_virtual_network.vnet.resource_group_name
   initiator_vnet_subscription   = var.subscription_id
 
   target_vnet                = "core-infra-vnet-mgmt"
@@ -118,7 +118,7 @@ module "vnet_peer_vpn" {
 
   providers = {
     azurerm           = azurerm
-    azurerm.initiator = azurerm.soc
+    azurerm.initiator = azurerm
     azurerm.target    = azurerm.vpn
   }
 }
