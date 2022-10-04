@@ -223,22 +223,22 @@ SETTINGS
 
 
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
-  count                  = var.num_vid_edit_vms
-  virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  location               = azurerm_resource_group.rg.location
-  enabled                = true
+# resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
+#   count                  = var.num_vid_edit_vms
+#   virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   location               = azurerm_resource_group.rg.location
+#   enabled                = true
 
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
+#   daily_recurrence_time = "1800"
+#   timezone              = "GMT Standard Time"
 
 
-  notification_settings {
-    enabled         = false
+#   notification_settings {
+#     enabled         = false
    
-  }
-  tags                = var.common_tags
- }
+#   }
+#   tags                = var.common_tags
+#  }
 
 ##DynaTrace
 
