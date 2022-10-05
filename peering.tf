@@ -6,14 +6,14 @@ module "vnet_peer_hub_prod" {
   for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.env], "prod")])
 
   initiator_peer_name = format("%s%s_To_%s",
-    var.project,
+    var.product,
     var.env,
     local.hub["prod"][each.key].name
   )
 
   target_peer_name = format("%s_To_%s%s",
     local.hub["prod"][each.key].name,
-    var.project,
+    var.product,
     var.env
   )
 
@@ -38,14 +38,14 @@ module "vnet_peer_hub_nonprod" {
   for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.env], "nonprod")])
 
   initiator_peer_name = format("%s%s_To_%s",
-    var.project,
+    var.projvar.subscription_idect,
     var.env,
     local.hub["nonprod"][each.key].name
   )
 
   target_peer_name = format("%s_To_%s%s",
     local.hub["nonprod"][each.key].name,
-    var.project,
+    var.product,
     var.env
   )
 
@@ -70,14 +70,14 @@ module "vnet_peer_hub_sbox" {
   for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.env], "sbox")])
 
   initiator_peer_name = format("%s%s_To_%s",
-    var.project,
+    var.product,
     var.env,
     local.hub["sbox"][each.key].name
   )
 
   target_peer_name = format("%s_To_%s%s",
     local.hub["sbox"][each.key].name,
-    var.project,
+    var.product,
     var.env
   )
 
@@ -104,7 +104,7 @@ module "vnet_peer_vpn" {
   initiator_peer_name = "vpn"
 
   target_peer_name = format("%s%s",
-    var.project,
+    var.product,
     var.env
   )
 
