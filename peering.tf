@@ -38,7 +38,7 @@ module "vnet_peer_hub_nonprod" {
   for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.env], "nonprod")])
 
   initiator_peer_name = format("%s%s_To_%s",
-    var.projvar.subscription_idect,
+    var.product,
     var.env,
     local.hub["nonprod"][each.key].name
   )
