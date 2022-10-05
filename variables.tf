@@ -1,4 +1,4 @@
-variable "product" {
+variable "producvar.environmentt" {
   default = "pre"
 }
 variable "location" {
