@@ -3,23 +3,23 @@
 module "vnet_peer_hub_prod" {
   source = "./modules/vnet_peering/"
 
-  for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.environment], "prod")])
+  for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.env], "prod")])
 
   initiator_peer_name = format("%s%s_To_%s",
     var.project,
-    var.environment,
+    var.env,
     local.hub["prod"][each.key].name
   )
 
   target_peer_name = format("%s_To_%s%s",
     local.hub["prod"][each.key].name,
     var.project,
-    var.environment
+    var.env
   )
 
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_virtual_network.vnet.resource_group_name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = local.hub["prod"][each.key].name
   target_vnet_resource_group = local.hub["prod"][each.key].name
@@ -35,23 +35,23 @@ module "vnet_peer_hub_prod" {
 module "vnet_peer_hub_nonprod" {
   source = "./modules/vnet_peering/"
 
-  for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.environment], "nonprod")])
+  for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.env], "nonprod")])
 
   initiator_peer_name = format("%s%s_To_%s",
     var.project,
-    var.environment,
+    var.env,
     local.hub["nonprod"][each.key].name
   )
 
   target_peer_name = format("%s_To_%s%s",
     local.hub["nonprod"][each.key].name,
     var.project,
-    var.environment
+    var.env
   )
 
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_virtual_network.vnet.resource_group_name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = local.hub["nonprod"][each.key].name
   target_vnet_resource_group = local.hub["nonprod"][each.key].name
@@ -67,23 +67,23 @@ module "vnet_peer_hub_nonprod" {
 module "vnet_peer_hub_sbox" {
   source = "./modules/vnet_peering/"
 
-  for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.environment], "sbox")])
+  for_each = toset([for r in local.regions : r if contains(local.hubs_to_peer[var.env], "sbox")])
 
   initiator_peer_name = format("%s%s_To_%s",
     var.project,
-    var.environment,
+    var.env,
     local.hub["sbox"][each.key].name
   )
 
   target_peer_name = format("%s_To_%s%s",
     local.hub["sbox"][each.key].name,
     var.project,
-    var.environment
+    var.env
   )
 
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_virtual_network.vnet.resource_group_name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = local.hub["sbox"][each.key].name
   target_vnet_resource_group = local.hub["sbox"][each.key].name
@@ -105,12 +105,12 @@ module "vnet_peer_vpn" {
 
   target_peer_name = format("%s%s",
     var.project,
-    var.environment
+    var.env
   )
 
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_virtual_network.vnet.resource_group_name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = "core-infra-vnet-mgmt"
   target_vnet_resource_group = "rg-mgmt"
