@@ -57,7 +57,7 @@ resource "azurerm_media_transform" "EncodeToMP4" {
 
  resource "azurerm_media_services_account" "ams02" {
   name                          = "${var.product}ams02${var.env}"
-  location                      = "${var.location}"
+  location                      = var.location
   resource_group_name           = azurerm_resource_group.rg.name
   
   # identity {
