@@ -53,6 +53,7 @@ resource "azurerm_network_interface" "nic" {
    tags                = var.common_tags
 }
 resource "azurerm_windows_virtual_machine" "vm" {
+  zone                        = 2
   count                       = var.num_vid_edit_vms
   name                        = "${var.product}-videditvm${count.index}-${var.env}"
   computer_name               = "PREVIDED0${count.index}-${var.env}"
@@ -62,14 +63,14 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
-  # encryption_at_host_enabled  = true
+  encryption_at_host_enabled  = true
 
   
  # encryption_at_host_enabled  = true
 
-#   # additional_capabilities {
-#   #  ultra_ssd_enabled   =  true
-#   # }
+  additional_capabilities {
+   ultra_ssd_enabled   =  true
+  }
   
 
   os_disk {
@@ -77,6 +78,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     caching                   = "ReadWrite"
     storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
     disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
+    disk_size_gb              = 1000
     # write_accelerator_enabled = true
   }
 
@@ -326,7 +328,7 @@ resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
-  disk_size_gb         = 100
+  disk_size_gb         = 1000
   zone                 = "2"
   disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   tags                 = var.common_tags
