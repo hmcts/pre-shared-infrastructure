@@ -1,7 +1,7 @@
-//== Provider used to store timestamp for updates ==//
-provider "time" {
-  version = "~> 0.4"
-}
+# //== Provider used to store timestamp for updates ==//
+# provider "time" {
+#   version = "~> 0.4"
+# }
 
 //== Store 1 day in the future, only update if [local.update_time] is altered ==//
 resource "time_offset" "next_day" {

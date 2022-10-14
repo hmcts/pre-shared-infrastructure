@@ -11,6 +11,11 @@ terraform {
     azapi = {
       source = "Azure/azapi"
     }
+
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.6" # where X.Y is the current major version and minor version
+    }
   }
 }
 
