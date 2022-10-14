@@ -48,8 +48,8 @@ resource "azurerm_template_deployment" "windows" {
                       "rebootSetting": "${local.update_reboot_settings}"
                   },
                   "azureVirtualMachines": [
-                      "${azurerm_windows_virtual_machine.dtgtwyvm.*.name}",
-                      "${azurerm_windows_virtual_machine.vm.*.name}"
+                      "${azurerm_windows_virtual_machine.dtgtwyvm.*.name[0]}",
+                      "${azurerm_windows_virtual_machine.vm.*.name[0]}"
                   ],
                   "nonAzureComputerNames": [
                   ]
