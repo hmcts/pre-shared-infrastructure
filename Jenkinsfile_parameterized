@@ -25,10 +25,10 @@ static String (String envName){
 }
 withParameterizedInfraPipeline(params.PRODUCT_NAME, 'sbox', 'sbox') {
 //  
-  before('buildinfra:sbox') {
-    sh "echo 'amsid'"
-    sh amsstorageid("sbox")
-  }
+  // before('buildinfra:sbox') {
+  //   sh "echo 'amsid'"
+  //   sh amsstorageid("sbox")
+  // }
 
 
 }
