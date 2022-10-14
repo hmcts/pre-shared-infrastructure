@@ -1,3 +1,4 @@
+
 ##------------------------------------------------------###################
 ##BASTION
 ##------------------------------------------------------###################
@@ -34,6 +35,22 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
+###
+## Encryption@Host
+#######
+
+resource "null_resource" "Encryption" {
+   
+ provisioner "local-exec" {
+   command = <<EOF
+    az login --identity
+    az account set -s dts-sharedservices-${var.env}
+    echo "Enable Encryption at Host"
+    az feature register --namespace Microsoft.Compute --name EncryptionAtHost
+
+	  EOF
+   }
+}
 
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
@@ -102,7 +119,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   # # hotpatching_enabled          = true
   tags                         = var.common_tags
 
-  depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
+  depends_on = [ null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des ]
 }
 
 # # Datadisk 
