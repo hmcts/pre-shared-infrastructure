@@ -186,41 +186,41 @@ resource "azurerm_private_endpoint" "sa" {
 }
 
 
-# # ###################################################
-# # #                PRIVATE ENDPOINTS FOR STORAGES   
-# # ###################################################
-# resource "azurerm_private_endpoint" "finalsa" {
-#   name                     = "${var.product}finalsa-pe-${var.env}"
-#   resource_group_name      = azurerm_resource_group.rg.name
-#   location                 = azurerm_resource_group.rg.location
-#   subnet_id                = azurerm_subnet.endpoint_subnet.id
-
-#   private_service_connection {
-#     name                           = "${var.product}finalsa-psc-${var.env}"
-#     is_manual_connection           = false
-#     private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
-#     subresource_names              = ["blob"]
-#   }
-#  tags = var.common_tags
-# }
-
 # ###################################################
-# #                PRIVATE ENDPOINTS FOR STORAGES    
+# #                PRIVATE ENDPOINTS FOR STORAGES   
 # ###################################################
-# resource "azurerm_private_endpoint" "ingestsa" {
-#   name                     = "${var.product}stream-pe-${var.env}"
-#   resource_group_name      = azurerm_resource_group.rg.name
-#   location                 = azurerm_resource_group.rg.location
-#   subnet_id                = azurerm_subnet.endpoint_subnet.id
+resource "azurerm_private_endpoint" "finalsa" {
+  name                     = "${var.product}finalsa-pe-${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
 
-#   private_service_connection {
-#     name                           = "${var.product}stream-psc-${var.env}"
-#     is_manual_connection           = false
-#     private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
-#     subresource_names              = ["blob"]
-#   }
-#  tags = var.common_tags
-# }
+  private_service_connection {
+    name                           = "${var.product}finalsa-psc-${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
+    subresource_names              = ["blob"]
+  }
+ tags = var.common_tags
+}
+
+###################################################
+#                PRIVATE ENDPOINTS FOR STORAGES    
+###################################################
+resource "azurerm_private_endpoint" "ingestsa" {
+  name                     = "${var.product}stream-pe-${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
+
+  private_service_connection {
+    name                           = "${var.product}stream-psc-${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
+    subresource_names              = ["blob"]
+  }
+ tags = var.common_tags
+}
 
 # Store the connection string for the SAs in KV
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
