@@ -266,7 +266,6 @@ module "log_analytics_workspace" {
   environment = var.env
 }
 
-
 # resource "azurerm_log_analytics_workspace" "law" {
 #   name                = module.log_analytics_workspace.name
 #   location            = var.location
