@@ -1,5 +1,4 @@
 
-
 resource "azurerm_virtual_machine_extension" "vm_aad" {
   count                      =  var.num_vid_edit_vms
   name                       = "AADLoginForWindows"
@@ -8,6 +7,7 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
   type                       = "AADLoginForWindows"
   type_handler_version       = "1.0"
   auto_upgrade_minor_version = true
+  tags                       = var.common_tags
 
 #   depends_on = [
 #     azurerm_virtual_machine_extension.joinactivedirectory[0]
@@ -42,6 +42,7 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 #   PROTECTED_SETTINGS
 # }
 
+
 # TODO aad group ID 
 # resource "azurerm_role_assignment" "rbac_user_login" {
 #   for_each             = toset(data.azuread_groups.groups.object_ids)
@@ -58,4 +59,5 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 #   scope                = azurerm_windows_virtual_machine.vm.id
 #   role_definition_name = "Virtual Machine Administrator Login"
 # }
+
 

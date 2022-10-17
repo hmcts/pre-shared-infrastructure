@@ -71,8 +71,13 @@ variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
 variable "devops_admin" {}
+
 variable "providernamespace" {}
 variable "featurename" {}
+
+# variable "providernamespace" {}
+# variable "featurename" {}
+
 variable "lawSku" {
     type = string 
     default = "PerGB2018"
@@ -149,6 +154,15 @@ variable "schedules" {
   default = []
 }
 
+
+# Dynatrace
+variable "dynatrace_server" {
+  description = "The server URL, if you want to configure an alternative communication endpoint."
+  type        = string
+  default     = null
+}
+
+
 variable "server" {
   default = null
 }
@@ -175,3 +189,4 @@ variable "hostgroup" {
 #   type    = string
 #   default = null
 # }
+
