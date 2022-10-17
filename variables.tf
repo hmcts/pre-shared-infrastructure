@@ -13,6 +13,7 @@ variable "env" {}
 variable "jenkins_AAD_objectId" {}
 
 
+
 variable "common_tags" {
   type = map(string)
 }
@@ -70,8 +71,13 @@ variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
 variable "devops_admin" {}
+
+variable "providernamespace" {}
+variable "featurename" {}
+
 # variable "providernamespace" {}
 # variable "featurename" {}
+
 variable "lawSku" {
     type = string 
     default = "PerGB2018"
@@ -148,6 +154,7 @@ variable "schedules" {
   default = []
 }
 
+
 # Dynatrace
 variable "dynatrace_server" {
   description = "The server URL, if you want to configure an alternative communication endpoint."
@@ -155,9 +162,31 @@ variable "dynatrace_server" {
   default     = null
 }
 
+
 variable "server" {
   default = null
 }
 variable "hostgroup" {
   default = null
 }
+
+# # Dynatrace OneAgent
+# variable "cnp_vault_rg" {
+#   type = string
+#   default = "cnp-core-infra"
+# }
+
+# variable "cnp_vault_sub" {
+#   type = string
+#   default = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+# }
+
+# variable "dynatrace_tenant_id" {
+#   type = string
+# }
+
+# variable "dynatrace_server" {
+#   type    = string
+#   default = null
+# }
+
