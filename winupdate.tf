@@ -79,7 +79,7 @@ resource "azurerm_template_deployment" "windows" {
 }
 
 
-resource "azurerm_resource_group_template_deployment" "dtgtwwindows" {
+resource "azurerm_template_deployment" "dtgtwwindows" {
   count               =  var.num_datagateway
   name                = "windows-update"
   resource_group_name = azurerm_resource_group.rg.name
