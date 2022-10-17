@@ -141,6 +141,7 @@ resource "azurerm_managed_disk" "vmdatadisk" {
   create_option           = "Empty"
   disk_size_gb            = 1000
   disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
+  zone                    = "2"
   tags                    = var.common_tags
 
      
