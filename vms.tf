@@ -1,3 +1,4 @@
+
 ##------------------------------------------------------###################
 ##BASTION
 ##------------------------------------------------------###################
@@ -34,6 +35,22 @@ resource "azurerm_bastion_host" "bastion" {
 
 }
 
+###
+## Encryption@Host
+#######
+
+resource "null_resource" "Encryption" {
+   
+ provisioner "local-exec" {
+   command = <<EOF
+    az login --identity
+    az account set -s dts-sharedservices-${var.env}
+    echo "Enable Encryption at Host"
+    az feature register --namespace Microsoft.Compute --name EncryptionAtHost
+
+	  EOF
+   }
+}
 
 # ###################################################
 # #                EDIT VIRTUAL MACHINE                 #
@@ -53,6 +70,7 @@ resource "azurerm_network_interface" "nic" {
    tags                = var.common_tags
 }
 resource "azurerm_windows_virtual_machine" "vm" {
+  zone                        = 2
   count                       = var.num_vid_edit_vms
   name                        = "${var.product}-videditvm${count.index}-${var.env}"
   computer_name               = "PREVIDED0${count.index}-${var.env}"
@@ -62,14 +80,14 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_username              = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password              = random_password.vm_password[count.index].result
   network_interface_ids       = [azurerm_network_interface.nic[count.index].id]
-  # encryption_at_host_enabled  = true
+  encryption_at_host_enabled  = true
 
   
  # encryption_at_host_enabled  = true
 
-#   # additional_capabilities {
-#   #  ultra_ssd_enabled   =  true
-#   # }
+  additional_capabilities {
+   ultra_ssd_enabled   =  true
+  }
   
 
   os_disk {
@@ -77,6 +95,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     caching                   = "ReadWrite"
     storage_account_type      = "StandardSSD_LRS" #UltraSSD_LRS?
     disk_encryption_set_id    = azurerm_disk_encryption_set.pre-des.id
+    disk_size_gb              = 1000
     # write_accelerator_enabled = true
   }
 
@@ -87,9 +106,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
     sku       = "20h1-pro-g2"
     version   = "latest"
   }
-  # identity {
-  #   type = "SystemAssigned"
-  #   }
+ identity {
+    type         = "SystemAssigned, UserAssigned"
+    identity_ids = module.key-vault.managed_identity_id
+    }
 
   timezone                     = "GMT Standard Time"
   enable_automatic_updates     = true
@@ -99,7 +119,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   # # hotpatching_enabled          = true
   tags                         = var.common_tags
 
-  depends_on = [ module.key-vault, azurerm_disk_encryption_set.pre-des ]
+  depends_on = [ null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des ]
 }
 
 # # Datadisk 
@@ -121,6 +141,7 @@ resource "azurerm_managed_disk" "vmdatadisk" {
   create_option           = "Empty"
   disk_size_gb            = 1000
   disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
+  zone                    = "2"
   tags                    = var.common_tags
 
      
@@ -222,22 +243,22 @@ SETTINGS
 
 
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
-  count                  = var.num_vid_edit_vms
-  virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  location               = azurerm_resource_group.rg.location
-  enabled                = true
+# resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
+#   count                  = var.num_vid_edit_vms
+#   virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   location               = azurerm_resource_group.rg.location
+#   enabled                = true
 
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
+#   daily_recurrence_time = "1800"
+#   timezone              = "GMT Standard Time"
 
 
-  notification_settings {
-    enabled         = false
+#   notification_settings {
+#     enabled         = false
    
-  }
-  tags                = var.common_tags
- }
+#   }
+#   tags                = var.common_tags
+#  }
 
 ##DynaTrace
 
@@ -245,11 +266,11 @@ module "dynatrace-oneagent" {
   
   source               = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
   count                = var.num_vid_edit_vms
-  tenant_id            = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
-  token                =  "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+  tenant_id            = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
+  token                =  data.azurerm_key_vault_secret.dynatrace-token.value
   virtual_machine_os   = "windows"
   virtual_machine_type = "vm"
-  virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+  virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
   auto_upgrade_minor_version = true
   server                     = var.server
   hostgroup                  = var.hostgroup
@@ -298,10 +319,10 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     storage_account_type = "Standard_LRS"
     disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   }
-  # identity {
-  #   type = "SystemAssigned"
-  # }module
-
+   identity {
+    type         = "SystemAssigned, UserAssigned"
+    identity_ids = module.key-vault.managed_identity_id
+    }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
@@ -325,7 +346,7 @@ resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "Standard_LRS"
   create_option        = "Empty"
-  disk_size_gb         = 100
+  disk_size_gb         = 1000
   zone                 = "2"
   disk_encryption_set_id  = azurerm_disk_encryption_set.pre-des.id
   tags                 = var.common_tags
@@ -432,11 +453,11 @@ module "dynatrace-oneagent-dtgtway" {
   
   source                     = "github.com/hmcts/terraform-module-dynatrace-oneagent"
   count                      = var.num_datagateway
-  tenant_id                  = "${data.azurerm_key_vault_secret.dynatrace-tenant-id.value}"
-  token                      = "${data.azurerm_key_vault_secret.dynatrace-token.value}"
+  tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
+  token                      = data.azurerm_key_vault_secret.dynatrace-token.value
   virtual_machine_os         = "Windows"
   virtual_machine_type       = "vm"
-  virtual_machine_id         = "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}"
+  virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   auto_upgrade_minor_version = true
   server                     = var.server
   hostgroup                  = var.hostgroup
