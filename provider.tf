@@ -121,6 +121,8 @@ provider "azurerm" {
   features {}
   alias = "hub-prod"
 }
+
+
 # data "azurerm_key_vault" "cnp_vault" {
 #   provider            = azurerm.cnp
 #   name                = "infra-vault-${local.dynatrace_env}"
