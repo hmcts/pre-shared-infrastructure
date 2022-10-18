@@ -156,6 +156,18 @@ variable "hostgroup" {
   default = null
 }
 
+variable "private_dns_subscription" {}
+
+variable "private_dns_zones" {}
+variable "private_endpoint_private_dns_zones" {
+  default = [
+    "privatelink.database.windows.net",
+    "privatelink.blob.core.windows.net",
+    "privatelink.vaultcore.azure.net",
+    "privatelink.datafactory.azure.net",
+    "privatelink.postgres.database.azure.com",
+  ]
+}
 # # Dynatrace OneAgent
 # variable "cnp_vault_rg" {
 #   type = string
