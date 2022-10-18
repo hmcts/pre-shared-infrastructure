@@ -166,7 +166,7 @@ module "ingestsa02_storage_account" {
   common_tags = var.common_tags
 
 
-  }
+#   }
 ###################################################
 #                PRIVATE ENDPOINTS FOR STORAGES   
 ###################################################
