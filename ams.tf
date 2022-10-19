@@ -87,6 +87,7 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   
 }
 
+##TODO
 # resource "azapi_update_resource" "ams" {
 #   type        = "Microsoft.Media/mediaservices@2021-11-01"
 #   resource_id = azurerm_media_services_account.ams02.id
