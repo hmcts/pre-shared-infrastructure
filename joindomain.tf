@@ -1,4 +1,5 @@
 
+
 resource "azurerm_virtual_machine_extension" "vm_aad" {
   count                      =  var.num_vid_edit_vms
   name                       = "AADLoginForWindows"
