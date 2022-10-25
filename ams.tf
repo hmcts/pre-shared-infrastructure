@@ -93,7 +93,7 @@ resource "azapi_update_resource" "ams" {
   body = jsonencode({
     identity = {
       "type" = "UserAssigned",
-      "userAssignedIdentities" = "/subscriptions/${var.subscription}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+      "userAssignedIdentities" = "/subscriptions/a8140a9e-f1b0-481f-a4de-09e2ee23f7ab/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
       # "data.azurerm_user_assigned_identity.managed-identity.name" 
       #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
       # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
