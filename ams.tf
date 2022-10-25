@@ -93,7 +93,10 @@ resource "azapi_update_resource" "ams" {
   body = jsonencode({
     identity = {
       "type" = "UserAssigned",
-      "userAssignedIdentities" = "/subscriptions/a8140a9e-f1b0-481f-a4de-09e2ee23f7ab/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+      "userAssignedIdentities" = "/subscriptions/a8140a9e-f1b0-481f-a4de-09e2ee23f7ab/resourcegroups/managed-identities-sbox-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-sbox-mi"
+      #"/subscriptions/a8140a9e-f1b0-481f-a4de-09e2ee23f7ab/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+      
+      
       # "data.azurerm_user_assigned_identity.managed-identity.name" 
       #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
       # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
@@ -177,8 +180,7 @@ resource "azapi_update_resource" "ams_auth" {
 
           id   = module.finalsa02_storage_account.storageaccount_id 
            
-          type = "Primary"
-          identity = {
+            identity = {
             userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
             useSystemAssignedIdentity = "false"
           }
