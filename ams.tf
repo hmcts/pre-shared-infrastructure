@@ -174,7 +174,7 @@ resource "azapi_update_resource" "ams_auth" {
             useSystemAssignedIdentity = "false"
           }
 
-          id   = module.prefinalsa02_storage_account.storageaccount_id 
+          id   = module.finalsa02_storage_account.storageaccount_id 
            
           type = "Primary"
           identity = {
