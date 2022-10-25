@@ -312,6 +312,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   admin_username      = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
   admin_password      = random_password.dtgtwy_password[count.index].result
   network_interface_ids = [azurerm_network_interface.dtgwnic[count.index].id]
+  encryption_at_host_enabled  = true
 
   os_disk {
     name                 = "${var.product}dtgtwy${count.index}-osdisk-${var.env}"
@@ -476,8 +477,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
 
   notification_settings {
     enabled         = false
-   
-  }
+     }
   tags                = var.common_tags
  }
 
