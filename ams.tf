@@ -175,12 +175,12 @@ resource "azapi_update_resource" "ams_auth" {
             useSystemAssignedIdentity = "false"
           }
 
-          id   = module.finalsa02_storage_account.storageaccount_id 
-          type = "Secondary",
-            identity = {
-            userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
-            useSystemAssignedIdentity = "false"
-          }
+          # id   = module.finalsa02_storage_account.storageaccount_id 
+          # type = "Secondary",
+          #   identity = {
+          #   userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
+          #   useSystemAssignedIdentity = "false"
+          # }
         }
       ]
     }
