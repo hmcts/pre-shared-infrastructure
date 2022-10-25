@@ -169,8 +169,7 @@ resource "azapi_update_resource" "ams_auth" {
       storageAccounts = [
         {
           id   = module.ingestsa02_storage_account.storageaccount_id 
-           
-          type = "Primary"
+          type = "Primary",
           identity = {
             userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
             useSystemAssignedIdentity = "false"
