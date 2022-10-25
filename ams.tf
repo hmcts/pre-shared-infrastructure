@@ -162,7 +162,7 @@ resource "null_resource" "amsstorageauth" {
   #   always_run = timestamp()
   # }
 
-  depends_on = [azurerm_media_services_account.ams02]
+  depends_on = [azurerm_media_services_account.ams02, azurerm_role_assignment.mi_storage_1, azurerm_role_assignment.mi_storage_2]
  provisioner "local-exec" {
    command = <<EOF
     az login --identity
@@ -175,7 +175,6 @@ resource "null_resource" "amsstorageauth" {
      EOF
    }
   
-
 }
 
 # resource "azapi_update_resource" "ingestsa_ams_auth" {
