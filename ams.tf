@@ -59,12 +59,12 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   name                          = "${var.product}ams02${var.env}"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.rg.name
-  
-  identity {
-    #  principal_id 
-    #  tenant_id 
-    type = "SystemAssigned"
-  } 
+  depends_on = [ azurerm_role_assignment.mi_storage_1, azurerm_role_assignment.mi_storage_2]
+  # identity {
+  #   #  principal_id 
+  #   #  tenant_id 
+  #   type = "SystemAssigned"
+  # } 
 
 
   storage_account {
