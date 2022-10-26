@@ -140,13 +140,24 @@ resource "azurerm_network_security_group" "bastionnsg" {
 }
 
 
-#Connect the security group to the network interface
-resource "azurerm_network_interface_security_group_association" "nsgassoc" {
-    count                     = var.num_vid_edit_vms
-    network_interface_id      = azurerm_network_interface.nic[count.index].id
-    network_security_group_id = azurerm_network_security_group.bastionnsg.id
+resource "azurerm_subnet_network_security_group_association" "datagateway" {
+  subnet_id                 = azurerm_subnet.datagateway_subnet.id
+  network_security_group_id = azurerm_network_security_group.bastionnsg.id
+}
 
-    depends_on = [
-      azurerm_windows_virtual_machine.vm
-    ]
-    }
+
+resource "azurerm_subnet_network_security_group_association" "videoeditvm" {
+  subnet_id                 = azurerm_subnet.videoeditvm_subnet.id
+  network_security_group_id = azurerm_network_security_group.bastionnsg.id
+}
+
+#Connect the security group to the network interface
+# resource "azurerm_network_interface_security_group_association" "nsgassoc" {
+#     count                     = var.num_vid_edit_vms
+#     network_interface_id      = azurerm_network_interface.nic[count.index].id
+#     network_security_group_id = azurerm_network_security_group.bastionnsg.id
+
+#     depends_on = [
+#       azurerm_windows_virtual_machine.vm
+#     ]
+#     }

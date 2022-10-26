@@ -131,3 +131,5 @@ resource "azurerm_template_deployment" "dtgtwwindows" {
 
   deployment_mode = "Incremental"
 }
+
+
