@@ -123,7 +123,7 @@ resource "null_resource" "amsid" {
   #   always_run = timestamp()
   # }
 
-  depends_on = [azurerm_media_services_account.ams02]
+  depends_on = [azurerm_media_services_account.ams02,azurerm_media_services_account.ams]
  provisioner "local-exec" {
    command = <<EOF
     az login --identity
@@ -172,51 +172,6 @@ resource "null_resource" "amsid" {
 #   },)
 # }
 
-# resource "azapi_update_resource" "ingestsa_ams_auth" {
-#   depends_on =  [null_resource.amsid] #[azapi_update_resource.ams]
-#   type        = "Microsoft.Media/mediaservices@2021-06-01"
-#   resource_id = azurerm_media_services_account.ams.id
- 
-#   body = jsonencode({
-#     properties = {
-#       storageAuthentication = "ManagedIdentity"
-#       storageAccounts = [
-#         {
-#           id   = module.ingestsa_storage_account.storageaccount_id 
-#           type = "Primary",
-#           identity = {
-#             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" #data.azurerm_user_assigned_identity.managed-identity.principal_id
-#             useSystemAssignedIdentity = "false"
-#           }
-
-#         }
-#       ]
-#     }
-#   })
-# }
-
-
-# resource "azapi_update_resource" "finalsa_ams_auth" {
-#   depends_on =  [null_resource.amsid] #[azapi_update_resource.ams]
-#   type        = "Microsoft.Media/mediaservices@2021-06-01"
-#   resource_id = azurerm_media_services_account.ams.id
- 
-#   body = jsonencode({
-#     properties = {
-#       storageAuthentication = "ManagedIdentity"
-#       storageAccounts = [
-#         {
-#           id   = module.finalsa_storage_account.storageaccount_id 
-#           type = "Secondary",
-#             identity = {
-#             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" #data.azurerm_user_assigned_identity.managed-identity.principal_id
-#             useSystemAssignedIdentity = "false"
-#           }
-#         }
-#       ]
-#     }
-#   })
-# }
 
 
 resource "azapi_update_resource" "ams02_auth" {
@@ -283,26 +238,5 @@ resource "azapi_update_resource" "ams_auth" {
 
 
 
-# resource "azapi_update_resource" "finalsa02_ams_auth" {
-#   depends_on =  [null_resource.amsid] #[azapi_update_resource.ams]
-#   type        = "Microsoft.Media/mediaservices@2021-06-01"
-#   resource_id = azurerm_media_services_account.ams02.id
- 
-#   body = jsonencode({
-#     properties = {
-#       storageAuthentication = "ManagedIdentity"
-#       storageAccounts = [
-#         {
-#           id   = module.finalsa02_storage_account.storageaccount_id 
-#           type = "Secondary",
-#             identity = {
-#             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" #data.azurerm_user_assigned_identity.managed-identity.principal_id
-#             useSystemAssignedIdentity = "false"
-#           }
-#         }
-#       ]
-#     }
-#   })
-# }
 
 
