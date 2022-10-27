@@ -20,14 +20,13 @@
  
   # storage_authentication_type   = "ManagedIdentity"
   # storage_authentication_type   = "System"
-  # lifecycle {
-  #   ignore_changes= [storage_authentication_type,identity]
-  # }
+  lifecycle {
+    ignore_changes= [storage_authentication_type,identity]
+  }
   tags         = var.common_tags
   
 }
 resource "azurerm_media_transform" "analysevideo" {
-
   name                        = "AnalyseVideos"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
@@ -60,12 +59,12 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   name                          = "${var.product}ams02${var.env}"
   location                      = var.location
   resource_group_name           = azurerm_resource_group.rg.name
-  
-  # identity {
-   #   principal_id 
- #     tenant_id 
-  #   type = "SystemAssigned"
-  # } 
+  depends_on = [ azurerm_role_assignment.mi_storage_1, azurerm_role_assignment.mi_storage_2]
+  identity {
+    #  principal_id 
+    #  tenant_id 
+    type = "SystemAssigned"
+  } 
 
 
   storage_account {
@@ -87,215 +86,190 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   
 }
 
-##TODO
-# resource "azapi_update_resource" "ams" {
-#   type        = "Microsoft.Media/mediaservices@2021-11-01"
-#   resource_id = azurerm_media_services_account.ams02.id
- 
-#   body = jsonencode({
-#     identity = {
-#       "type" = "UserAssigned",
-#       "userAssignedIdentities" = "data.azurerm_user_assigned_identity.managed-identity.name" 
-#       #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
-#       # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-#     # eb4aa503-5ffa-49ef-a69d-221e90eaf236
-#     # principal_id                     = "module.key-vault.managed_identity_objectid"
-#     }
-#   })
-# }
-
-# resource "azapi_update_resource" "ams_auth" {
-#   type        = "Microsoft.Media/mediaservices@2021-06-01"
-#   resource_id = azurerm_media_services_account.ams02.id
- 
-#   body = jsonencode({
-#     properties = {
-#       storageAuthentication = "ManagedIdentity"
-#       storageAccounts = [
-#         {
-#           id   = module.ingestsa02_storage_account.storageaccount_id 
-           
-#           type = "Primary"
-#           identity = {
-#             userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
-#             useSystemAssignedIdentity = "false"
-#           }
-#         }
-#       ]
-#     }
-#   })
-# }
 
 
+
+resource "azurerm_media_transform" "analysevideo02" {
+  name                        = "AnalyseVideos"
+  resource_group_name         = azurerm_resource_group.rg.name
+  media_services_account_name = azurerm_media_services_account.ams02.name
+  description                 = "Analyse Video"
+  output {
+    relative_priority = "Normal"
+    on_error_action   = "ContinueJob"
+    builtin_preset {
+      preset_name = "H264SingleBitrate1080p"
+    }
+  }
+}
+
+resource "azurerm_media_transform" "EncodeToMP402" {
+  name                        = "EncodeToMP4"
+  resource_group_name         = azurerm_resource_group.rg.name
+  media_services_account_name = azurerm_media_services_account.ams02.name
+
+  description                 = "Encode To MP4"
+  output {
+    relative_priority = "Normal"
+    on_error_action   = "ContinueJob"
+    builtin_preset {
+      preset_name = "H264SingleBitrate1080p"
+    }
+  }
+}
 
 resource "null_resource" "amsid" {
   # triggers = {
   #   always_run = timestamp()
   # }
 
-
-  depends_on = [azurerm_media_services_account.ams]
-   provisioner "local-exec" {
+  depends_on = [azurerm_media_services_account.ams02,azurerm_media_services_account.ams]
+ provisioner "local-exec" {
    command = <<EOF
     az login --identity
     az account set -s dts-sharedservices-${var.env}
     echo "ams account identity assign"
-    az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    #az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+     az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
   
-    #echo "ams account storage"
-    #az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-	  EOF
+     EOF
    }
     # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
     # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-	}
+     # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
 
-# #Storage Blob Data Contributor Role Assignment for Managed Identity
-resource "null_resource" "amsid2" {
+}
+
+
+resource "null_resource" "amsid_1" {
   # triggers = {
   #   always_run = timestamp()
   # }
 
-  depends_on = [azurerm_media_services_account.ams]
+  depends_on = [azurerm_media_services_account.ams02,azurerm_media_services_account.ams]
  provisioner "local-exec" {
    command = <<EOF
     az login --identity
-
     az account set -s dts-sharedservices-${var.env}
-    #echo "ams account identity assign"
-   # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    echo "ams account storage"
-    az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-	  EOF
-
-    } 
-
-     # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"# az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+    echo "ams account identity assign"
+     az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+  
+     EOF
+   }
+    # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
     # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-	
+    # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+
 }
 
-
-### AMS02 in Sandbox
-#  resource "azurerm_media_services_account" "ams02" {
-#   name                          = "${var.product}ams02${var.env}"
-#   location                      = "${var.location}"
-#   resource_group_name           = azurerm_resource_group.rg.name
-  
-#   # identity {
-#   #   type = "SystemAssigned"
-#   # } 
-
-
-#   storage_account {
-#     id         = module.ingestsa02_storage_account.storageaccount_id 
-#     is_primary = true
-#   }
-
-#   storage_account {
-#     id         = module.finalsa02_storage_account.storageaccount_id 
-#     is_primary = false
-#  }
- 
-  # storage_authentication_type   = "ManagedIdentity"
-  # storage_authentication_type   = "System"
-  # lifecycle {
-  #   ignore_changes= [storage_authentication_type,identity]
-  # }
-#   tags         = var.common_tags
-  
-# }
-# # resource "azurerm_media_transform" "analysevideo" {
-#   name                        = "AnalyseVideo"
-#   resource_group_name         = azurerm_resource_group.rg.name
-#   media_services_account_name = azurerm_media_services_account.ams.name
-
-#   description                 = "Analyse Video"
-#   output {
-#     relative_priority = "Normal"
-#     on_error_action   = "ContinueJob"
-#     builtin_preset {
-#       preset_name = "H264SingleBitrate1080p"
-#     }
-#   }
-# }
-
-
-
-# resource "azurerm_media_transform" "EncodeToMP4" {
-#   name                        = "EncodeToMP4"
-#   resource_group_name         = azurerm_resource_group.rg.name
-#   media_services_account_name = azurerm_media_services_account.ams.name
-
-
-#   description                 = "Encode To MP4"
-#   output {
-#     relative_priority = "Normal"
-#     on_error_action   = "ContinueJob"
-#     builtin_preset {
-#       preset_name = "H264SingleBitrate1080p"
-#     }
-#   }
-# }
-
-
-
-
-
-# # #Storage Blob Data Contributor Role Assignment for Managed Identity
-
-
-# resource "azurerm_role_assignment" "pre_amsblobdatacontributor_mi" {
-#   scope                            = azurerm_resource_group.rg.id
-#   role_definition_name             = "Storage Blob Data Contributor"
-#   principal_id                     = "module.key-vault.managed_identity_objectid" #azurerm_media_services_account.ams.identity[0].principal_id #var.pre_mi_principal_id
-
-#   principal_id                     = azurerm_media_services_account.ams.identity[0].principal_id #var.pre_mi_principal_id
-#   skip_service_principal_aad_check = true
-#   depends_on = [
-#     azurerm_media_services_account.ams
-#   ]
-# }
-
-# #Reader Role Assignment for Managed Identity
-# resource "azurerm_role_assignment" "pre_amsreader_mi" {
-#   scope                            = azurerm_resource_group.rg.id
-#   role_definition_name             = "Reader"
-#   principal_id                     ="module.key-vault.managed_identity_objectid" # azurerm_media_services_account.ams.identity[0].principal_id # var.pre_mi_principal_id 
-#   principal_id                     = azurerm_media_services_account.ams.identity[0].principal_id # var.pre_mi_principal_id 
-#   skip_service_principal_aad_check = true
-  
-#   depends_on = [
-#     azurerm_media_services_account.ams
-#   ]
-# }
-
-
-# resource "null_resource" "amsid" {
+# resource "null_resource" "amsstorageauth" {
 #   # triggers = {
 #   #   always_run = timestamp()
 #   # }
 
-#   depends_on = [azurerm_media_services_account.ams]
+#   depends_on = [azurerm_media_services_account.ams02, azurerm_role_assignment.mi_storage_1, azurerm_role_assignment.mi_storage_2]
 #  provisioner "local-exec" {
 #    command = <<EOF
 #     az login --identity
-#     az account set -s DTS-SHAREDSERVICES-${var.env}
-#     az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-#     az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-# 	  EOF
-#  }
-
+#     az account set -s dts-sharedservices-${var.env}
+#     echo "ams account identity assign"
+#     # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
+#     # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/prefinalsa${var.env}" 
+#     az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa02${var.env}"
+#     az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/prefinalsa02${var.env}"
+#      EOF
+#    }
+  
+# }
+# resource "azapi_update_resource" "ams" {
+#   type        = "Microsoft.Media/mediaservices@2021-11-01"
+#   resource_id = azurerm_media_services_account.ams.id
+ 
+#   body = jsonencode({
+#     identity = {
+#       "type" = "UserAssigned",
+#       "userAssignedIdentities" = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+#        }
+#   })
 # }
 
 
-#    az account set -s DTS-SHAREDSERVICES-${var.env}
-#   az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-#    az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-#	  EOF
+# resource "azapi_update_resource" "ams02" {
+#   type        = "Microsoft.Media/mediaservices@2021-11-01"
+#   resource_id = azurerm_media_services_account.ams02.id
+ 
+#   body = jsonencode({
+#     identity = {
+#       "type" = "UserAssigned",
+#       "userAssignedIdentities" = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+#        }
+#   },)
 # }
 
-#}
+
+
+resource "azapi_update_resource" "ams02_auth" {
+  depends_on = [null_resource.amsid] # [azapi_update_resource.ams] #
+  type        = "Microsoft.Media/mediaservices@2021-06-01"
+  resource_id = azurerm_media_services_account.ams02.id
+ 
+  body = jsonencode({
+    properties = {
+      storageAuthentication = "ManagedIdentity"
+      storageAccounts = [
+        {
+          id   = module.ingestsa02_storage_account.storageaccount_id 
+          type = "Primary",
+          identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+            useSystemAssignedIdentity = "false"
+          }
+        },
+
+        {
+          id   = module.finalsa02_storage_account.storageaccount_id 
+          type = "Secondary",
+            identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+            useSystemAssignedIdentity = "false"
+          }
+        }
+      ]
+    }
+  })
+}
+
+resource "azapi_update_resource" "ams_auth" {
+  depends_on = [null_resource.amsid] # [azapi_update_resource.ams] #
+  type        = "Microsoft.Media/mediaservices@2021-06-01"
+  resource_id = azurerm_media_services_account.ams.id
+ 
+  body = jsonencode({
+    properties = {
+      storageAuthentication = "ManagedIdentity"
+      storageAccounts = [
+        {
+          id   = module.ingestsa_storage_account.storageaccount_id 
+          type = "Primary",
+          identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+            useSystemAssignedIdentity = "false"
+          }
+        },
+
+        {
+          id   = module.finalsa_storage_account.storageaccount_id 
+          type = "Secondary",
+            identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+            useSystemAssignedIdentity = "false"
+          }
+        }
+      ]
+    }
+  })
+}
+
+
+
 
 
