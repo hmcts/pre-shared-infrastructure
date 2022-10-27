@@ -1,7 +1,7 @@
 ##------------------------------------------------------###################
 ##BASTION
 ##------------------------------------------------------###################
-resource "azurerm_public_ip" "pip" {
+resource "azurerm_public_ip" "pip" {oneagent-
   name                = "${var.product}-bastionpip-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -450,7 +450,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
 
 module "dynatrace-oneagent-dtgtway" {
   
-  source                     = "github.com/hmcts/terraform-module-dynatrace-oneagent"
+  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
   count                      = var.num_datagateway
   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
