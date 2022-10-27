@@ -129,6 +129,7 @@ resource "null_resource" "amsid" {
     az login --identity
     az account set -s dts-sharedservices-${var.env}
     echo "ams account identity assign"
+      # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
      az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
   
      EOF
@@ -218,7 +219,7 @@ resource "null_resource" "amsid" {
 # }
 
 
-resource "azapi_update_resource" "ingestsa02_ams_auth" {
+resource "azapi_update_resource" "ams02_auth" {
   depends_on = [null_resource.amsid] # [azapi_update_resource.ams] #
   type        = "Microsoft.Media/mediaservices@2021-06-01"
   resource_id = azurerm_media_services_account.ams02.id
@@ -248,6 +249,38 @@ resource "azapi_update_resource" "ingestsa02_ams_auth" {
     }
   })
 }
+
+resource "azapi_update_resource" "ams_auth" {
+  depends_on = [null_resource.amsid] # [azapi_update_resource.ams] #
+  type        = "Microsoft.Media/mediaservices@2021-06-01"
+  resource_id = azurerm_media_services_account.ams.id
+ 
+  body = jsonencode({
+    properties = {
+      storageAuthentication = "ManagedIdentity"
+      storageAccounts = [
+        {
+          id   = module.ingestsa_storage_account.storageaccount_id 
+          type = "Primary",
+          identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+            useSystemAssignedIdentity = "false"
+          }
+        },
+
+        {
+          id   = module.finalsa_storage_account.storageaccount_id 
+          type = "Secondary",
+            identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+            useSystemAssignedIdentity = "false"
+          }
+        }
+      ]
+    }
+  })
+}
+
 
 
 # resource "azapi_update_resource" "finalsa02_ams_auth" {
