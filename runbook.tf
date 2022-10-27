@@ -82,30 +82,30 @@ module "vm_automation_dtgtwy" {
  
 }
 
-data "azurerm_log_analytics_linked_service" "la_linked_service" {
-  provider            = azurerm.oms
-  resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
-  workspace_id        = module.log_analytics_workspace.workspace_id
-  #read_access_id      = azurerm_automation_account.pre-aa.id
-}
+# data "azurerm_log_analytics_linked_service" "la_linked_service" {
+#   provider            = azurerm.oms
+#   resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
+#   workspace_id        = module.log_analytics_workspace.workspace_id
+#   #read_access_id      = azurerm_automation_account.pre-aa.id
+# }
 
 
-resource "azurerm_log_analytics_solution" "update_solution" {
-  provider              = azurerm.oms
-  solution_name         = "Updates"
-  location              = var.location
-  resource_group_name   = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name #module.log_analytics_workspace.resource_group_name
-  workspace_resource_id = module.log_analytics_workspace.workspace_id
-  workspace_name        = module.log_analytics_workspace.name
-  plan {
-    publisher = "Microsoft"
-    product   = "OMSGallery/Updates"
-  }
-  depends_on = [
-    azurerm_log_analytics_linked_service.la_linked_service
-  ]
+# resource "azurerm_log_analytics_solution" "update_solution" {
+#   provider              = azurerm.oms
+#   solution_name         = "Updates"
+#   location              = var.location
+#   resource_group_name   = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name #module.log_analytics_workspace.resource_group_name
+#   workspace_resource_id = module.log_analytics_workspace.workspace_id
+#   workspace_name        = module.log_analytics_workspace.name
+#   plan {
+#     publisher = "Microsoft"
+#     product   = "OMSGallery/Updates"
+#   }
+#   # depends_on = [
+#   #   azurerm_log_analytics_linked_service.la_linked_service
+#   # ]
 
-}
+# # }
 
 # data "azurerm_automation_account" "pre-aa" {
 #   name                = "${var.product}-${var.env}-aa"
