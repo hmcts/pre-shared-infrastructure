@@ -219,7 +219,7 @@ resource "null_resource" "amsid" {
 
 
 resource "azapi_update_resource" "ingestsa02_ams_auth" {
-  depends_on = [azapi_update_resource.ams] #[null_resource.amsid] #
+  depends_on = [null_resource.amsid] # [azapi_update_resource.ams] #
   type        = "Microsoft.Media/mediaservices@2021-06-01"
   resource_id = azurerm_media_services_account.ams02.id
  
@@ -231,7 +231,7 @@ resource "azapi_update_resource" "ingestsa02_ams_auth" {
           id   = module.ingestsa02_storage_account.storageaccount_id 
           type = "Primary",
           identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" #data.azurerm_user_assigned_identity.managed-identity.principal_id
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
             useSystemAssignedIdentity = "false"
           }
         },
@@ -240,7 +240,7 @@ resource "azapi_update_resource" "ingestsa02_ams_auth" {
           id   = module.finalsa02_storage_account.storageaccount_id 
           type = "Secondary",
             identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" # data.azurerm_user_assigned_identity.managed-identity.principal_id
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
             useSystemAssignedIdentity = "false"
           }
         }
