@@ -86,25 +86,25 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   
 }
 
-# resource "azapi_update_resource" "ams" {
-#   type        = "Microsoft.Media/mediaservices@2021-11-01"
-#   resource_id = azurerm_media_services_account.ams02.id
+resource "azapi_update_resource" "ams" {
+  type        = "Microsoft.Media/mediaservices@2021-11-01"
+  resource_id = azurerm_media_services_account.ams02.id
  
-#   body = jsonencode({
-#     identity = {
-#       "type" = "UserAssigned",
-#       "userAssignedIdentities" = "/subscriptions/a8140a9e-f1b0-481f-a4de-09e2ee23f7ab/resourcegroups/managed-identities-sbox-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-sbox-mi"
-#       #"/subscriptions/a8140a9e-f1b0-481f-a4de-09e2ee23f7ab/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+  body = jsonencode({
+    identity = {
+      "type" = "UserAssigned",
+      "userAssignedIdentities" = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+      #"/subscriptions/a8140a9e-f1b0-481f-a4de-09e2ee23f7ab/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
       
       
-#       # "data.azurerm_user_assigned_identity.managed-identity.name" 
-#       #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
-#       # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-#     # eb4aa503-5ffa-49ef-a69d-221e90eaf236
-#     # principal_id                     = "module.key-vault.managed_identity_objectid"
-#     }
-#   })
-# }
+      # "data.azurerm_user_assigned_identity.managed-identity.name" 
+      #"eb4aa503-5ffa-49ef-a69d-221e90eaf236"
+      # "/subscriptions/DTS-SHAREDSERVICES-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+    # eb4aa503-5ffa-49ef-a69d-221e90eaf236
+    # principal_id                     = "module.key-vault.managed_identity_objectid"
+    }
+  })
+}
 
 
 resource "azurerm_media_transform" "analysevideo02" {
@@ -136,24 +136,24 @@ resource "azurerm_media_transform" "EncodeToMP402" {
   }
 }
 
-resource "null_resource" "amsid" {
-  # triggers = {
-  #   always_run = timestamp()
-  # }
+# resource "null_resource" "amsid" {
+#   # triggers = {
+#   #   always_run = timestamp()
+#   # }
 
-  depends_on = [azurerm_media_services_account.ams02]
- provisioner "local-exec" {
-   command = <<EOF
-    az login --identity
-    az account set -s dts-sharedservices-${var.env}
-    echo "ams account identity assign"
-    # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+#   depends_on = [azurerm_media_services_account.ams02]
+#  provisioner "local-exec" {
+#    command = <<EOF
+#     az login --identity
+#     az account set -s dts-sharedservices-${var.env}
+#     echo "ams account identity assign"
+#     # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+#     az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
   
-     EOF
-   }
-    # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
+#      EOF
+#    }
+#     # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+#     # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
 
 }
 
