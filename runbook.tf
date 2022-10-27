@@ -86,7 +86,7 @@ resource "azurerm_log_analytics_linked_service" "la_linked_service" {
   provider            = azurerm.oms
   resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
   workspace_id        = module.log_analytics_workspace.workspace_id
-  # read_access_id      = azurerm_automation_account.pre-aa.id
+  read_access_id      = azurerm_automation_account.pre-aa.id
 }
 
 
