@@ -240,18 +240,15 @@ resource "azapi_update_resource" "ingestsa02_ams_auth" {
             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" #data.azurerm_user_assigned_identity.managed-identity.principal_id
             useSystemAssignedIdentity = "false"
           }
+        },
+
+        {
+          id   = module.finalsa02_storage_account.storageaccount_id 
           type = "Secondary",
             identity = {
-            userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" # data.azurerm_user_assigned_identity.managed-identity.principal_id
             useSystemAssignedIdentity = "false"
           }
-
-          # id   = module.finalsa02_storage_account.storageaccount_id 
-          # type = "Secondary",
-          #   identity = {
-          #   userAssignedIdentity      = data.azurerm_user_assigned_identity.managed-identity.principal_id
-          #   useSystemAssignedIdentity = "false"
-          # }
         }
       ]
     }
