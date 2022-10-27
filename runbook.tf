@@ -82,30 +82,30 @@ module "vm_automation_dtgtwy" {
  
 }
 
-# data "azurerm_log_analytics_linked_service" "la_linked_service" {
-#   provider            = azurerm.oms
-#   resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
-#   workspace_id        = module.log_analytics_workspace.workspace_id
-#   # read_access_id      = azurerm_automation_account.pre-aa.id
-# }
+resource "azurerm_log_analytics_linked_service" "la_linked_service" {
+  provider            = azurerm.oms
+  resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
+  workspace_id        = module.log_analytics_workspace.workspace_id
+  # read_access_id      = azurerm_automation_account.pre-aa.id
+}
 
 
-# resource "azurerm_log_analytics_solution" "update_solution" {
-#   provider              = azurerm.oms
-#   solution_name         = "Updates"
-#   location              = var.location
-#   resource_group_name   = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name #module.log_analytics_workspace.resource_group_name
-#   workspace_resource_id = module.log_analytics_workspace.workspace_id
-#   workspace_name        = module.log_analytics_workspace.name
-#   plan {
-#     publisher = "Microsoft"
-#     product   = "OMSGallery/Updates"
-#   }
-#   depends_on = [
-#     azurerm_log_analytics_linked_service.la_linked_service
-#   ]
+resource "azurerm_log_analytics_solution" "update_solution" {
+  provider              = azurerm.oms
+  solution_name         = "Updates"
+  location              = var.location
+  resource_group_name   = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name #module.log_analytics_workspace.resource_group_name
+  workspace_resource_id = module.log_analytics_workspace.workspace_id
+  workspace_name        = module.log_analytics_workspace.name
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/Updates"
+  }
+  depends_on = [
+    azurerm_log_analytics_linked_service.la_linked_service
+  ]
 
-# }
+}
 
 # data "azurerm_automation_account" "pre-aa" {
 #   name                = "${var.product}-${var.env}-aa"
@@ -114,56 +114,3 @@ module "vm_automation_dtgtwy" {
 
 #  for vms in azurerm_windows_virtual_machine.vm : vms.name
 
-# resource "azurerm_automation_account" "automateacct" {
-#   name                = "${var.product}${var.env}-autoacc"
-#   location            = azurerm_resource_group.rg.location
-#   resource_group_name = azurerm_resource_group.rg.name
-
-#   sku {
-#     name = "Basic"
-#   }
-# }
-
-# resource "azurerm_automation_schedule" "scheduledstartvm" {
-#   name                    = "StartVM"
-#   resource_group_name     = azurerm_resource_group.rg.name
-#   automation_account_name = "roonbookautomation"
-#   frequency               = "Day"
-#   interval                = 1
-#   timezone                = "America/Chicago"
-#   start_time              = "2021-09-20T13:00:00Z"
-#   description             = "Run every day"
-# }
-
-# resource "azurerm_automation_job_schedule" "startvm_sched" {
-#   resource_group_name     = azurerm_resource_group.rg.name
-#   automation_account_name = "runbookautomation"
-#   schedule_name           = azurerm_automation_schedule.scheduledstartvm.name
-#   runbook_name            = azurerm_automation_runbook.startstopvmrunbook.name
-#    parameters = {
-#     action        = "Start"
-#   }
-#   depends_on = [azurerm_automation_schedule.scheduledstartvm]
-# }
-
-# resource "azurerm_automation_schedule" "scheduledstopvm" {
-#   name                    = "StopVM"
-#   resource_group_name     = azurerm_resource_group.rg.name
-#   automation_account_name = "testautomation"
-#   frequency               = "Day"
-#   interval                = 1
-#   timezone                = "America/Chicago"
-#   start_time              = "2021-09-20T10:30:00Z"
-#   description             = "Run every day"
-# }
-
-# resource "azurerm_automation_job_schedule" "stopvm_sched" {
-#   resource_group_name     = azurerm_resource_group.rg.name
-#   automation_account_name = "testautomation"
-#   schedule_name           = azurerm_automation_schedule.scheduledstopvm.name
-#   runbook_name            = azurerm_automation_runbook.startstopvmrunbook.name
-#   parameters = {
-#     action        = "Stop"
-#   }
-#   depends_on = [azurerm_automation_schedule.scheduledstopvm]
-# }

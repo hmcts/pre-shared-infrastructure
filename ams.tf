@@ -225,7 +225,7 @@ resource "azurerm_media_transform" "EncodeToMP402" {
 
 
 resource "azapi_update_resource" "ingestsa02_ams_auth" {
-  depends_on =  [null_resource.amsid] #[azapi_update_resource.ams]
+  depends_on = [azapi_update_resource.ams] #[null_resource.amsid] #
   type        = "Microsoft.Media/mediaservices@2021-06-01"
   resource_id = azurerm_media_services_account.ams02.id
  
