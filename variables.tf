@@ -149,17 +149,6 @@ variable "schedules" {
   default = []
 }
 
-
-# Dynatrace
-variable "dynatrace_server" {
-  description = "The server URL, if you want to configure an alternative communication endpoint."
-  type        = string
-  default     = null
-}
-
-
-
-
 variable "server" {
   default = null
 }
@@ -186,4 +175,3 @@ variable "hostgroup" {
 #   type    = string
 #   default = null
 # }
-
