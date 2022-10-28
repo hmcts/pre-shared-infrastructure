@@ -8,7 +8,7 @@ module "vnet_peer_hub_prod" {
   initiator_peer_name = (var.env == "ptl") || (var.env == "dev") ? "${local.hub["prod"][each.key].peering_name}-prod" : local.hub["prod"][each.key].peering_name
 
   target_peer_name = format("%s%s",
-    var.project,
+    var.product,
     var.env
   )
   initiator_vnet                = azurerm_virtual_network.vnet.name
@@ -33,7 +33,7 @@ module "vnet_peer_hub_nonprod" {
   initiator_peer_name = var.env == "ptl" ? "${local.hub["prod"][each.key].peering_name}-nonprod" : local.hub["prod"][each.key].peering_name
 
   target_peer_name = format("%s%s",
-    var.project,
+    var.product,
     var.env
   )
 
@@ -59,7 +59,7 @@ module "vnet_peer_hub_sbox" {
   initiator_peer_name = var.env == "ptl" ? "${local.hub["prod"][each.key].peering_name}-sbox" : local.hub["prod"][each.key].peering_name
 
   target_peer_name = format("%s%s",
-    var.project,
+    var.product,
     var.env
   )
 
@@ -85,7 +85,7 @@ module "vnet_peer_vpn" {
   initiator_peer_name = "vpn"
 
   target_peer_name = format("%s%s",
-    var.project,
+    var.product,
     var.env
   )
 
