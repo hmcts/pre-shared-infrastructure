@@ -113,7 +113,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   tenant_id    = data.azurerm_client_config.current.tenant_id
 #   object_id    = azurerm_storage_account.example.identity.0.principal_id
 
-=======
+
 
 // storage management Permissions
 # resource "azurerm_key_vault_access_policy" "storage" {
@@ -121,7 +121,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   tenant_id          = data.azurerm_client_config.current.tenant_id
 #   object_id          = module.sa_storage_account.storageaccount_identity
 
-=======
+
 
 // storage management Permissions
 # resource "azurerm_key_vault_access_policy" "storage" {
@@ -205,7 +205,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   }
 # }
 
-=======
+
 
 #   services {
 #     blob  = true
