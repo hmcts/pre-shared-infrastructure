@@ -113,6 +113,130 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   tenant_id    = data.azurerm_client_config.current.tenant_id
 #   object_id    = azurerm_storage_account.example.identity.0.principal_id
 
+
+
+// storage management Permissions
+# resource "azurerm_key_vault_access_policy" "storage" {
+#   key_vault_id       = module.key-vault.key_vault_id
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   object_id          = module.sa_storage_account.storageaccount_identity
+
+
+
+// storage management Permissions
+# resource "azurerm_key_vault_access_policy" "storage" {
+#   key_vault_id       = module.key-vault.key_vault_id
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   object_id          = module.sa_storage_account.storageaccount_identity
+
+
+#   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
+#   secret_permissions = ["Get"]
+#   depends_on         = [module.sa_storage_account,module.key-vault]
+# }
+
+### Customer Managed key
+
+# resource "azurerm_storage_account_customer_managed_key" "storagekey" {
+#   storage_account_id          = module.sa_storage_account.storageaccount_id
+#   key_vault_id                = module.key-vault.key_vault_id
+#   key_name                    = azurerm_key_vault_key.pre_kv_key.name
+#   key_version                 = "1"
+#   depends_on                  = [module.sa_storage_account,module.key-vault]
+# }
+
+# resource "azurerm_key_vault_managed_storage_account" "managedstorage" {
+#   name                          = "premanagedstorage"
+#   storage_account_id            = module.sa_storage_account.storageaccount_id
+#   key_vault_id                  = module.key-vault.key_vault_id
+#   storage_account_key           = "key2"
+#   regenerate_key_automatically  = true
+#   regeneration_period           = "P1D"
+#   depends_on                    = [module.sa_storage_account,module.key-vault]
+# }
+
+# resource "azurerm_role_assignment" "kv-mi" {
+#   scope                = module.sa_storage_account.storageaccount_id
+#   role_definition_name = "Storage Account Key Operator Service Role"
+#   principal_id         = data.azuread_service_principal.kv.id
+# }
+
+# resource "azurerm_key_vault_managed_storage_account_sas_token_definition" "kvsas" {
+#   name                       = "pre-managedstorage-kvsas"
+#   validity_period            = "P1D"
+#   managed_storage_account_id = azurerm_key_vault_managed_storage_account.managedstorage.id
+#   sas_template_uri           = data.azurerm_storage_account_sas.storagesas.sas
+#   sas_type                   = "account"
+# }
+
+
+# data "azurerm_storage_account_sas" "storagesas" {
+#   connection_string = module.sa_storage_account.storageaccount_primary_connection_string
+#   https_only        = true
+
+#   resource_types {
+#     service   = true
+#     container = false
+#     object    = false
+#   }
+
+
+#   services {
+#     blob  = true
+#     queue = false
+#     table = false
+#     file  = false
+#   }
+
+#   start  = "2021-04-30T00:00:00Z"
+#   expiry = "2022-09-06T00:00:00Z"
+
+#   permissions {
+#     read    = true
+#     write   = true
+#     delete  = false
+#     list    = false
+#     add     = true
+#     create  = true
+#     update  = false
+#     process = false
+#     tag     = false
+#     filter  = false
+#   }
+# }
+
+
+
+#   services {
+#     blob  = true
+#     queue = false
+#     table = false
+#     file  = false
+#   }
+
+#   start  = "2021-04-30T00:00:00Z"
+#   expiry = "2022-09-06T00:00:00Z"
+
+#   permissions {
+#     read    = true
+#     write   = true
+#     delete  = false
+#     list    = false
+#     add     = true
+#     create  = true
+#     update  = false
+#     process = false
+#     tag     = false
+#     filter  = false
+#   }
+# }
+
+# resource "azurerm_key_vault_access_policy" "storage" {
+#   key_vault_id = module.key-vault.key_vault_id
+#   tenant_id    = data.azurerm_client_config.current.tenant_id
+#   object_id    = azurerm_storage_account.example.identity.0.principal_id
+
+
 #   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
 #   secret_permissions = ["Get"]
 # }
@@ -150,7 +274,6 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   storage_permissions     = [ "List", "Set", "Delete", "Get", ]
 
 # }
-
 
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
@@ -328,10 +451,19 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 ### Dynatrace
 
 
+# data "azurerm_key_vault" "keyvault" {
+#   name                = module.key-vault.key_vault_name
+#   resource_group_name = azurerm_resource_group.rg.name
+# }
+
+
+
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
   resource_group_name = azurerm_resource_group.rg.name
 }
+
+### Dynatrace
 data "azurerm_key_vault_secret" "dynatrace-token" {
   name      = "dynatrace-token"
   key_vault_id = "${module.key-vault.key_vault_id}"
@@ -371,6 +503,82 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
   
 # }
 
+
+# resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = azurerm_disk_encryption_set.pre-des-west.identity.0.tenant_id
+#   object_id = azurerm_disk_encryption_set.pre-des-west.identity.0.principal_id
+
+#   key_permissions = [
+#     "Get",
+#     "WrapKey",
+#     "UnwrapKey"
+#   ]
+# }
+# resource "azurerm_key_vault_access_policy" "pre-deskv-user" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = data.azurerm_client_config.current.tenant_id
+#   object_id = data.azurerm_client_config.current.object_id
+
+#   key_permissions = [
+#     "Get",
+#     "Create",
+#     "Delete"
+#   ]
+# }
+
+#### West
+
+# resource "azurerm_disk_encryption_set" "pre-des-west" {
+#   name                = "pre-des-west-${var.env}"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   location            = "UKWest"
+#   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
+#   identity {
+#     type = "SystemAssigned"
+#   }
+#   tags                = var.common_tags
+# }
+
+# resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = azurerm_disk_encryption_set.pre-des-west.identity.0.tenant_id
+#   object_id = azurerm_disk_encryption_set.pre-des-west.identity.0.principal_id
+
+#   key_permissions = [
+#     "Get",
+#     "WrapKey",
+#     "UnwrapKey"
+#   ]
+# }
+# resource "azurerm_key_vault_access_policy" "pre-deskv-user" {
+#   key_vault_id = module.key-vault.key_vault_id
+
+#   tenant_id = data.azurerm_client_config.current.tenant_id
+#   object_id = data.azurerm_client_config.current.object_id
+
+#   key_permissions = [
+#     "Get",
+#     "Create",
+#     "Delete"
+#   ]
+# }
+
+#### West
+
+# resource "azurerm_disk_encryption_set" "pre-des-west" {
+#   name                = "pre-des-west-${var.env}"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   location            = "UKWest"
+#   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
+#   identity {
+#     type = "SystemAssigned"
+#   }
+#   tags                = var.common_tags
+# }
 
 # resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
 #   key_vault_id = module.key-vault.key_vault_id
