@@ -42,7 +42,7 @@ source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names                = azurerm_windows_virtual_machine.vm.*.name
+  vm_names                = azurerm_windows_virtual_machine.dtgtwyvm.*.name
   mi_principal_id         = azurerm_automation_account.pre-aa.identity[0].principal_id 
  
 }
@@ -117,4 +117,3 @@ module "vm_automation_dtgtwy" {
 #   ]
 
 # }
-
