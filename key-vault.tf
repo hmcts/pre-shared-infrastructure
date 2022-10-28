@@ -34,7 +34,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   tenant_id          = data.azurerm_client_config.current.tenant_id
 #   object_id          = module.sa_storage_account.storageaccount_identity
 
-=======
+
 
 // storage management Permissions
 # resource "azurerm_key_vault_access_policy" "storage" {
@@ -118,7 +118,7 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   }
 # }
 
-=======
+
 
 #   services {
 #     blob  = true
@@ -372,7 +372,7 @@ data "azurerm_key_vault_secret" "dynatrace-token" {
   key_vault_id = module.key-vault.key_vault_id
 
 ### Dynatrace
-
+}
 
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
