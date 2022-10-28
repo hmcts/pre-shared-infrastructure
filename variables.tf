@@ -185,4 +185,3 @@ variable "hostgroup" {
 #   type    = string
 #   default = null
 # }
-
