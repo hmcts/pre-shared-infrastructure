@@ -8,6 +8,7 @@
   # } 
 
 
+
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id 
     is_primary = true
@@ -27,10 +28,12 @@
   
 }
 resource "azurerm_media_transform" "analysevideo" {
-  name                        = "AnalyseVideos"
+  name                        = "AnalyseVideo"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
+
   description                 = "Analyse Video"
+
   output {
     relative_priority = "Normal"
     on_error_action   = "ContinueJob"
@@ -39,13 +42,16 @@ resource "azurerm_media_transform" "analysevideo" {
     }
   }
 }
+
 
 resource "azurerm_media_transform" "EncodeToMP4" {
   name                        = "EncodeToMP4"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
+
   description                 = "Encode To MP4"
+
   output {
     relative_priority = "Normal"
     on_error_action   = "ContinueJob"
@@ -54,6 +60,7 @@ resource "azurerm_media_transform" "EncodeToMP4" {
     }
   }
 }
+
 
  resource "azurerm_media_services_account" "ams02" {
   name                          = "${var.product}ams02${var.env}"
@@ -269,3 +276,8 @@ resource "azapi_update_resource" "ams_auth" {
   })
 }
 
+
+
+
+
+>>>>>>>>> Temporary merge branch 2

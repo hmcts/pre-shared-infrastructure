@@ -66,17 +66,10 @@ withInfraPipeline(product) {
   //   }
 
 
-  
-    before('buildinfra:demo') {
-    sh "az login --identity;az account set -s DTS-SHAREDSERVICES-demo;az feature register --namespace Microsoft.Compute --name EncryptionAtHost"
-    }
-    
-    after('buildinfra:demo') {
-    sh "echo 'AMS ID'"
-    sh addamsid("demo")
-  }
+<<<<<<<<< Temporary merge branch 1
+=========
 
-
+>>>>>>>>> Temporary merge branch 2
 
   before('buildinfra:stg') {
     sh "echo 'msunlock RG stg'"
