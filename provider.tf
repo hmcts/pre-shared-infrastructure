@@ -33,6 +33,16 @@ provider "azurerm" {
 terraform {
   backend "azurerm" {}
 }
+provider "azurerm" {
+  alias           = "oms"
+  subscription_id = module.log_analytics_workspace.subscription_id
+  features {}
+}
+
+data "azuread_service_principal" "kv" {
+  # display_name = "Azure Key Vault"
+  application_id = "cfa8b339-82a2-471a-a3c9-0fc0be7a4093"
+}
 
 
 provider "azurerm" {
@@ -150,3 +160,18 @@ provider "azurerm" {
 
 # azurerm_storage_account_customer_managed_key
 
+# resource "null_resource" "PowerShellScriptRunFirstTimeOnly" {
+#     provisioner "local-exec" {
+#         command = "Register-AzProviderFeature -FeatureName "EncryptionAtHost" -ProviderNamespace "Microsoft.Compute" "
+#         interpreter = ["PowerShell", "-Command"]
+#     }
+# }
+# resource "azurerm_resource_provider_registration" "EncryptionAtHost" {
+#   name = "Microsoft.Compute/EncryptionAtHost"
+#   #   feature {
+#   #   name       = "EncryptionAtHost"
+#   #   registered = true
+#   # }
+# }
+
+# azurerm_storage_account_customer_managed_key
