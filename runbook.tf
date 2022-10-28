@@ -17,10 +17,7 @@ resource "azurerm_automation_account" "pre-aa" {
 }
 
 module "vm_automation" {
-  # editvmcount = var.num_vid_edit_vms
-  # dtgtwycount = var.num_datagateway
-  # for_each = toset( ["${azurerm_windows_virtual_machine.vm.*.name}", "${azurerm_windows_virtual_machine.dtgtwyvm.*.name}"] )
-  source = "git::https://github.com/hmcts/cnp-module-automation-runbook-start-stop-vm"
+source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
 
   product                 = var.product
   env                     = var.env
@@ -50,10 +47,7 @@ module "vm_automation" {
 }
 
 module "vm_automation_dtgtwy" {
-  # editvmcount = var.num_vid_edit_vms
-  # dtgtwycount = var.num_datagateway
-  # for_each = toset( ["${azurerm_windows_virtual_machine.vm.*.name}", "${azurerm_windows_virtual_machine.dtgtwyvm.*.name}"] )
-  source = "git::https://github.com/hmcts/cnp-module-automation-runbook-start-stop-vm"
+  source = "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
 
   product                 = "${var.product}-dtgtwy"
   env                     = var.env
