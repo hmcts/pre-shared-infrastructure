@@ -5,7 +5,7 @@
 }
 
 data "azuread_groups" "groups" {
-  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+  display_names = var.env == "stg" ? ["DTS-PRE-VideoEditing-SecurityGroup-staging"] : ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
 data "azuread_groups" "pre-groups" {
@@ -68,7 +68,6 @@ resource "azurerm_role_assignment" "vm_user_aa" {
 }
 
 
-
 # DTS-PRE-VideoEditing-SecurityGroup-
 resource "azurerm_role_assignment" "vmuser_login" {
   for_each             = toset(data.azuread_groups.groups.object_ids)
@@ -91,7 +90,6 @@ resource "azurerm_role_assignment" "vmuser_login" {
 #   role_definition_name = "Reader"
 #   principal_id         = data.azuread_groups.groups.id
 
-r
 # # DTS-PRE-VideoEditing-SecurityGroup-
 # resource "azurerm_role_assignment" "vmuser_login" {
 #   for_each             = toset(data.azuread_groups.groups.object_ids)

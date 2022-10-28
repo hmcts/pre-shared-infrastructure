@@ -57,19 +57,5 @@ withInfraPipeline(product) {
     sh "echo 'unlock RG stg'"
     sh unlockRg("stg")
   }
-
-
-  // before('buildinfra:prod') {
-  //   sh "echo 'Enable Encrypt'"  
-  //   sh encrypthost("PROD")
-  // }
-  
-  // after('buildinfra:prod') {
-  //   sh "echo 'Enable AMS ID'"
-  //   sh addamsid("PROD")
-  // }
-  
-  // before('buildinfra:stg') {
-  //   sh "echo 'unlock RG stg'"
-  //   sh unlockRg("stg")
-  // }
+    
+}

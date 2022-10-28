@@ -17,11 +17,9 @@ resource "azurerm_automation_account" "pre-aa" {
   tags = var.common_tags
 }
 
-
-
 module "vm_automation" {
-  source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
 
+source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
   product                 = var.product
   env                     = var.env
   location                = var.location
@@ -81,7 +79,6 @@ module "vm_automation_dtgtwy" {
 }
 
 
-
 # data "azurerm_log_analytics_linked_service" "la_linked_service" {
 #   provider            = azurerm.oms
 #   resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
@@ -100,7 +97,6 @@ module "vm_automation_dtgtwy" {
 #     publisher = "Microsoft"
 #     product   = "OMSGallery/Updates"
 #   }
-
 
 #   # depends_on = [
 #   #   azurerm_log_analytics_linked_service.la_linked_service
@@ -121,3 +117,4 @@ module "vm_automation_dtgtwy" {
 #   ]
 
 # }
+
