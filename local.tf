@@ -38,6 +38,8 @@ locals {
 
   hubs_to_peer = {
     sbox = ["sbox"]
+    sandbox = ["sbox"]
+    nonprod = ["dev", "test", "ithc", "demo", "stg"]
     prod = ["prod", "nonprod", "sbox"]
   }
 
