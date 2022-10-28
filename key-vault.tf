@@ -34,6 +34,15 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   tenant_id          = data.azurerm_client_config.current.tenant_id
 #   object_id          = module.sa_storage_account.storageaccount_identity
 
+
+
+// storage management Permissions
+# resource "azurerm_key_vault_access_policy" "storage" {
+#   key_vault_id       = module.key-vault.key_vault_id
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   object_id          = module.sa_storage_account.storageaccount_identity
+
+
 #   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
 #   secret_permissions = ["Get"]
 #   depends_on         = [module.sa_storage_account,module.key-vault]
@@ -83,6 +92,33 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #     container = false
 #     object    = false
 #   }
+
+
+#   services {
+#     blob  = true
+#     queue = false
+#     table = false
+#     file  = false
+#   }
+
+#   start  = "2021-04-30T00:00:00Z"
+#   expiry = "2022-09-06T00:00:00Z"
+
+#   permissions {
+#     read    = true
+#     write   = true
+#     delete  = false
+#     list    = false
+#     add     = true
+#     create  = true
+#     update  = false
+#     process = false
+#     tag     = false
+#     filter  = false
+#   }
+# }
+
+
 
 #   services {
 #     blob  = true
@@ -346,14 +382,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #   tenant_id = data.azurerm_client_config.current.tenant_id
 #   object_id = var.jenkins_AAD_objectId # data.azurerm_client_config.current.object_id
 
-#   key_permissions = [
-#     "Get",
-#     "Create",
-#     "Delete",
-#     "WrapKey",
-#     "UnwrapKey"
-#   ]
-# }
+### Dynatrace
 
 
 #### West
@@ -361,12 +390,6 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 # resource "azurerm_disk_encryption_set" "pre-des-west" {
 #   name                = "pre-des-west-${var.env}"
 #   resource_group_name = azurerm_resource_group.rg.name
-#   location            = "UKWest"
-#   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
-#   identity {
-#     type = "SystemAssigned"
-#   }
-#   tags                = var.common_tags
 # }
 
 # resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {

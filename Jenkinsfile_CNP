@@ -51,11 +51,58 @@ withInfraPipeline(product) {
   //   }
 
 
+  // before('buildinfra:demo') {
+  //   sh "echo 'Enable Encrypt'"  
+  //   sh encrypthost("demo")
+  // }
+  
+  // after('buildinfra:demo') {
+  //   sh "echo 'Enable AMS ID'"
+  //   sh addamsid("demo")
+  // }
+
+  // before('buildinfra:stg') {
+  //   sh "echo 'Enable Encrypt'"  
+  //   sh encrypthost("STG")
+  // }
+  
+  // after('buildinfra:stg') {
+  //   sh "echo 'Enable AMS ID'"
+  //   sh addamsid("STG")
+  // }
+
+  // before('buildinfra:test') {
+  //   sh "echo 'Enable VM disk Encrypt'"  
+  //   sh encrypthost("TEST")
+  // }
+  
+  // after('buildinfra:test') {
+  //   sh "echo 'Enable AMS ID'"
+  //   sh addamsid("TEST")
+  // }
+
+
 
 
   before('buildinfra:stg') {
     sh "echo 'unlock RG stg'"
     sh unlockRg("stg")
   }
+
+  // before('buildinfra:prod') {
+  //   sh "echo 'Enable Encrypt'"  
+  //   sh encrypthost("PROD")
+  // }
+  
+  // after('buildinfra:prod') {
+  //   sh "echo 'Enable AMS ID'"
+  //   sh addamsid("PROD")
+  // }
+  
+  // before('buildinfra:stg') {
+  //   sh "echo 'unlock RG stg'"
+  //   sh unlockRg("stg")
+  // }
+
     
 }
