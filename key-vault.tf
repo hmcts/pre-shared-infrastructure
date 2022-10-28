@@ -330,12 +330,12 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 #   resource_group_name = azurerm_resource_group.rg.name
 # }
 data "azurerm_key_vault_secret" "dynatrace-token" {
-  name      = "dynatrace-oneagent-token"
+  name      = "dynatrace-token"
   key_vault_id = module.key-vault.key_vault_id
   }
 
 data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
-  name      = "dynatrace-oneagent-tenant-id"
+  name      = "dynatrace-tenant-id"
   key_vault_id = module.key-vault.key_vault_id
   }
 
