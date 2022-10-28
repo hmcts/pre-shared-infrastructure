@@ -106,7 +106,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
  identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = data.azurerm_user_assigned_identity.managed-identity.managed_identity_id
+    identity_ids = module.key-vault.managed_identity_id
     }
 
   timezone                     = "GMT Standard Time"
@@ -117,7 +117,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   # # hotpatching_enabled          = true
   tags                         = var.common_tags
 
-  depends_on = [ null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des, data.azurerm_user_assigned_identity.managed-identity ]
+  depends_on = [ null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des ]
 }
 
 # # Datadisk 
@@ -320,7 +320,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   }
    identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = data.azurerm_user_assigned_identity.managed-identity.managed_identity_id
+    identity_ids = module.key-vault.managed_identity_id
     }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
@@ -335,7 +335,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   # patch_mode                   = "AutomaticByOS"
   # hotpatching_enabled          = true
   tags                         = var.common_tags
-  depends_on = [ module.key-vault, data.azurerm_user_assigned_identity.managed-identity]
+  depends_on = [ module.key-vault]
 }
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
