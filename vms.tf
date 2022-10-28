@@ -480,30 +480,28 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
  }
 
 
+#####
+## Os Disk Encryption"
+#####
 
-# data "azurerm_log_analytics_workspace" "loganalytics" {
-#   provider            = azurerm.oms
-#   name                = module.log_analytics_workspace.name
-#   resource_group_name = module.log_analytics_workspace.resource_group_name
+# resource "azurerm_virtual_machine_extension" "disk-encryption" {
+#   name                 = "DiskEncryption"
+#   location             = "${local.location}"
+#   resource_group_name  = "${azurerm_resource_group.environment-rg.name}"
+#   virtual_machine_name = "${azurerm_virtual_machine.server.name}"
+#   publisher            = "Microsoft.Azure.Security"
+#   type                 = "AzureDiskEncryption"
+#   type_handler_version = "2.2"
+
+#   settings = <<SETTINGS
+# {
+#   "EncryptionOperation": "EnableEncryption",
+#   "KeyVaultURL": "https://${local.vaultname}.vault.azure.net",
+#   "KeyVaultResourceId": "/subscriptions/${local.subscriptionid}/resourceGroups/${local.vaultresourcegroup}/providers/Microsoft.KeyVault/vaults/${local.vaultname}",
+#   "KeyEncryptionKeyURL": "https://${local.vaultname}.vault.azure.net/keys/${local.keyname}/${local.keyversion}",
+#   "KekVaultResourceId": "/subscriptions/${local.subscriptionid}/resourceGroups/${local.vaultresourcegroup}/providers/Microsoft.KeyVault/vaults/${local.vaultname}",
+#   "KeyEncryptionAlgorithm": "RSA-OAEP",
+#   "VolumeType": "All"
 # }
-
-# data "azurerm_key_vault_secret" "kv" {
-#   name                = module.key-vault.key_vault_name
-#   key_vault_id        = module.key-vault.key_vault_id
-#   # resource_group_name = azurerm_resource_group.rg.name
-# }
-
-
-
-##DynaTrace
-
-# module "dynatrace-oneagent" {
-  
-#   source               = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master" 
-#   count                = var.num_vid_edit_vms
-#   tenant_id            = "${data.azurerm_key_vault_secret.kv.dynatrace-token.value}"
-#   token                = "${data.azurerm_key_vault_secret.kv.dynatrace-tenant-id.value}"
-#   virtual_machine_os   = "windows"
-#   virtual_machine_type = "vm"
-#   virtual_machine_id   = "${azurerm_windows_virtual_machine.vm.*.id[count.index]}"
+# SETTINGS
 # }

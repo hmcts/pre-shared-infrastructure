@@ -14,7 +14,6 @@ variable "jenkins_AAD_objectId" {}
 
 
 
-
 variable "common_tags" {
   type = map(string)
 }
@@ -83,7 +82,6 @@ variable "lawRetention" {
     type = number
     default = "30" 
 }
->>>>>>>>> Temporary merge branch 2
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
@@ -156,5 +154,24 @@ variable "server" {
 }
 variable "hostgroup" {
   default = null
->>>>>>>>> Temporary merge branch 2
 }
+
+# # Dynatrace OneAgent
+# variable "cnp_vault_rg" {
+#   type = string
+#   default = "cnp-core-infra"
+# }
+
+# variable "cnp_vault_sub" {
+#   type = string
+#   default = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+# }
+
+# variable "dynatrace_tenant_id" {
+#   type = string
+# }
+
+# variable "dynatrace_server" {
+#   type    = string
+#   default = null
+# }
