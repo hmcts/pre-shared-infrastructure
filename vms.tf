@@ -106,7 +106,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
  identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = data.azurerm_user_assigned_identity.managed-identity.principal_id
+    identity_ids = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
     }
 
   timezone                     = "GMT Standard Time"
@@ -320,7 +320,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   }
    identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = data.azurerm_user_assigned_identity.managed-identity.principal_id
+    identity_ids = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
     }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
