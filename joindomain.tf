@@ -42,6 +42,7 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 #   PROTECTED_SETTINGS
 # }
 
+
 # TODO aad group ID 
 # resource "azurerm_role_assignment" "rbac_user_login" {
 #   for_each             = toset(data.azuread_groups.groups.object_ids)
