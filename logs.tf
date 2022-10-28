@@ -289,4 +289,3 @@ module "log_analytics_workspace" {
 #     product   = "VMInsights"
 #   }
 # }
-
