@@ -5,9 +5,12 @@
 }
 
 data "azuread_groups" "groups" {
-  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+  display_names = var.env == "stg" ? ["DTS-PRE-VideoEditing-SecurityGroup-staging"] : ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
+data "azuread_groups" "pre-groups" {
+  display_names = ["DTS Pre-recorded Evidence"] 
+}
 #Storage Blob Data Contributor Role Assignment for Managed Identity
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
   scope                            = azurerm_resource_group.rg.id
@@ -16,6 +19,33 @@ resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
   skip_service_principal_aad_check = true
 }
 
+# resource "azurerm_role_assignment" "mi_storage_1" {
+#   scope                            = module.ingestsa_storage_account.storageaccount_id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+#   skip_service_principal_aad_check = true
+# }
+
+# resource "azurerm_role_assignment" "mi_storage_2" {
+#   scope                            = module.finalsa_storage_account.storageaccount_id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+#   skip_service_principal_aad_check = true
+# }
+
+resource "azurerm_role_assignment" "mi_storage_1" {
+  scope                            = module.ingestsa02_storage_account.storageaccount_id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "mi_storage_2" {
+  scope                            = module.finalsa02_storage_account.storageaccount_id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  skip_service_principal_aad_check = true
+}
 resource "azurerm_role_assignment" "pre_reader_mi" {
   scope                            = azurerm_resource_group.rg.id
   role_definition_name             = "Reader"
@@ -36,6 +66,31 @@ resource "azurerm_role_assignment" "vm_user_aa" {
   principal_id                     = azurerm_automation_account.pre-aa.identity[0].principal_id 
   skip_service_principal_aad_check = true
 }
+
+
+
+# DTS-PRE-VideoEditing-SecurityGroup-
+resource "azurerm_role_assignment" "vmuser_login" {
+  for_each             = toset(data.azuread_groups.groups.object_ids)
+  scope                = azurerm_resource_group.rg.id
+  role_definition_name = "Virtual Machine User Login"
+  principal_id         = each.value
+}
+
+# resource "azurerm_role_assignment" "vmnic_reader" {
+#   count                = var.num_vid_edit_vms
+#   scope                = azurerm_network_interface.nic[count.index].id
+#   role_definition_name = "Reader"
+#   principal_id         = data.azuread_groups.groups.id
+# }
+
+# resource "azurerm_role_assignment" "vm_reader" {
+#   count                = var.num_vid_edit_vms
+#   # for_each             = toset(data.azuread_groups.groups.object_ids)
+#   scope                = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   role_definition_name = "Reader"
+#   principal_id         = data.azuread_groups.groups.id
+
 
 # # DTS-PRE-VideoEditing-SecurityGroup-
 # resource "azurerm_role_assignment" "vmuser_login" {
