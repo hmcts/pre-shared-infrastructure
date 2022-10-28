@@ -51,4 +51,3 @@ data "azuread_service_principal" "kv" {
 # }
 
 # azurerm_storage_account_customer_managed_key
-
