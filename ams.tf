@@ -280,4 +280,4 @@ resource "azapi_update_resource" "ams_auth" {
 
 
 
->>>>>>>>> Temporary merge branch 2
+
