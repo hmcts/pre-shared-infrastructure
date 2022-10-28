@@ -5,6 +5,7 @@
 }
 
 data "azuread_groups" "groups" {
+
   display_names = var.env == "stg" ? ["DTS-PRE-VideoEditing-SecurityGroup-staging"] : ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
@@ -67,6 +68,7 @@ resource "azurerm_role_assignment" "vm_user_aa" {
   skip_service_principal_aad_check = true
 }
 
+
 # DTS-PRE-VideoEditing-SecurityGroup-
 resource "azurerm_role_assignment" "vmuser_login" {
   for_each             = toset(data.azuread_groups.groups.object_ids)
@@ -88,6 +90,33 @@ resource "azurerm_role_assignment" "vmuser_login" {
 #   scope                = azurerm_windows_virtual_machine.vm.*.id[count.index]
 #   role_definition_name = "Reader"
 #   principal_id         = data.azuread_groups.groups.id
+
+
+# # DTS-PRE-VideoEditing-SecurityGroup-
+# resource "azurerm_role_assignment" "vmuser_login" {
+#   for_each             = toset(data.azuread_groups.groups.object_ids)
+#   scope                = azurerm_resource_group.rg.id
+#   role_definition_name = "Virtual Machine User Login"
+#   principal_id         = each.value
+# }
+
+# resource "azurerm_role_assignment" "vmnic_reader" {
+  
+#   for_each             = toset(data.azuread_groups.groups.object_ids)
+#   # count                = var.num_vid_edit_vms
+#   scope                = azurerm_network_interface.nic.*.id
+#   role_definition_name = "Reader"
+#   principal_id         = each.value
+# }
+
+# resource "azurerm_role_assignment" "vm_reader" {
+#   # count                = var.num_vid_edit_vms
+#   for_each             = toset(data.azuread_groups.groups.object_ids)
+#   scope                = azurerm_windows_virtual_machine.vm.*.id #[count.index]
+#   role_definition_name = "Reader"
+#   principal_id         = each.value
+
+
 # }
 
 # resource "azurerm_role_assignment" "bastion_reader" {
