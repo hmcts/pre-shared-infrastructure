@@ -42,3 +42,4 @@ resource "azurerm_resource_group" "rg" {
     #     "clientId": "fbdb4489-f3dd-4762-a32c-8ccb680691c6"
 
 
+

@@ -38,7 +38,16 @@ locals {
 
   hubs_to_peer = {
     sbox = ["sbox"]
+    sandbox = ["sbox"]
+    nonprod = ["dev", "test", "ithc", "demo", "stg"]
     prod = ["prod", "nonprod", "sbox"]
+  }
+
+  hub_to_env_mapping = {
+    sbox = ["sbox", "ptlsbox"]
+    sandbox = ["sbox", "ptlsbox"]
+    nonprod =["dev", "test", "ithc", "demo", "stg", "ptl"]
+    prod = ["prod", "nonprod", "sbox", "ptl"]
   }
 
   regions = [
