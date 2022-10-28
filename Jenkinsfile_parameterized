@@ -24,11 +24,13 @@ static String (String envName){
     return amsstorageid;
 }
 withParameterizedInfraPipeline(params.PRODUCT_NAME, 'sbox', 'sbox') {
+
 //  
   // before('buildinfra:sbox') {
   //   sh "echo 'amsid'"
   //   sh amsstorageid("sbox")
   // }
+
 
 
 }
