@@ -44,10 +44,10 @@ locals {
   }
 
   hub_to_env_mapping = {
-    sbox = ["sbox"]
-    sandbox = ["sbox"]
-    nonprod =["dev", "test", "ithc", "demo", "stg"]
-    prod = ["prod", "nonprod", "sbox"]
+    sbox = ["sbox", "ptlsbox"]
+    sandbox = ["sbox", "ptlsbox"]
+    nonprod =["dev", "test", "ithc", "demo", "stg", "ptl"]
+    prod = ["prod", "nonprod", "sbox", "ptl"]
   }
 
   regions = [
