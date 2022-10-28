@@ -158,12 +158,12 @@ variable "dynatrace_server" {
 }
 
 
+
 variable "server" {
   default = null
 }
 variable "hostgroup" {
   default = null
-
 }
 
 # # Dynatrace OneAgent
@@ -185,3 +185,4 @@ variable "hostgroup" {
 #   type    = string
 #   default = null
 # }
+
