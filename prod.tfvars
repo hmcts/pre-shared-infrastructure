@@ -1,5 +1,5 @@
-sa_account_tier             = "Premium"
-sa_replication_type         = "GRS"
+# sa_account_tier             = "Premium"
+# sa_replication_type         = "GRS"
 vnet_address_space          = "10.101.3.0/24"
 video_edit_vm_snet_address  = "10.101.3.0/26"    
 privatendpt_snet_address    = "10.101.3.64/26"   

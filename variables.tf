@@ -13,6 +13,7 @@ variable "env" {}
 variable "jenkins_AAD_objectId" {}
 
 
+
 variable "common_tags" {
   type = map(string)
 }
@@ -43,7 +44,7 @@ variable "num_vid_edit_vms" {
   default = 2
 }
 variable "vid_edit_vm_spec" {
-  default = "Standard_E2s_v4"
+  default = "Standard_E4s_v4"
  }
 variable "num_datagateway" {
   default = 2
@@ -70,6 +71,17 @@ variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
 variable "devops_admin" {}
+# variable "providernamespace" {}
+# variable "featurename" {}
+variable "lawSku" {
+    type = string 
+    default = "PerGB2018"
+}
+
+variable "lawRetention" {
+    type = number
+    default = "30" 
+}
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
@@ -125,3 +137,51 @@ variable "ip_rules" {
                 "82.12.61.131", #Ayisha
                 ]
 }
+
+variable "schedules" {
+  type = list(object({
+    name      = string
+    frequency = string
+    interval  = number
+    run_time  = string
+    start_vm  = bool
+  }))
+  default = []
+}
+
+
+# Dynatrace
+variable "dynatrace_server" {
+  description = "The server URL, if you want to configure an alternative communication endpoint."
+  type        = string
+  default     = null
+}
+
+
+
+variable "server" {
+  default = null
+}
+variable "hostgroup" {
+  default = null
+}
+
+# # Dynatrace OneAgent
+# variable "cnp_vault_rg" {
+#   type = string
+#   default = "cnp-core-infra"
+# }
+
+# variable "cnp_vault_sub" {
+#   type = string
+#   default = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+# }
+
+# variable "dynatrace_tenant_id" {
+#   type = string
+# }
+
+# variable "dynatrace_server" {
+#   type    = string
+#   default = null
+# }
