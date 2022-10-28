@@ -45,11 +45,11 @@ data "azuread_service_principal" "kv" {
 }
 
 
-provider "azurerm" {
-  alias           = "oms"
-  subscription_id = module.log_analytics_workspace.subscription_id
-  features {}
-}
+# provider "azurerm" {
+#   alias           = "oms"
+#   subscription_id = module.log_analytics_workspace.subscription_id
+#   features {}
+# }
 
 provider "azurerm" {
   alias                      = "cnp"
@@ -58,10 +58,10 @@ provider "azurerm" {
   subscription_id = var.cnp_vault_sub
 }
 
-data "azuread_service_principal" "kv" {
-  # display_name = "Azure Key Vault"
-  application_id = "cfa8b339-82a2-471a-a3c9-0fc0be7a4093"
-}
+# data "azuread_service_principal" "kv" {
+#   # display_name = "Azure Key Vault"
+#   application_id = "cfa8b339-82a2-471a-a3c9-0fc0be7a4093"
+# }
 
 provider "azurerm" {
   features {}
