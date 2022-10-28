@@ -93,9 +93,13 @@ module "vnet_peer_vpn" {
   initiator_vnet_resource_group = azurerm_resource_group.rg.name
   initiator_vnet_subscription   = var.subscription
 
-  target_vnet                = data.azurerm_virtual_network.vpn.name
-  target_vnet_resource_group = data.azurerm_virtual_network.vpn.resource_group_name
+  target_vnet                = "core-infra-vnet-mgmt"
+  target_vnet_resource_group = "rg-mgmt"
   target_vnet_subscription   = "ed302caf-ec27-4c64-a05e-85731c3ce90e"
+
+  # target_vnet                = data.azurerm_virtual_network.vpn.name
+  # target_vnet_resource_group = data.azurerm_virtual_network.vpn.resource_group_name
+  # target_vnet_subscription   = "ed302caf-ec27-4c64-a05e-85731c3ce90e"
 
   providers = {
     azurerm.initiator = azurerm
