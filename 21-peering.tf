@@ -1,7 +1,7 @@
 # HUB
 
 module "vnet_peer_hub_prod" {
-  source = "../../modules/vnet_peering"
+  source = "./modules/vnet_peering/"
 
   for_each = toset([for r in local.regions : r if contains(local.hub_to_env_mapping["prod"], var.environment)])
 
@@ -26,7 +26,7 @@ module "vnet_peer_hub_prod" {
 }
 
 module "vnet_peer_hub_nonprod" {
-  source = "../../modules/vnet_peering"
+  source = "./modules/vnet_peering/"
 
   for_each = toset([for r in local.regions : r if contains(local.hub_to_env_mapping["nonprod"], var.environment)])
 
@@ -52,7 +52,7 @@ module "vnet_peer_hub_nonprod" {
 }
 
 module "vnet_peer_hub_sbox" {
-  source = "../../modules/vnet_peering"
+  source = "./modules/vnet_peering/"
 
   for_each = toset([for r in local.regions : r if contains(local.hub_to_env_mapping["sbox"], var.environment)])
 
@@ -80,7 +80,7 @@ module "vnet_peer_hub_sbox" {
 # VPN
 
 module "vnet_peer_vpn" {
-  source = "../../modules/vnet_peering"
+  source = "./modules/vnet_peering/"
 
   initiator_peer_name = "vpn"
 
