@@ -1,4 +1,3 @@
-
 ##------------------------------------------------------###################
 ##BASTION
 ##------------------------------------------------------###################
@@ -47,7 +46,6 @@ resource "null_resource" "Encryption" {
     az account set -s dts-sharedservices-${var.env}
     echo "Enable Encryption at Host"
     az feature register --namespace Microsoft.Compute --name EncryptionAtHost
-
 	  EOF
    }
 }
@@ -452,7 +450,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
 
 module "dynatrace-oneagent-dtgtway" {
   
-  source                     = "github.com/hmcts/terraform-module-dynatrace-oneagent"
+  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
   count                      = var.num_datagateway
   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
