@@ -43,6 +43,13 @@ locals {
     prod = ["prod", "nonprod", "sbox"]
   }
 
+  hub_to_env_mapping = {
+    sbox = ["sbox"]
+    sandbox = ["sbox"]
+    nonprod =["dev", "test", "ithc", "demo", "stg"]
+    prod = ["prod", "nonprod", "sbox"]
+  }
+
   regions = [
     "ukSouth",
     "ukWest"
