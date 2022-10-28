@@ -157,8 +157,6 @@ variable "dynatrace_server" {
   default     = null
 }
 
-
-
 variable "server" {
   default = null
 }

@@ -11,6 +11,7 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
   tags                       = var.common_tags
 
 
+
 #   depends_on = [
 #     azurerm_virtual_machine_extension.joinactivedirectory[0]
 #   ]
@@ -60,4 +61,5 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 #   scope                = azurerm_windows_virtual_machine.vm.id
 #   role_definition_name = "Virtual Machine Administrator Login"
 # }
+
 

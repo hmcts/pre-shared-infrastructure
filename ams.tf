@@ -168,7 +168,6 @@ resource "null_resource" "amsid_1" {
 
 }
 
-
 # resource "null_resource" "amsstorageauth" {
 #   # triggers = {
 #   #   always_run = timestamp()
@@ -245,6 +244,7 @@ resource "azapi_update_resource" "ams02_auth" {
     }
   })
 
+
 }
 
 
@@ -278,7 +278,4 @@ resource "azapi_update_resource" "ams_auth" {
     }
   })
 }
-
-
-
 

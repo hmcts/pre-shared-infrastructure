@@ -6,16 +6,27 @@ resource "azurerm_automation_account" "pre-aa" {
 
  identity {
     type         = "SystemAssigned"
-
-    
+   
     }
 
    tags = var.common_tags
 }
 
 module "vm_automation" {
-
 source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
+
+    # UserAssigned"
+    # identity_ids = data.azurerm_user_assigned_identity.managed-identity.principal_id
+    }
+  # lifecycle {
+  #   ignore_changes= [ name]
+  # }
+  tags = var.common_tags
+}
+
+module "vm_automation" {
+
+  source = "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
   product                 = var.product
   env                     = var.env
   location                = var.location
@@ -115,6 +126,4 @@ module "vm_automation_dtgtwy" {
 #   ]
 
 # }
-
-
 
