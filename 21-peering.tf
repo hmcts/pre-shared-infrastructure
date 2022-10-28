@@ -13,7 +13,7 @@ module "vnet_peer_hub_prod" {
   )
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_resource_group.rg.name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = local.hub["prod"][each.key].name
   target_vnet_resource_group = local.hub["prod"][each.key].name
@@ -39,7 +39,7 @@ module "vnet_peer_hub_nonprod" {
 
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_resource_group.rg.name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = local.hub["nonprod"][each.key].name
   target_vnet_resource_group = local.hub["nonprod"][each.key].name
@@ -65,7 +65,7 @@ module "vnet_peer_hub_sbox" {
 
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_resource_group.rg.name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = local.hub["sbox"][each.key].name
   target_vnet_resource_group = local.hub["sbox"][each.key].name
@@ -91,7 +91,7 @@ module "vnet_peer_vpn" {
 
   initiator_vnet                = azurerm_virtual_network.vnet.name
   initiator_vnet_resource_group = azurerm_resource_group.rg.name
-  initiator_vnet_subscription   = var.subscription_id
+  initiator_vnet_subscription   = var.subscription
 
   target_vnet                = data.azurerm_virtual_network.vpn.name
   target_vnet_resource_group = data.azurerm_virtual_network.vpn.resource_group_name
