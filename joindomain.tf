@@ -59,5 +59,3 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 #   scope                = azurerm_windows_virtual_machine.vm.id
 #   role_definition_name = "Virtual Machine Administrator Login"
 # }
-
-
