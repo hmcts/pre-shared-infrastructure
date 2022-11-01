@@ -68,7 +68,6 @@ resource "azurerm_role_assignment" "vm_user_aa" {
 }
 
 
-
 # DTS-PRE-VideoEditing-SecurityGroup-
 resource "azurerm_role_assignment" "vmuser_login" {
   for_each             = toset(data.azuread_groups.groups.object_ids)
@@ -90,7 +89,6 @@ resource "azurerm_role_assignment" "vmuser_login" {
 #   scope                = azurerm_windows_virtual_machine.vm.*.id[count.index]
 #   role_definition_name = "Reader"
 #   principal_id         = data.azuread_groups.groups.id
-
 
 # # DTS-PRE-VideoEditing-SecurityGroup-
 # resource "azurerm_role_assignment" "vmuser_login" {
@@ -144,5 +142,4 @@ resource "azurerm_role_assignment" "vmuser_login" {
 #   principal_id                     = var.power_app_user_oid 
 #   skip_service_principal_aad_check = true
 # }
-
 
