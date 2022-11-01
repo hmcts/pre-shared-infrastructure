@@ -143,4 +143,3 @@ resource "azurerm_role_assignment" "vmuser_login" {
 #   skip_service_principal_aad_check = true
 # }
 
-
