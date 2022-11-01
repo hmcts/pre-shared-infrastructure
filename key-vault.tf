@@ -408,7 +408,7 @@ resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
 
 
 #################################
-##  Disk Encryption 
+##  Disk Encryption
 ###############################
 
 resource "azurerm_key_vault_key" "pre_kv_key" {
@@ -719,9 +719,9 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 ###################################################
 # #                PRIVATE ENDPOINT                 #
 # ###################################################
-# network_acls {
-#   bypass                     = "AzureServices"
-#   default_action             = "Deny"
-#   virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
-#   ip_rules                   = []
-#  }
+  # network_acls {
+  #   bypass                     = "AzureServices"
+  #   default_action             = "Deny"
+  #   virtual_network_subnet_ids = [azurerm_subnet.endpoint_subnet.id, azurerm_subnet.videoeditvm_subnet.id, azurerm_subnet.datagateway_subnet.id]
+  #   ip_rules                   = []
+  #  }
