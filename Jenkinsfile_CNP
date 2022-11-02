@@ -66,10 +66,6 @@ withInfraPipeline(product) {
   //   }
 
 
-<<<<<<<<< Temporary merge branch 1
-=========
-
->>>>>>>>> Temporary merge branch 2
 
 
   before('buildinfra:stg') {
