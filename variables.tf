@@ -135,6 +135,7 @@ variable "ip_rules" {
                 "62.31.90.131", #Indy
                 "82.44.92.214", #Shehreem
                 "82.12.61.131", #Ayisha
+                "86.179.180.2", #Darren
                 ]
 }
 
