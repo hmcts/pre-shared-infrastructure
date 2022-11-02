@@ -136,4 +136,3 @@ resource "azurerm_role_assignment" "vmuser_login" {
 #   principal_id                     = var.power_app_user_oid
 #   skip_service_principal_aad_check = true
 # }
-
