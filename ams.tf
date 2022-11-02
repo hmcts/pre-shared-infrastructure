@@ -62,6 +62,10 @@ resource "azurerm_media_transform" "EncodeToMP4" {
 }
 
 
+
+
+
+
  resource "azurerm_media_services_account" "ams02" {
   name                          = "${var.product}ams02${var.env}"
   location                      = var.location
@@ -130,7 +134,7 @@ resource "null_resource" "amsid" {
   #   always_run = timestamp()
   # }
 
-  depends_on = [azurerm_media_services_account.ams02,azurerm_media_services_account.ams]
+  depends_on = [azurerm_media_services_account.ams]
  provisioner "local-exec" {
    command = <<EOF
     az login --identity
@@ -140,19 +144,16 @@ resource "null_resource" "amsid" {
   
      EOF
    }
-    # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-     # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-
+   
 }
 
 
-resource "null_resource" "amsid_1" {
+resource "null_resource" "amsid_02" {
   # triggers = {
   #   always_run = timestamp()
   # }
 
-  depends_on = [azurerm_media_services_account.ams02,azurerm_media_services_account.ams]
+  depends_on = [azurerm_media_services_account.ams02]
  provisioner "local-exec" {
    command = <<EOF
     az login --identity
@@ -162,10 +163,6 @@ resource "null_resource" "amsid_1" {
   
      EOF
    }
-    # az ams account identity assign --name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-    # az ams account storage set-authentication --account-name ${azurerm_media_services_account.ams02.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/dts-sharedservices-${var.env}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" --storage-auth ManagedIdentity --storage-account-id "/subscriptions/dts-sharedservices-${var.env}/resourceGroups/${azurerm_resource_group.rg.name}/providers/Microsoft.Storage/storageAccounts/preingestsa${var.env}" 
-    # az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-
 }
 
 # resource "null_resource" "amsstorageauth" {
@@ -215,7 +212,7 @@ resource "null_resource" "amsid_1" {
 
 
 resource "azapi_update_resource" "ams02_auth" {
-  depends_on = [null_resource.amsid] # [azapi_update_resource.ams] #
+  depends_on = [null_resource.amsid_02] # [azapi_update_resource.ams] #
   type        = "Microsoft.Media/mediaservices@2021-06-01"
   resource_id = azurerm_media_services_account.ams02.id
  
