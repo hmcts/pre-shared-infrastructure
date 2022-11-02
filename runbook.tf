@@ -6,6 +6,7 @@ resource "azurerm_automation_account" "pre-aa" {
 
  identity {
     type         = "SystemAssigned"
+
     # UserAssigned"
     # identity_ids = data.azurerm_user_assigned_identity.managed-identity.principal_id
     }
@@ -17,8 +18,8 @@ resource "azurerm_automation_account" "pre-aa" {
 }
 
 module "vm_automation" {
-source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
 
+source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
   product                 = var.product
   env                     = var.env
   location                = var.location
@@ -43,8 +44,8 @@ source =  "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=
   resource_group_name     = azurerm_resource_group.rg.name
   vm_names                = azurerm_windows_virtual_machine.vm.*.name
   mi_principal_id         = azurerm_automation_account.pre-aa.identity[0].principal_id 
- 
 }
+
 
 module "vm_automation_dtgtwy" {
   source = "git@github.com:hmcts/cnp-module-automation-runbook-start-stop-vm?ref=master"
@@ -76,11 +77,11 @@ module "vm_automation_dtgtwy" {
  
 }
 
+
 # data "azurerm_log_analytics_linked_service" "la_linked_service" {
 #   provider            = azurerm.oms
 #   resource_group_name = data.azurerm_log_analytics_workspace.loganalytics.resource_group_name
 #   workspace_id        = module.log_analytics_workspace.workspace_id
-#   #read_access_id      = azurerm_automation_account.pre-aa.id
 # }
 
 
@@ -95,6 +96,7 @@ module "vm_automation_dtgtwy" {
 #     publisher = "Microsoft"
 #     product   = "OMSGallery/Updates"
 #   }
+
 #   # depends_on = [
 #   #   azurerm_log_analytics_linked_service.la_linked_service
 #   # ]
@@ -108,3 +110,9 @@ module "vm_automation_dtgtwy" {
 
 #  for vms in azurerm_windows_virtual_machine.vm : vms.name
 
+
+#   depends_on = [
+#     azurerm_log_analytics_linked_service.la_linked_service
+#   ]
+
+# }
