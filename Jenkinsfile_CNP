@@ -71,6 +71,7 @@ withInfraPipeline(product) {
 
 >>>>>>>>> Temporary merge branch 2
 
+
   before('buildinfra:stg') {
     sh "echo 'msunlock RG stg'"
     sh unlockRg("stg")
