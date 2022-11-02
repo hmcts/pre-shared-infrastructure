@@ -106,7 +106,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
  identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = data.azurerm_user_assigned_identity.managed-identity.managed_identity_id
+    identity_ids = module.key-vault.managed_identity_id
     }
 
   timezone                     = "GMT Standard Time"
@@ -117,7 +117,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   # # hotpatching_enabled          = true
   tags                         = var.common_tags
 
-  depends_on = [ null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des, data.azurerm_user_assigned_identity.managed-identity ]
+  depends_on = [ null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des ]
 }
 
 # # Datadisk 
@@ -320,7 +320,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   }
    identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = data.azurerm_user_assigned_identity.managed-identity.managed_identity_id
+    identity_ids = module.key-vault.managed_identity_id
     }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
@@ -335,7 +335,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   # patch_mode                   = "AutomaticByOS"
   # hotpatching_enabled          = true
   tags                         = var.common_tags
-  depends_on = [ module.key-vault, data.azurerm_user_assigned_identity.managed-identity]
+  depends_on = [ module.key-vault]
 }
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
@@ -419,34 +419,34 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
 }
 
 
-resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
-  depends_on = [  azurerm_virtual_machine_extension.dtgtwydaa-agent  ]
-  name                  = "MicrosoftMonitoringAgent"  # Must be called this
-  count                 = var.num_datagateway
-  virtual_machine_id    = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-  publisher             = "Microsoft.EnterpriseCloud.Monitoring"
-  type                  = "MicrosoftMonitoringAgent"
-  type_handler_version  =  "1.0"
-  tags                    = var.common_tags
-  # Not yet supported
-  # automatic_upgrade_enabled  = true
-  # auto_upgrade_minor_version = true
-  settings = <<SETTINGS
-    {
-        "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
-        "azureResourceId": "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}",
-        "stopOnMultipleConnections": "false"
-    }
-  SETTINGS
-  protected_settings = <<PROTECTED_SETTINGS
-    {
-      "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
-    }
-  PROTECTED_SETTINGS
-  lifecycle {
-    ignore_changes= [name ]
-  }
-}
+# resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
+#   depends_on = [  azurerm_virtual_machine_extension.dtgtwydaa-agent  ]
+#   name                  = "MicrosoftMonitoringAgent"  # Must be called this
+#   count                 = var.num_datagateway
+#   virtual_machine_id    = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+#   publisher             = "Microsoft.EnterpriseCloud.Monitoring"
+#   type                  = "MicrosoftMonitoringAgent"
+#   type_handler_version  =  "1.0"
+#   tags                    = var.common_tags
+#   # Not yet supported
+#   # automatic_upgrade_enabled  = true
+#   # auto_upgrade_minor_version = true
+#   settings = <<SETTINGS
+#     {
+#         "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
+#         "azureResourceId": "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}",
+#         "stopOnMultipleConnections": "false"
+#     }
+#   SETTINGS
+#   protected_settings = <<PROTECTED_SETTINGS
+#     {
+#       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
+#     }
+#   PROTECTED_SETTINGS
+#   lifecycle {
+#     ignore_changes= [name ]
+#   }
+# }
 
 module "dynatrace-oneagent-dtgtway" {
   
