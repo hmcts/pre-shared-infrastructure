@@ -14,7 +14,7 @@ module "key-vault" {
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled    = true
   network_acls_default_action = "Deny"
-  network_acls_allowed_ip_ranges = [ "80.44.26.160" ]
+  network_acls_allowed_ip_ranges = [ "80.44.26.160", "86.179.180.2" ]
 }
 
 // Power App Permissions
