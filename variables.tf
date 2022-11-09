@@ -1,6 +1,7 @@
 variable "product" {
   default = "pre"
 }
+
 variable "location" {
   default = "UK South"
 }
@@ -186,3 +187,39 @@ variable "hostgroup" {
 #   type    = string
 #   default = null
 # }
+
+# Addtional variables required for postgres
+
+variable "component" {
+  default = "pre"
+}
+
+variable "project" {
+  default = "sds"
+}
+
+variable "pgsql_admin_username" {
+  default = "psqladmin"
+}
+
+variable "pg_databases" {
+  description = "Databases to be deployed"
+}
+
+variable "database_name" {
+  default = "pre_db"
+}
+
+variable "pgsql_sku" {
+  default = "GP_Gen5_2"
+}
+
+variable "pgsql_storage_mb" {
+  default = "32768"
+}
+
+variable "zone" {
+  description = "Availability Zone for Postgres"
+  default = "1"
+}
+
