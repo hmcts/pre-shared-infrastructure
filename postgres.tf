@@ -51,7 +51,7 @@ module "data-store-db-v14" {
   pgsql_admin_username = var.pgsql_admin_username
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
-  zone                 = var.zone
+  #zone                 = var.zone #removed as getting error so can't be a valid param
 
   #subscription       = var.subscription this gets interpolated
   # high availability built in. var.zone sets the primary
