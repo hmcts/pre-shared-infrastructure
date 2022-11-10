@@ -31,7 +31,7 @@ resource "azurerm_key_vault_secret" "POSTGRES-PASS" {
 ////////////////////////////////
 
 module "data-store-db-v14" {
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
   product   = var.product
