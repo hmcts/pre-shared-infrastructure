@@ -81,4 +81,21 @@ resource "azurerm_private_endpoint" "endpoint" {
   location            = var.location
   resource_group_name = data.azurerm_resource_group.ss_resource_group.name
   subnet_id           = data.azurerm_subnet.ss_subnet_pre_postgresql.id
+
+  private_service_connection {
+    name                           = format("%s-%s-privateserviceconnection", var.product, var.env)
+    private_connection_resource_id = azurerm_postgresql_server.endpoint.id
+    is_manual_connection           = false
+    subresource_names              = ["postgresqlServer"]
+  }
+  tags = var.common_tags
+}
+
+resource "azurerm_private_dns_a_record" "dns_a" {
+  provider            = azurerm.DNS
+  name                = format("%s-%s-postgres-privlink", var.product, var.env)
+  zone_name           = var.PrivateDNSZone
+  resource_group_name = var.DNSResGroup
+  ttl                 = 10
+  records             = [azurerm_private_endpoint.endpoint.private_service_connection.0.private_ip_address]
 }
