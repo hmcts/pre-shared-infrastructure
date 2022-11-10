@@ -1,9 +1,9 @@
 
-# Get the key vault
-data "azurerm_key_vault" "keyvault" {
-  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
-  resource_group_name = azurerm_resource_group.rg.name
-}
+# Get the key vault (removing as this has been declared elsewhere)
+#data "azurerm_key_vault" "keyvault" {
+#  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
+#  resource_group_name = azurerm_resource_group.rg.name
+#}
 
 ////////////////////////////////
 // Populate Vault with DB info (the password is output from the module, the username is a standard var)
