@@ -207,11 +207,11 @@ variable "pg_databases" {
 }
 
 variable "database_name" {
-  default = "pre_db"
+  default = "pre-db"
 }
 
 variable "pgsql_sku" {
-  default = "GP_Gen5_2"
+  default = "GP_Standard_D2s_v3"
 }
 
 variable "pgsql_storage_mb" {
