@@ -39,11 +39,11 @@ module "data-store-db-v14" {
   project   = var.project
 
   common_tags     = var.common_tags
-  name            = "${var.database_name}-${var.env}"
+  name            = "${var.database_name}" #-${var.env}" removed as it looks like env gets added in root module
   pgsql_databases = var.pg_databases
 
   pgsql_delegated_subnet_id = data.azurerm_subnet.ss_subnet_pre_postgresql.id
-  pgsql_version             = "14.4"
+  pgsql_version             = "14"
   backup_retention_days     = 35
 
   location             = var.location
