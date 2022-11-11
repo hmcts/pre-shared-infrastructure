@@ -84,7 +84,7 @@ resource "azurerm_private_endpoint" "endpoint" {
 
   private_service_connection {
     name                           = format("%s-%s-privateserviceconnection", var.product, var.env)
-    private_connection_resource_id = azurerm_postgresql_server.endpoint.id
+    private_connection_resource_id = module.data-store-db-v14.instance_id #output from https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
     is_manual_connection           = false
     subresource_names              = ["postgresqlServer"]
   }
