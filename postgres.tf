@@ -110,7 +110,7 @@ resource "azurerm_route_table" "postgres" {
 
   route {
     name           = "route1"
-    address_prefix = data.azurerm_subnet.ss_subnet_pre_postgresql.0.address_prefixes
+    address_prefix = tolist(data.azurerm_subnet.ss_subnet_pre_postgresql.address_prefixes)[0]
     next_hop_type  = "VnetLocal"
   }
 
