@@ -152,7 +152,7 @@ data "dns_a_record_set" "postgres" {
 # Add the A record for postgres
 resource "azurerm_private_dns_a_record" "dns_a" {
   provider            = azurerm.DNS
-  name                = var.database_name-var.env
+  name                = format("%s-%s", var.database_name, var.env)
   zone_name           = var.PrivateDNSZone
   resource_group_name = var.DNSResGroup
   ttl                 = 10
