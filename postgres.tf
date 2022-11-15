@@ -144,10 +144,10 @@ data "dns_a_record_set" "postgres" {
   host = module.data-store-db-v14.fqdn
 }
 
-output "postgres_addrs" {
-  value = join(",", data.dns_a_record_set.postgres.addrs)
-  depends_on          = [module.data-store-db-v14]
-}
+#output "postgres_addrs" {
+#  value = join(",", data.dns_a_record_set.postgres.addrs)
+#  depends_on          = [module.data-store-db-v14]
+#}
 
 # Add the A record for postgres
 resource "azurerm_private_dns_a_record" "dns_a" {
@@ -156,6 +156,6 @@ resource "azurerm_private_dns_a_record" "dns_a" {
   zone_name           = var.PrivateDNSZone
   resource_group_name = var.DNSResGroup
   ttl                 = 10
-  records             = output.postgres_addrs
+  records             = data.dns_a_record_set.postgres.addrs
   #depends_on          = [module.data-store-db-v14]
 }
