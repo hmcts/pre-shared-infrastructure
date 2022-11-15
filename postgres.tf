@@ -139,6 +139,16 @@ resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
 
+# Get IP from FQDN of postgres flexi server
+data "dns_a_record_set" "postgres" {
+  host = module.data-store-db-v14.fqdn
+}
+
+output "postgres_addrs" {
+  value = join(",", data.dns_a_record_set.postgres.addrs)
+  depends_on          = [module.data-store-db-v14]
+}
+
 # Add the A record for postgres
 resource "azurerm_private_dns_a_record" "dns_a" {
   provider            = azurerm.DNS
@@ -146,6 +156,6 @@ resource "azurerm_private_dns_a_record" "dns_a" {
   zone_name           = var.PrivateDNSZone
   resource_group_name = var.DNSResGroup
   ttl                 = 10
-  records             = data.azurerm_postgresql_flexible_server.var.database_name.private_ip_address
+  records             = output.postgres_addrs
   #depends_on          = [module.data-store-db-v14]
 }
