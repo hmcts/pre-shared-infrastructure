@@ -5,7 +5,7 @@ terraform {
       version = ">= 3.3.0"
     }
     random = {
-      source = "hashicorp/random"
+      source  = "hashicorp/random"
       version = ">= 2.2.0"
     }
     azapi = {
@@ -96,6 +96,14 @@ provider "azurerm" {
   skip_provider_registration = "true"
   features {}
   alias = "private-dns-private-endpoint"
+}
+
+#Adding DNS provider required for deploying postgres on platops network and using platops dns
+provider "azurerm" {
+  alias                      = "DNS"
+  skip_provider_registration = "true"
+  features {}
+  subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
 }
 
 provider "azurerm" {

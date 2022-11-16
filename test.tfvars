@@ -19,3 +19,8 @@ dts_pre_app_admin           = "d055ba21-5814-4278-8752-aaffa7eaac62"
 devops_admin                = "64e5c2d9-c957-4038-873f-7eb4e6250c7d"
 pre_mi_principal_id         = "d03f73e6-40ed-40a2-a0ec-059286505905"
 pre_mi_tenant_id            = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+pg_databases = [
+  {
+    name : "pre-pdb-test"
+  }
+]
