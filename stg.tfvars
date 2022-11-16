@@ -21,3 +21,8 @@ pre_mi_tenant_id            = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 # dts_cft_developers_oid      = "b2a1773c-a5ae-48b5-b5fa-95b0e05eee05"
 # dts_pre_project_admin       = "56a29187-3d5f-4262-99d6-c635776e0eac"
 # # env                         = "stg"
+pg_databases = [
+  {
+    name : "pre-pdb-stg"
+  }
+]

@@ -1,6 +1,7 @@
 variable "product" {
   default = "pre"
 }
+
 variable "location" {
   default = "UK South"
 }
@@ -186,3 +187,48 @@ variable "hostgroup" {
 #   type    = string
 #   default = null
 # }
+
+# Addtional variables required for postgres
+
+variable "component" {
+  default = "pre"
+}
+
+variable "project" {
+  default = "sds"
+}
+
+variable "pgsql_admin_username" {
+  default = "psqladmin"
+}
+
+variable "pg_databases" {
+  description = "Databases to be deployed"
+}
+
+variable "database_name" {
+  default = "pre-db"
+}
+
+variable "pgsql_sku" {
+  default = "GP_Standard_D2s_v3"
+}
+
+variable "pgsql_storage_mb" {
+  default = "32768"
+}
+
+variable "zone" {
+  description = "Availability Zone for Postgres"
+  default = "1"
+}
+
+# Private DNS zone configuration (for postgres)
+variable "DNSResGroup" {
+  default = "core-infra-intsvc-rg"
+}
+
+variable "PrivateDNSZone" {
+  default = "privatelink.postgres.database.azure.com"
+}
+
