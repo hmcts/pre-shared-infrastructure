@@ -75,6 +75,11 @@ data "azurerm_subnet" "ss_subnet_pre_postgresql" {
   resource_group_name  = data.azurerm_resource_group.ss_resource_group.name
 }
 
+// Resource Group (this is the resource group where the privatelink.postgres.database.azure.com resides)
+data "azurerm_resource_group" "privatelink_resource_group" {
+  name = "core-infra-intsvc-rg"
+}
+
 #remove section below, cannot use private endpoints with postgres flexi server, replace with routing and peering
 // Private endpoint for postgres in platops resource group
 #resource "azurerm_private_endpoint" "endpoint" {
@@ -134,7 +139,7 @@ resource "azurerm_virtual_network_peering" "dg_postgres" {
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)
 resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)
-  resource_group_name   = var.DNSResGroup
+  resource_group_name   = data.azurerm_resource_group.privatelink_resource_group.name
   private_dns_zone_name = var.PrivateDNSZone
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
