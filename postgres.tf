@@ -134,7 +134,7 @@ resource "azurerm_virtual_network_peering" "dg_postgres" {
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)
 resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)
-  resource_group_name   = azurerm_resource_group.rg.name
+  resource_group_name   = var.DNSResGroup
   private_dns_zone_name = var.PrivateDNSZone
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
