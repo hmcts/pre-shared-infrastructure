@@ -78,7 +78,6 @@ data "azurerm_subnet" "ss_subnet_pre_postgresql" {
 // Resource Group (this is the resource group where the privatelink.postgres.database.azure.com resides)
 data "azurerm_resource_group" "privatelink_resource_group" {
   name = "core-infra-intsvc-rg"
-  #id = "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg" #invalid key
 }
 
 #remove section below, cannot use private endpoints with postgres flexi server, replace with routing and peering
@@ -160,7 +159,7 @@ resource "azurerm_private_dns_a_record" "dns_a" {
   provider            = azurerm.DNS
   name                = format("%s-%s", var.database_name, var.env)
   zone_name           = var.PrivateDNSZone
-  resource_group_name = var.DNSResGroup
+  resource_group_name = data.azurerm_resource_group.privatelink_resource_group.name
   ttl                 = 10
   records             = data.dns_a_record_set.postgres.addrs
   #depends_on          = [module.data-store-db-v14]
