@@ -77,8 +77,8 @@ data "azurerm_subnet" "ss_subnet_pre_postgresql" {
 
 // Resource Group (this is the resource group where the privatelink.postgres.database.azure.com resides)
 data "azurerm_resource_group" "privatelink_resource_group" {
-  name = "core-infra-intsvc-rg" # going to try with resource id
-  id = "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg"
+  name = "core-infra-intsvc-rg"
+  #id = "/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg" #invalid key
 }
 
 #remove section below, cannot use private endpoints with postgres flexi server, replace with routing and peering
