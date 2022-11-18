@@ -137,7 +137,6 @@ resource "azurerm_virtual_network_peering" "from-hub" {
   remote_virtual_network_id    = azurerm_resource_group.rg.id
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
-
 }
 
 resource "azurerm_route_table" "postgres" {
