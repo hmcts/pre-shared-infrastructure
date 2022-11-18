@@ -32,14 +32,14 @@ module "data_store_db_v14" {
 
 #take this from input as no output for this value
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  name         = "${var.component}-POSTGRES_USER"
+  name         = "${var.component}-POSTGRES-USER"
   value        = var.pgsql_admin_username
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 #https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
 resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
-  name         = "${var.component}-POSTGRES_PASS"
+  name         = "${var.component}-POSTGRES-PASS"
   value        = module.data_store_db_v14.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
