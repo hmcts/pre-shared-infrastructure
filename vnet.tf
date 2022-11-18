@@ -148,7 +148,7 @@ resource "azurerm_route_table" "postgres" {
 
   route {
     name           = "default"
-    address_prefix = ["0.0.0.0/0"]
+    address_prefix = "0.0.0.0/0"
     next_hop_type  = "VirtualAppliance"
     next_hop_in_ip_address = local.hub[local.hub_name].ukSouth.next_hop_ip
   }
