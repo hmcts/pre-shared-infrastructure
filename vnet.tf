@@ -128,13 +128,13 @@ resource "azurerm_virtual_network_peering" "to_hub" {
 
 }
 
-resource "azurerm_virtual_network_peering" "from-hub" {
+resource "azurerm_virtual_network_peering" "from_hub" {
   provider = azurerm.hub
 
   name                         = "pre-recorded-evidence"
   resource_group_name          = local.hub[local.hub_name].ukSouth.name
   virtual_network_name         = local.hub[local.hub_name].ukSouth.name
-  remote_virtual_network_id    = azurerm_resource_group.rg.id
+  remote_virtual_network_id    = azurerm_virtual_network.vnet.id
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
 }
