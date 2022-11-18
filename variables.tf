@@ -223,9 +223,9 @@ variable "zone" {
 }
 
 # Private DNS zone configuration (for postgres)
-variable "DNSResGroup" {
-  default = "core-infra-intsvc-rg"
-}
+#variable "DNSResGroup" {
+#  default = "core-infra-intsvc-rg"
+#}
 
 variable "PrivateDNSZone" {
   default = "privatelink.postgres.database.azure.com"
