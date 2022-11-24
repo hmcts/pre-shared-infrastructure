@@ -16,6 +16,7 @@ dts_pre_app_admin          = "d055ba21-5814-4278-8752-aaffa7eaac62"
 devops_admin               = "a0c6507c-299c-4f46-96c6-8275d2c45242"
 pre_mi_principal_id        = "d03f73e6-40ed-40a2-a0ec-059286505905"
 pre_mi_tenant_id           = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+dts_pre_appreg_oid         = "1043d250-96eb-4cc3-af11-3215cfbf028f"
 
 # managed_oid                 = "2008e85a-5f57-4a54-870e-abbacd6b4d09" # 2008e85a-5f57-4a54-870e-abbacd6b4d09
 # dts_pre_oid                 = "b1fd4154-355f-4683-a795-d09cdb814d16"
