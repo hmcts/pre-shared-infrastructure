@@ -17,6 +17,14 @@ data "azurerm_subnet" "jenkins_subnet" {
   resource_group_name  = local.mgmt_network_rg_name
 }
 
+# adding this to allow postgres pipeline agent located on ss-ptlsbox-vnet to access keyvault
+data "azurerm_subnet" "pipelineagent_subnet" {
+  provider             = azurerm.mgmt
+  name                 = "aks-00"
+  virtual_network_name = local.mgmt_network_name
+  resource_group_name  = local.mgmt_network_rg_name
+}
+
 ###################################################
 #                 STORAGES               #
 ###################################################
