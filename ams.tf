@@ -23,7 +23,7 @@
   # storage_authentication_type   = "System"
   #lifecycle {
   #  ignore_changes= [storage_authentication_type,identity]
-  }
+  #}
   tags         = var.common_tags
   
 }
