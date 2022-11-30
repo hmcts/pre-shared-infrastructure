@@ -47,6 +47,8 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
 provider "azurerm" {
   alias =  "private_dns"
   subscription_id = var.mgmt_subscription_id
+  features {}
+
 }
 
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)
