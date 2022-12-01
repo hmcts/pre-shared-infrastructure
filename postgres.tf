@@ -7,22 +7,24 @@ module "data_store_db_v14" {
   source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
-  product   = var.product
-  component = var.component
-  project   = var.project
+  product       = var.product
+  component     = var.component
+  business_area = var.project
 
   common_tags     = var.common_tags
   name            = var.database_name #-${var.env}" removed as it looks like env gets added in root module
   pgsql_databases = var.pg_databases
 
-  pgsql_version             = "14"
-  backup_retention_days     = 35
+  pgsql_version         = "14"
+  backup_retention_days = 35
 
   location             = var.location
   resource_group_name  = azurerm_resource_group.rg.name
   pgsql_admin_username = var.pgsql_admin_username
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
+
+  admin_user_object_id = var.jenkins_AAD_objectId
 
 }
 
@@ -45,7 +47,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
 }
 
 provider "azurerm" {
-  alias =  "private_dns"
+  alias           = "private_dns"
   subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
   features {}
 
