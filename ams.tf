@@ -1,38 +1,38 @@
- resource "azurerm_media_services_account" "ams" {
-  name                          = "${var.product}ams${var.env}"
-  location                      = "UKwest"
-  resource_group_name           = azurerm_resource_group.rg.name
-  
-   #identity {
-   #  type = "SystemAssigned"
-   #} 
+resource "azurerm_media_services_account" "ams" {
+  name                = "${var.product}ams${var.env}"
+  location            = "UKwest"
+  resource_group_name = azurerm_resource_group.rg.name
+
+  #identity {
+  #  type = "SystemAssigned"
+  #} 
 
 
 
   storage_account {
-    id         = module.ingestsa_storage_account.storageaccount_id 
+    id         = module.ingestsa_storage_account.storageaccount_id
     is_primary = true
   }
 
   storage_account {
-    id         = module.finalsa_storage_account.storageaccount_id 
+    id         = module.finalsa_storage_account.storageaccount_id
     is_primary = false
- }
- 
+  }
+
   # storage_authentication_type   = "ManagedIdentity"
   # storage_authentication_type   = "System"
   lifecycle {
-    ignore_changes= [storage_authentication_type,identity]
+    ignore_changes = [storage_authentication_type, identity]
   }
-  tags         = var.common_tags
-  
+  tags = var.common_tags
+
 }
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
-  description                 = "Analyse Video"
+  description = "Analyse Video"
 
   output {
     relative_priority = "Normal"
@@ -50,7 +50,7 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   media_services_account_name = azurerm_media_services_account.ams.name
 
 
-  description                 = "Encode To MP4"
+  description = "Encode To MP4"
 
   output {
     relative_priority = "Normal"
@@ -62,46 +62,46 @@ resource "azurerm_media_transform" "EncodeToMP4" {
 }
 
 resource "null_resource" "amsid" {
-  # triggers = {
-  #   always_run = timestamp()
-  # }
+  triggers = {
+    always_run = "${timestamp()}"
+  }
 
   depends_on = [azurerm_media_services_account.ams]
- provisioner "local-exec" {
-   command = <<EOF
+  provisioner "local-exec" {
+    command = <<EOF
     az login --identity
     az account set -s dts-sharedservices-${var.env}
     echo "ams account identity assign"
      az ams account identity assign --name ${azurerm_media_services_account.ams.name} -g ${azurerm_resource_group.rg.name} --user-assigned "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
   
      EOF
-   }
+  }
 }
 
 
 resource "azapi_update_resource" "ams_auth" {
-  depends_on = [null_resource.amsid] # [azapi_update_resource.ams] #
+  depends_on  = [null_resource.amsid] # [azapi_update_resource.ams] #
   type        = "Microsoft.Media/mediaservices@2021-05-01"
   resource_id = azurerm_media_services_account.ams.id
- 
+
   body = jsonencode({
     properties = {
       storageAuthentication = "ManagedIdentity"
       storageAccounts = [
         {
-          id   = module.ingestsa_storage_account.storageaccount_id 
+          id   = module.ingestsa_storage_account.storageaccount_id
           type = "Primary",
           identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
             useSystemAssignedIdentity = "false"
           }
         },
 
         {
-          id   = module.finalsa_storage_account.storageaccount_id 
+          id   = module.finalsa_storage_account.storageaccount_id
           type = "Secondary",
-            identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi" 
+          identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
             useSystemAssignedIdentity = "false"
           }
         }
