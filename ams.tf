@@ -2,6 +2,7 @@ resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
   location            = var.location #"UKwest"
   resource_group_name = azurerm_resource_group.rg.name
+  storage_authentication_type = "ManagedIdentity"
 
   #identity {
   #  type = "SystemAssigned"
