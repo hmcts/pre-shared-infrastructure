@@ -1,6 +1,6 @@
 resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
-  location            = "UKwest"
+  location            = var.location #"UKwest"
   resource_group_name = azurerm_resource_group.rg.name
 
   #identity {
