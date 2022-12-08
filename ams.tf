@@ -84,9 +84,6 @@ resource "azapi_update_resource" "ams_auth" {
   depends_on  = [null_resource.amsid] # [azapi_update_resource.ams] #
   type        = "Microsoft.Media/mediaservices@2021-05-01"
   resource_id = azurerm_media_services_account.ams.id
-  triggers = {
-    always_run = "${timestamp()}"
-  }
 
   body = jsonencode({
     properties = {
