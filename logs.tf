@@ -5,7 +5,7 @@ data "azurerm_log_analytics_workspace" "loganalytics" {
   resource_group_name = module.log_analytics_workspace.resource_group_name
 }
 
-resource "azurerm_monitor_diagnostic_setting" "ams" {
+resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   name                       = azurerm_media_services_account.ams.name
   target_resource_id         = azurerm_media_services_account.ams.id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
