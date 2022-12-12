@@ -272,7 +272,7 @@ module "dynatrace-oneagent" {
   auto_upgrade_minor_version = true
   server                     = var.server
   hostgroup                  = var.hostgroup
-  tags                       = var.tags
+  tags                       = var.common_tags
 }
 
 
@@ -460,7 +460,7 @@ module "dynatrace-oneagent-dtgtway" {
   auto_upgrade_minor_version = true
   server                     = var.server
   hostgroup                  = var.hostgroup
-  tags                       = var.tags
+  tags                       = var.common_tags
   
 }
 
