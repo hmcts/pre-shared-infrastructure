@@ -6,9 +6,9 @@ provider "azurerm" {
 }
 
 locals {
-  mgmt_network_name    = var.mgmt_net_name
-  mgmt_network_rg_name = var.mgmt_net_rg_name
-}
+  mgmt_network_name         =  var.mgmt_net_name 
+  mgmt_network_rg_name      =  var.mgmt_net_rg_name 
+ }
 
 data "azurerm_subnet" "jenkins_subnet" {
   provider             = azurerm.mgmt
@@ -37,10 +37,10 @@ module "sa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id],[azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
-  default_action                  = "Deny"
+  default_action                  = "Deny" 
   enable_data_protection          = true
 
   #TODO
@@ -51,7 +51,7 @@ module "sa_storage_account" {
   # }]
   common_tags = var.common_tags
 
-  depends_on = [module.key-vault]
+  depends_on = [ module.key-vault]
 }
 
 module "finalsa_storage_account" {
@@ -59,15 +59,15 @@ module "finalsa_storage_account" {
   env                      = var.env
   storage_account_name     = replace("${var.product}finalsa${var.env}", "-", "")
   resource_group_name      = azurerm_resource_group.rg.name
-  location                 = var.location #"UKWest" #As recommended by MS
+  location                 = "UKWest" #As recommended by MS
   account_kind             = "StorageV2"
   account_tier             = var.sa_account_tier
   account_replication_type = var.sa_replication_type
   # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.))
-  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
-  default_action                  = "Deny"
+  default_action                  = "Deny" 
   enable_data_protection          = true
   #TODO
   # ip_rules                 = []
@@ -81,23 +81,23 @@ module "finalsa_storage_account" {
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
   common_tags = var.common_tags
 
-  depends_on = [module.key-vault]
+  depends_on = [ module.key-vault]
 }
 
 module "ingestsa_storage_account" {
-  source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-  env                      = var.env
-  storage_account_name     = replace("${var.product}ingestsa${var.env}", "-", "")
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = var.location #"UKWest" #As recommended by MS azurerm_resource_group.rg.location
-  account_kind             = "StorageV2"
-  account_tier             = var.sa_account_tier
-  account_replication_type = var.sa_replication_type
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                             = var.env
+  storage_account_name            = replace("${var.product}ingestsa${var.env}", "-", "")
+  resource_group_name             = azurerm_resource_group.rg.name
+  location                        = "UKWest" #As recommended by MS azurerm_resource_group.rg.location
+  account_kind                    = "StorageV2"
+  account_tier                    = var.sa_account_tier
+  account_replication_type        = var.sa_replication_type
   # sa_subnets                    = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
-  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
-  default_action                  = "Deny"
+  default_action                  = "Deny" 
   enable_data_protection          = true
 
   ## TODO
@@ -105,24 +105,85 @@ module "ingestsa_storage_account" {
   ## allow_blob_public_access = false
   ## default_action           = "Deny"
   ## containers = [{
-  # ##   name        = "ingestsa"
-  # #   access_type = "private"
+ # ##   name        = "ingestsa"
+ # #   access_type = "private"
   ## }]
 
-  depends_on  = [module.key-vault]
+  depends_on = [ module.key-vault]
   common_tags = var.common_tags
 
 
+  }
+
+
+module "finalsa02_storage_account" {
+  source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                      = var.env
+  storage_account_name     = replace("${var.product}finalsa02${var.env}", "-", "")
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = var.location #As recommended by MS
+  account_kind             = "StorageV2"
+  account_tier             = var.sa_account_tier
+  account_replication_type = var.sa_replication_type
+  # sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.))
+  sa_subnets               = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+  allow_nested_items_to_be_public = false
+  ip_rules                        = var.ip_rules
+  default_action                  = "Deny" 
+  enable_data_protection          = true
+  #TODO
+  # ip_rules                 = []
+  # allow_blob_public_access = false
+  # default_action           = "Deny"
+  # containers = [{
+  #   name        = "finalsa"
+  #   access_type = "private"
+  # }]
+
+  # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
+  common_tags = var.common_tags
+
+  depends_on = [ module.key-vault]
 }
 
+module "ingestsa02_storage_account" {
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                             = var.env
+  storage_account_name            = replace("${var.product}ingestsa02${var.env}", "-", "")
+  resource_group_name             = azurerm_resource_group.rg.name
+  location                        = var.location #As recommended by MS azurerm_resource_group.rg.location
+  account_kind                    = "StorageV2"
+  account_tier                    = var.sa_account_tier
+  account_replication_type        = var.sa_replication_type
+  # sa_subnets                    = concat([data.azurerm_subnet.jenkins_subnet.id], slice(azurerm_virtual_network.vnet.subnet.*.id, 0, 1))
+  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id],[azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id],[azurerm_subnet.videoeditvm_subnet.id])
+  allow_nested_items_to_be_public = false
+  ip_rules                        = var.ip_rules
+  default_action                  = "Deny" 
+  enable_data_protection          = true
+
+  ## TODO
+  ## ip_rules                 = []
+  ## allow_blob_public_access = false
+  ## default_action           = "Deny"
+  ## containers = [{
+ # ##   name        = "ingestsa"
+ # #   access_type = "private"
+  ## }]
+
+  depends_on = [ module.key-vault]
+  common_tags = var.common_tags
+
+
+  }
 ###################################################
 #                PRIVATE ENDPOINTS FOR STORAGES   
 ###################################################
 resource "azurerm_private_endpoint" "sa" {
-  name                = "${var.product}sa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  name                     = "${var.product}sa-pe-${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.product}sa-psc-${var.env}"
@@ -200,10 +261,10 @@ resource "azurerm_private_endpoint" "sa" {
 # #                PRIVATE ENDPOINTS FOR STORAGES   
 # ###################################################
 resource "azurerm_private_endpoint" "finalsa" {
-  name                = "${var.product}finalsa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  name                     = "${var.product}finalsa-pe-${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.product}finalsa-psc-${var.env}"
@@ -211,17 +272,17 @@ resource "azurerm_private_endpoint" "finalsa" {
     private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-  tags = var.common_tags
+ tags = var.common_tags
 }
 
 ###################################################
 #                PRIVATE ENDPOINTS FOR STORAGES    
 ###################################################
 resource "azurerm_private_endpoint" "ingestsa" {
-  name                = "${var.product}stream-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  name                     = "${var.product}stream-pe-${var.env}"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  subnet_id                = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.product}stream-psc-${var.env}"
@@ -229,7 +290,7 @@ resource "azurerm_private_endpoint" "ingestsa" {
     private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-  tags = var.common_tags
+ tags = var.common_tags
 }
 
 # Store the connection string for the SAs in KV

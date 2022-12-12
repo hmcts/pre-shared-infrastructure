@@ -1,4 +1,3 @@
-
 resource "azurerm_virtual_machine_extension" "vm_aad" {
   count                      =  var.num_vid_edit_vms
   name                       = "AADLoginForWindows"
@@ -41,7 +40,6 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 #     }
 #   PROTECTED_SETTINGS
 # }
-
 
 # TODO aad group ID 
 # resource "azurerm_role_assignment" "rbac_user_login" {

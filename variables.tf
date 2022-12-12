@@ -1,6 +1,7 @@
 variable "product" {
   default = "pre"
 }
+
 variable "location" {
   default = "UK South"
 }
@@ -53,7 +54,8 @@ variable "datagateway_spec" {
   default = "Standard_F8s_v2"
 }
 
-variable "mgmt_subscription_id" {}
+variable "mgmt_subscription_id" {} // set by jenkins library
+
 variable "power_app_user_oid" {
   default = "56a29187-3d5f-4262-99d6-c635776e0eac"
 }
@@ -133,8 +135,8 @@ variable "ip_rules" {
                 "86.24.226.11", #Chris
                 "82.21.185.208", # Oli
                 "62.31.90.131", #Indy
-                "82.44.92.214", #Shehreem
                 "82.12.61.131", #Ayisha
+                "86.179.180.2", #Darren
                 ]
 }
 
@@ -148,6 +150,16 @@ variable "schedules" {
   }))
   default = []
 }
+
+
+# Dynatrace
+variable "dynatrace_server" {
+  description = "The server URL, if you want to configure an alternative communication endpoint."
+  type        = string
+  default     = null
+}
+
+
 
 variable "server" {
   default = null
@@ -175,3 +187,50 @@ variable "hostgroup" {
 #   type    = string
 #   default = null
 # }
+
+# Addtional variables required for postgres
+
+variable "component" {
+  default = "pre"
+}
+
+variable "project" {
+  default = "sds"
+}
+
+variable "pgsql_admin_username" {
+  default = "psqladmin"
+}
+
+variable "pg_databases" {
+  description = "Databases to be deployed"
+}
+
+variable "database_name" {
+  default = "pre-db"
+}
+
+variable "pgsql_sku" {
+  default = "GP_Standard_D2s_v3"
+}
+
+variable "pgsql_storage_mb" {
+  default = "32768"
+}
+
+variable "zone" {
+  description = "Availability Zone for Postgres"
+  default = "1"
+}
+
+# Private DNS zone configuration (for postgres)
+variable "DNSResGroup" {
+  default = "core-infra-intsvc-rg"
+}
+
+variable "PrivateDNSZone" {
+  default = "private.postgres.database.azure.com"
+}
+
+variable "dts_pre_appreg_oid" {}
+
