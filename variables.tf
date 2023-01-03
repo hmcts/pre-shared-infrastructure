@@ -24,7 +24,7 @@ variable "sa_account_tier" {
 }
 
 variable "sa_replication_type" {
-  default = "LRS"
+  default = "GRS"
 }
 
 variable "vnet_address_space" {}
@@ -233,4 +233,5 @@ variable "PrivateDNSZone" {
 }
 
 variable "dts_pre_appreg_oid" {}
+
 
