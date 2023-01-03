@@ -80,16 +80,18 @@ module "finalsa_storage_account" {
 
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
 
-  cors_rules = {
-    allowed_headers    = ["*"]
-    allowed_methods    = ["GET", "POST"]
-    allowed_origins    = ["https://*.justice.gov.uk", "https://*.blob.core.windows.net", "https://*.files.core.windows.net"]
-    exposed_headers    = ["*"]
-    max_age_in_seconds = 600
+  blob_properties {
+    cors_rule = {
+      allowed_headers    = ["*"]
+      allowed_methods    = ["GET", "POST"]
+      allowed_origins    = ["https://*.justice.gov.uk", "https://*.blob.core.windows.net", "https://*.files.core.windows.net"]
+      exposed_headers    = ["*"]
+      max_age_in_seconds = 600
+    }
   }
 
   common_tags = var.common_tags
-  depends_on = [module.key-vault]
+  depends_on  = [module.key-vault]
 }
 
 module "ingestsa_storage_account" {
