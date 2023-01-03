@@ -80,7 +80,7 @@ module "finalsa_storage_account" {
 
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
 
-  cors_rule = {
+  cors_rules = {
     allowed_headers    = ["*"]
     allowed_methods    = ["GET", "POST"]
     allowed_origins    = ["https://*.justice.gov.uk", "https://*.blob.core.windows.net", "https://*.files.core.windows.net"]
