@@ -80,7 +80,7 @@ module "finalsa_storage_account" {
 
   # depends_on = [azurerm_virtual_network.vnet.subnet.*.id[3]]
 
-  cors_rule = var.cors_rules
+  cors_rules = var.cors_rules
 
   common_tags = var.common_tags
   depends_on  = [module.key-vault]
