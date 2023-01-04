@@ -235,11 +235,16 @@ variable "PrivateDNSZone" {
 variable "dts_pre_appreg_oid" {}
 
 variable "cors_rules" {
-  allowed_headers    = ["*"]
-  allowed_methods    = ["GET", "POST"]
-  allowed_origins    = ["https://*.justice.gov.uk", "https://*.blob.core.windows.net", "https://*.files.core.windows.net"]
-  exposed_headers    = ["*"]
-  max_age_in_seconds = 600
+  description = "cors rule for final storage account"
+  default = [
+    {
+      allowed_headers    = ["*"]
+      allowed_methods    = ["GET", "POST"]
+      allowed_origins    = ["https://*.justice.gov.uk", "https://*.blob.core.windows.net", "https://*.files.core.windows.net"]
+      exposed_headers    = ["*"]
+      max_age_in_seconds = 600
+    }
+  ]
 }
 
 
