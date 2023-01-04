@@ -235,6 +235,13 @@ variable "PrivateDNSZone" {
 variable "dts_pre_appreg_oid" {}
 
 variable "cors_rules" {
+  type = list(object({
+    allowed_headers    = list(string)
+    allowed_methods    = list(string)
+    allowed_origins    = list(string)
+    exposed_headers    = list(string)
+    max_age_in_seconds = number
+  }))
   description = "cors rule for final storage account"
   default = [
     {
