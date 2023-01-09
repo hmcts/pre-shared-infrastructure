@@ -47,12 +47,12 @@ resource "azurerm_role_assignment" "vm_user_mi" {
   skip_service_principal_aad_check = true
 }
 
-#resource "azurerm_role_assignment" "vm_user_aa" {
-#  scope                            = azurerm_resource_group.rg.id
-#  role_definition_name             = "Virtual Machine Contributor"
-#  principal_id                     = azurerm_automation_account.pre-aa.identity[0].principal_id
-#  skip_service_principal_aad_check = true
-#}
+resource "azurerm_role_assignment" "vm_user_aa" {
+  scope                            = azurerm_resource_group.rg.id
+  role_definition_name             = "Virtual Machine Contributor"
+  principal_id                     = azurerm_automation_account.pre-aa.identity[0].principal_id
+  skip_service_principal_aad_check = true
+}
 
 # Give PowerApp Appreg contributor access to resource groups
 resource "azurerm_role_assignment" "powerapp_appreg" {
