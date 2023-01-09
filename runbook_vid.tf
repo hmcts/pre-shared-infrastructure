@@ -24,7 +24,7 @@ module "vm_automation" {
                         frequency   = "Day"
                         interval    = 1
                         run_time    = "06:00:00"
-                        start_vm    = true
+                        start_vm    = false
                       },
                       {
                         name        = "vm-off"
