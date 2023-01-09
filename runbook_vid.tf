@@ -30,12 +30,12 @@ module "vm_automation" {
                         name        = "vm-off"
                         frequency   = "Day"
                         interval    = 1
-                        run_time    = "18:00:00"
+                        run_time    = "20:00:00"
                         start_vm    = false
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names                = ["pre-videditvm0-${var.env}"]
+  vm_names                = ["pre-videditvm0-${var.env}","predtgtwy0-${var.env}", "predtgtwy1-${var.env}"]
   mi_principal_id         = azurerm_automation_account.pre-aa.identity[0].principal_id 
  
 }
