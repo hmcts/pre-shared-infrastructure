@@ -35,7 +35,7 @@ module "vm_automation" {
                       }
                      ]
   resource_group_name     = azurerm_resource_group.rg.name
-  vm_names                = azurerm_windows_virtual_machine.vm.*.name
+  vm_names                = ["pre-videditvm0-${var.env}"]
   mi_principal_id         = azurerm_automation_account.pre-aa.identity[0].principal_id 
  
 }
