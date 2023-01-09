@@ -234,6 +234,8 @@ variable "PrivateDNSZone" {
 
 variable "dts_pre_appreg_oid" {}
 
+variable "dts_pre_ent_appreg_oid" {}
+
 variable "cors_rules" {
   type = list(object({
     allowed_headers    = list(string)
