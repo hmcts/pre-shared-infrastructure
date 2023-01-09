@@ -468,7 +468,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
   count                  = var.num_datagateway
   virtual_machine_id     = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   location               = azurerm_resource_group.rg.location
-  enabled                = true
+  enabled                = false
 
   daily_recurrence_time = "1800"
   timezone              = "GMT Standard Time"

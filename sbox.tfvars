@@ -22,6 +22,7 @@ pre_mi_tenant_id       = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 providernamespace      = "Microsoft.Compute"
 featurename            = "EncryptionAtHost"
 dts_pre_appreg_oid     = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
+dts_pre_ent_appreg_oid = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
 
 pg_databases = [
   {

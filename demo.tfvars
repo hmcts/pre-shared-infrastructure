@@ -22,6 +22,7 @@ devops_admin           = "a0c6507c-299c-4f46-96c6-8275d2c45242" #Devops
 pre_mi_principal_id    = "d03f73e6-40ed-40a2-a0ec-059286505905" #pre-demo-mi
 pre_mi_tenant_id       = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid     = "d47c3c69-6bec-4725-ac2d-45d2c21cbd7b"
+dts_pre_ent_appreg_oid = "863c5fa3-df86-4ebc-8b0f-cd2390028497"
 #"ManagedIdentityname": "pre-demo-mi",
 pg_databases = [
   {
