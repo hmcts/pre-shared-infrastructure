@@ -58,7 +58,7 @@ resource "azurerm_role_assignment" "vm_user_aa" {
 resource "azurerm_role_assignment" "powerapp_appreg" {
   scope                = azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
-  principal_id         = dts_pre_ent_appreg_oid
+  principal_id         = var.dts_pre_ent_appreg_oid
 }
 
 # DTS-PRE-VideoEditing-SecurityGroup-
