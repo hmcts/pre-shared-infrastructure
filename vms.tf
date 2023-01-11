@@ -113,8 +113,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates     = true
   provision_vm_agent           = true  
   allow_extension_operations   = true
-  # patch_mode                   = "AutomaticByOS"
-  # # hotpatching_enabled          = true
   tags                         = var.common_tags
 
   depends_on = [ null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des ]
@@ -202,11 +200,6 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
 }
 
 
-
-# resource "azurerm_security_center_server_vulnerability_assessment_virtual_machine" "va" {
-#   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id
-# }
-
 resource "azurerm_virtual_machine_extension" "vmextension" {
   name                 = "IaaSAntimalware"
   count                = var.num_vid_edit_vms
@@ -234,29 +227,6 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
 SETTINGS
   tags                = var.common_tags
 }
-# resource "azurerm_security_center_server_vulnerability_assessment" "vulass" {
-#   count                  = var.num_vid_edit_vms
-#   virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
-# }
-
-
-
-# resource "azurerm_dev_test_global_vm_shutdown_schedule" "editvm" {
-#   count                  = var.num_vid_edit_vms
-#   virtual_machine_id     = azurerm_windows_virtual_machine.vm.*.id[count.index]
-#   location               = azurerm_resource_group.rg.location
-#   enabled                = true
-
-#   daily_recurrence_time = "1800"
-#   timezone              = "GMT Standard Time"
-
-
-#   notification_settings {
-#     enabled         = false
-   
-#   }
-#   tags                = var.common_tags
-#  }
 
 ##DynaTrace
 
@@ -386,10 +356,6 @@ resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
 SETTINGS
   tags                = var.common_tags
 }
-# resource "azurerm_security_center_server_vulnerability_assessment" "vulneass" {
-#   count                  = var.num_datagateway
-#   virtual_machine_id = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-# }
 
 resource "azurerm_virtual_machine_extension" "dtgtwydaa-agent" {
   name                       = "DependencyAgentWindows"
@@ -417,36 +383,6 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
   auto_upgrade_minor_version = true
   tags                    = var.common_tags
 }
-
-
-# resource "azurerm_virtual_machine_extension" "dtgtwymsmonitor-agent" {
-#   depends_on = [  azurerm_virtual_machine_extension.dtgtwydaa-agent  ]
-#   name                  = "MicrosoftMonitoringAgent"  # Must be called this
-#   count                 = var.num_datagateway
-#   virtual_machine_id    = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-#   publisher             = "Microsoft.EnterpriseCloud.Monitoring"
-#   type                  = "MicrosoftMonitoringAgent"
-#   type_handler_version  =  "1.0"
-#   tags                    = var.common_tags
-#   # Not yet supported
-#   # automatic_upgrade_enabled  = true
-#   # auto_upgrade_minor_version = true
-#   settings = <<SETTINGS
-#     {
-#         "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
-#         "azureResourceId": "${azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]}",
-#         "stopOnMultipleConnections": "false"
-#     }
-#   SETTINGS
-#   protected_settings = <<PROTECTED_SETTINGS
-#     {
-#       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
-#     }
-#   PROTECTED_SETTINGS
-#   lifecycle {
-#     ignore_changes= [name ]
-#   }
-# }
 
 module "dynatrace-oneagent-dtgtway" {
   
@@ -479,30 +415,3 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
      }
   tags                = var.common_tags
  }
-
-
-#####
-## Os Disk Encryption"
-#####
-
-# resource "azurerm_virtual_machine_extension" "disk-encryption" {
-#   name                 = "DiskEncryption"
-#   location             = "${local.location}"
-#   resource_group_name  = "${azurerm_resource_group.environment-rg.name}"
-#   virtual_machine_name = "${azurerm_virtual_machine.server.name}"
-#   publisher            = "Microsoft.Azure.Security"
-#   type                 = "AzureDiskEncryption"
-#   type_handler_version = "2.2"
-
-#   settings = <<SETTINGS
-# {
-#   "EncryptionOperation": "EnableEncryption",
-#   "KeyVaultURL": "https://${local.vaultname}.vault.azure.net",
-#   "KeyVaultResourceId": "/subscriptions/${local.subscriptionid}/resourceGroups/${local.vaultresourcegroup}/providers/Microsoft.KeyVault/vaults/${local.vaultname}",
-#   "KeyEncryptionKeyURL": "https://${local.vaultname}.vault.azure.net/keys/${local.keyname}/${local.keyversion}",
-#   "KekVaultResourceId": "/subscriptions/${local.subscriptionid}/resourceGroups/${local.vaultresourcegroup}/providers/Microsoft.KeyVault/vaults/${local.vaultname}",
-#   "KeyEncryptionAlgorithm": "RSA-OAEP",
-#   "VolumeType": "All"
-# }
-# SETTINGS
-# }
