@@ -182,23 +182,19 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
   type                 = "MicrosoftMonitoringAgent"
   type_handler_version = "1.0"
   tags                 = var.common_tags
-  # Not yet supported
-  # automatic_upgrade_enabled  = true
-  # auto_upgrade_minor_version = true
-  settings           = <<SETTINGS
+  settings             = <<SETTINGS
     {
         "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
         "azureResourceId": "${azurerm_windows_virtual_machine.vm.*.id[count.index]}",
         "stopOnMultipleConnections": "false"
     }
   SETTINGS
-  protected_settings = <<PROTECTED_SETTINGS
+  protected_settings   = <<PROTECTED_SETTINGS
     {
       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
     }
   PROTECTED_SETTINGS
 }
-
 
 resource "azurerm_virtual_machine_extension" "vmextension" {
   name                       = "IaaSAntimalware"
@@ -302,10 +298,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   enable_automatic_updates   = true
   provision_vm_agent         = true
   allow_extension_operations = true
-  # patch_mode                   = "AutomaticByOS"
-  # hotpatching_enabled          = true
-  tags       = var.common_tags
-  depends_on = [module.key-vault]
+  tags                       = var.common_tags
+  depends_on                 = [module.key-vault]
 }
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
