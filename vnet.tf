@@ -146,9 +146,9 @@ resource "azurerm_route_table" "postgres" {
   disable_bgp_route_propagation = false
 
   route {
-    name           = "default"
-    address_prefix = "0.0.0.0/0"
-    next_hop_type  = "VirtualAppliance"
+    name                   = "default"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = local.hub[local.hub_name].ukSouth.next_hop_ip
   }
 
