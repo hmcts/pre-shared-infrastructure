@@ -2,7 +2,6 @@ resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
   location            = var.location #"UKwest"
   resource_group_name = azurerm_resource_group.rg.name
-  #storage_authentication_type = "ManagedIdentity"
 
   identity {
     type = "SystemAssigned"
@@ -20,11 +19,6 @@ resource "azurerm_media_services_account" "ams" {
     is_primary = false
   }
 
-  # storage_authentication_type   = "ManagedIdentity"
-  # storage_authentication_type   = "System"
-  #lifecycle {
-  #  ignore_changes = [storage_authentication_type, identity]
-  #}
   tags = var.common_tags
 
 }
@@ -81,7 +75,7 @@ resource "null_resource" "amsid" {
 
 
 resource "azapi_update_resource" "ams_auth" {
-  depends_on  = [null_resource.amsid] # [azapi_update_resource.ams] #
+  depends_on  = [null_resource.amsid]
   type        = "Microsoft.Media/mediaservices@2021-11-01"
   resource_id = azurerm_media_services_account.ams.id
 
