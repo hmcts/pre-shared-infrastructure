@@ -29,3 +29,5 @@ pg_databases = [
     name : "pre-pdb-demo"
   }
 ]
+#Name needs to be different on demo as both demo and test are both peered on the hmcts-hub-nonprodi virtual network
+PeeringFromHubName = "pre-recorded-evidence-demo"
