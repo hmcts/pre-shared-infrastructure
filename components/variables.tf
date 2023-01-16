@@ -236,8 +236,4 @@ variable "cors_rules" {
   ]
 }
 
-variable "PeeringFromHubName" {
-  default = "pre-recorded-evidence"
-}
-
 
