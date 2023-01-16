@@ -35,7 +35,7 @@ module "data_store_db_v14" {
 #take this from input as no output for this value
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
   name         = "postgres-username"
-  value        = var.pgsql_admin_username
+  value        = module.data_store_db_v14.username
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
