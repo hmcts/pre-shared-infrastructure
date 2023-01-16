@@ -94,7 +94,6 @@ resource "azurerm_key_vault_access_policy" "appreg_access" {
 
 ## Datagateway
 
-
 resource "random_string" "dtgtwy_username" {
   count   = var.num_datagateway
   length  = 4
