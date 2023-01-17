@@ -168,26 +168,6 @@ variable "hostgroup" {
   default = null
 }
 
-# # Dynatrace OneAgent
-# variable "cnp_vault_rg" {
-#   type = string
-#   default = "cnp-core-infra"
-# }
-
-# variable "cnp_vault_sub" {
-#   type = string
-#   default = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
-# }
-
-# variable "dynatrace_tenant_id" {
-#   type = string
-# }
-
-# variable "dynatrace_server" {
-#   type    = string
-#   default = null
-# }
-
 # Addtional variables required for postgres
 
 variable "component" {
@@ -254,6 +234,10 @@ variable "cors_rules" {
       max_age_in_seconds = 600
     }
   ]
+}
+
+variable "PeeringFromHubName" {
+  default = "pre-recorded-evidence"
 }
 
 

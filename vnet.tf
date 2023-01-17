@@ -131,7 +131,7 @@ resource "azurerm_virtual_network_peering" "to_hub" {
 resource "azurerm_virtual_network_peering" "from_hub" {
   provider = azurerm.hub
 
-  name                         = "pre-recorded-evidence"
+  name                         = var.PeeringFromHubName
   resource_group_name          = local.hub[local.hub_name].ukSouth.name
   virtual_network_name         = local.hub[local.hub_name].ukSouth.name
   remote_virtual_network_id    = azurerm_virtual_network.vnet.id
@@ -146,9 +146,9 @@ resource "azurerm_route_table" "postgres" {
   disable_bgp_route_propagation = false
 
   route {
-    name           = "default"
-    address_prefix = "0.0.0.0/0"
-    next_hop_type  = "VirtualAppliance"
+    name                   = "default"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = local.hub[local.hub_name].ukSouth.next_hop_ip
   }
 
