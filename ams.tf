@@ -4,7 +4,7 @@ resource "azurerm_media_services_account" "ams" {
   resource_group_name = azurerm_resource_group.rg.name
 
   identity {
-    type = "SystemAssigned"
+    type = "UserAssigned"
   }
 
 
