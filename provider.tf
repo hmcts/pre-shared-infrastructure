@@ -15,7 +15,7 @@ terraform {
 
     time = {
       source  = "hashicorp/time"
-      version = "~> 0.6" # where X.Y is the current major version and minor version
+      version = "~> 0.6"
     }
   }
 }
