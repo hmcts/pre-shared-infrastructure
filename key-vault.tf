@@ -548,7 +548,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #   identity {
 #     type = "SystemAssigned"
 #   }
-#   tags                = module.tags.common_tags
+#   tags                = local.common_tags
 # }
 
 # resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
@@ -586,7 +586,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #   identity {
 #     type = "SystemAssigned"
 #   }
-#   tags                = module.tags.common_tags
+#   tags                = local.common_tags
 # }
 
 # resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
@@ -624,7 +624,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #   identity {
 #     type = "SystemAssigned"
 #   }
-#   tags                = module.tags.common_tags
+#   tags                = local.common_tags
 # }
 
 # resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
@@ -658,7 +658,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #   identity {
 #     type = "SystemAssigned"
 #   }
-#   tags                = module.tags.common_tags
+#   tags                = local.common_tags
 # }
 
 # resource "azurerm_key_vault_access_policy" "pre-des-west-disk" {
@@ -706,7 +706,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #     private_connection_resource_id = module.key-vault.key_vault_id
 #     subresource_names              = ["Vault"]
 #   }
-# tags = module.tags.common_tags
+# tags = local.common_tags
 # }
 # TODO
 

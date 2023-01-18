@@ -43,7 +43,7 @@ module "sa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
 
-  common_tags = module.tags.common_tags
+  common_tags = local.common_tags
 
   depends_on = [module.key-vault]
 }
@@ -65,7 +65,7 @@ module "finalsa_storage_account" {
 
   cors_rules = var.cors_rules
 
-  common_tags = module.tags.common_tags
+  common_tags = local.common_tags
   depends_on  = [module.key-vault]
 }
 
@@ -85,7 +85,7 @@ module "ingestsa_storage_account" {
   enable_data_protection          = true
 
   depends_on  = [module.key-vault]
-  common_tags = module.tags.common_tags
+  common_tags = local.common_tags
 
 
 }
@@ -105,7 +105,7 @@ resource "azurerm_private_endpoint" "sa" {
     private_connection_resource_id = module.sa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-  tags = module.tags.common_tags
+  tags = local.common_tags
 }
 
 # ###################################################
@@ -123,7 +123,7 @@ resource "azurerm_private_endpoint" "finalsa" {
     private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-  tags = module.tags.common_tags
+  tags = local.common_tags
 }
 
 ###################################################
@@ -141,7 +141,7 @@ resource "azurerm_private_endpoint" "ingestsa" {
     private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
   }
-  tags = module.tags.common_tags
+  tags = local.common_tags
 }
 
 # Store the connection string for the SAs in KV
