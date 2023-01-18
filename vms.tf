@@ -7,7 +7,7 @@ resource "azurerm_public_ip" "pip" {
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
   sku                 = "Standard"
-  tags                = var.common_tags
+  tags                = local.common_tags
 }
 
 ##------------------------------------------------------###################
@@ -30,7 +30,7 @@ resource "azurerm_bastion_host" "bastion" {
     subnet_id            = azurerm_subnet.AzureBastionSubnet_subnet.id
     public_ip_address_id = azurerm_public_ip.pip.id
   }
-  tags = var.common_tags
+  tags = local.common_tags
 
 }
 
@@ -65,7 +65,7 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
-  tags = var.common_tags
+  tags = local.common_tags
 }
 resource "azurerm_windows_virtual_machine" "vm" {
   zone                       = 2
@@ -113,7 +113,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates   = true
   provision_vm_agent         = true
   allow_extension_operations = true
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 
   depends_on = [null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des]
 }
@@ -138,7 +138,7 @@ resource "azurerm_managed_disk" "vmdatadisk" {
   disk_size_gb           = 1000
   disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
   zone                   = "2"
-  tags                   = var.common_tags
+  tags                   = local.common_tags
 
 
 }
@@ -154,7 +154,7 @@ resource "azurerm_virtual_machine_extension" "daa-agent" {
   type_handler_version       = "9.10"
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 }
 
 
@@ -169,7 +169,7 @@ resource "azurerm_virtual_machine_extension" "monitor-agent" {
   type_handler_version       = "1.5"
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 }
 
 
@@ -181,7 +181,7 @@ resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
   publisher            = "Microsoft.EnterpriseCloud.Monitoring"
   type                 = "MicrosoftMonitoringAgent"
   type_handler_version = "1.0"
-  tags                 = var.common_tags
+  tags                 = local.common_tags
   settings             = <<SETTINGS
     {
         "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
@@ -221,7 +221,7 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
     }
     }
 SETTINGS
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 }
 
 ##DynaTrace
@@ -238,7 +238,7 @@ module "dynatrace-oneagent" {
   auto_upgrade_minor_version = true
   server                     = var.server
   hostgroup                  = var.hostgroup
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 }
 
 
@@ -259,7 +259,7 @@ resource "azurerm_network_interface" "dtgwnic" {
     subnet_id                     = azurerm_subnet.datagateway_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
-  tags = var.common_tags
+  tags = local.common_tags
 }
 
 ###################################################
@@ -298,7 +298,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   enable_automatic_updates   = true
   provision_vm_agent         = true
   allow_extension_operations = true
-  tags                       = var.common_tags
+  tags                       = local.common_tags
   depends_on                 = [module.key-vault]
 }
 
@@ -312,7 +312,7 @@ resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   disk_size_gb           = 1000
   zone                   = "2"
   disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
-  tags                   = var.common_tags
+  tags                   = local.common_tags
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
@@ -348,7 +348,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
     }
     }
 SETTINGS
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 }
 
 resource "azurerm_virtual_machine_extension" "dtgtwydaa-agent" {
@@ -360,7 +360,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwydaa-agent" {
   type_handler_version       = "9.10"
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 }
 
 
@@ -375,7 +375,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
   type_handler_version       = "1.5"
   automatic_upgrade_enabled  = true
   auto_upgrade_minor_version = true
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 }
 
 module "dynatrace-oneagent-dtgtway" {
@@ -390,7 +390,7 @@ module "dynatrace-oneagent-dtgtway" {
   auto_upgrade_minor_version = true
   server                     = var.server
   hostgroup                  = var.hostgroup
-  tags                       = var.common_tags
+  tags                       = local.common_tags
 
 }
 
@@ -407,5 +407,5 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
   notification_settings {
     enabled = false
   }
-  tags = var.common_tags
+  tags = local.common_tags
 }

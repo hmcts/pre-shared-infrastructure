@@ -8,5 +8,5 @@ locals {
 resource "azurerm_resource_group" "rg" {
   name     = local.resource_group_name
   location = var.location
-  tags     = var.common_tags
+  tags     = local.common_tags
 }

@@ -8,7 +8,7 @@ resource "azurerm_virtual_network" "vnet" {
   #   enable      = true
   # }
 
-  tags = var.common_tags
+  tags = local.common_tags
 }
 
 #------------------------------------------------------###################
@@ -152,7 +152,7 @@ resource "azurerm_route_table" "postgres" {
     next_hop_in_ip_address = local.hub[local.hub_name].ukSouth.next_hop_ip
   }
 
-  tags = var.common_tags
+  tags = local.common_tags
 }
 
 resource "azurerm_subnet_route_table_association" "dg_subnet" {

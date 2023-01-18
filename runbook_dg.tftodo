@@ -5,7 +5,7 @@ module "vm_automation_dtgtwy" {
   env                     = var.env
   location                = var.location
   automation_account_name = azurerm_automation_account.pre-aa.name
-  tags                    = var.common_tags
+  tags                    = module.tags.common_tags
   schedules = [
     {
       name      = "vm-on"
