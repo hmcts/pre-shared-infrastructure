@@ -19,7 +19,7 @@ resource "azurerm_media_services_account" "ams" {
     is_primary = false
   }
 
-  tags = var.common_tags
+  tags = local.common_tags
 
 }
 resource "azurerm_media_transform" "analysevideo_1" {
