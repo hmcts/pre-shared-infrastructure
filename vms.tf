@@ -85,10 +85,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
   network_interface_ids      = [azurerm_network_interface.nic[count.index].id]
   encryption_at_host_enabled = true
 
-  # encryption_at_host_enabled  = true
   additional_capabilities {
     ultra_ssd_enabled = true
   }
+
   os_disk {
     name                   = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
@@ -97,6 +97,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
     disk_size_gb           = 1000
     # write_accelerator_enabled = true
   }
+
+
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
     offer     = "Windows-10"
