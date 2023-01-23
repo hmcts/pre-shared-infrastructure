@@ -67,6 +67,11 @@ resource "azurerm_network_interface" "nic" {
   }
   tags = var.common_tags
 }
+
+# Data template Bash bootstrapping file
+data "template_file" "edit-vm-init" {
+  template = file("bootstrap/bootstrap-edit-vm.sh")
+}
 resource "azurerm_windows_virtual_machine" "vm" {
   zone                       = 2
   count                      = var.num_vid_edit_vms
@@ -80,14 +85,18 @@ resource "azurerm_windows_virtual_machine" "vm" {
   network_interface_ids      = [azurerm_network_interface.nic[count.index].id]
   encryption_at_host_enabled = true
 
+  timezone                   = "GMT Standard Time"
+  enable_automatic_updates   = true
+  provision_vm_agent         = true
+  allow_extension_operations = true
+  tags                       = var.common_tags
+  custom_data                = base64encode(data.template_file.edit-vm-init.rendered)
 
+  depends_on = [null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des]
   # encryption_at_host_enabled  = true
-
   additional_capabilities {
     ultra_ssd_enabled = true
   }
-
-
   os_disk {
     name                   = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
@@ -96,8 +105,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
     disk_size_gb           = 1000
     # write_accelerator_enabled = true
   }
-
-
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
     offer     = "Windows-10"
@@ -108,14 +115,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
     type         = "SystemAssigned, UserAssigned"
     identity_ids = module.key-vault.managed_identity_id
   }
-
-  timezone                   = "GMT Standard Time"
-  enable_automatic_updates   = true
-  provision_vm_agent         = true
-  allow_extension_operations = true
-  tags                       = var.common_tags
-
-  depends_on = [null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des]
 }
 
 # # Datadisk 
@@ -278,6 +277,12 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   network_interface_ids      = [azurerm_network_interface.dtgwnic[count.index].id]
   encryption_at_host_enabled = true
 
+  timezone                   = "GMT Standard Time"
+  enable_automatic_updates   = true
+  provision_vm_agent         = true
+  allow_extension_operations = true
+  tags                       = var.common_tags
+  depends_on                 = [module.key-vault]
   os_disk {
     name                   = "${var.product}dtgtwy${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
@@ -294,12 +299,6 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     sku       = "2019-datacenter-gensecond"
     version   = "latest"
   }
-  timezone                   = "GMT Standard Time"
-  enable_automatic_updates   = true
-  provision_vm_agent         = true
-  allow_extension_operations = true
-  tags                       = var.common_tags
-  depends_on                 = [module.key-vault]
 }
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
