@@ -96,21 +96,21 @@ resource "azurerm_monitor_diagnostic_setting" "bastionpip" {
   }
 }
 
-resource "azurerm_monitor_diagnostic_setting" "nic" {
-  count                      = var.num_vid_edit_vms
-  name                       = azurerm_network_interface.nic[count.index].name
-  target_resource_id         = azurerm_network_interface.nic[count.index].id
-  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+# resource "azurerm_monitor_diagnostic_setting" "nic" {
+#   count                      = var.num_vid_edit_vms
+#   name                       = azurerm_network_interface.nic[count.index].name
+#   target_resource_id         = azurerm_network_interface.nic[count.index].id
+#   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  metric {
-    category = "AllMetrics"
+#   metric {
+#     category = "AllMetrics"
 
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
-  }
-}
+#     retention_policy {
+#       enabled = true
+#       days    = 14
+#     }
+#   }
+# }
 resource "azurerm_monitor_diagnostic_setting" "vnet" {
 
   name                       = azurerm_virtual_network.vnet.name
