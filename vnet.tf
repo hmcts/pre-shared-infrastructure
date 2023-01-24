@@ -102,6 +102,11 @@ locals {
     prod    = ["prod", "stg", "ptl", "dev"]
   }
 
+  hubs_to_peer = {
+    sbox = ["sbox"]
+    prod = ["prod", "nonprod", "sbox"]
+  }
+
   regions = [
     "ukSouth",
     "ukWest"
