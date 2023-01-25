@@ -288,28 +288,11 @@ resource "azurerm_key_vault_access_policy" "dts_pre_access" {
   secret_permissions      = ["List", "Get", ]
   storage_permissions     = ["List", "Get", ]
 }
-
-#####################################
-#    DTS CFT Developers| Members Access to KV
-#####################################
-resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id               = var.dts_cft_developers_oid
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = ["List", "Get", ]
-  certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
-  secret_permissions      = ["List", "Get", ]
-  storage_permissions     = ["List", "Get", ]
-
-}
-
 #####################################
 #    DTS PRE Admin
 #####################################
 resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
   key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
   object_id               = var.dts_pre_project_admin
   tenant_id               = data.azurerm_client_config.current.tenant_id
   key_permissions         = ["List", "Get", ]
@@ -318,28 +301,13 @@ resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
   storage_permissions     = ["List", "Get", ]
 }
 
-
-// DevopsAdmin Permissions
-resource "azurerm_key_vault_access_policy" "devops_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id               = var.devops_admin
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = ["List", "Update", "Create", "Import", "Delete", "Get"]
-  certificate_permissions = ["List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
-  secret_permissions      = ["List", "Set", "Delete", "Get", ]
-  storage_permissions     = ["List", "Set", "Delete", "Get", ]
-}
-
 // Access for the service connection App registrations dts_pre_<env>
 resource "azurerm_key_vault_access_policy" "appreg_access" {
   key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
   object_id          = var.dts_pre_appreg_oid
   tenant_id          = data.azurerm_client_config.current.tenant_id
   secret_permissions = ["List", "Get", ]
 }
-
 
 // VM credentials
 
