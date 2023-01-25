@@ -56,11 +56,6 @@ withInfraPipeline(product) {
     sh unlockRg("stg")
   }
 
-  before('buildinfra:prod') {
-    sh "echo 'unlock RG prod'"
-    sh unlockRg("prod")
-  }
-
   // before('buildinfra:prod') {
   //   sh "echo 'Enable Encrypt'"  
   //   sh encrypthost("PROD")
