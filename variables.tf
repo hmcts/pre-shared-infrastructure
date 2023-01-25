@@ -13,8 +13,6 @@ variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
 
-
-
 variable "common_tags" {
   type = map(string)
 }
@@ -22,7 +20,6 @@ variable "common_tags" {
 variable "sa_account_tier" {
   default = "Standard"
 }
-
 variable "sa_replication_type" {
   default = "GRS"
 }

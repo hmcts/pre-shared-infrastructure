@@ -3,10 +3,6 @@ resource "azurerm_virtual_network" "vnet" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   address_space       = [var.vnet_address_space]
-  # ddos_protection_plan {
-  #   id          = azurerm_network_ddos_protection_plan.pre-ddos.id
-  #   enable      = true
-  # }
 
   tags = var.common_tags
 }
@@ -37,7 +33,6 @@ resource "azurerm_subnet" "endpoint_subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = [var.privatendpt_snet_address]
   service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
-  # enforce_private_link_endpoint_network_policies = true
 }
 
 resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
