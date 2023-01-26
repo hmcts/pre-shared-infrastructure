@@ -2,28 +2,15 @@ resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
   location            = var.location #"UKwest"
   resource_group_name = azurerm_resource_group.rg.name
-  identity {
-    type = "SystemAssigned, UserAssigned"
-  }
 
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id
     is_primary = true
-
-    managed_identity {
-      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed-identity.principal_id
-      use_system_assigned_identity = false
-    }
   }
 
   storage_account {
     id         = module.finalsa_storage_account.storageaccount_id
     is_primary = false
-
-    managed_identity {
-      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed-identity.principal_id
-      use_system_assigned_identity = false
-    }
   }
 
   tags = var.common_tags
