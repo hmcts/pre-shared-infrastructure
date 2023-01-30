@@ -16,6 +16,7 @@ dts_pre_app_admin          = "d055ba21-5814-4278-8752-aaffa7eaac62" #can't see t
 devops_admin               = "a0c6507c-299c-4f46-96c6-8275d2c45242" #should be removed
 dts_pre_appreg_oid         = "b521e9e3-58e1-4c25-98b5-7f3157f68c16"
 dts_pre_ent_appreg_oid     = "9168b884-7ccd-4e71-860f-7f63455818e1"
+dts_pre_oid                = "b1fd4154-355f-4683-a795-d09cdb814d16"
 pg_databases = [
   {
     name : "pre-pdb-dev"
