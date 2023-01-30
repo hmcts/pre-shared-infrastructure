@@ -1,10 +1,10 @@
-
-vnet_address_space         = "10.50.12.128/25"
-video_edit_vm_snet_address = "10.50.12.128/28"
-privatendpt_snet_address   = "10.50.12.192/26"
-bastion_snet_address       = ""
-data_gateway_snet_address  = ""
-num_vid_edit_vms           = 0
-power_app_user_oid         = ""
+vnet_address_space         = "10.50.12.0/25"
+video_edit_vm_snet_address = "10.50.12.0/28"
+privatendpt_snet_address   = "10.50.12.64/26"
+bastion_snet_address       = "10.50.12.128/26"
+data_gateway_snet_address  = "10.50.12.192/26"
+num_vid_edit_vms           = 1
 mgmt_net_name              = "ss-ptl-vnet"
 mgmt_net_rg_name           = "ss-ptl-network-rg"
+env                        = "dev"
+dts_pre_oid                = "b1fd4154-355f-4683-a795-d09cdb814d16"
