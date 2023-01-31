@@ -1,7 +1,7 @@
 name: Pre-Shared-Infrastructure Deployment Pipeline
 
 trigger:
-- master
+  - master
 
 pool:
   vmImage: ubuntu-latest
