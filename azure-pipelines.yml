@@ -48,9 +48,9 @@ steps:
     displayName: Set terraform version env variable
     inputs:
       targetType: 'inline'
-          script: |
-            $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/.terraform-version" -Raw
-            Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
+      script: |
+        $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/.terraform-version" -Raw
+        Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
 
   - task: TerraformInstaller@0
     displayName: 'install terraform $(tfVersion)'
