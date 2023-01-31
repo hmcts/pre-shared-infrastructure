@@ -23,7 +23,9 @@ variables:
     value: tfstate-${{ lower(parameters.environment) }}
 
 parameters:
-  tfversion: ''
+  - name: tfversion
+    type: string
+    default: ''
 
   - name: action
     type: string
@@ -32,17 +34,17 @@ parameters:
       - plan
       - apply
 
-    - name: environment
-      displayName: Environment
-      type: string
-      default: "Sbox"
-      values:
-        - Sbox
-        - Dev
-        - Demo
-        - Test
-        - Stg
-        - Prod
+  - name: environment
+    displayName: Environment
+    type: string
+    default: "Sbox"
+    values:
+      - Sbox
+      - Dev
+      - Demo
+      - Test
+      - Stg
+      - Prod
 
   # - stage: Precheck
   #   jobs:
