@@ -23,10 +23,6 @@ variables:
     value: tfstate-${{ lower(parameters.environment) }}
 
 parameters:
-  - name: tfversion
-    type: string
-    default: ''
-
   - name: action
     type: string
     default: plan
