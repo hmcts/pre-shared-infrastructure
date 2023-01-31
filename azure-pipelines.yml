@@ -1,7 +1,4 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: Pre-Shared-Infrastructure Deployment Pipeline
 
 trigger:
 - master
@@ -9,11 +6,114 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+resources:
+  repositories:
+    - repository: azure-devops-templates
+      type: github
+      name: hmcts/azure-devops-templates
+      ref: refs/heads/master
+      endpoint: hmcts 
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+variables:
+  - name: resourceGroup
+    value: jenkins-state-${{ lower(parameters.environment) }}
+  - name: storageAccount
+    value: sdsstate${{ lower(parameters.environment) }}
+  - name: container
+    value: tfstate-${{ lower(parameters.environment) }}
+
+parameters:
+  tfversion: ''
+
+  - name: action
+    type: string
+    default: plan
+    values:
+      - plan
+      - apply
+
+    - name: environment
+      displayName: Environment
+      type: string
+      default: "Sbox"
+      values:
+        - Sbox
+        - Dev
+        - Demo
+        - Test
+        - Stg
+        - Prod
+
+  # - stage: Precheck
+  #   jobs:
+  #     - job: Validate
+  #       pool:
+  #         vmImage: ${{ variables.agentPool }}
+  #         timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+  #       steps:
+  #         - task: TerraformInstaller@0
+  #           displayName: Terraform install
+  #           inputs:
+  #             terraformVersion: ${{ variables.tfversion }}
+
+  # - stage: Precheck
+  #   jobs:
+  #     - job:
+  #       pool:
+  #         vmImage: ${{ variables.agentPool }}
+  #         timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+  #       steps:
+  #         - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
+  #           parameters:
+  #             keyvaultName: 'infra-vault-nonprod'
+  #             keyvaultSecret: 'azure-devops-token'
+  #             serviceConnection: 'DCD-CFT-Sandbox'
+  #             overrideAction: ${{ parameters.action }}
+
+  - pwsh: |
+      $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/.terraform-version" -Raw
+      Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
+    displayName: Set terraform version env variable
+
+  - task: TerraformInstaller@0
+    displayName: 'install terraform $(tfVersion)'
+    inputs:
+      terraformVersion: $(tfVersion)
+
+  - task: TerraformCLI@0
+    displayName: Terraform init
+    inputs:
+      command: init
+      terraformVersion: $(tfVersion)
+      backendType: 'azurerm'
+      workingDirectory: $(System.DefaultWorkingDirectory)
+      backendServiceArm: 'devops-test-service-connection'
+      backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
+      backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
+      backendAzureRmContainerName: ${{ variables.container }}
+      backendAzureRmKey: 'tf/terraform.tfstate'
+
+  - task: TerraformCLI@0
+    displayName: Terraform validate
+    inputs:
+      command: 'validate'
+      workingDirectory: $(System.DefaultWorkingDirectory)
+
+  - task: TerraformCLI@0
+    displayName: Terraform plan
+    inputs:
+      command: plan
+      terraformVersion: $(tfVersion)
+      commandOptions: '-out=tfplan -var-file=${{ environment }}.tfvars'
+      workingDirectory: $(System.DefaultWorkingDirectory)
+      environmentServiceNameAzureRM: 'devops-test-service-connection'
+
+  # - task: TerraformCLI@0
+  #   displayName: Terraform apply
+  #   condition: and(succeeded(), eq('${{ parameters.Action }}', 'apply'))
+  #   inputs:
+  #     command: apply
+  #     terraformVersion: $(tfVersion)
+  #     commandOptions: '--auto-approve tfplan'
+  #     workingDirectory: $(System.DefaultWorkingDirectory)
+  #     environmentServiceNameAzureRM: 'devops-test-service-connection'
