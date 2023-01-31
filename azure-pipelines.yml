@@ -21,10 +21,10 @@ variables:
     value: sdsstate${{ lower(parameters.environment) }}
   - name: container
     value: tfstate-${{ lower(parameters.environment) }}
+  - name: serviceConnection
+    value: PowerPlatform${{ lower(parameters.environment) }}
 
 parameters:
-  - name: azureServiceConnection
-    default: "ado_nonlive_service_principal"
 
   - name: action
     type: string
@@ -67,7 +67,7 @@ steps:
       terraformVersion: $(tfVersion)
       backendType: 'azurerm'
       workingDirectory: $(System.DefaultWorkingDirectory)
-      backendServiceArm: ${{ parameters.azureServiceConnection }}
+      backendServiceArm: $(ServiceConnection)
       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
       backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
       backendAzureRmContainerName: ${{ variables.container }}
@@ -86,7 +86,7 @@ steps:
       terraformVersion: $(tfVersion)
       commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars'
       workingDirectory: $(System.DefaultWorkingDirectory)
-      environmentServiceNameAzureRM: ${{ parameters.azureServiceConnection }}
+      environmentServiceNameAzureRM: $(ServiceConnection)
 
   # - stage: Precheck
   #   jobs:
