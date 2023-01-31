@@ -23,6 +23,9 @@ variables:
     value: tfstate-${{ lower(parameters.environment) }}
 
 parameters:
+  - name: azureServiceConnection
+    default: "ado_nonlive_service_principal"
+
   - name: action
     type: string
     default: plan
@@ -64,7 +67,7 @@ steps:
       terraformVersion: $(tfVersion)
       backendType: 'azurerm'
       workingDirectory: $(System.DefaultWorkingDirectory)
-      backendServiceArm: 'devops-test-service-connection'
+      backendServiceArm: ${{ parameters.azureServiceConnection }}
       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
       backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
       backendAzureRmContainerName: ${{ variables.container }}
@@ -81,9 +84,9 @@ steps:
     inputs:
       command: plan
       terraformVersion: $(tfVersion)
-      commandOptions: '-out=tfplan -var-file=${{ environment }}.tfvars'
+      commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars'
       workingDirectory: $(System.DefaultWorkingDirectory)
-      environmentServiceNameAzureRM: 'devops-test-service-connection'
+      environmentServiceNameAzureRM: ${{ parameters.azureServiceConnection }}
 
   # - stage: Precheck
   #   jobs:
