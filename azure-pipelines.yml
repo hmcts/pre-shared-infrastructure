@@ -36,7 +36,7 @@ parameters:
   - name: environment
     displayName: Environment
     type: string
-    default: "Sbox"
+    default: "Dev"
     values:
       - Sbox
       - Dev
@@ -84,7 +84,7 @@ steps:
     inputs:
       command: plan
       terraformVersion: $(tfVersion)
-      commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars'
+      commandOptions: '-out=tfplan -var-file=${{ parameters.environment }}.tfvars'
       workingDirectory: $(System.DefaultWorkingDirectory)
       environmentServiceNameAzureRM: $(ServiceConnection)
 
