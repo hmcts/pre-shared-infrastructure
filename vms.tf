@@ -267,7 +267,7 @@ resource "azurerm_network_interface" "dtgwnic" {
 #                DATAGATEWAY VIRTUAL MACHINE                 #
 ###################################################
 data "template_file" "edit-vm-init" {
-  template = file("bootstrap-dtgw-vm.sh")
+  template = file(bootstrap-dtgw-vm.sh)
 }
 resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   count                      = var.num_datagateway
