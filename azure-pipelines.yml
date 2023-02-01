@@ -22,7 +22,7 @@ variables:
   - name: container
     value: tfstate-${{ lower(parameters.environment) }}
   - name: serviceConnection
-    value: PowerPlatform${{ lower(parameters.environment) }}
+    value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
 
 parameters:
 
