@@ -241,33 +241,8 @@ module "dynatrace-oneagent" {
 }
 
 
-####
-## DataGateway VMs
-####
-###################################################
-#            Datagateway NETWORK INTERFACE CARD               #
-###################################################
-resource "azurerm_network_interface" "dtgwnic" {
-  count                         = var.num_datagateway
-  name                          = "${var.product}-dtgwnic${count.index}-${var.env}"
-  location                      = azurerm_resource_group.rg.location
-  resource_group_name           = azurerm_resource_group.rg.name
-  enable_accelerated_networking = true
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.datagateway_subnet.id
-    private_ip_address_allocation = "Dynamic"
-    network_security_group_id     = azurerm_network_security_group.dtgwnsg.id
-  }
-  tags = var.common_tags
-}
-
-###################################################
-#            Datagateway NSG               #
-###################################################
-resource "azurerm_network_security_group" "dtgwnsg" {
-  name                = "${var.product}-dtgwsg${count.index}-${var.env}"
+resource "azurerm_network_security_group" "editnsg" {
+  name                = "${var.product}-editsg${count.index}-${var.env}"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -285,21 +260,28 @@ resource "azurerm_network_security_rule" "allow_ssh" {
   source_address_prefix       = "*"
   destination_address_prefix  = "Internet"
   resource_group_name         = azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.dtgwnsg.name
+  network_security_group_name = azurerm_network_security_group.editnsg.name
 }
 
-resource "azurerm_network_security_rule" "block_internet_outbound" {
-  name                        = "block-internet-outbound"
-  priority                    = 100
-  direction                   = "Outbound"
-  access                      = "Deny"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "VirtualNetwork"
-  destination_address_prefix  = "Internet"
-  resource_group_name         = azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.dtgwnsg.name
+####
+## DataGateway VMs
+####
+###################################################
+#            Datagateway NETWORK INTERFACE CARD               #
+###################################################
+resource "azurerm_network_interface" "dtgwnic" {
+  count                         = var.num_datagateway
+  name                          = "${var.product}-dtgwnic${count.index}-${var.env}"
+  location                      = azurerm_resource_group.rg.location
+  resource_group_name           = azurerm_resource_group.rg.name
+  enable_accelerated_networking = true
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.datagateway_subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+  tags = var.common_tags
 }
 
 ###################################################
