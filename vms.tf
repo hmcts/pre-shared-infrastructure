@@ -266,7 +266,7 @@ resource "azurerm_network_interface" "dtgwnic" {
 ###################################################
 #                DATAGATEWAY VIRTUAL MACHINE                 #
 ###################################################
-data "template_file" "edit-vm-init" {
+data "template_file" "dtgw-vm-init" {
   template = file("dtgw-vm-init.sh")
 }
 resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
