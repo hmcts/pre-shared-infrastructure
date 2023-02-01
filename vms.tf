@@ -64,6 +64,7 @@ resource "azurerm_network_interface" "nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
     private_ip_address_allocation = "Dynamic"
+    network_security_group_id     = azurerm_network_security_group.editnsg.id
   }
   tags = var.common_tags
 }
@@ -261,6 +262,20 @@ resource "azurerm_network_security_rule" "allow_ssh" {
   destination_address_prefix  = "Internet"
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.editnsg.name
+}
+
+resource "azurerm_network_security_rule" "block_internet_outbound" {
+  name                        = "block-internet-outbound"
+  priority                    = 100
+  direction                   = "Outbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "Internet"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.dtgwnsg.name
 }
 
 ####
