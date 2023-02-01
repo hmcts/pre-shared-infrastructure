@@ -275,7 +275,7 @@ resource "azurerm_network_security_rule" "block_internet_outbound" {
   source_address_prefix       = "VirtualNetwork"
   destination_address_prefix  = "Internet"
   resource_group_name         = azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.dtgwnsg.name
+  network_security_group_name = azurerm_network_security_group.editnsg.name
 }
 
 ####
