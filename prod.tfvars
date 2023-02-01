@@ -21,6 +21,7 @@ pre_mi_principal_id    = "d03f73e6-40ed-40a2-a0ec-059286505905"
 pre_mi_tenant_id       = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid     = "4f732c4d-d113-4a09-928d-6c035a26629b"
 dts_pre_ent_appreg_oid = "bec31833-3791-4d2a-80cc-871f5582f128"
+PeeringFromHubName     = "pre-recorded-evidence-prod"
 pg_databases = [
   {
     name : "pre-pdb-prod"
