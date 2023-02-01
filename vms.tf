@@ -267,7 +267,7 @@ resource "azurerm_network_interface" "dtgwnic" {
 #                DATAGATEWAY VIRTUAL MACHINE                 #
 ###################################################
 data "template_file" "edit-vm-init" {
-  template = file("bootstrap/bootstrap-dtgw-vm.sh")
+  template = file("bootstrap-dtgw-vm.sh")
 }
 resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   count                      = var.num_datagateway
@@ -283,7 +283,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   encryption_at_host_enabled = true
 
   custom_data = base64encode(data.template_file.dtgw-vm-init.rendered)
-  
+
   os_disk {
     name                   = "${var.product}dtgtwy${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
