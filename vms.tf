@@ -94,7 +94,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
     storage_account_type   = "StandardSSD_LRS" #UltraSSD_LRS?
     disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
     disk_size_gb           = 1000
-    # write_accelerator_enabled = true
   }
 
 
@@ -259,8 +258,48 @@ resource "azurerm_network_interface" "dtgwnic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.datagateway_subnet.id
     private_ip_address_allocation = "Dynamic"
+    network_security_group_id     = azurerm_network_security_group.dtgwnsg.id
   }
   tags = var.common_tags
+}
+
+###################################################
+#            Datagateway NSG               #
+###################################################
+resource "azurerm_network_security_group" "dtgwnsg" {
+  name                = "${var.product}-dtgwsg${count.index}-${var.env}"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  tags = var.common_tags
+}
+
+resource "azurerm_network_security_rule" "allow_ssh" {
+  name                        = "allow-ssh"
+  priority                    = 100
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "Internet"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.dtgwnsg.name
+}
+
+resource "azurerm_network_security_rule" "block_internet_outbound" {
+  name                        = "block-internet-outbound"
+  priority                    = 100
+  direction                   = "Outbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "Internet"
+  resource_group_name         = azurerm_resource_group.rg.name
+  network_security_group_name = azurerm_network_security_group.dtgwnsg.name
 }
 
 ###################################################
@@ -325,7 +364,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
 }
 
 resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
-  name                       = "IaaSAntimalware"
+  name                      = "IaaSAntimalware"
   count                      = var.num_datagateway
   virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   publisher                  = "Microsoft.Azure.Security"
