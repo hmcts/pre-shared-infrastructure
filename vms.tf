@@ -364,7 +364,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "dtgtwy" {
 }
 
 resource "azurerm_virtual_machine_extension" "dtgtwayvmextension" {
-  name                      = "IaaSAntimalware"
+  name                       = "IaaSAntimalware"
   count                      = var.num_datagateway
   virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
   publisher                  = "Microsoft.Azure.Security"
