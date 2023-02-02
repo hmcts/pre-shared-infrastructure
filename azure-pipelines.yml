@@ -13,31 +13,6 @@ resources:
       name: hmcts/azure-devops-templates
       ref: refs/heads/master
       endpoint: hmcts
-    - repository: terraform-module-postgresql-flexible
-      type: github
-      name: hmcts/terraform-module-postgresql-flexible
-      ref: refs/heads/master
-      endpoint: hmcts
-    - repository: cnp-module-key-vault
-      type: github
-      name: hmcts/cnp-module-key-vault
-      ref: refs/heads/master
-      endpoint: hmcts 
-    - repository: terraform-module-log-analytics-workspace-id
-      type: github
-      name: hmcts/terraform-module-log-analytics-workspace-id
-      ref: refs/heads/master
-      endpoint: hmcts 
-    - repository: cnp-module-storage-account
-      type: github
-      name: hmcts/cnp-module-storage-account
-      ref: refs/heads/master
-      endpoint: hmcts 
-    - repository: terraform-module-dynatrace-oneagent
-      type: github
-      name: hmcts/terraform-module-dynatrace-oneagent
-      ref: refs/heads/master
-      endpoint: hmcts
 
 variables:
   - name: resourceGroup
@@ -84,6 +59,13 @@ steps:
     displayName: 'install terraform $(tfVersion)'
     inputs:
       terraformVersion: $(tfVersion)
+
+  - task: InstallSSHKey@0
+    displayName: 'Install SSH Key'
+    inputs:
+      hostName: 'github.com'
+      sshPublicKey: 'not required'
+      sshKeySecureFile: 'jenkins_ssh_pk'
 
   - task: TerraformCLI@0
     displayName: Terraform init
