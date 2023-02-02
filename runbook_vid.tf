@@ -8,5 +8,5 @@ resource "azurerm_automation_account" "pre-aa" {
     type = "SystemAssigned"
   }
 
-  tags = var.common_tags
+  tags = module.tags.common_tags
 }

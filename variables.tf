@@ -13,12 +13,6 @@ variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
 
-
-
-variable "common_tags" {
-  type = map(string)
-}
-
 variable "sa_account_tier" {
   default = "Standard"
 }
@@ -73,8 +67,7 @@ variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
 variable "devops_admin" {}
-# variable "providernamespace" {}
-# variable "featurename" {}
+
 variable "lawSku" {
   type    = string
   default = "PerGB2018"
@@ -84,6 +77,7 @@ variable "lawRetention" {
   type    = number
   default = "30"
 }
+
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
@@ -151,15 +145,12 @@ variable "schedules" {
   default = []
 }
 
-
 # Dynatrace
 variable "dynatrace_server" {
   description = "The server URL, if you want to configure an alternative communication endpoint."
   type        = string
   default     = null
 }
-
-
 
 variable "server" {
   default = null
@@ -240,5 +231,11 @@ variable "cors_rules" {
 variable "PeeringFromHubName" {
   default = "pre-recorded-evidence"
 }
+variable "builtFrom" {
+  description = "The GitHub URL for the repository that contains the infrastructure code."
+  default     = ""
+}
 
-
+variable "application" {
+  default = "pre-recorded-evidence"
+}
