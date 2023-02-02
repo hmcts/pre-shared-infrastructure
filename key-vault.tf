@@ -6,7 +6,7 @@ module "key-vault" {
   product                         = var.product
   env                             = var.env
   tenant_id                       = data.azurerm_client_config.current.tenant_id
-  object_id                       = var.jenkins_AAD_objectId
+  object_id                       = var.product_group_object_id
   resource_group_name             = azurerm_resource_group.rg.name
   product_group_name              = "DTS Pre-recorded Evidence"
   common_tags                     = module.tags.common_tags
@@ -184,7 +184,7 @@ resource "azurerm_key_vault_key" "pre_kv_key" {
 }
 
 resource "azurerm_disk_encryption_set" "pre-des" {
-  name                = "pre-des" #"pre-des-${var.env}"
+  name                = "pre-des-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id

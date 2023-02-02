@@ -11,8 +11,6 @@ variable "subscription" {
 }
 variable "env" {}
 
-variable "jenkins_AAD_objectId" {}
-
 variable "sa_account_tier" {
   default = "Standard"
 }
@@ -53,12 +51,7 @@ variable "mgmt_subscription_id" {} // set by jenkins library
 variable "power_app_user_oid" {
   default = "56a29187-3d5f-4262-99d6-c635776e0eac"
 }
-variable "jenkins_ptlsbox_oid" {
-  default = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
-}
-variable "jenkins_ptlsbox_appid" {
-  default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
-}
+
 variable "managed_oid" {}
 variable "dts_pre_oid" {}
 variable "dts_cft_developers_oid" {}
@@ -238,4 +231,10 @@ variable "builtFrom" {
 
 variable "application" {
   default = "pre-recorded-evidence"
+}
+
+variable "product_group_object_id" {
+  type        = string
+  default     = "b1fd4154-355f-4683-a795-d09cdb814d16"
+  description = "DTS PRE Recorded Evidence"
 }
