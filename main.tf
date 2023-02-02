@@ -1,3 +1,10 @@
+module "tags" {
+  source       = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  environment  = var.env
+  product      = var.application
+  builtFrom    = var.builtFrom
+  expiresAfter = "3000-01-01"
+}
 locals {
   prefix              = "${var.product}-${var.env}"
   resource_group_name = local.prefix
@@ -8,5 +15,5 @@ locals {
 resource "azurerm_resource_group" "rg" {
   name     = local.resource_group_name
   location = var.location
-  tags     = var.common_tags
+  tags     = module.tags.common_tags
 }

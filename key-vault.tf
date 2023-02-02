@@ -9,7 +9,7 @@ module "key-vault" {
   object_id                       = var.jenkins_AAD_objectId
   resource_group_name             = azurerm_resource_group.rg.name
   product_group_name              = "DTS Pre-recorded Evidence"
-  common_tags                     = var.common_tags
+  tags                            = module.tags.common_tags
   create_managed_identity         = true
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
@@ -191,7 +191,7 @@ resource "azurerm_disk_encryption_set" "pre-des" {
   identity {
     type = "SystemAssigned"
   }
-  tags = var.common_tags
+  tags = module.tags.common_tags
 }
 
 resource "azurerm_key_vault_access_policy" "pre-des-disk" {
