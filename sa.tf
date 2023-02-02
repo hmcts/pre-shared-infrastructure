@@ -43,8 +43,8 @@ module "sa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
 
-  tags       = module.tags.common_tags
-  depends_on = [module.key-vault]
+  common_tags = module.tags.common_tags
+  depends_on  = [module.key-vault]
 }
 
 module "finalsa_storage_account" {
@@ -64,8 +64,8 @@ module "finalsa_storage_account" {
 
   cors_rules = var.cors_rules
 
-  tags       = module.tags.common_tags
-  depends_on = [module.key-vault]
+  common_tags = module.tags.common_tags
+  depends_on  = [module.key-vault]
 }
 
 module "ingestsa_storage_account" {
@@ -83,8 +83,8 @@ module "ingestsa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
 
-  tags       = module.tags.common_tags
-  depends_on = [module.key-vault]
+  common_tags = module.tags.common_tags
+  depends_on  = [module.key-vault]
 }
 
 ###################################################
