@@ -8,11 +8,11 @@ pool:
 
   resources:
     repositories:
-      - repository: templates
+      - repository: cnp-azuredevops-libraries
         type: github
-        name: hmcts/azure-devops-templates
         ref: refs/heads/master
-        endpoint: hmcts
+        name: hmcts/cnp-azuredevops-libraries
+        endpoint: 'hmcts (1)'  
 
 variables:
   - name: timeoutInMinutes
@@ -29,7 +29,7 @@ variables:
     value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
   - name: terraformInitSubscription
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
-  #- template: vars/input-variables.yaml@cnp-azuredevops-libraries
+  - template: vars/input-variables.yaml@cnp-azuredevops-libraries
 
 parameters:
 
@@ -54,66 +54,34 @@ parameters:
       - Prod
 
 stages:
-
-  - stage: Validate
-    displayName: 'Terraform Validate'
+  - stage: Precheck
     jobs:
       - job:
-        displayName: Terraform Validate
+        pool:
+          vmImage: ${{ variables.agentPool }}
+        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
         steps:
-          - template: pipeline-steps/terraform-validate.yaml
+          - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
+            parameters:
+              keyvaultName: 'infra-vault-nonprod'
+              keyvaultSecret: 'azure-devops-token'
+              serviceConnection: ${{ variables.serviceConnection }}
+              overrideAction: ${{ parameters.overrideAction }}
 
-          - ${{ each env in parameters.environment }}:
-            - ${{ if and( eq(env.name, 'Dev'), contains(variables['Build.SourceBranch'], 'refs/pull')) }}:
-              - template: pipeline-steps/terraform-plan-apply.yaml
+      - stage: Plan and Apply
+        jobs:
+          - job: TerraformPlanApply
+            pool:
+              vmImage: ${{ variables.agentPool }}
+            timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+            steps:
+              - template: steps/terraform.yaml@cnp-azuredevops-libraries
                 parameters:
-                  terraformVersion: $(tfVersion)
-                  env: ${{ env.name }}
-                  environmentServiceConnection: ${{ variables.serviceConnection }}
-                  product: pre
-                  tfStateResourceGroup: ${{ variables.resourceGroup }}
-                  tfStateStorageAccountName: ${{ variables.storageAccount }}
-                  #dependsOnEnv: ${{ env.dependsOnEnv }}
-
-              - ${{ elseif eq(variables['Build.SourceBranchName'], 'master') }}:
-                - template: pipeline-steps/terraform-plan-apply.yaml
-                  parameters:
-                    terraformVersion: $(tfVersion)
-                    env: ${{ env.name }}
-                    environmentServiceConnection: ${{ variables.serviceConnection }}
-                    product: pre
-                    tfStateResourceGroup: ${{ variables.resourceGroup }}
-                    tfStateStorageAccountName: ${{ variables.storageAccount }}
-                    #dependsOnEnv: ${{ env.dependsOnEnv }}
-
-
-                    # - stage: Precheck
-                    # jobs:
-                    #   - job:
-                    #     pool:
-                    #       vmImage: ${{ variables.agentPool }}
-                    #     timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-                    #     steps:
-                    #       - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
-                    #         parameters:
-                    #           keyvaultName: 'infra-vault-nonprod'
-                    #           keyvaultSecret: 'azure-devops-token'
-                    #           serviceConnection: ${{ variables.serviceConnection }}
-                    #           overrideAction: ${{ parameters.overrideAction }}
-      # - stage: Plan and Apply
-      #   jobs:
-      #     - job: TerraformPlanApply
-      #       pool:
-      #         vmImage: ${{ variables.agentPool }}
-      #       timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-      #       steps:
-      #         - template: steps/terraform.yaml@cnp-azuredevops-libraries
-      #           parameters:
-      #             overrideAction: ${{ parameters.overrideAction }}
-      #             environment: ${{ lower(parameters.environment) }}
-      #             serviceConnection: ${{ variables.serviceConnection }}
-      #             terraformInitSubscription: ${{ variables.terraformInitSubscription }}
-      #             product: ${{ variables.product }}
+                  overrideAction: ${{ parameters.overrideAction }}
+                  environment: ${{ lower(parameters.environment) }}
+                  serviceConnection: ${{ variables.serviceConnection }}
+                  terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+                  product: ${{ variables.product }}
 
 
 
