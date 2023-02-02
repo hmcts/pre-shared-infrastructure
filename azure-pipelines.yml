@@ -12,7 +12,7 @@ resources:
       type: github
       name: hmcts/azure-devops-templates
       ref: refs/heads/master
-      endpoint: 'hmcts (3)''
+      endpoint: 'hmcts (3)'
 
 variables:
   - name: timeoutInMinutes
