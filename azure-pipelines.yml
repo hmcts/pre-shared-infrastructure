@@ -47,6 +47,15 @@ parameters:
   
 steps:
 
+  # - task: InstallSSHKey@0
+  #   displayName: 'Install SSH Key'
+  #   inputs:
+  #     knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
+  #     sshKeySecureFile: 'pre_github_id_rsa'
+  #     # hostName: 'github.com'
+  #     # sshPublicKey: 'not required'
+  #     # sshKeySecureFile: 'jenkins_ssh_pk'
+
   - task: PowerShell@2
     displayName: Set terraform version env variable
     inputs:
@@ -60,25 +69,19 @@ steps:
     inputs:
       terraformVersion: $(tfVersion)
 
-  - task: InstallSSHKey@0
-    displayName: 'Install SSH Key'
-    inputs:
-      hostName: 'github.com'
-      sshPublicKey: 'not required'
-      sshKeySecureFile: 'jenkins_ssh_pk'
-
   - task: TerraformCLI@0
     displayName: Terraform init
     inputs:
       command: init
       terraformVersion: $(tfVersion)
-      backendType: 'azurerm'
       workingDirectory: $(System.DefaultWorkingDirectory)
-      backendServiceArm: $(ServiceConnection)
-      backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
-      backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
-      backendAzureRmContainerName: ${{ variables.container }}
-      backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
+      commandOptions: '-backend=false -input=false'
+      # backendType: 'azurerm'
+      # backendServiceArm: $(ServiceConnection)
+      # backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
+      # backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
+      # backendAzureRmContainerName: ${{ variables.container }}
+      # backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
 
   - task: TerraformCLI@0
     displayName: Terraform validate
