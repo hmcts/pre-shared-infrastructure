@@ -12,7 +12,7 @@ resources:
       type: github
       name: hmcts/azure-devops-templates
       ref: refs/heads/master
-      endpoint: 'hmcts (1)'
+      endpoint: 'hmcts'
 
 variables:
   - name: timeoutInMinutes
@@ -68,21 +68,20 @@ stages:
               serviceConnection: ${{ variables.serviceConnection }}
               overrideAction: ${{ parameters.overrideAction }}
 
-  - stage: Plan and Apply
-    dependsOn: ${{ deployment.dependsOn }}
-    jobs:
-      - job: TerraformPlanApply
-        pool:
-          vmImage: ${{ variables.agentPool }}
-        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-        steps:
-          - template: steps/terraform.yaml@cnp-azuredevops-libraries
-            parameters:
-              overrideAction: ${{ parameters.overrideAction }}
-              environment: ${{ lower(parameters.environment) }}
-              serviceConnection: ${{ variables.serviceConnection }}
-              terraformInitSubscription: ${{ variables.terraformInitSubscription }}
-              product: ${{ variables.product }}
+      - stage: Plan and Apply
+        jobs:
+          - job: TerraformPlanApply
+            pool:
+              vmImage: ${{ variables.agentPool }}
+            timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+            steps:
+              - template: steps/terraform.yaml@cnp-azuredevops-libraries
+                parameters:
+                  overrideAction: ${{ parameters.overrideAction }}
+                  environment: ${{ lower(parameters.environment) }}
+                  serviceConnection: ${{ variables.serviceConnection }}
+                  terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+                  product: ${{ variables.product }}
 
 
 
@@ -132,31 +131,6 @@ stages:
 #       workingDirectory: $(System.DefaultWorkingDirectory)
 #       environmentServiceNameAzureRM: $(ServiceConnection)
 
-  # - stage: Precheck
-  #   jobs:
-  #     - job: Validate
-  #       pool:
-  #         vmImage: ${{ variables.agentPool }}
-  #         timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-  #       steps:
-  #         - task: TerraformInstaller@0
-  #           displayName: Terraform install
-  #           inputs:
-  #             terraformVersion: ${{ variables.tfversion }}
-
-  # - stage: Precheck
-  #   jobs:
-  #     - job:
-  #       pool:
-  #         vmImage: ${{ variables.agentPool }}
-  #         timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-  #       steps:
-  #         - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
-  #           parameters:
-  #             keyvaultName: 'infra-vault-nonprod'
-  #             keyvaultSecret: 'azure-devops-token'
-  #             serviceConnection: 'DCD-CFT-Sandbox'
-  #             overrideAction: ${{ parameters.action }}
 
   # - task: TerraformCLI@0
   #   displayName: Terraform apply
