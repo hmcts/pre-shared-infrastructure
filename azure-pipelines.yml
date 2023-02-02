@@ -84,7 +84,7 @@ steps:
     inputs:
       command: plan
       terraformVersion: $(tfVersion)
-      commandOptions: '-out=tfplan -var-file=$${{ lower(parameters.environment) }}.tfvars'
+      commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars'
       workingDirectory: $(System.DefaultWorkingDirectory)
       environmentServiceNameAzureRM: $(ServiceConnection)
 
