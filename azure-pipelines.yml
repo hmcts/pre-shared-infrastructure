@@ -71,7 +71,7 @@ steps:
       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
       backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
       backendAzureRmContainerName: ${{ variables.container }}
-      backendAzureRmKey: 'tf/terraform.tfstate'
+      backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
 
   - task: TerraformCLI@0
     displayName: Terraform validate
