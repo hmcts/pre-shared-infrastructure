@@ -43,8 +43,7 @@ module "sa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
 
-  tags = module.tags.common_tags
-
+  tags       = module.tags.common_tags
   depends_on = [module.key-vault]
 }
 
@@ -84,10 +83,8 @@ module "ingestsa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
 
-  depends_on = [module.key-vault]
   tags       = module.tags.common_tags
-
-
+  depends_on = [module.key-vault]
 }
 
 ###################################################
