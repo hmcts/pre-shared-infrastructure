@@ -12,9 +12,13 @@ resources:
       type: github
       name: hmcts/azure-devops-templates
       ref: refs/heads/master
-      endpoint: hmcts
+      endpoint: 'hmcts (1)'
 
 variables:
+  - name: timeoutInMinutes
+    value: 60
+  - name: agentPool
+    value: ubuntu-latest
   - name: resourceGroup
     value: jenkins-state-${{ lower(parameters.environment) }}
   - name: storageAccount
@@ -23,15 +27,19 @@ variables:
     value: tfstate-${{ lower(parameters.environment) }}
   - name: serviceConnection
     value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
+  - name: terraformInitSubscription
+    value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
+  - template: vars/input-variables.yaml@cnp-azuredevops-libraries
 
 parameters:
 
-  - name: action
+  - name: overrideAction
     type: string
     default: plan
     values:
       - plan
       - apply
+      - destroy
 
   - name: environment
     displayName: Environment
@@ -44,50 +52,85 @@ parameters:
       - Test
       - Stg
       - Prod
-  
-steps:
 
-  - task: PowerShell@2
-    displayName: Set terraform version env variable
-    inputs:
-      targetType: 'inline'
-      script: |
-        $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/.terraform-version" -Raw
-        Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
+stages:
+  - stage: Precheck
+    jobs:
+      - job:
+        pool:
+          vmImage: ${{ variables.agentPool }}
+        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+        steps:
+          - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
+            parameters:
+              keyvaultName: 'infra-vault-nonprod'
+              keyvaultSecret: 'azure-devops-token'
+              serviceConnection: ${{ variables.serviceConnection }}
+              overrideAction: ${{ parameters.overrideAction }}
 
-  - task: TerraformInstaller@0
-    displayName: 'install terraform $(tfVersion)'
-    inputs:
-      terraformVersion: $(tfVersion)
+  - stage: Plan and Apply
+    dependsOn: ${{ deployment.dependsOn }}
+    jobs:
+      - job: TerraformPlanApply
+        pool:
+          vmImage: ${{ variables.agentPool }}
+        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+        steps:
+          - template: steps/terraform.yaml@cnp-azuredevops-libraries
+            parameters:
+              overrideAction: ${{ parameters.overrideAction }}
+              environment: ${{ lower(parameters.environment) }}
+              serviceConnection: ${{ variables.serviceConnection }}
+              terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+              product: ${{ variables.product }}
 
-  - task: TerraformCLI@0
-    displayName: Terraform init
-    inputs:
-      command: init
-      #commandOptions: '-lock=false' # don't lock on PRs / validate phase
-      terraformVersion: $(tfVersion)
-      workingDirectory: $(System.DefaultWorkingDirectory)
-      backendType: 'azurerm'
-      backendServiceArm: $(ServiceConnection)
-      backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
-      backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
-      backendAzureRmContainerName: ${{ variables.container }}
-      backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
 
-  - task: TerraformCLI@0
-    displayName: Terraform validate
-    inputs:
-      command: 'validate'
-      workingDirectory: $(System.DefaultWorkingDirectory)
 
-  - task: TerraformCLI@0
-    displayName: Terraform plan
-    inputs:
-      command: plan
-      terraformVersion: $(tfVersion)
-      commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
-      workingDirectory: $(System.DefaultWorkingDirectory)
-      environmentServiceNameAzureRM: $(ServiceConnection)
+
+
+# steps:
+
+#   - task: PowerShell@2
+#     displayName: Set terraform version env variable
+#     inputs:
+#       targetType: 'inline'
+#       script: |
+#         $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/.terraform-version" -Raw
+#         Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
+
+#   - task: TerraformInstaller@0
+#     displayName: 'install terraform $(tfVersion)'
+#     inputs:
+#       terraformVersion: $(tfVersion)
+
+#   - task: TerraformCLI@0
+#     displayName: Terraform init
+#     inputs:
+#       command: init
+#       #commandOptions: '-lock=false' # don't lock on PRs / validate phase
+#       terraformVersion: $(tfVersion)
+#       workingDirectory: $(System.DefaultWorkingDirectory)
+#       backendType: 'azurerm'
+#       backendServiceArm: $(ServiceConnection)
+#       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
+#       backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
+#       backendAzureRmContainerName: ${{ variables.container }}
+#       backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
+
+#   - task: TerraformCLI@0
+#     displayName: Terraform validate
+#     inputs:
+#       command: 'validate'
+#       workingDirectory: $(System.DefaultWorkingDirectory)
+
+#   - task: TerraformCLI@0
+#     displayName: Terraform plan
+#     inputs:
+#       command: plan
+#       terraformVersion: $(tfVersion)
+#       commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
+#       workingDirectory: $(System.DefaultWorkingDirectory)
+#       environmentServiceNameAzureRM: $(ServiceConnection)
 
   # - stage: Precheck
   #   jobs:
