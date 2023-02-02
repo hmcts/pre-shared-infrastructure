@@ -52,7 +52,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/.terraform-version" -Raw
+        $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/.terraform-version" -Raw
         Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
 
   - task: TerraformInstaller@0
