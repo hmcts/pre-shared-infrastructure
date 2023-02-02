@@ -64,6 +64,7 @@ steps:
     displayName: Terraform init
     inputs:
       command: init
+      commandOptions: '-lock=false' # don't lock on PRs / validate phase
       terraformVersion: $(tfVersion)
       workingDirectory: $(System.DefaultWorkingDirectory)
       backendType: 'azurerm'
