@@ -29,7 +29,7 @@ variables:
     value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
   - name: terraformInitSubscription
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
-#  - template: vars/input-variables.yaml@cnp-azuredevops-libraries
+  #- template: vars/input-variables.yaml@cnp-azuredevops-libraries
 
 parameters:
 
@@ -53,51 +53,40 @@ parameters:
       - Stg
       - Prod
 
-steps:
+stages:
 
-  - task: PowerShell@2
-    displayName: Set terraform version env variable
-    inputs:
-      targetType: 'inline'
-      script: |
-        $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/.terraform-version" -Raw
-        Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
-  - task: TerraformInstaller@0
-    displayName: 'install terraform $(tfVersion)'
-    inputs:
-      terraformVersion: $(tfVersion)
+  - stage: Validate
+    displayName: 'Terraform Validate'
+    jobs:
+      - job:
+        displayName: Terraform Validate
+        steps:
+          - template: pipeline-steps/terraform-validate.yaml
 
-  - task: TerraformCLI@0
-    displayName: Terraform init
-    inputs:
-      command: init
-      #commandOptions: '-lock=false' # don't lock on PRs / validate phase
-      terraformVersion: $(tfVersion)
-      workingDirectory: $(System.DefaultWorkingDirectory)
-      backendType: 'azurerm'
-      backendServiceArm: $(ServiceConnection)
-      backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
-      backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
-      backendAzureRmContainerName: ${{ variables.container }}
-      backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
+          - ${{ each env in parameters.environment }}:
+            - ${{ if and( eq(env.name, 'Dev'), contains(variables['Build.SourceBranch'], 'refs/pull')) }}:
+              - template: pipeline-steps/terraform-plan-apply.yaml
+                parameters:
+                  terraformVersion: $(tfVersion)
+                  env: ${{ env.name }}
+                  environmentServiceConnection: ${{ variables.serviceConnection }}
+                  product: pre
+                  tfStateResourceGroup: ${{ variables.resourceGroup }}
+                  tfStateStorageAccountName: ${{ variables.storageAccount }}
+                  #dependsOnEnv: ${{ env.dependsOnEnv }}
 
-  - task: TerraformCLI@0
-    displayName: Terraform validate
-    inputs:
-      command: 'validate'
-      workingDirectory: $(System.DefaultWorkingDirectory)
+              - ${{ elseif eq(variables['Build.SourceBranchName'], 'master') }}:
+                - template: pipeline-steps/terraform-plan-apply.yaml
+                  parameters:
+                    terraformVersion: $(tfVersion)
+                    env: ${{ env.name }}
+                    environmentServiceConnection: ${{ variables.serviceConnection }}
+                    product: pre
+                    tfStateResourceGroup: ${{ variables.resourceGroup }}
+                    tfStateStorageAccountName: ${{ variables.storageAccount }}
+                    #dependsOnEnv: ${{ env.dependsOnEnv }}
 
-  - task: TerraformCLI@0
-    displayName: Terraform plan
-    inputs:
-      command: plan
-      runAzLogin: true
-      terraformVersion: $(tfVersion)
-      commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
-      workingDirectory: $(System.DefaultWorkingDirectory)
-      environmentServiceNameAzureRM: $(ServiceConnection)
 
-#
                     # - stage: Precheck
                     # jobs:
                     #   - job:
