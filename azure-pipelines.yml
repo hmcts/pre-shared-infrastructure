@@ -66,7 +66,6 @@ steps:
       command: init
       terraformVersion: $(tfVersion)
       workingDirectory: $(System.DefaultWorkingDirectory)
-      commandOptions: '-backend=false -input=false'
       backendType: 'azurerm'
       backendServiceArm: $(ServiceConnection)
       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
