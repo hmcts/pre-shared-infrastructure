@@ -228,7 +228,7 @@ SETTINGS
 
 module "dynatrace-oneagent" {
 
-  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
+  source                     = "git::https://github.com/hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
   count                      = var.num_vid_edit_vms
   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
@@ -380,7 +380,7 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
 
 module "dynatrace-oneagent-dtgtway" {
 
-  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
+  source                     = "git::https://github.com/hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
   count                      = var.num_datagateway
   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
