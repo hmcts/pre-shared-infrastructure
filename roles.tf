@@ -5,13 +5,13 @@ data "azurerm_user_assigned_identity" "managed-identity" {
   depends_on          = [module.key-vault]
 }
 
-data "azuread_groups" "groups" {
-  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
-}
+# data "azuread_groups" "groups" {
+#   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+# }
 
-data "azuread_groups" "pre-groups" {
-  display_names = ["DTS Pre-recorded Evidence"]
-}
+# data "azuread_groups" "pre-groups" {
+#   display_names = ["DTS Pre-recorded Evidence"]
+# }
 
 #Storage Blob Data Contributor Role Assignment for Managed Identity
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
@@ -56,10 +56,11 @@ resource "azurerm_role_assignment" "powerapp_appreg" {
   principal_id         = var.dts_pre_ent_appreg_oid
 }
 
-# DTS-PRE-VideoEditing-SecurityGroup-
-resource "azurerm_role_assignment" "vmuser_login" {
-  for_each             = toset(data.azuread_groups.groups.object_ids)
-  scope                = azurerm_resource_group.rg.id
-  role_definition_name = "Virtual Machine User Login"
-  principal_id         = each.value
-}
+# role should be assigned already
+# # DTS-PRE-VideoEditing-SecurityGroup-
+# resource "azurerm_role_assignment" "vmuser_login" {
+#   for_each             = toset(data.azuread_groups.groups.object_ids)
+#   scope                = azurerm_resource_group.rg.id
+#   role_definition_name = "Virtual Machine User Login"
+#   principal_id         = each.value
+# }
