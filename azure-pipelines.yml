@@ -60,7 +60,7 @@ steps:
   - task: AzureCLI@2
     displayName: Azure CLI
     inputs:
-      azureSubscription: $(ServiceConnection)
+      azureSubscription: $(serviceConnection)
       scriptType: 'bash'
       scriptLocation: inlineScript
       inlineScript: |
@@ -73,7 +73,7 @@ steps:
   - task: AzureCLI@2
     name: spoutput
     inputs:
-      azureSubscription: $(ServiceConnection)
+      azureSubscription: $(serviceConnection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
@@ -101,7 +101,7 @@ steps:
   - task: AzureCLI@2
     displayName: Set publishing variables
     inputs:
-      azureSubscription: ${{ parameters.serviceConnection }}
+      azureSubscription: $(serviceConnection)
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
@@ -126,7 +126,7 @@ steps:
       terraformVersion: $(tfVersion)
       workingDirectory: $(System.DefaultWorkingDirectory)
       backendType: 'azurerm'
-      backendServiceArm: $(ServiceConnection)
+      backendServiceArm: $(serviceConnection)
       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
       backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
       backendAzureRmContainerName: ${{ variables.container }}
@@ -146,7 +146,7 @@ steps:
       terraformVersion: $(tfVersion)
       commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
       workingDirectory: $(System.DefaultWorkingDirectory)
-      environmentServiceNameAzureRM: $(ServiceConnection)
+      environmentServiceNameAzureRM: $(serviceConnection)
       AZURE_BEARER_TOKEN: $(AZURE_BEARER_TOKEN)
       AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
       AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
