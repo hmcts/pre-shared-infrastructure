@@ -68,7 +68,7 @@ steps:
         az account show
         az account list
         az account get-access-token
-        az ad signed-in-user show
+      # az ad signed-in-user show
   
   - task: AzureCLI@2
     name: spoutput
@@ -137,6 +137,12 @@ steps:
       command: 'validate'
       workingDirectory: $(System.DefaultWorkingDirectory)
 
+  - task: TerraformCLI@0
+    inputs:
+      workingDirectory: $(System.DefaultWorkingDirectory)
+      command: login
+      arguments: --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
+  
   - task: TerraformCLI@0
     displayName: Terraform plan
     inputs:
