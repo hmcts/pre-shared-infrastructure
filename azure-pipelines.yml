@@ -49,6 +49,10 @@ parameters:
 
 steps:
 
+  - checkout: self
+    persistCredentials: true
+    clean: true
+
   - task: PowerShell@2
     displayName: Set terraform version env variable
     inputs:
@@ -113,10 +117,18 @@ steps:
       addSpnToEnvironment: true
       failOnStandardError: true
 
-  - task: CommandLine@2
-    inputs:
-      script: |
-        az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
+  # - task: AzureKeyVault@1
+  #   displayName: 'Get azure devops API token from Keyvault'
+  #   inputs:
+  #     runAsPreJob: false
+  #     ConnectedServiceName: 'DCD-CNP-DEV'
+  #     keyVaultName: 'infra-vault-nonprod'
+  #     secretsFilter: 'azure-devops-token'
+
+  # - task: CommandLine@2
+  #   inputs:
+  #     script: |
+  #       az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
 
   - task: TerraformInstaller@0
     displayName: 'Install terraform'
@@ -151,12 +163,19 @@ steps:
       commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
       workingDirectory: $(System.DefaultWorkingDirectory)
       environmentServiceNameAzureRM: $(serviceConnection)
-      AZURE_BEARER_TOKEN: $(AZURE_BEARER_TOKEN)
-      AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
-      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
-      AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-      AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
-      AZURE_RESOURCE_GROUP_NAME: ${{ variables.resourceGroup }}
+      keyvaultName: 'infra-vault-nonprod'
+      keyvaultSecret: 'azure-devops-token'
+      serviceConnection: 'DCD-CFT-Sandbox'
+      env:
+        tenantId : $(tenantId)
+        clientId : $(servicePrincipalId)
+        secret : $(servicePrincipalKey)
+      # AZURE_BEARER_TOKEN: $(AZURE_BEARER_TOKEN)
+      # AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
+      # AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+      # AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+      # AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
+      # AZURE_RESOURCE_GROUP_NAME: ${{ variables.resourceGroup }}
 
 
 # steps:
