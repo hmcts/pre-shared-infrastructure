@@ -19,8 +19,9 @@ variables:
     value: tfstate-${{ lower(parameters.environment) }}
   - name: serviceConnection
     value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
-  - name: terraformInitSubscription
-    value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
+  # - name: terraformInitSubscription
+  #   value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
+  # - group: pre-azure-devops-agent
 
 parameters:
 
@@ -63,11 +64,25 @@ steps:
       inlineScript: |
         az --version
         az account show
+        az account list
 
   - task: TerraformInstaller@0
     displayName: 'Install terraform $(tfVersion)'
     inputs:
       terraformVersion: $(tfVersion)
+
+  - task: AzureCLI@2
+    name: spoutput
+    inputs:
+      azureSubscription: $(ServiceConnection)
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        echo "##vso[task.setvariable variable=spId]$servicePrincipalId"
+        echo "##vso[task.setvariable variable=spKey]$servicePrincipalKey"
+        echo "##vso[task.setvariable variable=tenantId]$tenantId"
+      addSpnToEnvironment: true
+      failOnStandardError: true
 
   - task: TerraformCLI@0
     displayName: Terraform init
