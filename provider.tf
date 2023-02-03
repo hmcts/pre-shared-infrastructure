@@ -30,6 +30,7 @@ provider "azapi" {
 
 provider "azurerm" {
   skip_provider_registration = true
+  subscription_id = "867a878b-cb68-4de5-9741-361ac9e178b6"
   features {
     key_vault {
       purge_soft_delete_on_destroy = true
@@ -37,12 +38,12 @@ provider "azurerm" {
 
   }
 }
-
-provider "azurerm" {
-  alias           = "oms"
-  subscription_id = module.log_analytics_workspace.subscription_id
-  features {}
-}
+#COMMENTED OUT FOR TROUBLESHOOTING
+# provider "azurerm" {
+#   alias           = "oms"
+#   subscription_id = module.log_analytics_workspace.subscription_id
+#   features {}
+# }
 
 provider "azurerm" {
   subscription_id            = local.hub[local.hub_name].subscription
