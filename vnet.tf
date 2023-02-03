@@ -49,7 +49,7 @@ resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
 
 ##########################
 
-Hub connection
+# Hub connection
 
 ##########################
 
