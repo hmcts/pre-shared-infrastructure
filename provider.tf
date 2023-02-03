@@ -38,20 +38,19 @@ provider "azurerm" {
   }
 }
 
-#COMMENTED OUT FOR TROUBLESHOOTING
-# provider "azurerm" {
-#   alias           = "oms"
-#   subscription_id = module.log_analytics_workspace.subscription_id
-#   features {}
-# }
+provider "azurerm" {
+  alias           = "oms"
+  subscription_id = module.log_analytics_workspace.subscription_id
+  features {}
+}
 
-# provider "azurerm" {
-#   tenant_id = data.azurerm_client_config.current.tenant_id
-#   subscription_id            = local.hub[local.hub_name].subscription
-#   skip_provider_registration = "true"
-#   features {}
-#   alias = "hub"
-# }
+provider "azurerm" {
+  tenant_id = data.azurerm_client_config.current.tenant_id
+  subscription_id            = local.hub[local.hub_name].subscription
+  skip_provider_registration = "true"
+  features {}
+  alias = "hub"
+}
 
 provider "azuread" {
   tenant_id = data.azurerm_client_config.current.tenant_id

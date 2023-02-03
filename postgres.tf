@@ -47,7 +47,6 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
   value        = module.data_store_db_v14.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
-
 provider "azurerm" {
   alias           = "private_dns"
   subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
