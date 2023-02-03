@@ -68,7 +68,6 @@ steps:
         az account show
         az account list
         az account get-access-token
-        az login
   
   - task: AzureCLI@2
     name: spoutput
@@ -114,7 +113,7 @@ steps:
       failOnStandardError: true
 
   - task: TerraformInstaller@0
-    displayName: 'Install terraform $(tfVersion)'
+    displayName: 'Install terraform'
     inputs:
       terraformVersion: $(tfVersion)
 
