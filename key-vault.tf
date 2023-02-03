@@ -59,16 +59,16 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
 #####################################
 #    DTS PRE Admin
 #####################################
-resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id               = var.dts_pre_project_admin
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = ["List", "Get", ]
-  certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
-  secret_permissions      = ["List", "Get", ]
-  storage_permissions     = ["List", "Get", ]
-}
+# resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
+#   key_vault_id = module.key-vault.key_vault_id
+#   # application_id        = var.app_id
+#   object_id               = var.dts_pre_project_admin
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+#   key_permissions         = ["List", "Get", ]
+#   certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
+#   secret_permissions      = ["List", "Get", ]
+#   storage_permissions     = ["List", "Get", ]
+# }
 
 
 // DevopsAdmin Permissions
