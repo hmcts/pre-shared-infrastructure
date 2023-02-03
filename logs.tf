@@ -1,9 +1,8 @@
-#COMMENTED OUT FOR TROUBLESHOOTING
-# data "azurerm_log_analytics_workspace" "loganalytics" {
-#   provider            = azurerm.oms
-#   name                = module.log_analytics_workspace.name
-#   resource_group_name = module.log_analytics_workspace.resource_group_name
-# }
+data "azurerm_log_analytics_workspace" "loganalytics" {
+  provider            = azurerm.oms
+  name                = module.log_analytics_workspace.name
+  resource_group_name = module.log_analytics_workspace.resource_group_name
+}
 
 resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   name                       = azurerm_media_services_account.ams.name
