@@ -53,6 +53,17 @@ steps:
       script: |
         $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/.terraform-version" -Raw
         Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
+
+  - task: AzureCLI@2
+    displayName: Azure CLI
+    inputs:
+      azureSubscription: $(ServiceConnection)
+      scriptType: 'bash'
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        az account show
+
   - task: TerraformInstaller@0
     displayName: 'Install terraform $(tfVersion)'
     inputs:
