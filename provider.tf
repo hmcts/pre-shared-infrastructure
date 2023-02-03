@@ -17,6 +17,11 @@ terraform {
       source  = "hashicorp/time"
       version = "~> 0.6"
     }
+
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "2.33.0"
+    }
   }
 }
 
@@ -39,9 +44,11 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  #subscription_id            = local.hub[var.env].subscription
   subscription_id            = local.hub[local.hub_name].subscription
   skip_provider_registration = "true"
   features {}
   alias = "hub"
+}
+
+provider "azuread" {
 }
