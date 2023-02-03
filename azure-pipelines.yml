@@ -113,6 +113,11 @@ steps:
       addSpnToEnvironment: true
       failOnStandardError: true
 
+  - task: CommandLine@2
+    inputs:
+      script: |
+        az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
+
   - task: TerraformInstaller@0
     displayName: 'Install terraform'
     inputs:
@@ -136,12 +141,6 @@ steps:
     inputs:
       command: 'validate'
       workingDirectory: $(System.DefaultWorkingDirectory)
-
-  - task: TerraformCLI@0
-    inputs:
-      workingDirectory: $(System.DefaultWorkingDirectory)
-      command: login
-      arguments: --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
   
   - task: TerraformCLI@0
     displayName: Terraform plan
