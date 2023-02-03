@@ -37,6 +37,7 @@ provider "azurerm" {
 
   }
 }
+
 #COMMENTED OUT FOR TROUBLESHOOTING
 # provider "azurerm" {
 #   alias           = "oms"
