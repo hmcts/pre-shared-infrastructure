@@ -68,6 +68,7 @@ steps:
         az account show
         az account list
         az account get-access-token
+        az ad signed-in-user show
   
   - task: AzureCLI@2
     name: spoutput
@@ -121,7 +122,6 @@ steps:
     displayName: Terraform init
     inputs:
       command: init
-      #commandOptions: '-lock=false' # don't lock on PRs / validate phase
       terraformVersion: $(tfVersion)
       workingDirectory: $(System.DefaultWorkingDirectory)
       backendType: 'azurerm'
