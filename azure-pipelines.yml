@@ -6,14 +6,6 @@ trigger:
 pool:
   vmImage: ubuntu-22.04
 
-  resources:
-    repositories:
-      - repository: cnp-azuredevops-libraries
-        type: github
-        ref: refs/heads/master
-        name: hmcts/cnp-azuredevops-libraries
-        endpoint: 'hmcts (1)'  
-
 variables:
   - name: timeoutInMinutes
     value: 60
@@ -29,7 +21,6 @@ variables:
     value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
   - name: terraformInitSubscription
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
-  - template: vars/input-variables.yaml@cnp-azuredevops-libraries
 
 parameters:
 
@@ -53,38 +44,49 @@ parameters:
       - Stg
       - Prod
 
-stages:
-  - stage: Precheck
-    jobs:
-      - job:
-        pool:
-          vmImage: ${{ variables.agentPool }}
-        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-        steps:
-          - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
-            parameters:
-              keyvaultName: 'infra-vault-nonprod'
-              keyvaultSecret: 'azure-devops-token'
-              serviceConnection: ${{ variables.serviceConnection }}
-              overrideAction: ${{ parameters.overrideAction }}
+steps:
 
-  - stage: Plan and Apply
-    jobs:
-      - job: TerraformPlanApply
-        pool:
-          vmImage: ${{ variables.agentPool }}
-        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-        steps:
-          - template: steps/terraform.yaml@cnp-azuredevops-libraries
-            parameters:
-              overrideAction: ${{ parameters.overrideAction }}
-              environment: ${{ lower(parameters.environment) }}
-              serviceConnection: ${{ variables.serviceConnection }}
-              terraformInitSubscription: ${{ variables.terraformInitSubscription }}
-              product: ${{ variables.product }}
+  - task: PowerShell@2
+    displayName: Set terraform version env variable
+    inputs:
+      targetType: 'inline'
+      script: |
+        $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/.terraform-version" -Raw
+        Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
+  - task: TerraformInstaller@0
+    displayName: 'Install terraform $(tfVersion)'
+    inputs:
+      terraformVersion: $(tfVersion)
 
+  - task: TerraformCLI@0
+    displayName: Terraform init
+    inputs:
+      command: init
+      #commandOptions: '-lock=false' # don't lock on PRs / validate phase
+      terraformVersion: $(tfVersion)
+      workingDirectory: $(System.DefaultWorkingDirectory)
+      backendType: 'azurerm'
+      backendServiceArm: $(ServiceConnection)
+      backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
+      backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
+      backendAzureRmContainerName: ${{ variables.container }}
+      backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
 
+  - task: TerraformCLI@0
+    displayName: Terraform validate
+    inputs:
+      command: 'validate'
+      workingDirectory: $(System.DefaultWorkingDirectory)
 
+  - task: TerraformCLI@0
+    displayName: Terraform plan
+    inputs:
+      command: plan
+      runAzLogin: true
+      terraformVersion: $(tfVersion)
+      commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
+      workingDirectory: $(System.DefaultWorkingDirectory)
+      environmentServiceNameAzureRM: $(ServiceConnection)
 
 
 # steps:
