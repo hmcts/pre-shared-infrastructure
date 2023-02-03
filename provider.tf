@@ -34,6 +34,7 @@ provider "azurerm" {
     key_vault {
       purge_soft_delete_on_destroy = true
     }
+
   }
 }
 
@@ -51,4 +52,5 @@ provider "azurerm" {
 }
 
 provider "azuread" {
+  tenant_id = data.azurerm_client_config.current.tenant_id
 }
