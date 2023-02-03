@@ -18,10 +18,10 @@ terraform {
       version = "~> 0.6"
     }
 
-    # azuread = {
-    #   source  = "hashicorp/azuread"
-    #   version = "2.33.0"
-    # }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "2.33.0"
+    }
   }
 }
 
@@ -50,5 +50,5 @@ provider "azurerm" {
   alias = "hub"
 }
 
-# provider "azuread" {
-# }
+provider "azuread" {
+}
