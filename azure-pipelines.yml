@@ -65,6 +65,7 @@ steps:
         az --version
         az account show
         az account list
+        az account get-access-token
 
   - task: TerraformInstaller@0
     displayName: 'Install terraform $(tfVersion)'
