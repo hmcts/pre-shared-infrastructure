@@ -172,29 +172,29 @@ resource "azurerm_virtual_machine_extension" "monitor-agent" {
   tags                       = module.tags.common_tags
 }
 
-
-resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
-  depends_on           = [azurerm_virtual_machine_extension.daa-agent]
-  name                 = "MicrosoftMonitoringAgent" # Must be called this
-  count                = var.num_vid_edit_vms
-  virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  publisher            = "Microsoft.EnterpriseCloud.Monitoring"
-  type                 = "MicrosoftMonitoringAgent"
-  type_handler_version = "1.0"
-  tags                 = module.tags.common_tags
-  settings             = <<SETTINGS
-    {
-        "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
-        "azureResourceId": "${azurerm_windows_virtual_machine.vm.*.id[count.index]}",
-        "stopOnMultipleConnections": "false"
-    }
-  SETTINGS
-  protected_settings   = <<PROTECTED_SETTINGS
-    {
-      "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
-    }
-  PROTECTED_SETTINGS
-}
+# COMMENTED OUT FOR TROUBLESHOOTING
+# resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
+#   depends_on           = [azurerm_virtual_machine_extension.daa-agent]
+#   name                 = "MicrosoftMonitoringAgent" # Must be called this
+#   count                = var.num_vid_edit_vms
+#   virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   publisher            = "Microsoft.EnterpriseCloud.Monitoring"
+#   type                 = "MicrosoftMonitoringAgent"
+#   type_handler_version = "1.0"
+#   tags                 = module.tags.common_tags
+#   settings             = <<SETTINGS
+#     {
+#         "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
+#         "azureResourceId": "${azurerm_windows_virtual_machine.vm.*.id[count.index]}",
+#         "stopOnMultipleConnections": "false"
+#     }
+#   SETTINGS
+#   protected_settings   = <<PROTECTED_SETTINGS
+#     {
+#       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
+#     }
+#   PROTECTED_SETTINGS
+# }
 
 resource "azurerm_virtual_machine_extension" "vmextension" {
   name                       = "IaaSAntimalware"
