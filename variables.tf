@@ -226,15 +226,15 @@ variable "PeeringFromHubName" {
 }
 variable "builtFrom" {
   description = "The GitHub URL for the repository that contains the infrastructure code."
-  default     = ""
+  default     = "hmcts/pre-shared-infrastrucuture"
 }
-
-variable "application" {
-  default = "pre-recorded-evidence"
-}
-
 variable "product_group_object_id" {
   type        = string
   default     = "b1fd4154-355f-4683-a795-d09cdb814d16"
   description = "DTS PRE Recorded Evidence"
 }
+
+# variable "subscription_id" {}
+# variable "client_id" {}
+# variable "client_secret" {}
+# variable "tenant_id" {}
