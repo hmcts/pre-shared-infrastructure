@@ -166,10 +166,10 @@ steps:
       keyvaultName: 'infra-vault-nonprod'
       keyvaultSecret: 'azure-devops-token'
       serviceConnection: 'DCD-CFT-Sandbox'
-      env:
-        tenantId : $(tenantId)
-        clientId : $(servicePrincipalId)
-        secret : $(servicePrincipalKey)
+      # env:
+      #   tenantId : $(tenantId)
+      #   clientId : $(servicePrincipalId)
+      #   secret : $(servicePrincipalKey)
       # AZURE_BEARER_TOKEN: $(AZURE_BEARER_TOKEN)
       # AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
       # AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
