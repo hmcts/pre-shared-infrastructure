@@ -1,20 +1,20 @@
 data "azurerm_client_config" "current" {}
 
 module "key-vault" {
-  source                          = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
-  name                            = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  product                         = var.product
-  env                             = var.env
-  tenant_id                       = data.azurerm_client_config.current.tenant_id
-  object_id                       = var.product_group_object_id
-  resource_group_name             = azurerm_resource_group.rg.name
-  product_group_name              = "DTS Pre-recorded Evidence"
-  common_tags                     = module.tags.common_tags
-  create_managed_identity         = true
-  network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
-  purge_protection_enabled        = true
-  network_acls_default_action     = "Deny"
-  network_acls_allowed_ip_ranges  = ["80.44.26.160", "86.179.180.2"]
+  source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
+  name                    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  product                 = var.product
+  env                     = var.env
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  object_id               = var.product_group_object_id
+  resource_group_name     = azurerm_resource_group.rg.name
+  product_group_name      = "DTS Pre-recorded Evidence"
+  common_tags             = module.tags.common_tags
+  create_managed_identity = true
+  # network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  purge_protection_enabled = true
+  # network_acls_default_action     = "Deny"
+  # network_acls_allowed_ip_ranges  = ["80.44.26.160", "86.179.180.2"]
 }
 
 // Power App Permissions
