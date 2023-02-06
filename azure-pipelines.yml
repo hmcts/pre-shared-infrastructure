@@ -21,6 +21,8 @@ variables:
     value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
   - name: keyvaultName
     value: pre-stg
+  - name: tfInitSub
+    value: "04d27a32-7a07-48b3-95b8-3c8691e1a263"
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
   # - name: terraformInitSubscription
   #   value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
@@ -59,18 +61,18 @@ parameters:
 
 stages:
   - stage: Precheck
-    pool:
-      vmImage: ${{ variables.agentPool }}
     jobs:
-      - job: Precheck
-        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+      - job:
+        pool:
+          vmImage: ${{ variables.agentPool }}
+          timeoutInMinutes: ${{ variables.timeoutInMinutes }}
         steps:
           - checkout: self
           - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
             parameters:
               keyvaultName: 'infra-vault-nonprod'
               keyvaultSecret: 'azure-devops-token'
-              serviceConnection: 'azurerm-sandbox' # $(serviceConnection) 'DCD-CNP-DEV' #'DCD-CFT-Sandbox'
+              serviceConnection: 'DCD-CFT-Sandbox' # $(serviceConnection)'DCD-CNP-DEV' #'DCD-CFT-Sandbox'
               overrideAction: ${{ parameters.overrideAction }}
 
 # steps:
