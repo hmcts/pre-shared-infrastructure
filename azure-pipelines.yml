@@ -24,8 +24,10 @@ variables:
   - name: tfInitSub
     value: "04d27a32-7a07-48b3-95b8-3c8691e1a263"
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
-  # - name: terraformInitSubscription
-  #   value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
+  - name: terraformInitSubscription
+    value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
+  - name: product
+    value: pre-shared-infrastrucuture
   # - group: pre-azure-devops-agent
 
 resources:
@@ -72,183 +74,21 @@ stages:
             parameters:
               keyvaultName: 'infra-vault-nonprod'
               keyvaultSecret: 'azure-devops-token'
-              serviceConnection: 'DCD-CFT-Sandbox' # $(serviceConnection)'DCD-CNP-DEV' #'DCD-CFT-Sandbox'
+              serviceConnection: 'DCD-CFT-Sandbox'
               overrideAction: ${{ parameters.overrideAction }}
 
-# steps:
-
-#   - checkout: self
-#     persistCredentials: true
-#     clean: true
-
-#   - task: PowerShell@2
-#     displayName: Set terraform version env variable
-#     inputs:
-#       targetType: 'inline'
-#       script: |
-#         $tfVersion = Get-Content "$(System.DefaultWorkingDirectory)/.terraform-version" -Raw
-#         Write-Host "##vso[task.setvariable variable=tfVersion]$tfVersion"
-
-#   - task: AzureCLI@2
-#     displayName: Azure CLI
-#     inputs:
-#       azureSubscription: $(serviceConnection)
-#       scriptType: 'bash'
-#       scriptLocation: inlineScript
-#       inlineScript: |
-#         az --version
-#         az account show
-#         az account list
-#         az account get-access-token
-#       # az ad signed-in-user show
-  
-#   - task: AzureCLI@2
-#     name: spoutput
-#     inputs:
-#       azureSubscription: $(serviceConnection)
-#       scriptType: 'bash'
-#       scriptLocation: 'inlineScript'
-#       inlineScript: |
-#         echo "##vso[task.setvariable variable=spId]$servicePrincipalId"
-#         echo "##vso[task.setvariable variable=spKey]$servicePrincipalKey"
-#         echo "##vso[task.setvariable variable=tenantId]$tenantId"
-#       addSpnToEnvironment: true
-#       failOnStandardError: true
-
-#   # - task: AzureKeyVault@1
-#   #   displayName: 'Get Secrets from KeyVault'
-#   #   inputs:
-#   #     azureSubscription: ${{ parameters.serviceConnection }}
-#   #     keyVaultName: ${{ parameters.keyvaultName }}
-#   #     secretsFilter: '*'
-
-#   # - script: |
-#   #     echo "##vso[task.setvariable variable=ARM_CLIENT_ID;isOutput=true]$(sp-client-id)"
-#   #     echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET;isOutput=true]$(sp-client-secret)"
-#   #     echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID;isOutput=true]$(sp-subscription-id)"
-#   #     echo "##vso[task.setvariable variable=ARM_TENANT_ID;isOutput=true]$(sp-tenant-id)"
-#   #   displayName: 'Export Keyvault Variables'
-#   #   name: exportKeyVault
-
-#   - task: AzureCLI@2
-#     displayName: Set publishing variables
-#     inputs:
-#       azureSubscription: $(serviceConnection)
-#       scriptType: bash
-#       scriptLocation: inlineScript
-#       inlineScript: |
-#         echo "##vso[task.setvariable issecret=true;variable=AZURE_BEARER_TOKEN]$(az account get-access-token --query "accessToken" --output tsv)"
-#         echo "##vso[task.setvariable issecret=true;variable=AZURE_CLIENT_ID]$servicePrincipalId"
-#         echo "##vso[task.setvariable issecret=true;variable=AZURE_CLIENT_SECRET]$servicePrincipalKey"
-#         echo "##vso[task.setvariable issecret=true;variable=AZURE_TENANT_ID]$tenantId"
-#         echo "##vso[task.setvariable issecret=true;variable=AZURE_SUBSCRIPTION_ID]$(az account show --query "id" --output tsv)"
-#       addSpnToEnvironment: true
-#       failOnStandardError: true
-
-#   # - task: AzureKeyVault@1
-#   #   displayName: 'Get azure devops API token from Keyvault'
-#   #   inputs:
-#   #     runAsPreJob: false
-#   #     ConnectedServiceName: 'DCD-CNP-DEV'
-#   #     keyVaultName: 'infra-vault-nonprod'
-#   #     secretsFilter: 'azure-devops-token'
-
-#   # - task: CommandLine@2
-#   #   inputs:
-#   #     script: |
-#   #       az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
-
-#   - task: TerraformInstaller@0
-#     displayName: 'Install terraform'
-#     inputs:
-#       terraformVersion: $(tfVersion)
-
-#   - task: TerraformCLI@0
-#     displayName: Terraform init
-#     inputs:
-#       command: init
-#       terraformVersion: $(tfVersion)
-#       workingDirectory: $(System.DefaultWorkingDirectory)
-#       backendType: 'azurerm'
-#       backendServiceArm: $(serviceConnection)
-#       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
-#       backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
-#       backendAzureRmContainerName: ${{ variables.container }}
-#       backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
-
-#   - task: TerraformCLI@0
-#     displayName: Terraform validate
-#     inputs:
-#       command: 'validate'
-#       workingDirectory: $(System.DefaultWorkingDirectory)
-  
-#   - task: TerraformCLI@0
-#     displayName: Terraform plan
-#     inputs:
-#       command: plan
-#       runAzLogin: true
-#       terraformVersion: $(tfVersion)
-#       commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
-#       workingDirectory: $(System.DefaultWorkingDirectory)
-#       environmentServiceNameAzureRM: $(serviceConnection)
-#       keyvaultName: 'infra-vault-nonprod'
-#       keyvaultSecret: 'azure-devops-token'
-#       serviceConnection: 'DCD-CFT-Sandbox'
-#       # env:
-#       #   tenantId : $(tenantId)
-#       #   clientId : $(servicePrincipalId)
-#       #   secret : $(servicePrincipalKey)
-#       # AZURE_BEARER_TOKEN: $(AZURE_BEARER_TOKEN)
-#       # AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
-#       # AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
-#       # AZURE_TENANT_ID: $(AZURE_TENANT_ID)
-#       # AZURE_SUBSCRIPTION_ID: $(AZURE_SUBSCRIPTION_ID)
-#       # AZURE_RESOURCE_GROUP_NAME: ${{ variables.resourceGroup }}
-
-
-# # steps:
-# #
-# #   - task: TerraformInstaller@0
-# #     displayName: 'install terraform $(tfVersion)'
-# #     inputs:
-# #       terraformVersion: $(tfVersion)
-
-# #   - task: TerraformCLI@0
-# #     displayName: Terraform init
-# #     inputs:
-# #       command: init
-# #       #commandOptions: '-lock=false' # don't lock on PRs / validate phase
-# #       terraformVersion: $(tfVersion)
-# #       workingDirectory: $(System.DefaultWorkingDirectory)
-# #       backendType: 'azurerm'
-# #       backendServiceArm: $(ServiceConnection)
-# #       backendAzureRmResourceGroupName: ${{ variables.resourceGroup }}
-# #       backendAzureRmStorageAccountName: ${{ variables.storageAccount }}
-# #       backendAzureRmContainerName: ${{ variables.container }}
-# #       backendAzureRmKey: 'pre/${{ lower(parameters.environment) }}/terraform.tfstate'
-
-# #   - task: TerraformCLI@0
-# #     displayName: Terraform validate
-# #     inputs:
-# #       command: 'validate'
-# #       workingDirectory: $(System.DefaultWorkingDirectory)
-
-# #   - task: TerraformCLI@0
-# #     displayName: Terraform plan
-# #     inputs:
-# #       command: plan
-# #       terraformVersion: $(tfVersion)
-# #       commandOptions: '-out=tfplan -var-file=${{ lower(parameters.environment) }}.tfvars -lock=false'
-# #       workingDirectory: $(System.DefaultWorkingDirectory)
-# #       environmentServiceNameAzureRM: $(ServiceConnection)
-
-
-#   # - task: TerraformCLI@0
-#   #   displayName: Terraform apply
-#   #   condition: and(succeeded(), eq('${{ parameters.Action }}', 'apply'))
-#   #   inputs:
-#   #     command: apply
-#   #     terraformVersion: $(tfVersion)
-#   #     commandOptions: '--auto-approve tfplan'
-#   #     workingDirectory: $(System.DefaultWorkingDirectory)
-#   #     environmentServiceNameAzureRM: 'devops-test-service-connection'
+      - stage: Plan and Apply
+        jobs:
+          - job: TerraformPlanApply
+            pool:
+              vmImage: ${{ variables.agentPool }}
+            timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+            steps:
+              - template: steps/terraform.yaml@cnp-azuredevops-libraries
+                parameters:
+                  overrideAction: ${{ parameters.overrideAction }}
+                  environment: ${{ lower(parameters.environment) }}
+                  serviceConnection: ${{ variables.serviceConnection }}
+                  terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+                  product: ${{ variables.product }}
+                  tfVarsFile: "$(System.DefaultWorkingDirectory)/${{ lower(parameters.environment) }}.tfvars"
