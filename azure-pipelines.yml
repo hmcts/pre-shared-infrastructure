@@ -77,18 +77,18 @@ stages:
               serviceConnection: 'DCD-CFT-Sandbox'
               overrideAction: ${{ parameters.overrideAction }}
 
-      - stage: Plan and Apply
-        jobs:
-          - job: TerraformPlanApply
-            pool:
-              vmImage: ${{ variables.agentPool }}
-            timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-            steps:
-              - template: steps/terraform.yaml@cnp-azuredevops-libraries
-                parameters:
-                  overrideAction: ${{ parameters.overrideAction }}
-                  environment: ${{ lower(parameters.environment) }}
-                  serviceConnection: ${{ variables.serviceConnection }}
-                  terraformInitSubscription: ${{ variables.terraformInitSubscription }}
-                  product: ${{ variables.product }}
-                  tfVarsFile: "$(System.DefaultWorkingDirectory)/${{ lower(parameters.environment) }}.tfvars"
+          - stage: Plan and Apply
+            jobs:
+              - job: TerraformPlanApply
+                pool:
+                  vmImage: ${{ variables.agentPool }}
+                timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+                steps:
+                  - template: steps/terraform.yaml@cnp-azuredevops-libraries
+                    parameters:
+                      overrideAction: ${{ parameters.overrideAction }}
+                      environment: ${{ lower(parameters.environment) }}
+                      serviceConnection: ${{ variables.serviceConnection }}
+                      terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+                      product: ${{ variables.product }}
+                      tfVarsFile: "$(System.DefaultWorkingDirectory)/${{ lower(parameters.environment) }}.tfvars"
