@@ -88,7 +88,7 @@ stages:
             parameters:
               overrideAction: ${{ parameters.overrideAction }}
               environment: ${{ lower(parameters.environment) }}
-              serviceConnection: ${{ variables.serviceConnection }}
+              serviceConnection: 'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
               terraformInitSubscription: ${{ variables.terraformInitSubscription }}
               product: ${{ variables.product }}
               tfVarsFile: "$(System.DefaultWorkingDirectory)/${{ lower(parameters.environment) }}.tfvars"
