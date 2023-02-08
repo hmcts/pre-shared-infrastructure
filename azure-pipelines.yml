@@ -27,6 +27,9 @@ variables:
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
   - name: product
     value: pre-shared-infrastrucuture
+  - name: kvConnectedServiceName
+    value: DCD-CFT-Sandbox
+
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
   # - group: pre-azure-devops-agent
 
@@ -61,10 +64,6 @@ parameters:
       - Stg
       - Prod
 
-  - name: kvConnectedServiceName
-    type: string
-    default: DCD-CFT-Sandbox
-
 stages:
   - stage: Precheck
     jobs:
@@ -92,7 +91,7 @@ stages:
             parameters:
               overrideAction: ${{ parameters.overrideAction }}
               environment: ${{ lower(parameters.environment) }}
-              kvConnectedServiceName: DTS-SHAREDSERVICES-SBOX # ${{ parameters.kvConnectedServiceName }}
+              kvConnectedServiceName: ${{ variables.kvConnectedServiceName }} # DTS-SHAREDSERVICES-SBOX
               serviceConnection: 'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
               terraformInitSubscription: ${{ variables.terraformInitSubscription }}
               product: ${{ variables.product }}
