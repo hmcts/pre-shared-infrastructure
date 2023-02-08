@@ -77,7 +77,7 @@ stages:
               serviceConnection: 'DCD-CFT-Sandbox'
               overrideAction: ${{ parameters.overrideAction }}
 
-  - stage: Plan and Apply
+  - stage: Plan/Apply
     jobs:
       - job: TerraformPlanApply
         pool:
