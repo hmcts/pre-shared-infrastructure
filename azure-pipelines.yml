@@ -61,6 +61,10 @@ parameters:
       - Stg
       - Prod
 
+  - name: kvConnectedServiceName
+    type: string
+    default: DCD-CFT-Sandbox
+
 stages:
   - stage: Precheck
     jobs:
@@ -88,6 +92,7 @@ stages:
             parameters:
               overrideAction: ${{ parameters.overrideAction }}
               environment: ${{ lower(parameters.environment) }}
+              kvConnectedServiceName: ${{ parameters.kvConnectedServiceName }}
               serviceConnection: 'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
               terraformInitSubscription: ${{ variables.terraformInitSubscription }}
               product: ${{ variables.product }}
