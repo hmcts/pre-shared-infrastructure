@@ -332,13 +332,13 @@ resource "azurerm_key_vault_access_policy" "devops_access" {
 }
 
 // Access for the service connection App registrations dts_pre_<env>
-resource "azurerm_key_vault_access_policy" "appreg_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id          = var.dts_pre_appreg_oid
-  tenant_id          = data.azurerm_client_config.current.tenant_id
-  secret_permissions = ["List", "Get", ]
-}
+# resource "azurerm_key_vault_access_policy" "appreg_access" {
+#   key_vault_id = module.key-vault.key_vault_id
+#   # application_id        = var.app_id
+#   object_id          = var.dts_pre_appreg_oid
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   secret_permissions = ["List", "Get", ]
+# }
 
 
 // VM credentials
