@@ -6,9 +6,9 @@ module "tags" {
   expiresAfter = "3000-01-01"
 }
 locals {
-  prefix              = "${var.product}-${var.env}"
+  prefix              = "${var.prefix}-${var.env}"
   resource_group_name = local.prefix
-  key_vault_name      = "${var.product}-kv-${var.env}"
+  key_vault_name      = "${var.prefix}-kv-${var.env}"
   env_long_name       = var.env == "sbox" ? "sandbox" : var.env == "stg" ? "staging" : var.env
 }
 

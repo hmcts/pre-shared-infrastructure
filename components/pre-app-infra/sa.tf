@@ -11,7 +11,7 @@
 module "sa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = "${var.product}sa${var.env}"
+  storage_account_name            = "${var.prefix}sa${var.env}"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
@@ -30,7 +30,7 @@ module "sa_storage_account" {
 module "finalsa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = "${var.product}finalsa${var.env}"
+  storage_account_name            = "${var.prefix}finalsa${var.env}"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = var.location #"UKWest" #As recommended by MS
   account_kind                    = "StorageV2"
@@ -51,7 +51,7 @@ module "finalsa_storage_account" {
 module "ingestsa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = "${var.product}ingestsa${var.env}"
+  storage_account_name            = "${var.prefix}ingestsa${var.env}"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = var.location #"UKWest" #As recommended by MS azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
@@ -71,13 +71,13 @@ module "ingestsa_storage_account" {
 #                PRIVATE ENDPOINTS FOR STORAGES   
 ###################################################
 resource "azurerm_private_endpoint" "sa" {
-  name                = "${var.product}sa-pe-${var.env}"
+  name                = "${var.prefix}sa-pe-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   subnet_id           = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}sa-psc-${var.env}"
+    name                           = "${var.prefix}sa-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.sa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
@@ -89,13 +89,13 @@ resource "azurerm_private_endpoint" "sa" {
 # #                PRIVATE ENDPOINTS FOR STORAGES   
 # ###################################################
 resource "azurerm_private_endpoint" "finalsa" {
-  name                = "${var.product}finalsa-pe-${var.env}"
+  name                = "${var.prefix}finalsa-pe-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   subnet_id           = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}finalsa-psc-${var.env}"
+    name                           = "${var.prefix}finalsa-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
@@ -107,13 +107,13 @@ resource "azurerm_private_endpoint" "finalsa" {
 #                PRIVATE ENDPOINTS FOR STORAGES    
 ###################################################
 resource "azurerm_private_endpoint" "ingestsa" {
-  name                = "${var.product}stream-pe-${var.env}"
+  name                = "${var.prefix}stream-pe-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   subnet_id           = azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
-    name                           = "${var.product}stream-psc-${var.env}"
+    name                           = "${var.prefix}stream-psc-${var.env}"
     is_manual_connection           = false
     private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
     subresource_names              = ["blob"]
