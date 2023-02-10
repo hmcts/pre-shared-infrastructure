@@ -24,8 +24,6 @@ module "data_store_db_v14" {
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  admin_user_object_id = var.jenkins_AAD_objectId
-
 }
 
 ////////////////////////////////
