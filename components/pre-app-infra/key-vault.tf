@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 module "key-vault" {
-  source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
+  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name                    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   product                 = var.product
   env                     = var.env
