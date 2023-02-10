@@ -95,5 +95,5 @@ stages:
               serviceConnection: 'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
               terraformInitSubscription: ${{ variables.terraformInitSubscription }}
               product: ${{ variables.product }}
-              component: ${{ variables.product }}
+              component: pre-app-infra
               tfVarsFile: "$(System.DefaultWorkingDirectory)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
