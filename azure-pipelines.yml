@@ -91,7 +91,7 @@ stages:
             parameters:
               overrideAction: ${{ parameters.overrideAction }}
               environment: ${{ lower(parameters.environment) }}
-              kvConnectedServiceName: ${{ variables.kvConnectedServiceName }} # DTS-SHAREDSERVICES-SBOX
+              kvConnectedServiceName: DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
               serviceConnection: 'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
               terraformInitSubscription: ${{ variables.terraformInitSubscription }}
               product: ${{ variables.product }}
