@@ -249,10 +249,11 @@ module "dynatrace-oneagent" {
 #            Datagateway NETWORK INTERFACE CARD               #
 ###################################################
 resource "azurerm_network_interface" "dtgwnic" {
-  count               = var.num_datagateway
-  name                = "${var.product}-dtgwnic${count.index}-${var.env}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  count                         = var.num_datagateway
+  name                          = "${var.product}-dtgwnic${count.index}-${var.env}"
+  location                      = azurerm_resource_group.rg.location
+  resource_group_name           = azurerm_resource_group.rg.name
+  enable_accelerated_networking = true
 
   ip_configuration {
     name                          = "internal"
