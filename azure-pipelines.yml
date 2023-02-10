@@ -96,4 +96,4 @@ stages:
               terraformInitSubscription: ${{ variables.terraformInitSubscription }}
               product: ${{ variables.product }}
               component: pre-app-infra
-              tfVarsFile: "$(System.DefaultWorkingDirectory)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
+              tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
