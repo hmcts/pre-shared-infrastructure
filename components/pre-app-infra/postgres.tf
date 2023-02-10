@@ -11,7 +11,7 @@ module "data_store_db_v14" {
   component     = var.component
   business_area = var.project
 
-  common_tags     = var.common_tags
+  common_tags     = module.tags.common_tags
   name            = var.database_name #-${var.env}" removed as it looks like env gets added in root module
   pgsql_databases = var.pg_databases
 
