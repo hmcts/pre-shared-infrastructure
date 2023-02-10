@@ -232,10 +232,6 @@ variable "product_group_object_id" {
   description = "DTS PRE Recorded Evidence"
 }
 
-variable "product" {
-  default = "pre"
-}
-
 # variable "subscription_id" {}
 # variable "client_id" {}
 # variable "client_secret" {}
