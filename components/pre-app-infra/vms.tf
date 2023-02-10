@@ -2,7 +2,7 @@
 ##BASTION
 ##------------------------------------------------------###################
 resource "azurerm_public_ip" "pip" {
-  name                = "${var.product}-bastionpip-${var.env}"
+  name                = "${var.prefix}-bastionpip-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
@@ -14,7 +14,7 @@ resource "azurerm_public_ip" "pip" {
 ##BASTION
 ##------------------------------------------------------###################
 resource "azurerm_bastion_host" "bastion" {
-  name                   = "${var.product}-bastion-${var.env}"
+  name                   = "${var.prefix}-bastion-${var.env}"
   resource_group_name    = azurerm_resource_group.rg.name
   location               = azurerm_resource_group.rg.location
   copy_paste_enabled     = true
@@ -56,7 +56,7 @@ resource "null_resource" "Encryption" {
 
 resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
-  name                = "${var.product}-videditnic${count.index}-${var.env}"
+  name                = "${var.prefix}-videditnic${count.index}-${var.env}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
@@ -70,7 +70,7 @@ resource "azurerm_network_interface" "nic" {
 resource "azurerm_windows_virtual_machine" "vm" {
   zone                       = 2
   count                      = var.num_vid_edit_vms
-  name                       = "${var.product}-videditvm${count.index}-${var.env}"
+  name                       = "${var.prefix}-videditvm${count.index}-${var.env}"
   computer_name              = "PREVIDED0${count.index}-${var.env}"
   resource_group_name        = azurerm_resource_group.rg.name
   location                   = azurerm_resource_group.rg.location
@@ -89,7 +89,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
 
   os_disk {
-    name                   = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
+    name                   = "${var.prefix}-videditvm${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
     storage_account_type   = "StandardSSD_LRS" #UltraSSD_LRS?
     disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
@@ -130,7 +130,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 ## Managed Disk
 resource "azurerm_managed_disk" "vmdatadisk" {
   count                  = var.num_vid_edit_vms
-  name                   = "${var.product}-videditvm${count.index}-datadisk-${var.env}"
+  name                   = "${var.prefix}-videditvm${count.index}-datadisk-${var.env}"
   location               = azurerm_resource_group.rg.location
   resource_group_name    = azurerm_resource_group.rg.name
   storage_account_type   = "StandardSSD_LRS"
@@ -250,7 +250,7 @@ module "dynatrace-oneagent" {
 ###################################################
 resource "azurerm_network_interface" "dtgwnic" {
   count                         = var.num_datagateway
-  name                          = "${var.product}-dtgwnic${count.index}-${var.env}"
+  name                          = "${var.prefix}-dtgwnic${count.index}-${var.env}"
   location                      = azurerm_resource_group.rg.location
   resource_group_name           = azurerm_resource_group.rg.name
   enable_accelerated_networking = true
@@ -269,7 +269,7 @@ resource "azurerm_network_interface" "dtgwnic" {
 resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   count                      = var.num_datagateway
   zone                       = 2
-  name                       = "${var.product}dtgtwy${count.index}-${var.env}"
+  name                       = "${var.prefix}dtgtwy${count.index}-${var.env}"
   computer_name              = "PREDTGTW0${count.index}-${var.env}"
   resource_group_name        = azurerm_resource_group.rg.name
   location                   = azurerm_resource_group.rg.location
@@ -280,7 +280,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   encryption_at_host_enabled = true
 
   os_disk {
-    name                   = "${var.product}dtgtwy${count.index}-osdisk-${var.env}"
+    name                   = "${var.prefix}dtgtwy${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
     storage_account_type   = "Standard_LRS"
     disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
@@ -305,7 +305,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   count                  = var.num_datagateway
-  name                   = "${var.product}dtgtwy${count.index}-datadisk-${var.env}"
+  name                   = "${var.prefix}dtgtwy${count.index}-datadisk-${var.env}"
   location               = azurerm_resource_group.rg.location
   resource_group_name    = azurerm_resource_group.rg.name
   storage_account_type   = "Standard_LRS"

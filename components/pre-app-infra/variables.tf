@@ -1,7 +1,10 @@
 variable "product" {
-  default = "pre"
+  default = "pre-recorded-evidence"
 }
 
+variable "prefix" {
+  default = "pre"
+}
 variable "location" {
   default = "UK South"
 }
@@ -154,11 +157,6 @@ variable "hostgroup" {
 
 # Addtional variables required for postgres
 
-// 2 variables with the same value???? see var "product"
-variable "component" {
-  default = "pre"
-}
-
 variable "project" {
   default = "sds"
 }
@@ -232,6 +230,10 @@ variable "product_group_object_id" {
   type        = string
   default     = "b1fd4154-355f-4683-a795-d09cdb814d16"
   description = "DTS PRE Recorded Evidence"
+}
+
+variable "product" {
+  default = "pre"
 }
 
 # variable "subscription_id" {}

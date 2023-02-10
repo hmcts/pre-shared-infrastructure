@@ -7,8 +7,8 @@ module "data_store_db_v14" {
   source = "git::https://github.com/hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
-  product       = var.product
-  component     = var.component
+  product       = var.prefix
+  component     = var.product
   business_area = var.project
 
   common_tags     = module.tags.common_tags
@@ -56,7 +56,7 @@ provider "azurerm" {
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)
 resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   provider              = azurerm.private_dns
-  name                  = format("%s-%s-virtual-network-link", var.product, var.env)
+  name                  = format("%s-%s-virtual-network-link", var.prefix, var.env)
   resource_group_name   = var.DNSResGroup
   private_dns_zone_name = var.PrivateDNSZone
   virtual_network_id    = azurerm_virtual_network.vnet.id

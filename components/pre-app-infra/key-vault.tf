@@ -2,8 +2,8 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
-  name                    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  product                 = var.product
+  name                    = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}"
+  product                 = var.prefix
   env                     = var.env
   tenant_id               = data.azurerm_client_config.current.tenant_id
   object_id               = var.product_group_object_id
@@ -208,7 +208,7 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 }
 
 data "azurerm_key_vault" "keyvault" {
-  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
+  name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
   resource_group_name = azurerm_resource_group.rg.name
 }
 
