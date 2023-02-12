@@ -3,8 +3,8 @@ module "tags" {
   environment  = var.env
   product      = "pre-recorded-evidence"
   builtFrom    = "hmcts/pre-shared-infrastrucuture"
-  expiresAfter = "3000-01-01"
 }
+
 locals {
   prefix              = "${var.prefix}-${var.env}"
   resource_group_name = local.prefix
