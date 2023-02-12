@@ -224,7 +224,7 @@ variable "PeeringFromHubName" {
 }
 variable "builtFrom" {
   description = "The GitHub URL for the repository that contains the infrastructure code."
-  default     = "hmcts/pre-shared-infrastrucuture"
+  default     = "hmcts/pre-shared-infrastructure"
 }
 variable "product_group_object_id" {
   type        = string
