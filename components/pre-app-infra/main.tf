@@ -1,8 +1,8 @@
 module "tags" {
-  source       = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
-  environment  = var.env
-  product      = "pre-recorded-evidence"
-  builtFrom    = "hmcts/pre-shared-infrastrucuture"
+  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  environment = var.env
+  product     = "pre-recorded-evidence"
+  builtFrom   = "hmcts/pre-shared-infrastrucuture"
 }
 
 locals {
