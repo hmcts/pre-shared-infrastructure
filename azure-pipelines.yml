@@ -26,7 +26,7 @@ variables:
   - name: terraformInitSubscription
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
   - name: product
-    value: pre-shared-infrastrucuture
+    value: pre-recorded-evidence
   - name: kvConnectedServiceName
     value: DCD-CFT-Sandbox
 
