@@ -1,6 +1,6 @@
 data "azurerm_subnet" "videoedit_subnet" {
   name                 = "${var.prefix}-videoedit-snet-${var.env}"
-  resource_group_name  = local.resource_group_name
+  resource_group_name  = data.azurerm_resource_group.rg.id
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
@@ -12,7 +12,7 @@ resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
   name                = "${var.prefix}-videditnic${count.index}-${var.env}"
   location            = var.location
-  resource_group_name = local.resource_group_name
+  resource_group_name = data.azurerm_resource_group.rg.id
 
   ip_configuration {
     name                          = "internal"
@@ -26,7 +26,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   count                      = var.num_vid_edit_vms
   name                       = "${var.prefix}-videditvm${count.index}-${var.env}"
   computer_name              = "PREVIDED0${count.index}-${var.env}"
-  resource_group_name        = local.resource_group_name
+  resource_group_name        = data.azurerm_resource_group.rg.id
   location                   = var.location
   size                       = var.vid_edit_vm_spec
   admin_username             = "videdit${count.index}_${random_string.vm_username[count.index].result}"
@@ -86,7 +86,7 @@ resource "azurerm_managed_disk" "vmdatadisk" {
   count                  = var.num_vid_edit_vms
   name                   = "${var.prefix}-videditvm${count.index}-datadisk-${var.env}"
   location               = var.location
-  resource_group_name    = local.resource_group_name
+  resource_group_name    = data.azurerm_resource_group.rg.id
   storage_account_type   = "StandardSSD_LRS"
   create_option          = "Empty"
   disk_size_gb           = 1000
