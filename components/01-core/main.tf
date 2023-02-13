@@ -21,7 +21,7 @@ output "virtual_network_id" {
 }
 
 data "azurerm_resource_group" "rg" {
-  name     = "pre-dev"
+  name = "pre-dev"
 }
 
 output "id" {
