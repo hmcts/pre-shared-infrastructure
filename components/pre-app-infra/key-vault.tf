@@ -58,14 +58,14 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
 #   storage_permissions     = ["List", "Get", ]
 # }
 
-// Access for the service connection App registrations dts_pre_<env>
-resource "azurerm_key_vault_access_policy" "appreg_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id          = var.dts_pre_appreg_oid
-  tenant_id          = data.azurerm_client_config.current.tenant_id
-  secret_permissions = ["List", "Get", ]
-}
+# // Access for the service connection App registrations dts_pre_<env>
+# resource "azurerm_key_vault_access_policy" "appreg_access" {
+#   key_vault_id = module.key-vault.key_vault_id
+#   # application_id        = var.app_id
+#   object_id          = var.dts_pre_appreg_oid
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   secret_permissions = ["List", "Get", ]
+# }
 
 
 // VM credentials
@@ -181,6 +181,8 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
   resource_group_name = azurerm_resource_group.rg.name
+
+  depends_on = [module.key-vault]
 }
 
 ### Dynatrace
