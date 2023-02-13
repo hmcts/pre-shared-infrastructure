@@ -15,16 +15,6 @@ module "key-vault" {
   purge_protection_enabled        = true
 }
 
-// Power App Permissions
-resource "azurerm_key_vault_access_policy" "power_app_access" {
-  key_vault_id            = module.key-vault.key_vault_id
-  object_id               = var.power_app_user_oid
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = ["List", "Update", "Create", "Import", "Delete", "Get", ]
-  certificate_permissions = ["List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
-  secret_permissions      = ["List", "Set", "Delete", "Get", ]
-}
-
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
 #####################################
