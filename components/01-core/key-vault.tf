@@ -70,7 +70,7 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
 
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
-  resource_group_name = data.azurerm_resource_group.rg.id
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   depends_on = [module.key-vault]
 }

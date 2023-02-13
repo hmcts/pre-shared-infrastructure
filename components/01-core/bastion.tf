@@ -19,7 +19,7 @@ resource "azurerm_public_ip" "pip" {
 
 resource "azurerm_bastion_host" "bastion" {
   name                   = "${var.prefix}-bastion-${var.env}"
-  resource_group_name    = data.azurerm_resource_group.rg.id
+  resource_group_name    = data.azurerm_resource_group.rg.name
   location               = var.location
   copy_paste_enabled     = true
   file_copy_enabled      = true
