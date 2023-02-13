@@ -1,13 +1,23 @@
+data "azurerm_subnet" "datagateway_subnet" {
+  name                 = "${var.prefix}-datagateway-snet-${var.env}"
+  resource_group_name  = local.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+}
+
+output "subnet_id" {
+  value = data.azurerm_subnet.datagateway_subnet.id
+}
+
 resource "azurerm_network_interface" "dtgwnic" {
   count                         = var.num_datagateway
   name                          = "${var.prefix}-dtgwnic${count.index}-${var.env}"
-  location                      = azurerm_resource_group.rg.location
-  resource_group_name           = azurerm_resource_group.rg.name
+  location                      = var.location
+  resource_group_name           = local.resource_group_name
   enable_accelerated_networking = true
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.datagateway_subnet.id
+    subnet_id                     = data.azurerm_subnet.datagateway_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
   tags = module.tags.common_tags
@@ -18,8 +28,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   zone                       = 2
   name                       = "${var.prefix}dtgtwy${count.index}-${var.env}"
   computer_name              = "PREDTGTW0${count.index}-${var.env}"
-  resource_group_name        = azurerm_resource_group.rg.name
-  location                   = azurerm_resource_group.rg.location
+  resource_group_name        = local.resource_group_name
+  location                   = var.location
   size                       = var.datagateway_spec
   admin_username             = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
   admin_password             = random_password.dtgtwy_password[count.index].result
@@ -53,8 +63,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   count                  = var.num_datagateway
   name                   = "${var.prefix}dtgtwy${count.index}-datadisk-${var.env}"
-  location               = azurerm_resource_group.rg.location
-  resource_group_name    = azurerm_resource_group.rg.name
+  location               = var.location
+  resource_group_name    = local.resource_group_name
   storage_account_type   = "Standard_LRS"
   create_option          = "Empty"
   disk_size_gb           = 1000
@@ -145,7 +155,7 @@ module "dynatrace-oneagent-dtgtway" {
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
   count              = var.num_datagateway
   virtual_machine_id = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-  location           = azurerm_resource_group.rg.location
+  location           = var.location
   enabled            = false
 
   daily_recurrence_time = "1800"

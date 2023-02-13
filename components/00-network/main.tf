@@ -5,6 +5,12 @@ module "tags" {
   builtFrom   = var.builtFrom
 }
 
+resource "azurerm_resource_group" "rg" {
+  name     = local.resource_group_name
+  location = var.location
+  tags     = module.tags.common_tags
+}
+
 resource "azurerm_virtual_network" "vnet" {
   name                = "${var.prefix}-vnet-${var.env}"
   location            = var.location
@@ -24,14 +30,13 @@ resource "azurerm_subnet" "datagateway_subnet" {
   depends_on = [azurerm_route_table.postgres]
 }
 
-resource "azurerm_subnet" "videoeditvm_subnet" {
+resource "azurerm_subnet" "videoedit_subnet" {
   name                 = "${var.prefix}-videoedit-snet-${var.env}"
   resource_group_name  = local.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = [var.video_edit_vm_snet_address]
   service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
 }
-
 
 resource "azurerm_subnet" "endpoint_subnet" {
   name                 = "${var.prefix}-privatendpt-snet-${var.env}"
