@@ -1,6 +1,6 @@
 data "azurerm_subnet" "bastion_subnet" {
   name                 = "AzureBastionSubnet"
-  resource_group_name  = data.azurerm_resource_group.rg.id
+  resource_group_name  = local.resource_group_name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
