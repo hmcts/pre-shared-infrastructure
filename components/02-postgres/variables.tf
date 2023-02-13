@@ -31,3 +31,8 @@ variable "pgsql_sku" {
 variable "pgsql_storage_mb" {
   default = "32768"
 }
+
+variable "builtFrom" {
+  description = "The GitHub URL for the repository that contains the infrastructure code."
+  default     = "hmcts/pre-shared-infrastructure"
+}
