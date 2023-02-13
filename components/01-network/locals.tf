@@ -1,4 +1,8 @@
 locals {
+  resource_group_name = "${var.prefix}-${var.env}"
+  key_vault_name      = "${var.prefix}-kv-${var.env}"
+  env_long_name       = var.env == "sbox" ? "sandbox" : var.env == "stg" ? "staging" : var.env
+
   hub = {
     nonprod = {
       subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"
@@ -53,5 +57,11 @@ locals {
   ]
 
   hub_name = [for x in keys(local.hub_to_env_mapping) : x if contains(local.hub_to_env_mapping[x], var.env)][0]
+}
 
+module "tags" {
+  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  environment = var.env
+  product     = var.prefix
+  builtFrom   = var.builtFrom
 }

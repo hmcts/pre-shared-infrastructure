@@ -29,19 +29,37 @@ variable "dts_pre_oid" {}
 
 variable "dts_cft_developers_oid" {}
 
-variable "vnet_address_space" {}
+variable "num_vid_edit_vms" {
+  default = 2
+}
 
-variable "video_edit_vm_snet_address" {}
+variable "num_datagateway" {
+  default = 2
+}
 
-variable "privatendpt_snet_address" {}
+variable "vid_edit_vm_spec" {
+  default = "Standard_E4s_v4"
+}
 
-variable "bastion_snet_address" {}
+variable "datagateway_spec" {
+  default = "Standard_F8s_v2"
+}
 
-variable "data_gateway_snet_address" {}
+variable "server" {
+  default = null
+}
 
-variable "mgmt_net_name" {}
+variable "hostgroup" {
+  default = null
+}
 
-variable "mgmt_net_rg_name" {}
+variable "PrivateDNSZone" {
+  default = "private.postgres.database.azure.com"
+}
+
+variable "DNSResGroup" {
+  default = "core-infra-intsvc-rg"
+}
 
 # variable "managed_oid" {}
 # variable "dts_pre_project_admin" {}

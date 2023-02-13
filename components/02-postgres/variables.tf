@@ -8,14 +8,6 @@ variable "location" {
 
 variable "env" {}
 
-variable "PrivateDNSZone" {
-  default = "private.postgres.database.azure.com"
-}
-
-variable "DNSResGroup" {
-  default = "core-infra-intsvc-rg"
-}
-
 variable "project" {
   default = "sds"
 }
