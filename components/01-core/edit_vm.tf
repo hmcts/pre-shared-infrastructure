@@ -1,6 +1,6 @@
 data "azurerm_subnet" "videoedit_subnet" {
   name                 = "${var.prefix}-videoedit-snet-${var.env}"
-  resource_group_name  = data.azurerm_resource_group.rg.id
+  resource_group_name  = local.resource_group_name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
