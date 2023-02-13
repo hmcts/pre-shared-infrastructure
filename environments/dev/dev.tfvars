@@ -17,6 +17,7 @@ dts_pre_appreg_oid     = "b521e9e3-58e1-4c25-98b5-7f3157f68c16"
 dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1"
 dts_pre_oid            = "b1fd4154-355f-4683-a795-d09cdb814d16"
 # mgmt_subscription_id       = "6c4d2513-a873-41b4-afdd-b05a33206631"
+PeeringFromHubName     = "pre-recorded-evidence-dev"
 pg_databases = [
   {
     name : "pre-pdb-dev"
