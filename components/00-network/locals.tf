@@ -58,10 +58,3 @@ locals {
 
   hub_name = [for x in keys(local.hub_to_env_mapping) : x if contains(local.hub_to_env_mapping[x], var.env)][0]
 }
-
-module "tags" {
-  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
-  environment = var.env
-  product     = var.prefix
-  builtFrom   = var.builtFrom
-}
