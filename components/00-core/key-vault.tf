@@ -11,7 +11,7 @@ module "key-vault" {
   product_group_name              = "DTS Pre-recorded Evidence"
   common_tags                     = module.tags.common_tags
   create_managed_identity         = true
-  network_acls_allowed_subnet_ids = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  //network_acls_allowed_subnet_ids = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
 }
 
