@@ -87,3 +87,8 @@ variable "cors_rules" {
     }
   ]
 }
+
+variable "builtFrom" {
+  description = "The GitHub URL for the repository that contains the infrastructure code."
+  default     = "hmcts/pre-shared-infrastructure"
+}
