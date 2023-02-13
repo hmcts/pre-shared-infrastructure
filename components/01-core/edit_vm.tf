@@ -12,7 +12,7 @@ resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
   name                = "${var.prefix}-videditnic${count.index}-${var.env}"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.rg.id
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   ip_configuration {
     name                          = "internal"
