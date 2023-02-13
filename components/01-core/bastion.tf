@@ -4,7 +4,7 @@ data "azurerm_subnet" "bastion_subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
-output "subnet_id" {
+output "bastion_subnet_id" {
   value = data.azurerm_subnet.bastion_subnet.id
 }
 
