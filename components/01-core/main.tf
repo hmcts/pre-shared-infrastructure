@@ -13,9 +13,19 @@ locals {
 
 data "azurerm_virtual_network" "vnet" {
   name                = "${var.prefix}-vnet-${var.env}"
-  resource_group_name = local.resource_group_name
+  resource_group_name = data.azurerm_resource_group.rg.id
 }
 
 output "virtual_network_id" {
   value = data.azurerm_virtual_network.vnet.id
+}
+
+data "azurerm_resource_group" "rg" {
+  name     = "pre-dev"
+  location = var.location
+  tags     = var.common_tags
+}
+
+output "id" {
+  value = data.azurerm_resource_group.rg.id
 }

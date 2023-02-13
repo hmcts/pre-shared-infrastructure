@@ -15,21 +15,21 @@ data "azurerm_user_assigned_identity" "managed-identity" {
 
 #Storage Blob Data Contributor Role Assignment for Managed Identity
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
-  scope                            = local.resource_group_name
+  scope                            = data.azurerm_resource_group.rg.id
   role_definition_name             = "Storage Blob Data Contributor"
   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
   skip_service_principal_aad_check = true
 }
 
 resource "azurerm_role_assignment" "pre_reader_mi" {
-  scope                            = local.resource_group_name
+  scope                            = data.azurerm_resource_group.rg.id
   role_definition_name             = "Reader"
   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id # var.pre_mi_principal_id 
   skip_service_principal_aad_check = true
 }
 
 resource "azurerm_role_assignment" "vm_user_mi" {
-  scope                            = local.resource_group_name
+  scope                            = data.azurerm_resource_group.rg.id
   role_definition_name             = "Virtual Machine Contributor"
   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id # var.pre_mi_principal_id 
   skip_service_principal_aad_check = true
@@ -37,7 +37,7 @@ resource "azurerm_role_assignment" "vm_user_mi" {
 
 # Give PowerApp Appreg contributor access to resource groups
 resource "azurerm_role_assignment" "powerapp_appreg" {
-  scope                = local.resource_group_name
+  scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
   principal_id         = var.dts_pre_ent_appreg_oid
 }
