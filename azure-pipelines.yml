@@ -90,7 +90,7 @@ stages:
               overrideAction: ${{ parameters.overrideAction }}
               environment: ${{ lower(parameters.environment) }}
               kvConnectedServiceName: DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
-              serviceConnection: 'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
+              serviceConnection: "OPS-APPROVAL-GATE-MGMT-ENVS" #'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
               terraformInitSubscription: ${{ variables.terraformInitSubscription }}
               product: ${{ variables.product }}
               component: pre-app-infra
