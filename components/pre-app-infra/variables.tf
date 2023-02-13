@@ -56,7 +56,6 @@ variable "dts_cft_developers_oid" {}
 # variable "pre_mi_principal_id" {}
 # variable "pre_mi_tenant_id" {}
 #variable "dts_pre_app_admin" {}
-variable "devops_admin" {}
 
 variable "lawSku" {
   type    = string
