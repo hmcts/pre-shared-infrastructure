@@ -6,8 +6,7 @@ module "tags" {
 }
 
 locals {
-  prefix              = "${var.prefix}-${var.env}"
-  resource_group_name = local.prefix
+  resource_group_name = "${var.prefix}-${var.env}"
   key_vault_name      = "${var.prefix}-kv-${var.env}"
   env_long_name       = var.env == "sbox" ? "sandbox" : var.env == "stg" ? "staging" : var.env
 }

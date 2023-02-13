@@ -1,3 +1,10 @@
+module "tags" {
+  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  environment = var.env
+  product     = var.prefix
+  builtFrom   = var.builtFrom
+}
+
 module "sa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env

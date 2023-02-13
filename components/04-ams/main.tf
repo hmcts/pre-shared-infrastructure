@@ -1,19 +1,31 @@
+module "tags" {
+  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  environment = var.env
+  product     = var.prefix
+  builtFrom   = var.builtFrom
+}
+locals {
+  resource_group_name = "${var.product}-${var.env}"
+  ingest_sa_id        = module.ingestsa_storage_account.storageaccount_id
+  final_sa_id         = module.finalsa_storage_account.storageaccount_id
+}
+
 resource "azurerm_media_services_account" "ams" {
   name                = "${var.prefix}ams${var.env}"
   location            = var.location #"UKwest"
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = local.resource_group_name
 
   identity {
     type = "SystemAssigned"
   }
 
   storage_account {
-    id         = module.ingestsa_storage_account.storageaccount_id
+    id         = local.ingest_sa_id
     is_primary = true
   }
 
   storage_account {
-    id         = module.finalsa_storage_account.storageaccount_id
+    id         = local.final_sa_id
     is_primary = false
   }
 
@@ -22,7 +34,7 @@ resource "azurerm_media_services_account" "ams" {
 }
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = local.resource_group_name
   media_services_account_name = azurerm_media_services_account.ams.name
 
   description = "Analyse Video"
@@ -38,7 +50,7 @@ resource "azurerm_media_transform" "analysevideo" {
 
 resource "azurerm_media_transform" "EncodeToMP4" {
   name                        = "EncodeToMP4"
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = local.resource_group_name
   media_services_account_name = azurerm_media_services_account.ams.name
 
 
@@ -73,7 +85,7 @@ resource "azapi_update_resource" "ams_auth" {
       storageAuthentication = "ManagedIdentity"
       storageAccounts = [
         {
-          id   = module.ingestsa_storage_account.storageaccount_id
+          id   = local.ingest_sa_id
           type = "Primary",
           identity = {
             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
@@ -82,7 +94,7 @@ resource "azapi_update_resource" "ams_auth" {
         },
 
         {
-          id   = module.finalsa_storage_account.storageaccount_id
+          id   = local.final_sa_id
           type = "Secondary",
           identity = {
             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"

@@ -22,14 +22,11 @@ provider "azurerm" {
   }
 }
 
+provider "azurerm" {
+  alias           = "oms"
+  subscription_id = module.log_analytics_workspace.subscription_id
+  features {}
+}
 provider "azuread" {
   tenant_id = data.azurerm_client_config.current.tenant_id
-}
-
-provider "azurerm" {
-  #subscription_id            = local.hub[var.env].subscription
-  subscription_id            = local.hub[local.hub_name].subscription
-  skip_provider_registration = "true"
-  features {}
-  alias = "hub"
 }

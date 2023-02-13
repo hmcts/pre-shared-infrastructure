@@ -8,6 +8,7 @@ variable "location" {
 
 variable "env" {}
 
+
 variable "sa_account_tier" {
   default = "Standard"
 }

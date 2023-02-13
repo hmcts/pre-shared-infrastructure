@@ -5,11 +5,13 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "= 3.33.0"
     }
+    azapi = {
+      source = "Azure/azapi"
+    }
   }
 }
 
 provider "azurerm" {
-  alias           = "oms"
-  subscription_id = module.log_analytics_workspace.subscription_id
+  skip_provider_registration = true
   features {}
 }
