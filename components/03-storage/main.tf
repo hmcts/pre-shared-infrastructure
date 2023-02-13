@@ -1,3 +1,13 @@
+data "azurerm_subnet" "endpoint_subnet" {
+  name                 = "${var.prefix}-privatendpt-snet-${var.env}"
+  resource_group_name  = local.resource_group_name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+}
+
+output "endpoint_subnet_id" {
+  value = data.azurerm_subnet.endpoint_subnet.id
+}
+
 module "tags" {
   source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
   environment = var.env
@@ -14,7 +24,7 @@ module "sa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  sa_subnets                      = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  sa_subnets                      = concat([data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
