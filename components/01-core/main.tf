@@ -23,7 +23,6 @@ output "virtual_network_id" {
 data "azurerm_resource_group" "rg" {
   name     = "pre-dev"
   location = var.location
-  tags     = var.common_tags
 }
 
 output "id" {
