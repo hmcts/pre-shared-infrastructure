@@ -4,7 +4,7 @@ data "azurerm_subnet" "videoedit_subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
 }
 
-output "subnet_id" {
+output "videoedit_subnet_id" {
   value = data.azurerm_subnet.videoedit_subnet.id
 }
 
