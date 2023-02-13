@@ -1,7 +1,7 @@
 resource "azurerm_public_ip" "pip" {
   name                = "${var.prefix}-bastionpip-${var.env}"
-  resource_group_name = local.resource_group_name
-  location            = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
   allocation_method   = "Static"
   sku                 = "Standard"
   tags                = module.tags.common_tags
@@ -9,8 +9,8 @@ resource "azurerm_public_ip" "pip" {
 
 resource "azurerm_bastion_host" "bastion" {
   name                   = "${var.prefix}-bastion-${var.env}"
-  resource_group_name    = local.resource_group_name
-  location               = var.location
+  resource_group_name    = azurerm_resource_group.rg.name
+  location               = azurerm_resource_group.rg.location
   copy_paste_enabled     = true
   file_copy_enabled      = true
   sku                    = "Standard"
@@ -21,8 +21,8 @@ resource "azurerm_bastion_host" "bastion" {
 
   ip_configuration {
     name                 = "bastionpublic"
-    subnet_id            = local.subnet_id
-    public_ip_address_id = local.public_ip_address_id
+    subnet_id            = azurerm_subnet.AzureBastionSubnet_subnet.id
+    public_ip_address_id = azurerm_public_ip.pip.id
   }
   tags = module.tags.common_tags
 
