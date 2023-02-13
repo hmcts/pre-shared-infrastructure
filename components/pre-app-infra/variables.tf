@@ -49,10 +49,6 @@ variable "datagateway_spec" {
   default = "Standard_F8s_v2"
 }
 
-variable "power_app_user_oid" {
-  default = "56a29187-3d5f-4262-99d6-c635776e0eac"
-}
-
 # variable "managed_oid" {}
 variable "dts_pre_oid" {}
 variable "dts_cft_developers_oid" {}

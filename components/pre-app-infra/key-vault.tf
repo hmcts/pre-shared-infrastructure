@@ -68,19 +68,6 @@ resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
 #   storage_permissions     = ["List", "Get", ]
 # }
 
-
-// DevopsAdmin Permissions
-resource "azurerm_key_vault_access_policy" "devops_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id               = var.devops_admin
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = ["List", "Update", "Create", "Import", "Delete", "Get"]
-  certificate_permissions = ["List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
-  secret_permissions      = ["List", "Set", "Delete", "Get", ]
-  storage_permissions     = ["List", "Set", "Delete", "Get", ]
-}
-
 // Access for the service connection App registrations dts_pre_<env>
 resource "azurerm_key_vault_access_policy" "appreg_access" {
   key_vault_id = module.key-vault.key_vault_id
@@ -166,10 +153,6 @@ resource "azurerm_key_vault_key" "pre_kv_key" {
   key_vault_id = module.key-vault.key_vault_id
   key_type     = "RSA"
   key_size     = 2048
-
-  # depends_on = [
-  #   azurerm_key_vault_access_policy.pre-kv-user
-  # ]
 
   key_opts = [
     "decrypt",

@@ -13,7 +13,6 @@ dts_cft_developers_oid = "b2a1773c-a5ae-48b5-b5fa-95b0e05eee05" #giving cft-deve
 #pre_mi_principal_id        = "d03f73e6-40ed-40a2-a0ec-059286505905" #they're all declaring pre-demo-mi but doesn't look like it's being called anywhere
 #pre_mi_tenant_id           = "531ff96d-0ae9-462a-8d2d-bec7c0b42082" #likely useless
 #dts_pre_app_admin          = "d055ba21-5814-4278-8752-aaffa7eaac62" #can't see this called anywhere
-devops_admin           = "a0c6507c-299c-4f46-96c6-8275d2c45242" #should be removed
 dts_pre_appreg_oid     = "b521e9e3-58e1-4c25-98b5-7f3157f68c16"
 dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1"
 dts_pre_oid            = "b1fd4154-355f-4683-a795-d09cdb814d16"
