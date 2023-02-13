@@ -1,7 +1,7 @@
 resource "azurerm_automation_account" "pre-aa" {
   name                = "${var.prefix}-${var.env}-aa"
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = local.resource_group_name
   sku_name            = "Basic"
 
   identity {

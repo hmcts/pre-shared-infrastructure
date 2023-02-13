@@ -9,10 +9,6 @@ locals {
   resource_group_name = "${var.prefix}-${var.env}"
   key_vault_name      = "${var.prefix}-kv-${var.env}"
   env_long_name       = var.env == "sbox" ? "sandbox" : var.env == "stg" ? "staging" : var.env
-}
-
-resource "azurerm_resource_group" "rg" {
-  name     = local.resource_group_name
-  location = var.location
-  tags     = module.tags.common_tags
+  videoedit-subnet    = azurerm_subnet.videoeditvm_subnet.id
+  datagateway-subnet  = azurerm_subnet.datagateway_subnet.id
 }

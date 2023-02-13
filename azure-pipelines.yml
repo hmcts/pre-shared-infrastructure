@@ -65,12 +65,12 @@ parameters:
   - name: components
     type: object
     default:
-    - deployment: 'Core'
-      component: '00-core'
+    - deployment: 'Network'
+      component: '00-network'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
-    - deployment: 'Network'
-      component: '01-network'
+    - deployment: 'Core'
+      component: '01-core'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
