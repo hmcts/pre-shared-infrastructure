@@ -11,8 +11,6 @@ variables:
     value: 60
   - name: agentPool
     value: ubuntu-latest
-  - name: resourceGroup
-    value: jenkins-state-${{ lower(parameters.environment) }}
   - name: storageAccount
     value: sdsstate${{ lower(parameters.environment) }}
   - name: container
