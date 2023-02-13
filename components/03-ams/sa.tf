@@ -1,13 +1,3 @@
-# provider "azurerm" {
-#   alias                      = "mgmt"
-#   subscription_id            = var.mgmt_subscription_id
-#   skip_provider_registration = true
-#   features {}
-# }
-
-###################################################
-#                 STORAGES               #
-###################################################
 module "sa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
@@ -67,9 +57,7 @@ module "ingestsa_storage_account" {
   depends_on  = [module.key-vault]
 }
 
-###################################################
-#                PRIVATE ENDPOINTS FOR STORAGES   
-###################################################
+
 resource "azurerm_private_endpoint" "sa" {
   name                = "${var.prefix}sa-pe-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
@@ -85,9 +73,6 @@ resource "azurerm_private_endpoint" "sa" {
   tags = module.tags.common_tags
 }
 
-# ###################################################
-# #                PRIVATE ENDPOINTS FOR STORAGES   
-# ###################################################
 resource "azurerm_private_endpoint" "finalsa" {
   name                = "${var.prefix}finalsa-pe-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
@@ -103,9 +88,6 @@ resource "azurerm_private_endpoint" "finalsa" {
   tags = module.tags.common_tags
 }
 
-###################################################
-#                PRIVATE ENDPOINTS FOR STORAGES    
-###################################################
 resource "azurerm_private_endpoint" "ingestsa" {
   name                = "${var.prefix}stream-pe-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
@@ -137,4 +119,19 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
   name         = "ingestsa-storage-account-connection-string"
   value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
   key_vault_id = module.key-vault.key_vault_id
+}
+
+#SA role assignments
+resource "azurerm_role_assignment" "mi_storage_1" {
+  scope                            = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "mi_storage_2" {
+  scope                            = module.finalsa_storage_account.storageaccount_id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  skip_service_principal_aad_check = true
 }

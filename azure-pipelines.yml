@@ -62,6 +62,35 @@ parameters:
       - Stg
       - Prod
 
+  - name: components
+    type: object
+    default:
+    - deployment: 'Core'
+      component: '00-core'
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      dependsOn: 'Precheck'
+    - deployment: 'VirtualMachines'
+      component: '01-virtual_machines'
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      dependsOn: 'Precheck'
+    - deployment: 'Postgres'
+      component: '02-postgres'
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      dependsOn: 'Precheck'
+    - deployment: 'AMS'
+      component: '03-ams'
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      dependsOn: 'Precheck'
+    - deployment: 'Monitoring'
+      component: '04-monitoring'
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      dependsOn: 'Precheck'
+    - deployment: 'Peerings'
+      component: '05-peerings'
+      serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
+      dependsOn: 'Precheck'
+
+
 stages:
   - stage: Precheck
     jobs:
@@ -78,20 +107,22 @@ stages:
               serviceConnection: 'DTS-SHAREDSERVICES-SBOX'
               overrideAction: ${{ parameters.overrideAction }}
 
-  - stage: PlanApply
-    jobs:
-      - job: TerraformPlanApply
-        pool:
-          vmImage: ${{ variables.agentPool }}
-        timeoutInMinutes: ${{ variables.timeoutInMinutes }}
-        steps:
-          - template: steps/terraform.yaml@cnp-azuredevops-libraries
-            parameters:
-              overrideAction: ${{ parameters.overrideAction }}
-              environment: ${{ lower(parameters.environment) }}
-              kvConnectedServiceName: DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
-              serviceConnection: "OPS-APPROVAL-GATE-MGMT-ENVS" #'DTS-SHAREDSERVICES-DEV' # ${{ variables.serviceConnection }}
-              terraformInitSubscription: ${{ variables.terraformInitSubscription }}
-              product: ${{ variables.product }}
-              component: pre-app-infra
-              tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
+  - ${{ each deployment in parameters.components }}:
+      - stage: ${{ deployment.deployment }}
+        jobs:
+          - job: TerraformPlanApply
+            pool:
+              vmImage: ${{ variables.agentPool }}
+            timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+            steps:
+              - template: steps/terraform.yaml@cnp-azuredevops-libraries
+                parameters:
+                  overrideAction: ${{ parameters.overrideAction }}
+                  environment: ${{ lower(parameters.environment) }}
+                  kvConnectedServiceName: DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
+                  serviceConnection: ${{ deployment.serviceConnection }}
+                  terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+                  product: ${{ variables.product }}
+                  component: ${{ deployment.component }}
+                  tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
+                  
