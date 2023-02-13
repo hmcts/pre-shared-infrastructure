@@ -1,3 +1,8 @@
+module "log_analytics_workspace" {
+  source      = "git::https://github.com/hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
+  environment = var.env
+}
+
 data "azurerm_log_analytics_workspace" "loganalytics" {
   provider            = azurerm.oms
   name                = module.log_analytics_workspace.name
@@ -54,8 +59,6 @@ resource "azurerm_monitor_diagnostic_setting" "bastion" {
   }
 }
 
-
-
 resource "azurerm_monitor_diagnostic_setting" "bastionpip" {
   name                       = azurerm_public_ip.pip.name
   target_resource_id         = azurerm_public_ip.pip.id
@@ -110,6 +113,7 @@ resource "azurerm_monitor_diagnostic_setting" "nic" {
     }
   }
 }
+
 resource "azurerm_monitor_diagnostic_setting" "vnet" {
 
   name                       = azurerm_virtual_network.vnet.name
@@ -258,9 +262,4 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
       enabled = true
     }
   }
-}
-
-module "log_analytics_workspace" {
-  source      = "git::https://github.com/hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
-  environment = var.env
 }

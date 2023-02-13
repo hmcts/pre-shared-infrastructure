@@ -1,25 +1,3 @@
-variable "location" {
-  default = "uksouth"
-}
-
-variable "service_shortname" {
-  default = "pre"
-}
-
-variable "private_endpoint_private_dns_zones" {
-  default = [
-    "privatelink.database.windows.net",
-    "privatelink.blob.core.windows.net",
-    "privatelink.vaultcore.azure.net",
-    "privatelink.datafactory.azure.net",
-    "privatelink.postgres.database.azure.com",
-    # "privatelink.dev.azuresynapse.net",
-    # "privatelink.sql.azuresynapse.net",
-    # "privatelink.redis.cache.windows.net",
-    # "privatelink.service.signalr.net",
-  ]
-}
-
 locals {
   hub = {
     nonprod = {
@@ -74,12 +52,6 @@ locals {
     "ukWest"
   ]
 
-}
+  hub_name = [for x in keys(local.hub_to_env_mapping) : x if contains(local.hub_to_env_mapping[x], var.env)][0]
 
-variable "additional_routes" {
-  default = []
-}
-
-variable "additional_subnets" {
-  default = []
 }

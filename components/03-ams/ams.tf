@@ -7,8 +7,6 @@ resource "azurerm_media_services_account" "ams" {
     type = "SystemAssigned"
   }
 
-
-
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id
     is_primary = true
@@ -38,8 +36,7 @@ resource "azurerm_media_transform" "analysevideo" {
   }
 }
 
-
-resource "azurerm_media_transform" "EncodeToMP" {
+resource "azurerm_media_transform" "EncodeToMP4" {
   name                        = "EncodeToMP4"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
@@ -65,7 +62,6 @@ resource "null_resource" "amsid" {
 
 
 }
-
 
 resource "azapi_update_resource" "ams_auth" {
   depends_on  = [null_resource.amsid]
