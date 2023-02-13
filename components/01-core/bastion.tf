@@ -10,7 +10,7 @@ output "bastion_subnet_id" {
 
 resource "azurerm_public_ip" "pip" {
   name                = "${var.prefix}-bastionpip-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.id
+  resource_group_name = local.resource_group_name
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"
