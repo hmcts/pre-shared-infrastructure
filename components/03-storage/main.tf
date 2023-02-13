@@ -1,7 +1,7 @@
 data "azurerm_subnet" "endpoint_subnet" {
   name                 = "${var.prefix}-privatendpt-snet-${var.env}"
   resource_group_name  = local.resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnet.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
 output "endpoint_subnet_id" {
