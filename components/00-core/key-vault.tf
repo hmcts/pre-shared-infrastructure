@@ -1,18 +1,18 @@
 data "azurerm_client_config" "current" {}
 
 module "key-vault" {
-  source                          = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
-  name                            = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}"
-  product                         = var.prefix
-  env                             = var.env
-  tenant_id                       = data.azurerm_client_config.current.tenant_id
-  object_id                       = data.azurerm_client_config.current.object_id
-  resource_group_name             = azurerm_resource_group.rg.name
-  product_group_name              = "DTS Pre-recorded Evidence"
-  common_tags                     = module.tags.common_tags
-  create_managed_identity         = true
+  source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
+  name                    = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}"
+  product                 = var.prefix
+  env                     = var.env
+  tenant_id               = data.azurerm_client_config.current.tenant_id
+  object_id               = data.azurerm_client_config.current.object_id
+  resource_group_name     = azurerm_resource_group.rg.name
+  product_group_name      = "DTS Pre-recorded Evidence"
+  common_tags             = module.tags.common_tags
+  create_managed_identity = true
   //network_acls_allowed_subnet_ids = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
-  purge_protection_enabled        = true
+  purge_protection_enabled = true
 }
 
 #####################################
