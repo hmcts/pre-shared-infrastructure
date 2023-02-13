@@ -1,5 +1,8 @@
 terraform {
   backend "azurerm" {}
+  features {
+    use_providers = true
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -9,7 +12,6 @@ terraform {
 }
 
 provider "azurerm" {
-  #subscription_id            = local.hub[var.env].subscription
   subscription_id            = local.hub[local.hub_name].subscription
   skip_provider_registration = "true"
   features {}
