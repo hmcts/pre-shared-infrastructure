@@ -76,13 +76,6 @@ resource "azurerm_subnet_route_table_association" "dg_subnet" {
 }
 
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)
-provider "azurerm" {
-  alias           = "private_dns"
-  subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
-  features {}
-
-}
-
 resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   provider              = azurerm.private_dns
   name                  = format("%s-%s-virtual-network-link", var.prefix, var.env)
