@@ -6,8 +6,8 @@ module "tags" {
 }
 
 locals {
-  key_vault_name      = "${var.prefix}-kv-${var.env}"
-  env_long_name       = var.env == "sbox" ? "sandbox" : var.env == "stg" ? "staging" : var.env
+  key_vault_name = "${var.prefix}-kv-${var.env}"
+  env_long_name  = var.env == "sbox" ? "sandbox" : var.env == "stg" ? "staging" : var.env
 }
 
 data "azurerm_resource_group" "rg" {
