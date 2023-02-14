@@ -67,7 +67,7 @@ parameters:
     default:
     - deployment: 'Network'
       component: '00-network'
-      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
       dependsOn: 'Precheck'
     - deployment: 'Core'
       component: '01-core'
