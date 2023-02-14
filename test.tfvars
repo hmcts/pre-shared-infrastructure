@@ -23,3 +23,8 @@ pg_databases = [
     name : "pre-pdb-test"
   }
 ]
+
+retention_daily   = "14"
+retention_weekly  = "0"
+retention_monthly = "0"
+retention_yearly  = "0"
