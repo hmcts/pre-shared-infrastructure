@@ -1,3 +1,9 @@
+module "tags" {
+  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+  environment = var.env
+  product     = var.prefix
+  builtFrom   = var.builtFrom
+}
 data "azurerm_virtual_network" "hub" {
   provider = azurerm.hub
 
