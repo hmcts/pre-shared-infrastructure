@@ -63,6 +63,9 @@ parameters:
       - Stg
       - Prod
 
+  - name: terraformInitSubscription
+    default: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
+
   - name: components
     type: object
     default:
@@ -125,7 +128,7 @@ stages:
                   environment: ${{ lower(parameters.environment) }}
                   kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS' #DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
                   serviceConnection: ${{ deployment.serviceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS'
-                  terraformInitSubscription: ${{ variables.terraformInitSubscription }} #'HMCTS-CONTROL'
+                  terraformInitSubscription: ${{ parameter.terraformInitSubscription }} #'HMCTS-CONTROL'
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
