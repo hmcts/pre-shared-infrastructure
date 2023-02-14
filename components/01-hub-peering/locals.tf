@@ -1,6 +1,4 @@
 locals {
-  resource_group_name = "${var.prefix}-${var.env}"
-
   hub = {
     nonprod = {
       subscription = "fb084706-583f-4c9a-bdab-949aac66ba5c"

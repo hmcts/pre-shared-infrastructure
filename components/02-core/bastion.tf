@@ -1,6 +1,6 @@
 data "azurerm_subnet" "bastion_subnet" {
   name                 = "AzureBastionSubnet"
-  resource_group_name  = local.resource_group_name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
@@ -10,7 +10,7 @@ output "bastion_subnet_id" {
 
 resource "azurerm_public_ip" "pip" {
   name                = "${var.prefix}-bastionpip-${var.env}"
-  resource_group_name = local.resource_group_name
+  resource_group_name = data.azurerm_resource_group.rg.name
   location            = var.location
   allocation_method   = "Static"
   sku                 = "Standard"

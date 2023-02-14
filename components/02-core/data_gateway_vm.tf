@@ -1,6 +1,6 @@
 data "azurerm_subnet" "datagateway_subnet" {
   name                 = "${var.prefix}-datagateway-snet-${var.env}"
-  resource_group_name  = local.resource_group_name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
@@ -12,7 +12,7 @@ resource "azurerm_network_interface" "dtgwnic" {
   count                         = var.num_datagateway
   name                          = "${var.prefix}-dtgwnic${count.index}-${var.env}"
   location                      = var.location
-  resource_group_name           = local.resource_group_name
+  resource_group_name           = data.azurerm_resource_group.rg.name
   enable_accelerated_networking = true
 
   ip_configuration {
@@ -28,7 +28,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   zone                       = 2
   name                       = "${var.prefix}dtgtwy${count.index}-${var.env}"
   computer_name              = "PREDTGTW0${count.index}-${var.env}"
-  resource_group_name        = local.resource_group_name
+  resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = var.location
   size                       = var.datagateway_spec
   admin_username             = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
@@ -64,7 +64,7 @@ resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   count                  = var.num_datagateway
   name                   = "${var.prefix}dtgtwy${count.index}-datadisk-${var.env}"
   location               = var.location
-  resource_group_name    = local.resource_group_name
+  resource_group_name    = data.azurerm_resource_group.rg.name
   storage_account_type   = "Standard_LRS"
   create_option          = "Empty"
   disk_size_gb           = 1000
