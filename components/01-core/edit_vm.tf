@@ -86,7 +86,7 @@ resource "azurerm_managed_disk" "vmdatadisk" {
   count                  = var.num_vid_edit_vms
   name                   = "${var.prefix}-videditvm${count.index}-datadisk-${var.env}"
   location               = var.location
-  resource_group_name    = data.azurerm_resource_group.rg.id
+  resource_group_name    = data.azurerm_resource_group.rg.name
   storage_account_type   = "StandardSSD_LRS"
   create_option          = "Empty"
   disk_size_gb           = 1000
