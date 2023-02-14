@@ -16,6 +16,16 @@ data "azurerm_virtual_network" "vnet" {
   resource_group_name = local.resource_group_name
 }
 
+data "azurerm_subnet" "datagateway_subnet" {
+  name                 = "${var.prefix}-datagateway-snet-${var.env}"
+  resource_group_name  = local.resource_group_name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
+output "datagateway_subnet_id" {
+  value = data.azurerm_subnet.datagateway_subnet.id
+}
+
 resource "azurerm_virtual_network_peering" "to_hub" {
   name                         = "hub"
   resource_group_name          = local.resource_group_name
@@ -54,6 +64,6 @@ resource "azurerm_route_table" "postgres" {
 }
 
 resource "azurerm_subnet_route_table_association" "dg_subnet" {
-  subnet_id      = azurerm_subnet.datagateway_subnet.id
+  subnet_id      = data.azurerm_subnet.datagateway_subnet.id
   route_table_id = azurerm_route_table.postgres.id
 }
