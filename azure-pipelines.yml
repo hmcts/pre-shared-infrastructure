@@ -130,6 +130,16 @@ stages:
               vmImage: ${{ variables.agentPool }}
             timeoutInMinutes: ${{ variables.timeoutInMinutes }}
             steps:
+              - template: steps/set-build-repo-suffix-env-var.yaml@cnp-azuredevops-libraries   
+
+              - template: steps/keyvault-read.yaml@cnp-azuredevops-libraries
+                parameters:
+                  serviceConnection: $(serviceConnection)
+                  environment: ${{ parameters.environment }}
+                  subscriptionIdVariableName: 'SUBSCRIPTION_ID'
+                  storageAccountVariableName: 'STORAGE_ACCOUNT'
+                  keyVaultVariableName: 'KEY_VAULT'
+
               - template: steps/terraform.yaml@cnp-azuredevops-libraries
                 parameters:
                   overrideAction: ${{ parameters.overrideAction }}
@@ -142,8 +152,8 @@ stages:
                   location: ${{ parameters.location }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
                   initCommandOptions: >
-                    -backend-config=storage_account_name=c867a878b361ac9e178b6sa
-                    -var subscription_id=04d27a32-7a07-48b3-95b8-3c8691e1a263                    
+                    -var subscription_id=$(SUBSCRIPTION_ID)
+                    -backend-config storage_account_name=$(STORAGE_ACCOUNT)                   
 
               # - template: steps/terraform.yaml@cnp-azuredevops-libraries
               #   parameters:
