@@ -135,7 +135,7 @@ stages:
                   overrideAction: ${{ parameters.overrideAction }}
                   environment: ${{ lower(parameters.environment) }}
                   component: ${{ deployment.component }}
-                  # kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #DTS-SHAREDSERVICES-SBOX
+                  kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #DTS-SHAREDSERVICES-SBOX
                   serviceConnection: ${{ deployment.serviceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS'
                   terraformInitSubscription: ${{ variables.terraformInitSubscription }} #'HMCTS-CONTROL'
                   product: ${{ variables.product }}
