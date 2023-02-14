@@ -15,8 +15,8 @@ variables:
   #   value: sdsstate${{ lower(parameters.environment) }}
   # - name: container
   #   value: tfstate-${{ lower(parameters.environment) }}
-  - name: serviceConnection
-    value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
+  # - name: serviceConnection
+  #   value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
   # - name: keyvaultName
   #   value: pre-stg
   # - name: tfInitSub
@@ -129,9 +129,9 @@ stages:
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
-                  initCommandOptions: >
-                    -var subscription_id=$(SUBSCRIPTION_ID)
-                    -backend-config storage_account_name=$(STORAGE_ACCOUNT)
+                  # initCommandOptions: >
+                  #   -var subscription_id='04d27a32-7a07-48b3-95b8-3c8691e1a263'
+                  #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
                   # -backend-config=subscription_id=${{ deployment.subscription }}
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
                   # planCommandOptions: "-var project=$(project) -var control_vault=$(controlKeyVault) -var subscription_id=$(SUBSCRIPTION_ID)"
