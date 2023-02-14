@@ -25,9 +25,10 @@ variables:
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
   - name: product
     value: pre
+  - name: project
+    value: pre
   - name: kvConnectedServiceName
     value: DCD-CFT-Sandbox
-
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
   # - group: pre-azure-devops-agent
 
@@ -70,7 +71,7 @@ parameters:
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
     - deployment: 'Peering'
-      component: '01-peering'
+      component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
       dependsOn: '00-network'
     - deployment: 'Core'
@@ -124,7 +125,7 @@ stages:
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
-                  planCommandOptions: "-var project=$(project) -var control_vault=$(KEY_VAULT) -var subscription_id=$(SUBSCRIPTION_ID)"
-                  initCommandOptions: >
-                    -var subscription_id=$(SUBSCRIPTION_ID)
-                    -backend-config storage_account_name=$(STORAGE_ACCOUNT)
+                  # planCommandOptions: "-var project=$(project) -var control_vault=$(KEY_VAULT) -var subscription_id=$(SUBSCRIPTION_ID)"
+                  # initCommandOptions: >
+                  #   -var subscription_id=$(SUBSCRIPTION_ID)
+                  #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
