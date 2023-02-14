@@ -76,7 +76,7 @@ parameters:
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
       kvServiceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
-      subscription: '867a878b-cb68-4de5-9741-361ac9e178b6'
+      subscription: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
       dependsOn: '00-network'
     - deployment: 'Core'
       component: '02-core'
