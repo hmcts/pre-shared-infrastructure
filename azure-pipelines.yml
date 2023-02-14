@@ -152,8 +152,7 @@ stages:
                   location: ${{ parameters.location }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
                   initCommandOptions: >
-                    -backend-config storage_account_name=$(STORAGE_ACCOUNT)                   
-                    -var subscription_id=$(SUBSCRIPTION_ID)
+                    -backend-config storage_account_name=$(STORAGE_ACCOUNT)
 
               # - template: steps/terraform.yaml@cnp-azuredevops-libraries
               #   parameters:
