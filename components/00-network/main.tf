@@ -29,8 +29,6 @@ resource "azurerm_subnet" "datagateway_subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = [var.data_gateway_snet_address]
   service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
-
-  depends_on = [azurerm_route_table.postgres]
 }
 
 resource "azurerm_subnet" "videoedit_subnet" {
