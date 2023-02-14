@@ -134,7 +134,7 @@ stages:
 
               - template: steps/keyvault-read.yaml@cnp-azuredevops-libraries
                 parameters:
-                  serviceConnection: $(serviceConnection)
+                  serviceConnection: OPS-APPROVAL-GATE-MGMT-ENVS
                   environment: ${{ parameters.environment }}
                   subscriptionIdVariableName: 'SUBSCRIPTION_ID'
                   storageAccountVariableName: 'STORAGE_ACCOUNT'
