@@ -126,14 +126,14 @@ stages:
                 parameters:
                   overrideAction: ${{ parameters.overrideAction }}
                   environment: ${{ lower(parameters.environment) }}
-                  kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS' #DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
+                  kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #DTS-SHAREDSERVICES-SBOX
                   serviceConnection: ${{ deployment.serviceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS'
                   terraformInitSubscription: ${{ parameters.terraformInitSubscription }} #'HMCTS-CONTROL'
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
-                  # initCommandOptions: >
-                  #   -var subscription_id='04d27a32-7a07-48b3-95b8-3c8691e1a263'
+                  initCommandOptions: >
+                    -var subscription_id='04d27a32-7a07-48b3-95b8-3c8691e1a263'
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
                   # -backend-config=subscription_id=${{ deployment.subscription }}
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
