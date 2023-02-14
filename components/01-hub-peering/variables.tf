@@ -2,6 +2,10 @@ variable "prefix" {
   default = "pre"
 }
 
+variable "product" {
+  default = "pre"
+}
+
 variable "env" {}
 
 variable "location" {
