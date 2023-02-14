@@ -128,7 +128,7 @@ stages:
                   environment: ${{ lower(parameters.environment) }}
                   kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS' #DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
                   serviceConnection: ${{ deployment.serviceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS'
-                  terraformInitSubscription: ${{ parameter.terraformInitSubscription }} #'HMCTS-CONTROL'
+                  terraformInitSubscription: ${{ parameters.terraformInitSubscription }} #'HMCTS-CONTROL'
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
