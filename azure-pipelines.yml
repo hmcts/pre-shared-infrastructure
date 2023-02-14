@@ -75,7 +75,7 @@ parameters:
     - deployment: 'HubPeering'
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
-      kvServiceConnection: 'HMCTS-CONTROL'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-SBOX' #'HMCTS-CONTROL'
       subscription: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
       dependsOn: '00-network'
     - deployment: 'Core'
@@ -129,9 +129,9 @@ stages:
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
-                  # initCommandOptions: >
-                  #   -var subscription_id=$(SUBSCRIPTION_ID)
-                  #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
+                  initCommandOptions: >
+                    -var subscription_id=$(SUBSCRIPTION_ID)
+                    -backend-config storage_account_name=$(STORAGE_ACCOUNT)
                   # -backend-config=subscription_id=${{ deployment.subscription }}
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
                   # planCommandOptions: "-var project=$(project) -var control_vault=$(controlKeyVault) -var subscription_id=$(SUBSCRIPTION_ID)"
