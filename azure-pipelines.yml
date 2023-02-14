@@ -63,6 +63,14 @@ parameters:
       - Stg
       - Prod
 
+  - name: location
+    displayName: Location
+    type: string
+    default: "UK South"
+    values:
+      - "UK South"
+      - "UK West"
+
   - name: terraformInitSubscription
     default: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
 
@@ -126,14 +134,31 @@ stages:
                 parameters:
                   overrideAction: ${{ parameters.overrideAction }}
                   environment: ${{ lower(parameters.environment) }}
-                  kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #DTS-SHAREDSERVICES-SBOX
-                  serviceConnection: ${{ deployment.serviceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS'
-                  terraformInitSubscription: ${{ parameters.terraformInitSubscription }} #'HMCTS-CONTROL'
-                  product: ${{ variables.product }}
                   component: ${{ deployment.component }}
+                  # kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #DTS-SHAREDSERVICES-SBOX
+                  serviceConnection: ${{ deployment.serviceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS'
+                  terraformInitSubscription: ${{ variables.terraformInitSubscription }} #'HMCTS-CONTROL'
+                  product: ${{ variables.product }}
+                  location: ${{ parameters.location }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
                   initCommandOptions: >
                     -var subscription_id='04d27a32-7a07-48b3-95b8-3c8691e1a263'
+
+              # - template: steps/terraform.yaml@cnp-azuredevops-libraries
+              #   parameters:
+              #     overrideAction: ${{ parameters.action }}
+              #     environment: ${{ parameters.env  }}
+              #     component: "01-network"
+              #     serviceConnection: "OPS-APPROVAL-GATE-MGMT-ENVS"
+              #     terraformInitSubscription: ${{ variables.tfInitSub }}
+              #     product: $(product)
+              #     location: ${{ parameters.location }}
+              #     tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/01-network/${{ parameters.env }}.tfvars"
+              #     planCommandOptions: "-var project=$(project) -var control_vault=$(KEY_VAULT) -var subscription_id=$(SUBSCRIPTION_ID)"
+              #     initCommandOptions: >
+              #       -var subscription_id=$(SUBSCRIPTION_ID)
+              #       -backend-config storage_account_name=$(STORAGE_ACCOUNT)
+
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
                   # -backend-config=subscription_id=${{ deployment.subscription }}
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
