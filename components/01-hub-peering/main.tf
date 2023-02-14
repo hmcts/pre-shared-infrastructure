@@ -4,6 +4,11 @@ module "tags" {
   product     = var.prefix
   builtFrom   = var.builtFrom
 }
+
+data "azurerm_resource_group" "rg" {
+  name = "pre-dev"
+}
+
 data "azurerm_virtual_network" "hub" {
   provider = azurerm.hub
 
@@ -13,12 +18,12 @@ data "azurerm_virtual_network" "hub" {
 
 data "azurerm_virtual_network" "vnet" {
   name                = "${var.prefix}-vnet-${var.env}"
-  resource_group_name = local.resource_group_name
+  resource_group_name = data.azurerm_resource_group.rg.name
 }
 
 data "azurerm_subnet" "datagateway_subnet" {
   name                 = "${var.prefix}-datagateway-snet-${var.env}"
-  resource_group_name  = local.resource_group_name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
@@ -28,7 +33,7 @@ output "datagateway_subnet_id" {
 
 resource "azurerm_virtual_network_peering" "to_hub" {
   name                         = "hub"
-  resource_group_name          = local.resource_group_name
+  resource_group_name          = data.azurerm_resource_group.rg.name
   virtual_network_name         = data.azurerm_virtual_network.vnet.name
   remote_virtual_network_id    = data.azurerm_virtual_network.hub.id
   allow_virtual_network_access = true
@@ -50,7 +55,7 @@ resource "azurerm_virtual_network_peering" "from_hub" {
 resource "azurerm_route_table" "postgres" {
   name                          = "${var.prefix}-${var.env}-route-table"
   location                      = var.location
-  resource_group_name           = local.resource_group_name
+  resource_group_name           = data.azurerm_resource_group.rg.name
   disable_bgp_route_propagation = false
 
   route {
