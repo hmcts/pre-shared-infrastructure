@@ -21,6 +21,7 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = [var.vnet_address_space]
 
   tags = module.tags.common_tags
+  depends_on = [azurerm_resource_group.rg]
 }
 
 resource "azurerm_subnet" "datagateway_subnet" {
