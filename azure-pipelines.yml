@@ -70,7 +70,7 @@ parameters:
       component: '00-network'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       kvServiceConnection: 'DTS-SHAREDSERVICES-SBOX'
-      subscription: '867a878b-cb68-4de5-9741-361ac9e178b6'
+      subscription: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
