@@ -26,7 +26,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   count                      = var.num_vid_edit_vms
   name                       = "${var.prefix}-videditvm${count.index}-${var.env}"
   computer_name              = "PREVIDED0${count.index}-${var.env}"
-  resource_group_name        = data.azurerm_resource_group.rg.id
+  resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = var.location
   size                       = var.vid_edit_vm_spec
   admin_username             = "videdit${count.index}_${random_string.vm_username[count.index].result}"
