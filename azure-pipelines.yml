@@ -69,10 +69,12 @@ parameters:
     - deployment: 'Network'
       component: '00-network'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-SBOX'
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
+      kvServiceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
       dependsOn: '00-network'
     - deployment: 'Core'
       component: '02-core'
@@ -119,7 +121,7 @@ stages:
                 parameters:
                   overrideAction: ${{ parameters.overrideAction }}
                   environment: ${{ lower(parameters.environment) }}
-                  kvConnectedServiceName: ${{ deployment.serviceConnection }} #DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
+                  kvConnectedServiceName: ${{ deployment.kvServiceConnection }} #DTS-SHAREDSERVICES-SBOX # ${{ variables.kvConnectedServiceName }}
                   serviceConnection: ${{ deployment.serviceConnection }}
                   terraformInitSubscription: ${{ variables.terraformInitSubscription }}
                   product: ${{ variables.product }}
