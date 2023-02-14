@@ -11,20 +11,20 @@ variables:
     value: 60
   - name: agentPool
     value: ubuntu-latest
-  - name: storageAccount
-    value: sdsstate${{ lower(parameters.environment) }}
-  - name: container
-    value: tfstate-${{ lower(parameters.environment) }}
+  # - name: storageAccount
+  #   value: sdsstate${{ lower(parameters.environment) }}
+  # - name: container
+  #   value: tfstate-${{ lower(parameters.environment) }}
   - name: serviceConnection
     value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
-  - name: keyvaultName
-    value: pre-stg
-  - name: tfInitSub
-    value: "04d27a32-7a07-48b3-95b8-3c8691e1a263"
+  # - name: keyvaultName
+  #   value: pre-stg
+  # - name: tfInitSub
+  #   value: "04d27a32-7a07-48b3-95b8-3c8691e1a263"
   - name: terraformInitSubscription
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
   - name: product
-    value: pre-shared-infrastructure
+    value: pre
   - name: kvConnectedServiceName
     value: DCD-CFT-Sandbox
 
@@ -67,22 +67,26 @@ parameters:
     default:
     - deployment: 'Network'
       component: '00-network'
-      serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
+    - deployment: 'Peering'
+      component: '01-peering'
+      serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
+      dependsOn: '00-network'
     - deployment: 'Core'
-      component: '01-core'
+      component: '02-core'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
-      component: '02-postgres'
+      component: '03-postgres'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
     - deployment: 'Storage'
-      component: '03-storage'
+      component: '04-storage'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
     - deployment: 'AMS'
-      component: '04-ams'
+      component: '05-ams'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
 
@@ -120,4 +124,7 @@ stages:
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
-                  
+                  planCommandOptions: "-var project=$(project) -var control_vault=$(KEY_VAULT) -var subscription_id=$(SUBSCRIPTION_ID)"
+                  initCommandOptions: >
+                    -var subscription_id=$(SUBSCRIPTION_ID)
+                    -backend-config storage_account_name=$(STORAGE_ACCOUNT)

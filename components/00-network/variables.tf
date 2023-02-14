@@ -34,10 +34,6 @@ variable "bastion_snet_address" {}
 
 variable "data_gateway_snet_address" {}
 
-variable "PeeringFromHubName" {
-  default = "pre-recorded-evidence"
-}
-
 variable "builtFrom" {
   description = "The GitHub URL for the repository that contains the infrastructure code."
   default     = "hmcts/pre-shared-infrastructure"

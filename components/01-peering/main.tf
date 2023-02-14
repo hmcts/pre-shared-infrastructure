@@ -5,6 +5,11 @@ data "azurerm_virtual_network" "hub" {
   resource_group_name = local.hub[local.hub_name].ukSouth.name
 }
 
+data "azurerm_virtual_network" "vnet" {
+  name                = "${var.prefix}-vnet-${var.env}"
+  resource_group_name = local.resource_group_name
+}
+
 resource "azurerm_virtual_network_peering" "to_hub" {
   name                         = "hub"
   resource_group_name          = local.resource_group_name
