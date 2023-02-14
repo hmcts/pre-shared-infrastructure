@@ -130,6 +130,6 @@ stages:
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
                   initCommandOptions: >
-                    -backend-config=subscription_id${{ deployment.subscription }}
+                    -backend-config=subscription_id=${{ deployment.subscription }}
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
                   # planCommandOptions: "-var project=$(project) -var control_vault=$(controlKeyVault) -var subscription_id=$(SUBSCRIPTION_ID)"
