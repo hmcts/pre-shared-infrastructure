@@ -104,7 +104,7 @@ stages:
             parameters:
               keyvaultName: 'infra-vault-nonprod'
               keyvaultSecret: 'azure-devops-token'
-              serviceConnection: 'DTS-SHAREDSERVICES-SBOX'
+              serviceConnection: 'DCD-CFT-Sandbox'
               overrideAction: ${{ parameters.overrideAction }}
 
   - ${{ each deployment in parameters.components }}:
@@ -125,7 +125,7 @@ stages:
                   product: ${{ variables.product }}
                   component: ${{ deployment.component }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
-                  # planCommandOptions: "-var project=$(project) -var control_vault=$(KEY_VAULT) -var subscription_id=$(SUBSCRIPTION_ID)"
+                  # planCommandOptions: "-var project=$(project) -var control_vault=$(controlKeyVault) -var subscription_id=$(SUBSCRIPTION_ID)"
                   # initCommandOptions: >
                   #   -var subscription_id=$(SUBSCRIPTION_ID)
                   #   -backend-config storage_account_name=$(STORAGE_ACCOUNT)
