@@ -9,6 +9,10 @@ data "azurerm_resource_group" "rg" {
   name = "pre-dev"
 }
 
+output "id" {
+  value = data.azurerm_resource_group.rg.id
+}
+
 data "azurerm_virtual_network" "hub" {
   provider = azurerm.hub
 
