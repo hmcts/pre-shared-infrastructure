@@ -11,7 +11,7 @@ locals {
 }
 
 data "azurerm_resource_group" "rg" {
-  name = "pre-dev"
+  name = local.resource_group_name
 }
 
 output "id" {
