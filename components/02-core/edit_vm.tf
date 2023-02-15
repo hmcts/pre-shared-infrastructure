@@ -179,20 +179,20 @@ SETTINGS
 
 ##DynaTrace
 
-module "dynatrace-oneagent" {
+# module "dynatrace-oneagent" {
+#   source                     = "git::https://github.com/hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
 
-  source                     = "git::https://github.com/hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
-  count                      = var.num_vid_edit_vms
-  tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
-  token                      = data.azurerm_key_vault_secret.dynatrace-token.value
-  virtual_machine_os         = "windows"
-  virtual_machine_type       = "vm"
-  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  auto_upgrade_minor_version = true
-  server                     = var.server
-  hostgroup                  = var.hostgroup
-  tags                       = module.tags.common_tags
-}
+#   count                      = var.num_vid_edit_vms
+#   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
+#   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
+#   virtual_machine_os         = "windows"
+#   virtual_machine_type       = "vm"
+#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   auto_upgrade_minor_version = true
+#   server                     = var.server
+#   hostgroup                  = var.hostgroup
+#   tags                       = module.tags.common_tags
+# }
 
 resource "azurerm_virtual_machine_extension" "vm_aad" {
   count                      = var.num_vid_edit_vms

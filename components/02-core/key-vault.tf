@@ -71,16 +71,16 @@ module "key-vault" {
 #   resource_group_name = data.azurerm_resource_group.rg.name
 # }
 
-# Dynatrace
-data "azurerm_key_vault_secret" "dynatrace-token" {
-  name         = "dynatrace-token"
-  key_vault_id = module.key-vault.key_vault_id
-}
+# # Dynatrace
+# data "azurerm_key_vault_secret" "dynatrace-token" {
+#   name         = "dynatrace-token"
+#   key_vault_id = module.key-vault.key_vault_id
+# }
 
-data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
-  name         = "dynatrace-tenant-id"
-  key_vault_id = module.key-vault.key_vault_id
-}
+# data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
+#   name         = "dynatrace-tenant-id"
+#   key_vault_id = module.key-vault.key_vault_id
+# }
 
 # Disk Encryption 
 
