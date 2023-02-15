@@ -1,8 +1,8 @@
-vnet_address_space         = "10.1.0.0/16" #10.50.12.0/25
-video_edit_vm_snet_address = "10.1.12.0/28"
-privatendpt_snet_address   = "10.1.12.64/26"
-bastion_snet_address       = "10.1.12.16/28" #10.50.12.16/28
-data_gateway_snet_address  = "10.1.12.32/28"
+vnet_address_space         = "10.50.12.0/25"
+video_edit_vm_snet_address = "10.50.12.0/28"
+privatendpt_snet_address   = "10.50.12.64/26"
+bastion_snet_address       = "10.50.12.48/28"
+data_gateway_snet_address  = "10.50.12.32/28"
 num_vid_edit_vms           = 1
 mgmt_net_name              = "ss-ptl-vnet"
 mgmt_net_rg_name           = "ss-ptl-network-rg"
