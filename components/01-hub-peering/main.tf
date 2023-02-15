@@ -1,12 +1,13 @@
-module "tags" {
-  source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
-  environment = var.env
-  product     = var.prefix
-  builtFrom   = var.builtFrom
-}
+# module "tags" {
+#   source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
+#   environment = var.env
+#   product     = var.prefix
+#   builtFrom   = var.builtFrom
+# }
 
 data "azurerm_resource_group" "rg" {
-  name = local.resource_group_name
+  provider = azurerm.sds-dev
+  name     = local.resource_group_name
 }
 
 output "id" {
@@ -30,8 +31,7 @@ data "azurerm_virtual_network" "vnet" {
 # }
 
 data "azurerm_virtual_network" "hub" {
-  provider = azurerm.hub
-
+  provider            = azurerm.hub
   name                = local.hub[local.hub_name].ukSouth.name
   resource_group_name = local.hub[local.hub_name].ukSouth.name
 }
