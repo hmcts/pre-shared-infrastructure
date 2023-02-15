@@ -1,5 +1,5 @@
 data "azurerm_resource_group" "rg" {
-  name = "${var.prefix}-${var.env}"
+  name = local.resource_group_name
 }
 
 data "azurerm_key_vault" "keyvault" {
