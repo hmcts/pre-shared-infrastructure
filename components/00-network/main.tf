@@ -61,17 +61,6 @@ resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   virtual_network_id    = azurerm_virtual_network.vnet.id
 }
 
-resource "azurerm_virtual_network_peering" "from_hub" {
-  provider = azurerm.hub
-
-  name                         = var.PeeringFromHubName
-  resource_group_name          = local.hub[local.hub_name].ukSouth.name
-  virtual_network_name         = local.hub[local.hub_name].ukSouth.name
-  remote_virtual_network_id    = azurerm_virtual_network.vnet.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-}
-
 resource "azurerm_route_table" "postgres" {
   name                          = "${var.prefix}-${var.env}-route-table"
   location                      = var.location
