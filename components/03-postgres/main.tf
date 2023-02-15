@@ -1,8 +1,12 @@
 data "azurerm_client_config" "current" {}
 
+data "azurerm_resource_group" "rg" {
+  name = local.resource_group_name
+}
 locals {
   resource_group_name = "${var.prefix}-${var.env}"
 }
+
 module "tags" {
   source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
   environment = var.env
@@ -38,10 +42,6 @@ module "data_store_db_v14" {
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
   resource_group_name = data.azurerm_resource_group.rg.name
-}
-
-data "azurerm_resource_group" "rg" {
-  name = local.resource_group_name
 }
 
 # output "id" {
