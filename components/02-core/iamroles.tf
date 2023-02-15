@@ -3,6 +3,11 @@ data "azurerm_user_assigned_identity" "managed-identity" {
   resource_group_name = "managed-identities-${var.env}-rg"
 }
 
+# resource "azurerm_user_assigned_identity" "managed-identity" {
+#   name                = "${var.prefix}-${var.env}-mi"
+#   resource_group_name = "managed-identities-${var.env}-rg"
+# }
+
 # data "azuread_groups" "groups" {
 #   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 # }
@@ -17,6 +22,8 @@ resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
   role_definition_name             = "Storage Blob Data Contributor"
   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
   skip_service_principal_aad_check = true
+
+  depends_on = [module.key-vault]
 }
 
 resource "azurerm_role_assignment" "pre_reader_mi" {
@@ -24,6 +31,8 @@ resource "azurerm_role_assignment" "pre_reader_mi" {
   role_definition_name             = "Reader"
   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id # var.pre_mi_principal_id 
   skip_service_principal_aad_check = true
+
+  depends_on = [module.key-vault]
 }
 
 resource "azurerm_role_assignment" "vm_user_mi" {
@@ -31,6 +40,8 @@ resource "azurerm_role_assignment" "vm_user_mi" {
   role_definition_name             = "Virtual Machine Contributor"
   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id # var.pre_mi_principal_id 
   skip_service_principal_aad_check = true
+
+  depends_on = [module.key-vault]
 }
 
 # Give PowerApp Appreg contributor access to resource groups
