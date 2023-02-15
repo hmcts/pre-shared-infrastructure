@@ -2,6 +2,10 @@ variable "prefix" {
   default = "pre"
 }
 
+variable "product" {
+  default = "pre"
+}
+
 variable "location" {
   default = "UK South"
 }

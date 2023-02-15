@@ -2,14 +2,39 @@ data "azurerm_resource_group" "rg" {
   name = "${var.prefix}-${var.env}"
 }
 
+data "azurerm_key_vault" "keyvault" {
+  name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
+data "azurerm_virtual_network" "vnet" {
+  name                = "${var.prefix}-vnet-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
 data "azurerm_subnet" "endpoint_subnet" {
   name                 = "${var.prefix}-privatendpt-snet-${var.env}"
   resource_group_name  = data.azurerm_resource_group.rg.id
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
-
 output "endpoint_subnet_id" {
   value = data.azurerm_subnet.endpoint_subnet.id
+}
+
+data "azurerm_subnet" "datagateway_subnet" {
+  name                 = "${var.prefix}-datagateway-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
+data "azurerm_subnet" "videoedit_subnet" {
+  name                 = "${var.prefix}-videoedit-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
+data "azurerm_user_assigned_identity" "managed-identity" {
+  name                = "${var.prefix}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
 }
 
 module "tags" {
@@ -23,8 +48,8 @@ module "sa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = "${var.prefix}sa${var.env}"
-  resource_group_name             = azurerm_resource_group.rg.name
-  location                        = azurerm_resource_group.rg.location
+  resource_group_name             = data.azurerm_resource_group.rg.name
+  location                        = data.azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
@@ -41,12 +66,12 @@ module "finalsa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = "${var.prefix}finalsa${var.env}"
-  resource_group_name             = azurerm_resource_group.rg.name
+  resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location #"UKWest" #As recommended by MS
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  sa_subnets                      = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  sa_subnets                      = concat([data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
@@ -61,12 +86,12 @@ module "ingestsa_storage_account" {
   source                          = "git::https://github.com/hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = "${var.prefix}ingestsa${var.env}"
-  resource_group_name             = azurerm_resource_group.rg.name
+  resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location #"UKWest" #As recommended by MS azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  sa_subnets                      = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  sa_subnets                      = concat([data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
@@ -78,9 +103,9 @@ module "ingestsa_storage_account" {
 
 resource "azurerm_private_endpoint" "sa" {
   name                = "${var.prefix}sa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.prefix}sa-psc-${var.env}"
@@ -93,9 +118,9 @@ resource "azurerm_private_endpoint" "sa" {
 
 resource "azurerm_private_endpoint" "finalsa" {
   name                = "${var.prefix}finalsa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.prefix}finalsa-psc-${var.env}"
@@ -108,9 +133,9 @@ resource "azurerm_private_endpoint" "finalsa" {
 
 resource "azurerm_private_endpoint" "ingestsa" {
   name                = "${var.prefix}stream-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
 
   private_service_connection {
     name                           = "${var.prefix}stream-psc-${var.env}"
@@ -125,18 +150,18 @@ resource "azurerm_private_endpoint" "ingestsa" {
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
   name         = "sa-storage-account-connection-string"
   value        = module.sa_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" {
   name         = "finalsa-storage-account-connection-string"
   value        = module.finalsa_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
   name         = "ingestsa-storage-account-connection-string"
   value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 #SA role assignments
