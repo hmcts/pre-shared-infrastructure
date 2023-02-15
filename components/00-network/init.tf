@@ -13,6 +13,11 @@ terraform {
 }
 
 provider "azurerm" {
+  skip_provider_registration = true
+  features {}
+}
+
+provider "azurerm" {
   subscription_id            = local.hub[local.hub_name].subscription
   skip_provider_registration = "true"
   features {}
@@ -22,14 +27,5 @@ provider "azurerm" {
 provider "azurerm" {
   alias           = "private_dns"
   subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
-  features {}
-}
-
-provider "azurerm" {
-  skip_provider_registration = true
-  features {}
-}
-
-provider "time" {
   features {}
 }

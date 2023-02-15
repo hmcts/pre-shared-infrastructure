@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "key-vault" {
   source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
-  name                    = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}"
+  name                    = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #why???
   product                 = var.prefix
   env                     = var.env
   tenant_id               = data.azurerm_client_config.current.tenant_id
@@ -75,7 +75,7 @@ data "azurerm_key_vault" "keyvault" {
   depends_on = [module.key-vault]
 }
 
-### Dynatrace
+# Dynatrace
 data "azurerm_key_vault_secret" "dynatrace-token" {
   name         = "dynatrace-token"
   key_vault_id = module.key-vault.key_vault_id
@@ -90,9 +90,7 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
   depends_on = [module.key-vault]
 }
 
-#################################
-##  Disk Encryption 
-###############################
+# Disk Encryption 
 
 resource "azurerm_key_vault_key" "pre_kv_key" {
   name         = "pre-des-key"
