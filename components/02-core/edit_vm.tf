@@ -4,8 +4,10 @@ data "azurerm_subnet" "videoedit_subnet" {
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
-output "videoedit_subnet_id" {
-  value = data.azurerm_subnet.videoedit_subnet.id
+data "azurerm_log_analytics_workspace" "loganalytics" {
+  provider            = azurerm.oms
+  name                = module.log_analytics_workspace.name
+  resource_group_name = module.log_analytics_workspace.resource_group_name
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -68,8 +70,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
   provision_vm_agent         = true
   allow_extension_operations = true
   tags                       = module.tags.common_tags
-
-  depends_on = [null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des]
 }
 
 # # Datadisk 
@@ -204,4 +204,26 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
   auto_upgrade_minor_version = true
   tags                       = module.tags.common_tags
 
+}
+
+#logs
+module "log_analytics_workspace" {
+  source      = "git::https://github.com/hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
+  environment = var.env
+}
+
+resource "azurerm_monitor_diagnostic_setting" "nic" {
+  count                      = var.num_vid_edit_vms
+  name                       = azurerm_network_interface.nic[count.index].name
+  target_resource_id         = azurerm_network_interface.nic[count.index].id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
 }
