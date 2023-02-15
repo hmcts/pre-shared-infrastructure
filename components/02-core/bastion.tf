@@ -42,14 +42,14 @@
 ## Encryption@Host
 ####### not sure what this is all about
 
-resource "null_resource" "Encryption" {
+# resource "null_resource" "Encryption" {
 
-  provisioner "local-exec" {
-    command = <<EOF
-    az login --identity
-    az account set -s dts-sharedservices-${var.env}
-    echo "Enable Encryption at Host"
-    az feature register --namespace Microsoft.Compute --name EncryptionAtHost
-	  EOF
-  }
-}
+#   provisioner "local-exec" {
+#     command = <<EOF
+#     az login --identity
+#     az account set -s dts-sharedservices-${var.env}
+#     echo "Enable Encryption at Host"
+#     az feature register --namespace Microsoft.Compute --name EncryptionAtHost
+# 	  EOF
+#   }
+# }
