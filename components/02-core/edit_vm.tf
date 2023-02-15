@@ -207,11 +207,6 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 }
 
 #logs
-module "log_analytics_workspace" {
-  source      = "git::https://github.com/hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
-  environment = var.env
-}
-
 resource "azurerm_monitor_diagnostic_setting" "nic" {
   count                      = var.num_vid_edit_vms
   name                       = azurerm_network_interface.nic[count.index].name
