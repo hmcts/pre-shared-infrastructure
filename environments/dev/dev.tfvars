@@ -1,6 +1,6 @@
 vnet_address_space         = "10.50.12.0/25"
 video_edit_vm_snet_address = "10.50.12.0/28"
-privatendpt_snet_address   = "10.50.12.64/26"
+privatendpt_snet_address   = "10.50.12.64/28"
 bastion_snet_address       = "10.50.12.48/28"
 data_gateway_snet_address  = "10.50.12.32/28"
 num_vid_edit_vms           = 1
