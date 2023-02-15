@@ -22,7 +22,7 @@ data "azurerm_virtual_network" "hub" {
 
 resource "azurerm_virtual_network_peering" "to_hub" {
   name                         = "hub"
-  resource_group_name          = data.azurerm_resource_group.rg.id
+  resource_group_name          = data.azurerm_resource_group.rg.name
   virtual_network_name         = data.azurerm_virtual_network.vnet.name
   remote_virtual_network_id    = data.azurerm_virtual_network.hub.id
   allow_virtual_network_access = true
