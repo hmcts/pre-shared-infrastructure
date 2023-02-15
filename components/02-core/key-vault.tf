@@ -66,10 +66,10 @@ module "key-vault" {
 # }
 
 
-data "azurerm_key_vault" "keyvault" {
-  name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
+# data "azurerm_key_vault" "keyvault" {
+#   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
+#   resource_group_name = data.azurerm_resource_group.rg.name
+# }
 
 # Dynatrace
 data "azurerm_key_vault_secret" "dynatrace-token" {
