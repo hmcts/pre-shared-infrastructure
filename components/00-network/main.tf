@@ -75,7 +75,7 @@ resource "azurerm_virtual_network_peering" "from_hub" {
 resource "azurerm_route_table" "postgres" {
   name                          = "${var.prefix}-${var.env}-route-table"
   location                      = var.location
-  resource_group_name           = azurerm_resource_group.rg.id
+  resource_group_name           = azurerm_resource_group.rg.name
   disable_bgp_route_propagation = false
 
   route {
