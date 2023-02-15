@@ -106,7 +106,7 @@ resource "azurerm_bastion_host" "bastion" {
 
   ip_configuration {
     name                 = "bastionpublic"
-    subnet_id            = azurerm_subnet.bastion_subnet.id
+    subnet_id            = azurerm_subnet.AzureBastionSubnet_subnet.id
     public_ip_address_id = azurerm_public_ip.pip.id
   }
   tags = module.tags.common_tags
