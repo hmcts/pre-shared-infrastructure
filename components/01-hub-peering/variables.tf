@@ -17,6 +17,6 @@ variable "builtFrom" {
   default     = "hmcts/pre-shared-infrastructure"
 }
 
-variable "PeeringFromHubName" {
-  default = "pre-recorded-evidence"
-}
+# variable "PeeringFromHubName" {
+#   default = "pre-recorded-evidence"
+# }
