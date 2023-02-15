@@ -9,7 +9,7 @@ locals {
 resource "azurerm_media_services_account" "ams" {
   name                = "${var.prefix}ams${var.env}"
   location            = var.location #"UKwest"
-  resource_group_name = data.azurerm_resource_group.rg.id
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   identity {
     type = "SystemAssigned"
@@ -30,7 +30,7 @@ resource "azurerm_media_services_account" "ams" {
 }
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
-  resource_group_name         = data.azurerm_resource_group.rg.id
+  resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
   description = "Analyse Video"
@@ -46,7 +46,7 @@ resource "azurerm_media_transform" "analysevideo" {
 
 resource "azurerm_media_transform" "EncodeToMP4" {
   name                        = "EncodeToMP4"
-  resource_group_name         = data.azurerm_resource_group.rg.id
+  resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
 
