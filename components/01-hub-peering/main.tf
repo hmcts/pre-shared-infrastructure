@@ -12,7 +12,9 @@ data "azurerm_resource_group" "rg" {
 output "id" {
   value = data.azurerm_resource_group.rg.id
 }
+
 data "azurerm_virtual_network" "vnet" {
+  provider            = azurerm.sds-dev
   name                = "${var.prefix}-vnet-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
