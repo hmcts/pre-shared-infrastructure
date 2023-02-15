@@ -19,7 +19,7 @@ module "data_store_db_v14" {
   env    = var.env
 
   product       = var.prefix
-  component     = var.product
+  component     = var.prefix
   business_area = var.project
 
   common_tags     = module.tags.common_tags
