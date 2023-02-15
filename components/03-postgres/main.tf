@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 locals {
   resource_group_name = "${var.prefix}-${var.env}"
 }
@@ -37,6 +39,14 @@ data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
   resource_group_name = data.azurerm_resource_group.rg.id
 }
+
+data "azurerm_resource_group" "rg" {
+  name = local.resource_group_name
+}
+
+# output "id" {
+#   value = data.azurerm_resource_group.rg.id
+# }
 
 #using own var for this
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
