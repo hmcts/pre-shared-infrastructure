@@ -6,36 +6,19 @@
 # }
 
 data "azurerm_resource_group" "rg" {
-  provider = azurerm.sds-dev
-  name     = local.resource_group_name
-}
-
-output "id" {
-  value = data.azurerm_resource_group.rg.id
+  name = "${var.prefix}-${var.env}"
 }
 
 data "azurerm_virtual_network" "vnet" {
-  provider            = azurerm.sds-dev
   name                = "${var.prefix}-vnet-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
-
-# data "azurerm_subnet" "datagateway_subnet" {
-#   name                 = "${var.prefix}-datagateway-snet-${var.env}"
-#   resource_group_name  = data.azurerm_resource_group.rg.name
-#   virtual_network_name = data.azurerm_virtual_network.vnet.name
-# }
-
-# output "datagateway_subnet_id" {
-#   value = data.azurerm_subnet.datagateway_subnet.id
-# }
 
 data "azurerm_virtual_network" "hub" {
   provider            = azurerm.hub
   name                = local.hub[local.hub_name].ukSouth.name
   resource_group_name = local.hub[local.hub_name].ukSouth.name
 }
-
 
 resource "azurerm_virtual_network_peering" "to_hub" {
   name                         = "hub"

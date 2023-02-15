@@ -2,6 +2,10 @@ variable "prefix" {
   default = "pre"
 }
 
+variable "product" {
+  default = "pre-recorded-evidence"
+}
+
 variable "location" {
   default = "UK South"
 }

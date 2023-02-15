@@ -1,3 +1,7 @@
+data "azurerm_resource_group" "rg" {
+  name = "${var.prefix}-${var.env}"
+}
+
 data "azurerm_subnet" "endpoint_subnet" {
   name                 = "${var.prefix}-privatendpt-snet-${var.env}"
   resource_group_name  = data.azurerm_resource_group.rg.id
@@ -31,7 +35,6 @@ module "sa_storage_account" {
   enable_data_protection          = true
 
   common_tags = module.tags.common_tags
-  depends_on  = [module.key-vault]
 }
 
 module "finalsa_storage_account" {
@@ -52,7 +55,6 @@ module "finalsa_storage_account" {
   cors_rules = var.cors_rules
 
   common_tags = module.tags.common_tags
-  depends_on  = [module.key-vault]
 }
 
 module "ingestsa_storage_account" {
@@ -71,7 +73,6 @@ module "ingestsa_storage_account" {
   enable_data_protection          = true
 
   common_tags = module.tags.common_tags
-  depends_on  = [module.key-vault]
 }
 
 
