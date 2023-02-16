@@ -4,7 +4,7 @@ resource "azurerm_recovery_services_vault" "pre_backup" {
   name                = "${var.product}-backup_vault-${var.env}"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
-  sku                 = "standard"
+  sku                 = "Standard"
   tags                = var.common_tags
 }
 
