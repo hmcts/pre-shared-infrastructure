@@ -3,6 +3,14 @@ data "azurerm_client_config" "current" {}
 data "azurerm_resource_group" "rg" {
   name = local.resource_group_name
 }
+
+data "azurerm_user_assigned_identity" "managed-identity" {
+  name                = "${var.prefix}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+
+  depends_on = [module.key-vault]
+}
+
 locals {
   resource_group_name = "${var.prefix}-${var.env}"
 }
@@ -35,7 +43,7 @@ module "data_store_db_v14" {
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  admin_user_object_id = var.dts_pre_ent_appreg_oid
+  admin_user_object_id = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
 
 }
 
