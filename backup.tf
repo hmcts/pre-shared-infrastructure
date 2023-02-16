@@ -1,7 +1,7 @@
 
 # create recovery services backup vault
 resource "azurerm_recovery_services_vault" "pre_backup" {
-  name                = "${var.product}-backup_vault-${var.env}"
+  name                = "${var.product}-backupvault-${var.env}"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   sku                 = "Standard"
@@ -10,7 +10,7 @@ resource "azurerm_recovery_services_vault" "pre_backup" {
 
 # backup policy on vault
 resource "azurerm_backup_policy_vm" "pre_backup_policy" {
-  name                = "${var.product}-backup_policy-${var.env}"
+  name                = "${var.product}-backuppolicy-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
 
@@ -67,7 +67,7 @@ resource "azurerm_backup_container_storage_account" "ingestsa_container" {
 
 # snapshot finalsa storage account
 resource "azurerm_snapshot" "snapshot_finalsa" {
-  name                = "${var.product}-finalsa_snapshot-${var.env}"
+  name                = "${var.product}-finalsasnapshot-${var.env}"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   create_option       = "Copy"
@@ -77,7 +77,7 @@ resource "azurerm_snapshot" "snapshot_finalsa" {
 
 # snapshot sa storage account
 resource "azurerm_snapshot" "snapshot_sa" {
-  name                = "${var.product}-sa_snapshot-${var.env}"
+  name                = "${var.product}-sasnapshot-${var.env}"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   create_option       = "Copy"
@@ -87,7 +87,7 @@ resource "azurerm_snapshot" "snapshot_sa" {
 
 # snapshot ingestsa storage account
 resource "azurerm_snapshot" "snapshot_ingestsa" {
-  name                = "${var.product}-ingestsa_snapshot-${var.env}"
+  name                = "${var.product}-ingestsasnapshot-${var.env}"
   location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
   create_option       = "Copy"
