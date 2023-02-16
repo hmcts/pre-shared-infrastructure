@@ -41,7 +41,8 @@ resource "azurerm_backup_policy_vm" "pre_backup_policy" {
     weekdays = ["Sunday"]
     weeks    = ["Last"]
     months   = ["January"]
-
+  }
+}
 
 # backup finalsa storage account
 resource "azurerm_backup_container_storage_account" "finalsa_container" {
