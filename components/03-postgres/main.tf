@@ -7,8 +7,6 @@ data "azurerm_resource_group" "rg" {
 data "azurerm_user_assigned_identity" "managed-identity" {
   name                = "${var.prefix}-${var.env}-mi"
   resource_group_name = "managed-identities-${var.env}-rg"
-
-  depends_on = [module.key-vault]
 }
 
 locals {
