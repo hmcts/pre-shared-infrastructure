@@ -81,7 +81,7 @@ resource "azapi_update_resource" "ams_auth" {
       storageAuthentication = "ManagedIdentity"
       storageAccounts = [
         {
-          id   = local.ingest_sa_id
+          id   = module.ingestsa_storage_account.storageaccount_id
           type = "Primary",
           identity = {
             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
@@ -90,7 +90,7 @@ resource "azapi_update_resource" "ams_auth" {
         },
 
         {
-          id   = local.final_sa_id
+          id   = module.finalsa_storage_account.storageaccount_id
           type = "Secondary",
           identity = {
             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
