@@ -42,6 +42,7 @@ module "data_store_db_v14" {
   pgsql_storage_mb     = var.pgsql_storage_mb
 
   admin_user_object_id = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
+}
 
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
