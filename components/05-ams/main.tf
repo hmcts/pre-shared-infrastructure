@@ -26,6 +26,7 @@ resource "azurerm_media_services_account" "ams" {
   name                = "${var.prefix}ams${var.env}"
   location            = var.location #"UKwest"
   resource_group_name = data.azurerm_resource_group.rg.name
+  
 
   identity {
     type         = "UserAssigned"
@@ -35,19 +36,11 @@ resource "azurerm_media_services_account" "ams" {
   storage_account {
     id         = local.ingest_sa_id
     is_primary = true
-    # managed_identity {
-    #   user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
-    #   use_system_assigned_identity = false
-    # }
   }
 
   storage_account {
     id         = local.final_sa_id
     is_primary = false
-    # managed_identity {
-    #   use_system_assigned_identity = false
-    #   user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
-    # }
   }
 
   tags = module.tags.common_tags
@@ -85,44 +78,3 @@ resource "azurerm_media_transform" "EncodeToMP4" {
     }
   }
 }
-
-# resource "null_resource" "amsid" {
-#   triggers = {
-#     always_run = "${timestamp()}"
-#   }
-
-#   depends_on = [azurerm_media_services_account.ams]
-
-
-# }
-
-# resource "azapi_update_resource" "ams_auth" {
-#   depends_on  = [null_resource.amsid]
-#   type        = "Microsoft.Media/mediaservices@2021-11-01"
-#   resource_id = azurerm_media_services_account.ams.id
-
-#   body = jsonencode({
-#     properties = {
-#       storageAuthentication = "ManagedIdentity"
-#       storageAccounts = [
-#         {
-#           id   = module.ingestsa_storage_account.storageaccount_id
-#           type = "Primary",
-#           identity = {
-#             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-#             useSystemAssignedIdentity = "false"
-#           }
-#         },
-
-#         {
-#           id   = module.finalsa_storage_account.storageaccount_id
-#           type = "Secondary",
-#           identity = {
-#             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-#             useSystemAssignedIdentity = "false"
-#           }
-#         }
-#       ]
-#     }
-#   })
-# }
