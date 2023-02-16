@@ -26,7 +26,6 @@ resource "azurerm_media_services_account" "ams" {
   name                = "${var.prefix}ams${var.env}"
   location            = var.location #"UKwest"
   resource_group_name = data.azurerm_resource_group.rg.name
-  
 
   identity {
     type         = "UserAssigned"

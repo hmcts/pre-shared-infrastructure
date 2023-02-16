@@ -82,7 +82,7 @@ module "finalsa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
   # managed_identity_object_id      = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
-  cors_rules                      = var.cors_rules
+  cors_rules = var.cors_rules
 
   common_tags = module.tags.common_tags
 }
