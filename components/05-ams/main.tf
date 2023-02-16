@@ -28,7 +28,7 @@ resource "azurerm_media_services_account" "ams" {
   resource_group_name = data.azurerm_resource_group.rg.name
 
   identity {
-    type = "SystemAssigned, UserAssigned"
+    type = "UserAssigned" #"SystemAssigned, UserAssigned"
   }
 
   storage_account {
