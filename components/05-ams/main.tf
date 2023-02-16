@@ -4,10 +4,10 @@ data "azurerm_resource_group" "rg" {
   name = local.resource_group_name
 }
 
-# data "azurerm_user_assigned_identity" "managed-identity" {
-#   name                = "${var.prefix}-${var.env}-mi"
-#   resource_group_name = "managed-identities-${var.env}-rg"
-# }
+data "azurerm_user_assigned_identity" "managed-identity" {
+  name                = "${var.prefix}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+}
 
 locals {
   resource_group_name = "${var.product}-${var.env}"
@@ -34,19 +34,20 @@ resource "azurerm_media_services_account" "ams" {
   storage_account {
     id         = local.ingest_sa_id
     is_primary = true
-    # managed_identity {
-    #   use_system_assigned_identity = false
-    #   user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed-identity.principal_id
-    # }
+    managed_identity {
+      use_system_assigned_identity = false
+      user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
+
+    }
   }
 
   storage_account {
     id         = local.final_sa_id
     is_primary = false
-    # managed_identity {
-    #   use_system_assigned_identity = false
-    #   user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed-identity.principal_id
-    # }
+    managed_identity {
+      use_system_assigned_identity = false
+      user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
+    }
   }
 
   tags = module.tags.common_tags
