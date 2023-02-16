@@ -41,7 +41,7 @@ module "data_store_db_v14" {
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  admin_user_object_id = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  admin_user_object_id = var.jenkins-mi
 
 }
 
