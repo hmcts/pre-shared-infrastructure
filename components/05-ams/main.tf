@@ -34,20 +34,19 @@ resource "azurerm_media_services_account" "ams" {
   storage_account {
     id         = local.ingest_sa_id
     is_primary = true
-    managed_identity {
-      use_system_assigned_identity = false
-      user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
-
-    }
+    # managed_identity {
+    #   use_system_assigned_identity = false
+    #   user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
+    # }
   }
 
   storage_account {
     id         = local.final_sa_id
     is_primary = false
-    managed_identity {
-      use_system_assigned_identity = false
-      user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
-    }
+    # managed_identity {
+    #   use_system_assigned_identity = false
+    #   user_assigned_identity_id    = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/managed-identities-dev-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-dev-mi"
+    # }
   }
 
   tags = module.tags.common_tags
