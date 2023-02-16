@@ -40,9 +40,9 @@ variable "pgsql_storage_mb" {
 #   default = "9168b884-7ccd-4e71-860f-7f63455818e1"
 # }
 
-variable "jenkins-mi" {
-  default = "jenkins-ptl-mi" #"7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
-}
+# variable "jenkins-mi" {
+#   default = "jenkins-ptl-mi" #"7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
+# }
 
 variable "builtFrom" {
   description = "The GitHub URL for the repository that contains the infrastructure code."
