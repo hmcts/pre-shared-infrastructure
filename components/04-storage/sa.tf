@@ -62,6 +62,7 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
+  managed_identity_object_id      = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
 
   common_tags = module.tags.common_tags
 }
@@ -80,8 +81,8 @@ module "finalsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
-
-  cors_rules = var.cors_rules
+  managed_identity_object_id      = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
+  cors_rules                      = var.cors_rules
 
   common_tags = module.tags.common_tags
 }
@@ -100,6 +101,7 @@ module "ingestsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
+  managed_identity_object_id      = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
 
   common_tags = module.tags.common_tags
 }
