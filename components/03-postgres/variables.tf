@@ -41,7 +41,7 @@ variable "pgsql_storage_mb" {
 # }
 
 variable "jenkins-mi" {
-  default = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
+  default = "jenkins-ptl-mi" #"7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
 }
 
 variable "builtFrom" {

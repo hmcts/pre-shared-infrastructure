@@ -1,3 +1,7 @@
+locals {
+  resource_group_name = "${var.prefix}-${var.env}"
+}
+
 data "azurerm_client_config" "current" {}
 
 data "azurerm_resource_group" "rg" {
@@ -7,10 +11,6 @@ data "azurerm_resource_group" "rg" {
 data "azurerm_user_assigned_identity" "managed-identity" {
   name                = "${var.prefix}-${var.env}-mi"
   resource_group_name = "managed-identities-${var.env}-rg"
-}
-
-locals {
-  resource_group_name = "${var.prefix}-${var.env}"
 }
 
 module "tags" {
