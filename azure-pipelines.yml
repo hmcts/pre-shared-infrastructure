@@ -97,14 +97,14 @@ parameters:
       component: '03-postgres'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
-    - deployment: 'AMS'
-      component: '04-ams'
+    - deployment: 'Storage'
+      component: '04-storage'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
-    # - deployment: 'AMS'
-    #   component: '05-ams'
-    #   serviceConnection: 'DTS-SHAREDSERVICES-DEV'
-    #   dependsOn: 'Precheck'
+    - deployment: 'AMS'
+      component: '05-ams'
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      dependsOn: 'Precheck'
 
 stages:
   - stage: Precheck

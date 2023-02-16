@@ -1,13 +1,25 @@
+data "azurerm_client_config" "current" {}
+
+data "azurerm_resource_group" "rg" {
+  name = local.resource_group_name
+}
+
+data "azurerm_user_assigned_identity" "managed-identity" {
+  name                = "${var.prefix}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+}
+
+locals {
+  resource_group_name = "${var.product}-${var.env}"
+  ingest_sa_id        = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/pre-dev/providers/Microsoft.Storage/storageAccounts/preingestsadev"
+  final_sa_id         = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/pre-dev/providers/Microsoft.Storage/storageAccounts/prefinalsadev"
+}
+
 module "tags" {
   source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
   environment = var.env
   product     = var.prefix
   builtFrom   = var.builtFrom
-}
-locals {
-  resource_group_name = "${var.product}-${var.env}"
-  ingest_sa_id        = module.ingestsa_storage_account.storageaccount_id
-  final_sa_id         = module.finalsa_storage_account.storageaccount_id
 }
 
 resource "azurerm_media_services_account" "ams" {
@@ -16,25 +28,32 @@ resource "azurerm_media_services_account" "ams" {
   resource_group_name = data.azurerm_resource_group.rg.name
 
   identity {
-    type = "SystemAssigned"
+    type = "SystemAssigned, UserAssigned"
   }
 
   storage_account {
     id         = local.ingest_sa_id
     is_primary = true
+    managed_identity {
+      user_assigned_identity_id = data.azurerm_user_assigned_identity.managed-identity.principal_id
+    }
   }
 
   storage_account {
     id         = local.final_sa_id
     is_primary = false
+    managed_identity {
+      user_assigned_identity_id = data.azurerm_user_assigned_identity.managed-identity.principal_id
+    }
   }
 
   tags = module.tags.common_tags
 
 }
+
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
-  resource_group_name         = data.azurerm_resource_group.rg.id
+  resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
   description = "Analyse Video"
@@ -50,9 +69,8 @@ resource "azurerm_media_transform" "analysevideo" {
 
 resource "azurerm_media_transform" "EncodeToMP4" {
   name                        = "EncodeToMP4"
-  resource_group_name         = data.azurerm_resource_group.rg.id
+  resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
-
 
   description = "Encode To MP4"
 
@@ -65,43 +83,43 @@ resource "azurerm_media_transform" "EncodeToMP4" {
   }
 }
 
-resource "null_resource" "amsid" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
+# resource "null_resource" "amsid" {
+#   triggers = {
+#     always_run = "${timestamp()}"
+#   }
 
-  depends_on = [azurerm_media_services_account.ams]
+#   depends_on = [azurerm_media_services_account.ams]
 
 
-}
+# }
 
-resource "azapi_update_resource" "ams_auth" {
-  depends_on  = [null_resource.amsid]
-  type        = "Microsoft.Media/mediaservices@2021-11-01"
-  resource_id = azurerm_media_services_account.ams.id
+# resource "azapi_update_resource" "ams_auth" {
+#   depends_on  = [null_resource.amsid]
+#   type        = "Microsoft.Media/mediaservices@2021-11-01"
+#   resource_id = azurerm_media_services_account.ams.id
 
-  body = jsonencode({
-    properties = {
-      storageAuthentication = "ManagedIdentity"
-      storageAccounts = [
-        {
-          id   = local.ingest_sa_id
-          type = "Primary",
-          identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-            useSystemAssignedIdentity = "false"
-          }
-        },
+#   body = jsonencode({
+#     properties = {
+#       storageAuthentication = "ManagedIdentity"
+#       storageAccounts = [
+#         {
+#           id   = module.ingestsa_storage_account.storageaccount_id
+#           type = "Primary",
+#           identity = {
+#             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+#             useSystemAssignedIdentity = "false"
+#           }
+#         },
 
-        {
-          id   = local.final_sa_id
-          type = "Secondary",
-          identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-            useSystemAssignedIdentity = "false"
-          }
-        }
-      ]
-    }
-  })
-}
+#         {
+#           id   = module.finalsa_storage_account.storageaccount_id
+#           type = "Secondary",
+#           identity = {
+#             userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+#             useSystemAssignedIdentity = "false"
+#           }
+#         }
+#       ]
+#     }
+#   })
+# }
