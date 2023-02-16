@@ -26,6 +26,6 @@ pg_databases = [
 ]
 
 retention_daily   = "35"
-retention_weekly  = "0"
+retention_weekly  = "1"
 retention_monthly = "12"
 retention_yearly  = "7"
