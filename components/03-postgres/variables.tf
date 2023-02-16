@@ -36,8 +36,12 @@ variable "pgsql_storage_mb" {
   default = "32768"
 }
 
-variable "dts_pre_ent_appreg_oid" {
-  default = "9168b884-7ccd-4e71-860f-7f63455818e1"
+# variable "dts_pre_ent_appreg_oid" {
+#   default = "9168b884-7ccd-4e71-860f-7f63455818e1"
+# }
+
+variable "jenkins-mi" {
+  default = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
 }
 
 variable "builtFrom" {
