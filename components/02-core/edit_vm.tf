@@ -157,6 +157,7 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
   type                       = "IaaSAntimalware"
   type_handler_version       = "1.3"
   auto_upgrade_minor_version = true
+  tags                       = module.tags.common_tags
   settings                   = <<SETTINGS
     {
     "AntimalwareEnabled": true,
@@ -174,7 +175,6 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
     }
     }
 SETTINGS
-  tags                       = module.tags.common_tags
 }
 
 ##DynaTrace
