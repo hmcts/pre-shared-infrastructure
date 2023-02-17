@@ -1,16 +1,41 @@
+data "azurerm_resource_group" "rg" {
+  name = local.resource_group_name
+}
+
+data "azurerm_virtual_network" "vnet" {
+  name                = "${var.prefix}-vnet-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+data "azurerm_subnet" "endpoint_subnet" {
+  name                 = "${var.prefix}-privatendpt-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+data "azurerm_subnet" "datagateway_subnet" {
+  name                 = "${var.prefix}-datagateway-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
+data "azurerm_subnet" "videoeditvm_subnet" {
+  name                 = "${var.product}-videoeditvm-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
 module "key-vault" {
-  source                  = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
-  name                    = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #why?
-  product                 = var.prefix
-  env                     = var.env
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  object_id               = data.azurerm_client_config.current.object_id
-  resource_group_name     = data.azurerm_resource_group.rg.name
-  product_group_name      = "DTS Pre-recorded Evidence"
-  common_tags             = module.tags.common_tags
-  create_managed_identity = true
-  //network_acls_allowed_subnet_ids = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
-  purge_protection_enabled = true
+  source                          = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
+  name                            = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #why?
+  product                         = var.prefix
+  env                             = var.env
+  tenant_id                       = data.azurerm_client_config.current.tenant_id
+  object_id                       = data.azurerm_client_config.current.object_id # "ca6d5085-485a-417d-8480-c3cefa29df31" # 
+  resource_group_name             = data.azurerm_resource_group.rg.name
+  product_group_name              = "DTS Pre-recorded Evidence"
+  common_tags                     = module.tags.common_tags
+  create_managed_identity         = true
+  network_acls_allowed_subnet_ids = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  purge_protection_enabled        = true
 }
 
 #####################################
