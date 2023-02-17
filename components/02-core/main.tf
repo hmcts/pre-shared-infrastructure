@@ -33,3 +33,21 @@ data "azurerm_virtual_network" "vnet" {
 output "virtual_network_id" {
   value = data.azurerm_virtual_network.vnet.id
 }
+
+data "azurerm_subnet" "endpoint_subnet" {
+  name                 = "${var.prefix}-privatendpt-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
+data "azurerm_subnet" "videoeditvm_subnet" {
+  name                 = "${var.product}-videoeditvm-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
+data "azurerm_subnet" "datagateway_subnet" {
+  name                 = "${var.prefix}-datagateway-snet-${var.env}"
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
+}

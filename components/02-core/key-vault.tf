@@ -1,23 +1,3 @@
-data "azurerm_resource_group" "rg" {
-  name = local.resource_group_name
-}
-
-data "azurerm_virtual_network" "vnet" {
-  name                = "${var.prefix}-vnet-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
-data "azurerm_subnet" "endpoint_subnet" {
-  name                 = "${var.prefix}-privatendpt-snet-${var.env}"
-  resource_group_name  = data.azurerm_resource_group.rg.name
-  virtual_network_name = data.azurerm_virtual_network.vnet.name
-}
-
-data "azurerm_subnet" "videoeditvm_subnet" {
-  name                 = "${var.product}-videoeditvm-snet-${var.env}"
-  resource_group_name  = data.azurerm_resource_group.rg.name
-  virtual_network_name = data.azurerm_virtual_network.vnet.name
-}
-
 module "key-vault" {
   source                          = "git::https://github.com/hmcts/cnp-module-key-vault?ref=master"
   name                            = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #why?
@@ -29,7 +9,7 @@ module "key-vault" {
   product_group_name              = "DTS Pre-recorded Evidence"
   common_tags                     = module.tags.common_tags
   create_managed_identity         = true
-  network_acls_allowed_subnet_ids = concat([azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
 }
 
