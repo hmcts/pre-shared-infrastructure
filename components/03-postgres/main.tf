@@ -20,6 +20,22 @@ module "tags" {
   builtFrom   = var.builtFrom
 }
 
+#role should be assigned already
+# DTS-PRE-VideoEditing-SecurityGroup-
+data "azuread_groups" "groups" {
+  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+}
+
+data "azuread_groups" "pre-groups" {
+  display_names = ["DTS Pre-recorded Evidence"]
+}
+resource "azurerm_role_assignment" "vmuser_login" {
+  for_each             = toset(data.azuread_groups.groups.object_ids)
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Virtual Machine User Login"
+  principal_id         = each.value
+}
+
 module "data_store_db_v14" {
   source = "git::https://github.com/hmcts/terraform-module-postgresql-flexible.git?ref=db-collation"
   env    = var.env
@@ -72,6 +88,7 @@ data "azurerm_virtual_network" "vnet" {
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 
+# connect data gateway vnet to private dns zone (this will contain the A name for postgres)	
 resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   provider              = azurerm.private_dns
   name                  = format("%s-%s-virtual-network-link", var.prefix, var.env)
