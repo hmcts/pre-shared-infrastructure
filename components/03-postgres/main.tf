@@ -41,7 +41,7 @@ module "data_store_db_v14" {
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  admin_user_object_id = data.azurerm_client_config.current.object_id
+  admin_user_object_id = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01" # data.azurerm_client_config.current.object_id
 }
 
 data "azurerm_key_vault" "keyvault" {
