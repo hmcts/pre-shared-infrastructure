@@ -41,7 +41,7 @@ module "data_store_db_v14" {
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  admin_user_object_id = "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01" # data.azurerm_client_config.current.object_id
+  admin_user_object_id = "ca6d5085-485a-417d-8480-c3cefa29df31" # data.azurerm_client_config.current.object_id
 }
 
 data "azurerm_key_vault" "keyvault" {
@@ -79,3 +79,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   private_dns_zone_name = var.PrivateDNSZone
   virtual_network_id    = data.azurerm_virtual_network.vnet.id
 }
+
+# module "log_analytics_workspace" {
+#   source      = "git::https://github.com/hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
+#   environment = var.env
+# }
