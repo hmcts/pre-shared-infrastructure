@@ -57,6 +57,14 @@ resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
   address_prefixes     = [var.bastion_snet_address]
 }
 
+resource "azurerm_subnet" "videoeditvm_subnet" {
+  name                 = "${var.product}-videoeditvm-snet-${var.env}"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [var.video_edit_vm_snet_address]
+  service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
+}
+
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)
 resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   provider              = azurerm.private_dns
