@@ -48,3 +48,11 @@ variable "builtFrom" {
   description = "The GitHub URL for the repository that contains the infrastructure code."
   default     = "hmcts/pre-shared-infrastructure"
 }
+
+variable "PrivateDNSZone" {
+  default = "private.postgres.database.azure.com"
+}
+
+variable "DNSResGroup" {
+  default = "core-infra-intsvc-rg"
+}
