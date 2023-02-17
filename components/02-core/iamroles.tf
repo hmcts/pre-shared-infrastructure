@@ -5,11 +5,6 @@ data "azurerm_user_assigned_identity" "managed-identity" {
   depends_on = [module.key-vault]
 }
 
-# resource "azurerm_user_assigned_identity" "managed-identity" {
-#   name                = "${var.prefix}-${var.env}-mi"
-#   resource_group_name = "managed-identities-${var.env}-rg"
-# }
-
 # data "azuread_groups" "groups" {
 #   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 # }
@@ -47,8 +42,15 @@ resource "azurerm_role_assignment" "powerapp_appreg" {
   principal_id         = var.dts_pre_ent_appreg_oid
 }
 
-# role should be assigned already
+# #role should be assigned already
 # # DTS-PRE-VideoEditing-SecurityGroup-
+# data "azuread_groups" "groups" {
+#   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+# }
+
+# data "azuread_groups" "pre-groups" {
+#   display_names = ["DTS Pre-recorded Evidence"]
+# }
 # resource "azurerm_role_assignment" "vmuser_login" {
 #   for_each             = toset(data.azuread_groups.groups.object_ids)
 #   scope                = azurerm_resource_group.rg.id
