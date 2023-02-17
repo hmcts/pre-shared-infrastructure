@@ -66,3 +66,16 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
   value        = module.data_store_db_v14.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
+
+data "azurerm_virtual_network" "vnet" {
+  name                = "${var.prefix}-vnet-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
+  provider              = azurerm.private_dns
+  name                  = format("%s-%s-virtual-network-link", var.prefix, var.env)
+  resource_group_name   = var.DNSResGroup
+  private_dns_zone_name = var.PrivateDNSZone
+  virtual_network_id    = data.azurerm_virtual_network.vnet.id
+}
