@@ -25,9 +25,8 @@ variable "builtFrom" {
   default     = "hmcts/pre-shared-infrastructure"
 }
 
-variable "dts_pre_oid" {}
-
-variable "dts_cft_developers_oid" {}
+# variable "dts_pre_oid" {}
+# variable "dts_cft_developers_oid" {}
 
 variable "num_vid_edit_vms" {
   default = 2
