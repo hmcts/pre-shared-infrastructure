@@ -16,7 +16,7 @@ variable "subscription" {
 
 variable "env" {}
 
-variable "dts_pre_appreg_oid" {}
+# variable "dts_pre_appreg_oid" {}
 
 variable "dts_pre_ent_appreg_oid" {}
 
