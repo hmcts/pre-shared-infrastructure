@@ -57,7 +57,7 @@ module "data_store_db_v14" {
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  admin_user_object_id = "53790b85-0d6d-4146-af63-398ddfa61cac" #"d8c74776-764e-4b2a-8f8b-acacec87b9b7" # dcd_sp_ado_mgmt_operations_v2 # data.azurerm_client_config.current.object_id #"ca6d5085-485a-417d-8480-c3cefa29df31"
+  admin_user_object_id = "f6991ff8-d675-4f54-b2ba-99af86a8e01c" #"53790b85-0d6d-4146-af63-398ddfa61cac" #"d8c74776-764e-4b2a-8f8b-acacec87b9b7" # dcd_sp_ado_mgmt_operations_v2 # data.azurerm_client_config.current.object_id #"ca6d5085-485a-417d-8480-c3cefa29df31"
 }
 
 data "azurerm_key_vault" "keyvault" {
