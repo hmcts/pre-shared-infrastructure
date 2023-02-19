@@ -110,3 +110,18 @@ resource "azurerm_monitor_diagnostic_setting" "vnet" {
     }
   }
 }
+
+data "azurerm_subnet" "jenkins_subnet" {
+  provider             = azurerm.mgmt
+  name                 = "iaas"
+  virtual_network_name = local.mgmt_network_name
+  resource_group_name  = local.mgmt_network_rg_name
+}
+
+# allow postgres pipeline agent located on ss-ptlsbox-vnet to access keyvault
+data "azurerm_subnet" "pipelineagent_subnet" {
+  provider             = azurerm.mgmt
+  name                 = "aks-00"
+  virtual_network_name = local.mgmt_network_name
+  resource_group_name  = local.mgmt_network_rg_name
+}
