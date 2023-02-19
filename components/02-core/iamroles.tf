@@ -1,4 +1,3 @@
-data "azurerm_client_config" "current" {}
 data "azurerm_user_assigned_identity" "managed-identity" {
   name                = "${var.prefix}-${var.env}-mi"
   resource_group_name = "managed-identities-${var.env}-rg"
