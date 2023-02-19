@@ -45,7 +45,7 @@ module "data_store_db_v14" {
   business_area = var.project
 
   common_tags     = module.tags.common_tags
-  name            = var.database_name #-${var.env}" removed as it looks like env gets added in root module
+  name            = var.database_name
   pgsql_databases = var.pg_databases
 
   pgsql_version         = "14"
@@ -57,7 +57,7 @@ module "data_store_db_v14" {
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  admin_user_object_id = "ca6d5085-485a-417d-8480-c3cefa29df31" # data.azurerm_client_config.current.object_id
+  admin_user_object_id = data.azurerm_client_config.current.object_id #"ca6d5085-485a-417d-8480-c3cefa29df31"
 }
 
 data "azurerm_key_vault" "keyvault" {
