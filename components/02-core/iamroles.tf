@@ -1,3 +1,4 @@
+data "azurerm_client_config" "current" {}
 data "azurerm_user_assigned_identity" "managed-identity" {
   name                = "${var.prefix}-${var.env}-mi"
   resource_group_name = "managed-identities-${var.env}-rg"
@@ -41,6 +42,21 @@ resource "azurerm_role_assignment" "powerapp_appreg" {
   role_definition_name = "Contributor"
   principal_id         = var.dts_pre_ent_appreg_oid
 }
+
+resource "azurerm_role_assignment" "ado" {
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Contributor"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+
+# resource "azurerm_key_vault_access_policy" "power_app_access" {
+#   key_vault_id            = module.key-vault.key_vault_id
+#   object_id               = var.power_app_user_oid
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+#   key_permissions         = ["List", "Update", "Create", "Import", "Delete", "Get", ]
+#   certificate_permissions = ["List", "Update", "Create", "Import", "Delete", "ManageContacts", "ManageIssuers", "GetIssuers", "ListIssuers", "SetIssuers", "DeleteIssuers", ]
+#   secret_permissions      = ["List", "Set", "Delete", "Get", ]
+# }
 
 # #role should be assigned already
 # # DTS-PRE-VideoEditing-SecurityGroup-
