@@ -111,7 +111,7 @@ resource "azurerm_monitor_diagnostic_setting" "vnet" {
   }
 }
 
-# data "azurerm_subnet" "jenkins_subnet" {
+# data "azurerm_subnet" "ss_subnet_iaas" {
 #   provider             = azurerm.mgmt
 #   name                 = "iaas"
 #   virtual_network_name = local.mgmt_network_name
