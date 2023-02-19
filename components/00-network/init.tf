@@ -30,9 +30,9 @@ provider "azurerm" {
   features {}
 }
 
-provider "azurerm" {
-  alias                      = "mgmt"
-  subscription_id            = var.mgmt_subscription_id
-  skip_provider_registration = true
-  features {}
-}
+# provider "azurerm" {
+#   alias                      = "mgmt"
+#   subscription_id            = var.mgmt_subscription_id
+#   skip_provider_registration = true
+#   features {}
+# }

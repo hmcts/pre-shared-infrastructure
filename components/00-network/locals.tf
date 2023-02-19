@@ -1,7 +1,7 @@
 locals {
-  resource_group_name  = "${var.prefix}-${var.env}"
-  mgmt_network_name    = var.mgmt_net_name
-  mgmt_network_rg_name = var.mgmt_net_rg_name
+  resource_group_name = "${var.prefix}-${var.env}"
+  #   mgmt_network_name    = var.mgmt_net_name
+  #   mgmt_network_rg_name = var.mgmt_net_rg_name
 
   hub = {
     nonprod = {

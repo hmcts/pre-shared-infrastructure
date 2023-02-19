@@ -34,17 +34,17 @@ variable "bastion_snet_address" {}
 
 variable "data_gateway_snet_address" {}
 
-variable "mgmt_subscription_id" {
-  default = "6c4d2513-a873-41b4-afdd-b05a33206631"
-}
+# variable "mgmt_subscription_id" {
+#   default = "6c4d2513-a873-41b4-afdd-b05a33206631"
+# }
 
-variable "mgmt_net_name" {
-  default = "ss-ptl-vnet"
-}
+# variable "mgmt_net_name" {
+#   default = "ss-ptl-vnet"
+# }
 
-variable "mgmt_net_rg_name" {
-  default = "ss-ptl-network-rg"
-}
+# variable "mgmt_net_rg_name" {
+#   default = "ss-ptl-network-rg"
+# }
 
 variable "builtFrom" {
   description = "The GitHub URL for the repository that contains the infrastructure code."
