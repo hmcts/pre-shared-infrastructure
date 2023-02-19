@@ -95,7 +95,7 @@ parameters:
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
       component: '03-postgres'
-      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
       dependsOn: 'Precheck'
     - deployment: 'Storage'
       component: '04-storage'
