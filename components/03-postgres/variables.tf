@@ -44,6 +44,8 @@ variable "pgsql_storage_mb" {
 #   default = "jenkins-ptl-mi" #"7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01"
 # }
 
+variable "dts_pre_ent_appreg_oid" {}
+
 variable "builtFrom" {
   description = "The GitHub URL for the repository that contains the infrastructure code."
   default     = "hmcts/pre-shared-infrastructure"
