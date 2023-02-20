@@ -65,23 +65,6 @@ module "key-vault" {
 #   secret_permissions = ["List", "Get", ]
 # }
 
-
-# data "azurerm_key_vault" "keyvault" {
-#   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
-#   resource_group_name = data.azurerm_resource_group.rg.name
-# }
-
-# # Dynatrace
-# data "azurerm_key_vault_secret" "dynatrace-token" {
-#   name         = "dynatrace-token"
-#   key_vault_id = module.key-vault.key_vault_id
-# }
-
-# data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
-#   name         = "dynatrace-tenant-id"
-#   key_vault_id = module.key-vault.key_vault_id
-# }
-
 # Disk Encryption 
 
 resource "azurerm_key_vault_key" "pre_kv_key" {

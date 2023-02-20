@@ -1,18 +1,3 @@
-data "azurerm_user_assigned_identity" "managed-identity" {
-  name                = "${var.prefix}-${var.env}-mi"
-  resource_group_name = "managed-identities-${var.env}-rg"
-
-  depends_on = [module.key-vault]
-}
-
-# data "azuread_groups" "groups" {
-#   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
-# }
-
-# data "azuread_groups" "pre-groups" {
-#   display_names = ["DTS Pre-recorded Evidence"]
-# }
-
 #Storage Blob Data Contributor Role Assignment for Managed Identity
 resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
   scope                            = data.azurerm_resource_group.rg.id

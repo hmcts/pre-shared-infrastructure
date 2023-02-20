@@ -1,9 +1,3 @@
-data "azurerm_log_analytics_workspace" "loganalytics" {
-  provider            = azurerm.oms
-  name                = module.log_analytics_workspace.name
-  resource_group_name = module.log_analytics_workspace.resource_group_name
-}
-
 resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
   name                = "${var.prefix}-videditnic${count.index}-${var.env}"
