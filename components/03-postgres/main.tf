@@ -2,17 +2,6 @@ locals {
   resource_group_name = "${var.prefix}-${var.env}"
 }
 
-data "azurerm_client_config" "current" {}
-
-data "azurerm_resource_group" "rg" {
-  name = local.resource_group_name
-}
-
-data "azurerm_user_assigned_identity" "managed-identity" {
-  name                = "${var.prefix}-${var.env}-mi"
-  resource_group_name = "managed-identities-${var.env}-rg"
-}
-
 module "tags" {
   source      = "git::https://github.com/hmcts/terraform-module-common-tags.git?ref=master"
   environment = var.env
@@ -22,13 +11,6 @@ module "tags" {
 
 #role should be assigned already
 # DTS-PRE-VideoEditing-SecurityGroup-
-data "azuread_groups" "groups" {
-  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
-}
-
-data "azuread_groups" "pre-groups" {
-  display_names = ["DTS Pre-recorded Evidence"]
-}
 resource "azurerm_role_assignment" "vmuser_login" {
   for_each             = toset(data.azuread_groups.groups.object_ids)
   scope                = data.azurerm_resource_group.rg.id
@@ -60,15 +42,6 @@ module "data_store_db_v14" {
   admin_user_object_id = data.azurerm_client_config.current.object_id # "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01" #data.azurerm_client_config.current.object_id #"7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01" #var.dts_pre_ent_appreg_oid #"dad693c4-36ad-468f-94e9-76faa4bc844b" #"9168b884-7ccd-4e71-860f-7f63455818e1" #"f6991ff8-d675-4f54-b2ba-99af86a8e01c" #"53790b85-0d6d-4146-af63-398ddfa61cac" #"d8c74776-764e-4b2a-8f8b-acacec87b9b7" # dcd_sp_ado_mgmt_operations_v2 # data.azurerm_client_config.current.object_id #"ca6d5085-485a-417d-8480-c3cefa29df31"
 }
 
-data "azurerm_key_vault" "keyvault" {
-  name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
-
-# output "id" {
-#   value = data.azurerm_resource_group.rg.id
-# }
-
 #using own var for this
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
   name         = "postgresdb-username"
@@ -81,11 +54,6 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
   name         = "postgresdb-password"
   value        = module.data_store_db_v14.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-data "azurerm_virtual_network" "vnet" {
-  name                = "${var.prefix}-vnet-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.name
 }
 
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)	
