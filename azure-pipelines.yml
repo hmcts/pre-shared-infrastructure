@@ -28,7 +28,7 @@ variables:
   - name: project
     value: pre
   - name: kvConnectedServiceName
-    value: DTS-SHAREDSERVICES-SBOX
+    value: DTS-SHAREDSERVICES-DEV
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
   # - group: pre-azure-devops-agent
 
@@ -134,7 +134,7 @@ stages:
 
               - template: steps/keyvault-read.yaml@cnp-azuredevops-libraries
                 parameters:
-                  serviceConnection: ${{ variables.kvConnectedServiceName }} #'DTS-SHAREDSERVICES-DEV'
+                  serviceConnection: 'DTS-SHAREDSERVICES-DEV' # ${{ deployment.serviceConnection }} #'DTS-SHAREDSERVICES-DEV'
                   environment: ${{ parameters.environment }}
                   subscriptionIdVariableName: 'SUBSCRIPTION_ID'
                   storageAccountVariableName: 'STORAGE_ACCOUNT'
