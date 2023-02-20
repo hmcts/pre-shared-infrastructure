@@ -33,7 +33,7 @@ resource "azurerm_role_assignment" "ado" {
   principal_id         = data.azurerm_client_config.current.object_id
 }
 
-resource "azurerm_role_assignment" "ado" {
+resource "azurerm_role_assignment" "dcd_sp_ado" {
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
   principal_id         = "11a86dfb-2183-4f42-ac53-9952bd31d0fb" #dcd_sp_ado_dev_operations_v2
