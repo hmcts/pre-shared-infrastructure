@@ -20,9 +20,9 @@ variable "pgsql_admin_username" {
   default = "psqladmin"
 }
 
-variable "pg_databases" {
-  description = "Databases to be deployed"
-}
+# variable "pg_databases" {
+#   description = "Databases to be deployed"
+# }
 
 variable "database_name" {
   default = "pre-db"
