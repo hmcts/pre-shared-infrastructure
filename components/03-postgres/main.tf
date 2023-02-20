@@ -26,19 +26,23 @@ module "data_store_db_v14" {
   component     = var.prefix
   business_area = var.project
 
-  common_tags     = module.tags.common_tags
-  name            = var.database_name
-  pgsql_databases = var.pg_databases
+  common_tags = module.tags.common_tags
+  name        = var.database_name
+  pgsql_databases = [
+    {
+      name : "pre-pdb-${var.env}"
+    }
+  ]
 
   pgsql_version         = "14"
   backup_retention_days = 35
 
-  location             = var.location
-  resource_group_name  = data.azurerm_resource_group.rg.name
-  pgsql_admin_username = var.pgsql_admin_username
-  pgsql_sku            = var.pgsql_sku
-  pgsql_storage_mb     = var.pgsql_storage_mb
-
+  location                      = var.location
+  resource_group_name           = data.azurerm_resource_group.rg.name
+  pgsql_admin_username          = var.pgsql_admin_username
+  pgsql_sku                     = var.pgsql_sku
+  pgsql_storage_mb              = var.pgsql_storage_mb
+  enable_read_only_group_access = false
   #admin_user_object_id = "11a86dfb-2183-4f42-ac53-9952bd31d0fb" # data.azurerm_client_config.current.object_id # "7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01" #data.azurerm_client_config.current.object_id #"7ef3b6ce-3974-41ab-8512-c3ef4bb8ae01" #var.dts_pre_ent_appreg_oid #"dad693c4-36ad-468f-94e9-76faa4bc844b" #"9168b884-7ccd-4e71-860f-7f63455818e1" #"f6991ff8-d675-4f54-b2ba-99af86a8e01c" #"53790b85-0d6d-4146-af63-398ddfa61cac" #"d8c74776-764e-4b2a-8f8b-acacec87b9b7" # dcd_sp_ado_mgmt_operations_v2 # data.azurerm_client_config.current.object_id #"ca6d5085-485a-417d-8480-c3cefa29df31"
 }
 
