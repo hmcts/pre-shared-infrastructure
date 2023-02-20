@@ -92,18 +92,22 @@ parameters:
     - deployment: 'Core'
       component: '02-core'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-SBOX' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
       component: '03-postgres'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-SBOX' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
     - deployment: 'Storage'
       component: '04-storage'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-SBOX' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
     - deployment: 'AMS'
       component: '05-ams'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-SBOX' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
 
 stages:
@@ -134,7 +138,7 @@ stages:
 
               - template: steps/keyvault-read.yaml@cnp-azuredevops-libraries
                 parameters:
-                  serviceConnection: ${{ deployment.serviceConnection }} #'DTS-SHAREDSERVICES-DEV'
+                  serviceConnection: ${{ deployment.kvServiceConnection }} #'DTS-SHAREDSERVICES-DEV'
                   environment: ${{ parameters.environment }}
                   subscriptionIdVariableName: 'SUBSCRIPTION_ID'
                   storageAccountVariableName: 'STORAGE_ACCOUNT'
