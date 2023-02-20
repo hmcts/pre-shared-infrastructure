@@ -33,6 +33,12 @@ resource "azurerm_role_assignment" "ado" {
   principal_id         = data.azurerm_client_config.current.object_id
 }
 
+resource "azurerm_role_assignment" "ado" {
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Contributor"
+  principal_id         = "11a86dfb-2183-4f42-ac53-9952bd31d0fb" #dcd_sp_ado_dev_operations_v2
+}
+
 # resource "azurerm_key_vault_access_policy" "power_app_access" {
 #   key_vault_id            = module.key-vault.key_vault_id
 #   object_id               = var.power_app_user_oid
