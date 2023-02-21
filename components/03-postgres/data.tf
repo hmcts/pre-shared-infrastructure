@@ -13,10 +13,6 @@ data "azuread_groups" "groups" {
   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
-data "azuread_groups" "pre-groups" {
-  display_names = ["DTS Pre-recorded Evidence"]
-}
-
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
   resource_group_name = data.azurerm_resource_group.rg.name

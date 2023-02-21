@@ -13,9 +13,9 @@ data "azurerm_user_assigned_identity" "managed-identity" {
   depends_on = [module.key-vault]
 }
 
-# data "azuread_groups" "groups" {
-#   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
-# }
+data "azuread_groups" "groups" {
+  display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
+}
 
 # data "azuread_groups" "pre-groups" {
 #   display_names = ["DTS Pre-recorded Evidence"]

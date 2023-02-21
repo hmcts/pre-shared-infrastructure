@@ -29,10 +29,3 @@ provider "azurerm" {
   subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
   features {}
 }
-
-# provider "azurerm" {
-#   alias                      = "mgmt"
-#   subscription_id            = var.mgmt_subscription_id
-#   skip_provider_registration = true
-#   features {}
-# }

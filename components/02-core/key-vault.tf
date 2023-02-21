@@ -47,7 +47,6 @@ module "key-vault" {
 #####################################
 # resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
 #   key_vault_id = module.key-vault.key_vault_id
-#   # application_id        = var.app_id
 #   object_id               = var.dts_pre_project_admin
 #   tenant_id               = data.azurerm_client_config.current.tenant_id
 #   key_permissions         = ["List", "Get", ]
@@ -56,7 +55,8 @@ module "key-vault" {
 #   storage_permissions     = ["List", "Get", ]
 # }
 
-# // Access for the service connection App registrations dts_pre_<env>
+# seems to be set already
+# # // Access for the service connection App registrations dts_pre_<env>
 # resource "azurerm_key_vault_access_policy" "appreg_access" {
 #   key_vault_id = module.key-vault.key_vault_id
 #   # application_id        = var.app_id
