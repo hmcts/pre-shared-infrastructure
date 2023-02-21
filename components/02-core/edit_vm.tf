@@ -165,7 +165,7 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
 SETTINGS
 }
 
-##DynaTrace
+#DynaTrace
 
 # module "dynatrace-oneagent" {
 #   source                     = "git::https://github.com/hmcts/terraform-module-dynatrace-oneagent.git?ref=master"

@@ -16,7 +16,7 @@ variable "subscription" {
 
 variable "env" {}
 
-# variable "dts_pre_appreg_oid" {}
+variable "dts_pre_appreg_oid" {}
 
 variable "dts_pre_ent_appreg_oid" {}
 
@@ -25,7 +25,8 @@ variable "builtFrom" {
   default     = "hmcts/pre-shared-infrastructure"
 }
 
-# variable "dts_pre_oid" {}
+variable "dts_pre_oid" {}
+
 # variable "dts_cft_developers_oid" {}
 
 variable "num_vid_edit_vms" {
@@ -60,11 +61,9 @@ variable "DNSResGroup" {
   default = "core-infra-intsvc-rg"
 }
 
-# variable "managed_oid" {}
 # variable "dts_pre_project_admin" {}
-# variable "pre_mi_principal_id" {}
-# variable "pre_mi_tenant_id" {}
-#variable "dts_pre_app_admin" {}
+
+variable "dts_pre_app_admin" {}
 
 # variable "lawSku" {
 #   type    = string

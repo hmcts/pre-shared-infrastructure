@@ -22,7 +22,6 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
-  # managed_identity_object_id      = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
 
   common_tags = module.tags.common_tags
 }
@@ -41,8 +40,7 @@ module "finalsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Allow"
   enable_data_protection          = true
-  # managed_identity_object_id      = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
-  cors_rules = var.cors_rules
+  cors_rules                      = var.cors_rules
 
   common_tags = module.tags.common_tags
 }
@@ -61,7 +59,6 @@ module "ingestsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
-  # managed_identity_object_id      = "4f24f27d-a3f9-49cc-be54-6d52bb1dbedd"
 
   common_tags = module.tags.common_tags
 }
@@ -134,13 +131,13 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
 resource "azurerm_role_assignment" "mi_storage_1" {
   scope                            = module.ingestsa_storage_account.storageaccount_id
   role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id
   skip_service_principal_aad_check = true
 }
 
 resource "azurerm_role_assignment" "mi_storage_2" {
   scope                            = module.finalsa_storage_account.storageaccount_id
   role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id
   skip_service_principal_aad_check = true
 }

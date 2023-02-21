@@ -23,5 +23,4 @@ provider "azurerm" {
   subscription_id            = "867a878b-cb68-4de5-9741-361ac9e178b6"
   skip_provider_registration = true
   features {}
-  # alias = "sds"
 }
