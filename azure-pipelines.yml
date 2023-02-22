@@ -20,7 +20,7 @@ variables:
   - name: kvConnectedServiceName
     value: DTS-SHAREDSERVICES-SBOX
   - name: subscriptionName
-    value: "DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}"
+    value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
 
 resources:
@@ -71,32 +71,26 @@ parameters:
     - deployment: 'Network'
       component: '00-network'
       serviceConnection: ${{ variables.subscriptionName }}
-      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
-      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: '00-network'
     - deployment: 'Core'
       component: '02-core'
       serviceConnection: ${{ variables.subscriptionName }}
-      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
       component: '03-postgres'
       serviceConnection: ${{ variables.subscriptionName }}
-      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'Storage'
       component: '04-storage'
       serviceConnection: ${{ variables.subscriptionName }}
-      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'AMS'
       component: '05-ams'
-      serviceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
+      serviceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
 
 stages:
@@ -138,7 +132,7 @@ stages:
                   overrideAction: ${{ parameters.overrideAction }}
                   environment: ${{ lower(parameters.environment) }}
                   component: ${{ deployment.component }}
-                  kvConnectedServiceName: ${{ variables.kvConnectedServiceName }}
+                  kvConnectedServiceName: ${{ variables.subscriptionName }}
                   serviceConnection: ${{ deployment.serviceConnection }}
                   terraformInitSubscription: ${{ variables.terraformInitSubscription }}
                   product: ${{ variables.product }}
