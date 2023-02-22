@@ -76,27 +76,27 @@ parameters:
     - deployment: 'HubPeering'
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: $(subscriptionName)
       dependsOn: '00-network'
     - deployment: 'Core'
       component: '02-core'
-      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
       component: '03-postgres'
-      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'Storage'
       component: '04-storage'
-      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'AMS'
       component: '05-ams'
-      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
 
 stages:

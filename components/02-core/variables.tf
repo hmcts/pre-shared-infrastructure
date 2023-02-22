@@ -16,7 +16,7 @@ variable "subscription" {
 
 variable "env" {}
 
-variable "dts_pre_appreg_oid" {}
+# variable "dts_pre_appreg_oid" {}
 
 variable "dts_pre_ent_appreg_oid" {}
 
@@ -25,7 +25,7 @@ variable "builtFrom" {
   default     = "hmcts/pre-shared-infrastructure"
 }
 
-variable "dts_pre_oid" {}
+# variable "dts_pre_oid" {}
 
 # variable "dts_cft_developers_oid" {}
 
