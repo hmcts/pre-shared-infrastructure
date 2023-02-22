@@ -1,0 +1,149 @@
+name: Pre-Shared-Infrastructure Deployment Pipeline
+
+trigger:
+  - master
+
+pool:
+  vmImage: ubuntu-22.04
+
+variables:
+  - name: timeoutInMinutes
+    value: 60
+  - name: agentPool
+    value: ubuntu-latest
+  - name: terraformInitSubscription
+    value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
+  - name: product
+    value: pre
+  - name: project
+    value: pre
+  - name: kvConnectedServiceName
+    value: DTS-SHAREDSERVICES-SBOX
+  - template: vars/input-variables.yaml@cnp-azuredevops-libraries
+  - name: subscriptionName
+    value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
+
+resources:
+  repositories:
+    - repository: cnp-azuredevops-libraries
+      type: github
+      ref: refs/heads/master
+      name: hmcts/cnp-azuredevops-libraries
+      endpoint: 'hmcts (3)'
+
+
+parameters:
+
+  - name: overrideAction
+    type: string
+    default: plan
+    values:
+      - plan
+      - apply
+      - destroy
+
+  - name: environment
+    displayName: Environment
+    type: string
+    default: "Dev"
+    values:
+      - Sbox
+      - Dev
+      - Demo
+      - Test
+      - Stg
+      - Prod
+
+  - name: location
+    displayName: Location
+    type: string
+    default: "UK South"
+    values:
+      - "UK South"
+      - "UK West"
+
+  - name: terraformInitSubscription
+    default: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
+
+  - name: components
+    type: object
+    default:
+    - deployment: 'Network'
+      component: '00-network'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
+      dependsOn: 'Precheck'
+    - deployment: 'HubPeering'
+      component: '01-hub-peering'
+      serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
+      kvServiceConnection: $(subscriptionName)
+      dependsOn: '00-network'
+    - deployment: 'Core'
+      component: '02-core'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
+      dependsOn: 'Precheck'
+    - deployment: 'Postgres'
+      component: '03-postgres'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
+      dependsOn: 'Precheck'
+    - deployment: 'Storage'
+      component: '04-storage'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
+      dependsOn: 'Precheck'
+    - deployment: 'AMS'
+      component: '05-ams'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
+      dependsOn: 'Precheck'
+
+stages:
+  - stage: Precheck
+    jobs:
+      - job:
+        pool:
+          vmImage: ${{ variables.agentPool }}
+          timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+        steps:
+          - checkout: self
+          - template: steps/terraform-precheck.yaml@cnp-azuredevops-libraries
+            parameters:
+              keyvaultName: 'infra-vault-nonprod'
+              keyvaultSecret: 'azure-devops-token'
+              serviceConnection: 'DTS-SHAREDSERVICES-SBOX'
+              overrideAction: ${{ parameters.overrideAction }}
+
+  - ${{ each deployment in parameters.components }}:
+      - stage: ${{ deployment.deployment }}
+        jobs:
+          - job: TerraformPlanApply
+            pool:
+              vmImage: ${{ variables.agentPool }}
+            timeoutInMinutes: ${{ variables.timeoutInMinutes }}
+            steps:
+              - template: steps/set-build-repo-suffix-env-var.yaml@cnp-azuredevops-libraries   
+
+              - template: steps/keyvault-read.yaml@cnp-azuredevops-libraries
+                parameters:
+                  serviceConnection: ${{ deployment.kvServiceConnection }}
+                  environment: ${{ parameters.environment }}
+                  subscriptionIdVariableName: 'SUBSCRIPTION_ID'
+                  storageAccountVariableName: 'STORAGE_ACCOUNT'
+                  keyVaultVariableName: 'KEY_VAULT'
+
+              - template: steps/terraform.yaml@cnp-azuredevops-libraries
+                parameters:
+                  overrideAction: ${{ parameters.overrideAction }}
+                  environment: ${{ lower(parameters.environment) }}
+                  component: ${{ deployment.component }}
+                  kvConnectedServiceName: ${{ variables.kvConnectedServiceName }}
+                  serviceConnection: ${{ deployment.serviceConnection }}
+                  terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+                  product: ${{ variables.product }}
+                  location: ${{ parameters.location }}
+                  tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
+                  initCommandOptions: >
+                    -var subscription_id=$(SUBSCRIPTION_ID)
+                    -backend-config=storage_account_name=$(STORAGE_ACCOUNT)
