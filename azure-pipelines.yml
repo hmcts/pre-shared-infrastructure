@@ -70,27 +70,33 @@ parameters:
     default:
     - deployment: 'Network'
       component: '00-network'
-      serviceConnection: ${{ variables.subscriptionName }}
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
+      kvServiceConnection: $(subscriptionName)
       dependsOn: '00-network'
     - deployment: 'Core'
       component: '02-core'
-      serviceConnection: ${{ variables.subscriptionName }}
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
       component: '03-postgres'
-      serviceConnection: ${{ variables.subscriptionName }}
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'Storage'
       component: '04-storage'
-      serviceConnection: ${{ variables.subscriptionName }}
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'AMS'
       component: '05-ams'
-      serviceConnection: ${{ variables.subscriptionName }}
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
 
 stages:
