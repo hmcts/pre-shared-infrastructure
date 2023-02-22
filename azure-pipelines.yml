@@ -20,6 +20,8 @@ variables:
   - name: kvConnectedServiceName
     value: DTS-SHAREDSERVICES-SBOX
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
+  - name: subscriptionName
+    value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
 
 resources:
   repositories:
@@ -68,8 +70,8 @@ parameters:
     default:
     - deployment: 'Network'
       component: '00-network'
-      serviceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
+      serviceConnection: $(subscriptionName)
+      kvServiceConnection: $(subscriptionName)
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
