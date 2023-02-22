@@ -53,7 +53,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
 }
 
 data "template_file" "dtgw-vm-init" {
-  template = file("/scripts/dtgw-vm-init.sh")
+  template = file("provisioning/dtgw-vm-init.sh")
 }
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
