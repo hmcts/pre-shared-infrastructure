@@ -70,8 +70,8 @@ parameters:
     default:
     - deployment: 'Network'
       component: '00-network'
-      serviceConnection: $(subscriptionName)
-      kvServiceConnection: $(subscriptionName)
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
