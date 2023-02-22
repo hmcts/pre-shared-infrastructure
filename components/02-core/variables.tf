@@ -65,6 +65,20 @@ variable "DNSResGroup" {
 
 variable "dts_pre_app_admin" {}
 
+
+#new vm
+variable "tenant_id" {}
+variable "vm_count" {
+  default = 2
+}
+variable "vm_type" {
+  default = "windows"
+}
+
+variable "vm_data_disks" {}
+
+variable "vm_private_ip" {}
+
 # variable "lawSku" {
 #   type    = string
 #   default = "PerGB2018"

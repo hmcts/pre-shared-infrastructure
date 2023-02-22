@@ -16,3 +16,51 @@ dts_pre_app_admin          = "d055ba21-5814-4278-8752-aaffa7eaac62" #DTS-PRE-App
 # dts_pre_appreg_oid     = "b521e9e3-58e1-4c25-98b5-7f3157f68c16" # dts_pre_devapp reg
 dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev enterprise app/sp
 PeeringFromHubName     = "pre-recorded-evidence-dev"
+
+tenant_id      = "yrk32651"
+vm_private_ip  = ["10.40.12.16", "10.40.12.17"]
+# data disks
+vm_data_disks = [{
+  datadisk1 = {
+    name                 = "data-gateway-vm01-data-01-dev"
+    location             = "uksouth"
+    resource_group_name  = "pre-dev-rg"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "data-gateway-vm02-data-01-dev"
+      location             = "uksouth"
+      resource_group_name  = "pre-dev-rg"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
