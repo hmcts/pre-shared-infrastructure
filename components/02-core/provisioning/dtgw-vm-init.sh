@@ -13,7 +13,7 @@ rm dotnet-runtime-desktop-3.1.10-windows-x64-installer.exe
 curl -LJO https://aka.ms/gatewayinstaller
 
 # Install Data Gateway
-MicrosoftDataGatewayInstaller.exe /quiet
+start /wait MicrosoftDataGatewayInstaller.exe /accepteula /silent
 
 # Clean up
 rm MicrosoftDataGatewayInstaller.exe
@@ -26,5 +26,9 @@ dotnet add package Npgsql.4.0.10.0.nupkg
 
 # Clean up
 rm Npgsql.4.0.10.0.nupkg
+
+# Verify installation
+dotnet --version
+dotnet list package | findstr Npgsql
 
 echo 'Installation complete.'
