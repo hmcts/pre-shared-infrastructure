@@ -19,6 +19,8 @@ variables:
     value: pre
   - name: kvConnectedServiceName
     value: DTS-SHAREDSERVICES-SBOX
+  - name: subscriptionName
+    value: "DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}"
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
 
 resources:
@@ -68,28 +70,28 @@ parameters:
     default:
     - deployment: 'Network'
       component: '00-network'
-      serviceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
+      serviceConnection: ${{ variables.subscriptionName }}
+      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
+      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: '00-network'
     - deployment: 'Core'
       component: '02-core'
-      serviceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
+      serviceConnection: ${{ variables.subscriptionName }}
+      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
       component: '03-postgres'
-      serviceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
+      serviceConnection: ${{ variables.subscriptionName }}
+      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'Storage'
       component: '04-storage'
-      serviceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}'
+      serviceConnection: ${{ variables.subscriptionName }}
+      kvServiceConnection: ${{ variables.subscriptionName }}
       dependsOn: 'Precheck'
     - deployment: 'AMS'
       component: '05-ams'
