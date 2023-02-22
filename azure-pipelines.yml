@@ -11,6 +11,16 @@ variables:
     value: 60
   - name: agentPool
     value: ubuntu-latest
+  # - name: storageAccount
+  #   value: sdsstate${{ lower(parameters.environment) }}
+  # - name: container
+  #   value: tfstate-${{ lower(parameters.environment) }}
+  # - name: serviceConnection
+  #   value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
+  # - name: keyvaultName
+  #   value: pre-stg
+  # - name: tfInitSub
+  #   value: "04d27a32-7a07-48b3-95b8-3c8691e1a263"
   - name: terraformInitSubscription
     value: 04d27a32-7a07-48b3-95b8-3c8691e1a263
   - name: product
@@ -19,9 +29,8 @@ variables:
     value: pre
   - name: kvConnectedServiceName
     value: DTS-SHAREDSERVICES-SBOX
-  - name: subscriptionName
-    value: DTS-SHAREDSERVICES-${{ upper(parameters.environment) }}
   - template: vars/input-variables.yaml@cnp-azuredevops-libraries
+  # - group: pre-azure-devops-agent
 
 resources:
   repositories:
@@ -71,32 +80,34 @@ parameters:
     - deployment: 'Network'
       component: '00-network'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-STG'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
+      # subscription: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
       serviceConnection: 'OPS-APPROVAL-GATE-MGMT-ENVS'
-      kvServiceConnection: $(subscriptionName)
+      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV' #'HMCTS-CONTROL'
+      # subscription: '04d27a32-7a07-48b3-95b8-3c8691e1a263'
       dependsOn: '00-network'
     - deployment: 'Core'
       component: '02-core'
-      serviceConnection: $(subscriptionName)
-      kvServiceConnection: $(subscriptionName)
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
     - deployment: 'Postgres'
       component: '03-postgres'
-      serviceConnection: $(subscriptionName)
-      kvServiceConnection: $(subscriptionName)
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
     - deployment: 'Storage'
       component: '04-storage'
-      serviceConnection: $(subscriptionName)
-      kvServiceConnection: $(subscriptionName)
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
     - deployment: 'AMS'
       component: '05-ams'
-      serviceConnection: $(subscriptionName)
-      kvServiceConnection: $(subscriptionName)
+      serviceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV' #'HMCTS-CONTROL'
       dependsOn: 'Precheck'
 
 stages:
@@ -127,7 +138,7 @@ stages:
 
               - template: steps/keyvault-read.yaml@cnp-azuredevops-libraries
                 parameters:
-                  serviceConnection: ${{ deployment.kvServiceConnection }}
+                  serviceConnection: ${{ deployment.kvServiceConnection }} #'DTS-SHAREDSERVICES-DEV'
                   environment: ${{ parameters.environment }}
                   subscriptionIdVariableName: 'SUBSCRIPTION_ID'
                   storageAccountVariableName: 'STORAGE_ACCOUNT'
@@ -138,9 +149,9 @@ stages:
                   overrideAction: ${{ parameters.overrideAction }}
                   environment: ${{ lower(parameters.environment) }}
                   component: ${{ deployment.component }}
-                  kvConnectedServiceName: ${{ variables.subscriptionName }}
-                  serviceConnection: ${{ deployment.serviceConnection }}
-                  terraformInitSubscription: ${{ variables.terraformInitSubscription }}
+                  kvConnectedServiceName: ${{ variables.kvConnectedServiceName }} # ${{ deployment.kvServiceConnection }} #
+                  serviceConnection: ${{ deployment.serviceConnection }} #'OPS-APPROVAL-GATE-MGMT-ENVS'
+                  terraformInitSubscription: ${{ variables.terraformInitSubscription }} #'HMCTS-CONTROL'
                   product: ${{ variables.product }}
                   location: ${{ parameters.location }}
                   tfVarsFile: "$(System.DefaultWorkingDirectory)/$(buildRepoSuffix)/environments/${{ lower(parameters.environment) }}/${{ lower(parameters.environment) }}.tfvars"
