@@ -48,13 +48,13 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
   secret_permissions      = ["List", "Set", "Delete", "Get", ]
 }
 
-# DTS-PRE-VideoEditing-SecurityGroup-
-resource "azurerm_role_assignment" "vmuser_login" {
-  for_each             = toset(data.azuread_groups.groups.object_ids)
-  scope                = data.azurerm_resource_group.rg.id
-  role_definition_name = "Virtual Machine User Login"
-  principal_id         = each.value
-}
+# # DTS-PRE-VideoEditing-SecurityGroup-
+# resource "azurerm_role_assignment" "vmuser_login" {
+#   for_each             = toset(data.azuread_groups.groups.object_ids)
+#   scope                = data.azurerm_resource_group.rg.id
+#   role_definition_name = "Virtual Machine User Login"
+#   principal_id         = each.value
+# }
 
 
 # data "azuread_groups" "pre-groups" {
