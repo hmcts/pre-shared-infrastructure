@@ -71,7 +71,7 @@ parameters:
     - deployment: 'Network'
       component: '00-network'
       serviceConnection: 'DTS-SHAREDSERVICES-DEV'
-      kvServiceConnection: 'DTS-SHAREDSERVICES-DEV'
+      kvServiceConnection: 'DCD-CFTAPPS-SBOX(b72ab7b7-723f-4b18-b6f6-03b0f2c6a1bb)'
       dependsOn: 'Precheck'
     - deployment: 'HubPeering'
       component: '01-hub-peering'
