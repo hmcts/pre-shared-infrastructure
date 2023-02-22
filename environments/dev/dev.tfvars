@@ -18,7 +18,7 @@ dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev en
 PeeringFromHubName     = "pre-recorded-evidence-dev"
 
 tenant_id      = "yrk32651"
-vm_private_ip  = ["10.40.12.16", "10.40.12.17"]
+vm_private_ip  = ["10.40.12.20", "10.40.12.21"]
 # data disks
 vm_data_disks = [{
   datadisk1 = {
