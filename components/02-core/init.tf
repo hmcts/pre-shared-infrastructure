@@ -27,3 +27,9 @@ provider "azurerm" {
   subscription_id = module.log_analytics_workspace.subscription_id
   features {}
 }
+
+provider "azurerm" {
+  alias = "cnp"
+  features {}
+  subscription_id = var.cnp_vault_sub
+}
