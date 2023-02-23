@@ -19,14 +19,14 @@ PeeringFromHubName     = "pre-recorded-evidence-dev"
 
 tenant_id      = "yrk32651"
 vm_private_ip  = ["10.40.12.22", "10.40.12.23"]
-cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
-cnp_vault_rg   = "cnp-core-infra"
+# cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+# cnp_vault_rg   = "cnp-core-infra"
 # data disks
 vm_data_disks = [{
   datadisk1 = {
     name                 = "data-gateway-vm01-data-01-dev"
     location             = "uksouth"
-    resource_group_name  = "pre-dev-rg"
+    resource_group_name  = "pre-dev"
     storage_account_type = "StandardSSD_LRS"
     disk_create_option   = "Empty"
     disk_size_gb         = "1000"
@@ -48,7 +48,7 @@ vm_data_disks = [{
     datadisk1 = {
       name                 = "data-gateway-vm02-data-01-dev"
       location             = "uksouth"
-      resource_group_name  = "pre-dev-rg"
+      resource_group_name  = "pre-dev"
       storage_account_type = "StandardSSD_LRS"
       disk_create_option   = "Empty"
       disk_size_gb         = "1000"
