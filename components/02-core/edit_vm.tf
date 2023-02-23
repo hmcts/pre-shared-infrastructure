@@ -114,29 +114,6 @@ resource "azurerm_virtual_machine_extension" "monitor-agent" {
   tags                       = module.tags.common_tags
 }
 
-resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
-  depends_on           = [azurerm_virtual_machine_extension.daa-agent]
-  name                 = "MicrosoftMonitoringAgent" # Must be called this
-  count                = var.num_vid_edit_vms
-  virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  publisher            = "Microsoft.EnterpriseCloud.Monitoring"
-  type                 = "MicrosoftMonitoringAgent"
-  type_handler_version = "1.0"
-  tags                 = module.tags.common_tags
-  settings             = <<SETTINGS
-    {
-        "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
-        "azureResourceId": "${azurerm_windows_virtual_machine.vm.*.id[count.index]}",
-        "stopOnMultipleConnections": "false"
-    }
-  SETTINGS
-  protected_settings   = <<PROTECTED_SETTINGS
-    {
-      "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
-    }
-  PROTECTED_SETTINGS
-}
-
 resource "azurerm_virtual_machine_extension" "vmextension" {
   name                       = "IaaSAntimalware"
   count                      = var.num_vid_edit_vms
@@ -164,23 +141,6 @@ resource "azurerm_virtual_machine_extension" "vmextension" {
     }
 SETTINGS
 }
-
-#DynaTrace
-
-# module "dynatrace-oneagent" {
-#   source                     = "git::https://github.com/hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
-
-#   count                      = var.num_vid_edit_vms
-#   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
-#   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
-#   virtual_machine_os         = "windows"
-#   virtual_machine_type       = "vm"
-#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-#   auto_upgrade_minor_version = true
-#   server                     = var.server
-#   hostgroup                  = var.hostgroup
-#   tags                       = module.tags.common_tags
-# }
 
 resource "azurerm_virtual_machine_extension" "vm_aad" {
   count                      = var.num_vid_edit_vms

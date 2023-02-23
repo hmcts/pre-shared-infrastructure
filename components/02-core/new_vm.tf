@@ -75,30 +75,6 @@ module "data_gateway_vm" {
 
 }
 
-resource "azurerm_virtual_machine_extension" "dotnet" {
-  count = local.vm_count
-  name  = "dotnet-install"
-  # location             = var.location
-  # resource_group_name  = "pre-${var.env}"
-  # virtual_machine_name = module.data_gateway_vm.vm_name
-  virtual_machine_id   = module.data_gateway_vm[0].vm_id
-  publisher            = "Microsoft.Compute"
-  type                 = "CustomScriptExtension"
-  type_handler_version = "1.10"
-
-  settings = <<SETTINGS
-    {
-        "fileUris": ["https://dot.net/v1/dotnet-install.ps1"],
-        "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File dotnet-install.ps1"
-    }
-SETTINGS
-
-  protected_settings = <<PROTECTED_SETTINGS
-    {}
-PROTECTED_SETTINGS
-}
-
-
 locals {
   vm_type = "windows"
 
