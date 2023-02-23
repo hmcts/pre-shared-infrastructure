@@ -4,7 +4,7 @@
 ////////////////////////////////
 
 module "data_store_db_v14" {
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=db-collation"
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
   product       = var.product
