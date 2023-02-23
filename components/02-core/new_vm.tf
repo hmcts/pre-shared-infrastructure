@@ -1,16 +1,17 @@
-data "azurerm_key_vault" "cnp_vault" {
-  count               = var.install_dynatrace_oa ? 1 : 0
-  provider            = azurerm.cnp
-  name                = "infra-vault-${local.dynatrace_env}"
-  resource_group_name = var.cnp_vault_rg
-}
+# data "azurerm_key_vault" "cnp_vault" {
+#   count               = var.install_dynatrace_oa ? 1 : 0
+#   provider            = azurerm.cnp
+#   name                = "infra-vault-${local.dynatrace_env}"
+#   resource_group_name = var.cnp_vault_rg
+# }
 
 data "azurerm_key_vault_secret" "token" {
-  count    = var.install_dynatrace_oa ? 1 : 0
-  provider = azurerm.cnp
+  count = var.install_dynatrace_oa ? 1 : 0
+  # provider = azurerm.cnp
 
-  name         = "dynatrace-${local.dynatrace_env}-token"
-  key_vault_id = data.azurerm_key_vault.cnp_vault[0].id
+  name         = "dynatrace-token"
+  key_vault_id = module.key-vault.id
+  # key_vault_id = data.azurerm_key_vault.cnp_vault[0].id
 }
 
 module "data_gateway_vm" {
