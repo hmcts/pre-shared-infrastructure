@@ -6,6 +6,12 @@ def product = "pre"
 
 def component = "shared-infrastructure"
 
+def branchesToSync = []
+
+withPipeline(type, product, component) {
+  syncBranchesWithMaster(branchesToSync)
+}
+
 static String encrypthost(String envName){
   def encryptvmdisk = "environment='" +  envName + "';" +
         'rgName="pre-sbox";' +
