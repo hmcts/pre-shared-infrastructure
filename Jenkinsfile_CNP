@@ -8,7 +8,7 @@ def component = "shared-infrastructure"
 
 def branchesToSync = []
 
-withPipeline(type, product, component) {
+withPipeline(product, component) {
   syncBranchesWithMaster(branchesToSync)
 }
 
