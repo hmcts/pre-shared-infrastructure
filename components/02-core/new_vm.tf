@@ -1,3 +1,10 @@
+data "azurerm_key_vault" "cnp_vault" {
+  count               = var.install_dynatrace_oa ? 1 : 0
+  provider            = azurerm.cnp
+  name                = "infra-vault-${local.dynatrace_env}"
+  resource_group_name = var.cnp_vault_rg
+}
+
 data "azurerm_key_vault_secret" "token" {
   count    = var.install_dynatrace_oa ? 1 : 0
   provider = azurerm.cnp
