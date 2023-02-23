@@ -9,17 +9,8 @@ module "tags" {
   builtFrom   = var.builtFrom
 }
 
-#role should be assigned already
-# DTS-PRE-VideoEditing-SecurityGroup-
-resource "azurerm_role_assignment" "vmuser_login" {
-  for_each             = toset(data.azuread_groups.groups.object_ids)
-  scope                = data.azurerm_resource_group.rg.id
-  role_definition_name = "Virtual Machine User Login"
-  principal_id         = each.value
-}
-
 module "data_store_db_v14" {
-  source = "git::https://github.com/hmcts/terraform-module-postgresql-flexible.git?ref=db-collation"
+  source = "git::https://github.com/hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
   product       = var.prefix
