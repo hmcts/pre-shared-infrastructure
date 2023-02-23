@@ -1,3 +1,11 @@
+data "azurerm_key_vault_secret" "token" {
+  count    = var.install_dynatrace_oa ? 1 : 0
+  provider = azurerm.cnp
+
+  name         = "dynatrace-${local.dynatrace_env}-token"
+  key_vault_id = data.azurerm_key_vault.cnp_vault[0].id
+}
+
 module "data_gateway_vm" {
   count                = local.vm_count
   source               = "git::https://github.com/hmcts/terraform-vm-module.git?ref=master"
@@ -43,10 +51,10 @@ module "data_gateway_vm" {
   # nessus_key     = try(data.azurerm_key_vault_secret.nessus_key[0].value, null)
   # nessus_groups  = var.nessus_groups
 
-  # dynatrace_hostgroup = var.hostgroup
-  # dynatrace_server    = var.server
-  # dynatrace_tenant_id = var.tenant_id
-  # dynatrace_token     = try(data.azurerm_key_vault_secret.token[0].value, null)
+  dynatrace_hostgroup = var.hostgroup
+  dynatrace_server    = var.server
+  dynatrace_tenant_id = var.tenant_id
+  dynatrace_token     = try(data.azurerm_key_vault_secret.token[0].value, null)
 
   #mount the disks
   additional_script_uri  = local.additional_script_uri
