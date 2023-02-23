@@ -18,7 +18,7 @@ dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev en
 PeeringFromHubName     = "pre-recorded-evidence-dev"
 
 tenant_id      = "yrk32651"
-vm_private_ip  = ["10.40.12.20", "10.40.12.21"]
+vm_private_ip  = ["10.40.12.22", "10.40.12.23"]
 cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 cnp_vault_rg   = "cnp-core-infra"
 # data disks
