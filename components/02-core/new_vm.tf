@@ -84,9 +84,9 @@ locals {
   vm_subnet_id = data.azurerm_subnet.datagateway_subnet.id
 
   vm_availabilty_zones  = [1, 2]
-  marketplace_product   = "MicrosoftWindowsServer"
-  marketplace_publisher = "WindowsServer"
-  marketplace_sku       = "2019-datacenter-gensecond"
+  marketplace_product   = "WindowsServer"
+  marketplace_publisher = "MicrosoftWindowsServer"
+  marketplace_sku       = "2019-Datacenter-gensecond"
   vm_version            = "latest"
 
   boot_diagnostics_enabled = false
