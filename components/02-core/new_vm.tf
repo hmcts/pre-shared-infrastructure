@@ -84,7 +84,7 @@ resource "azurerm_virtual_machine_extension" "dotnet" {
   virtual_machine_id   = module.data_gateway_vm[0].vm_id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
-  type_handler_version = "CustomScript"
+  type_handler_version = "1.10"
 
   settings = <<SETTINGS
     {
