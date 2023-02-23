@@ -81,10 +81,10 @@ resource "azurerm_virtual_machine_extension" "dotnet" {
   # location             = var.location
   # resource_group_name  = "pre-${var.env}"
   # virtual_machine_name = module.data_gateway_vm.vm_name
-  virtual_machine_id   = module.data_gateway_vm.*.vm_name[count.index]
+  virtual_machine_id   = module.data_gateway_vm[0].vm_id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
-  type_handler_version = "1.10"
+  type_handler_version = "CustomScript"
 
   settings = <<SETTINGS
     {
