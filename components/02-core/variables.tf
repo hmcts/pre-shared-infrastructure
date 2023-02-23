@@ -83,9 +83,9 @@ variable "install_dynatrace_oa" {
   default = true
 }
 
-variable "cnp_vault_sub" {}
+# variable "cnp_vault_sub" {}
 
-variable "cnp_vault_rg" {}
+# variable "cnp_vault_rg" {}
 # variable "lawSku" {
 #   type    = string
 #   default = "PerGB2018"

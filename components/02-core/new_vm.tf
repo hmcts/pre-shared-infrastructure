@@ -22,7 +22,7 @@ module "data_gateway_vm" {
   vm_location          = var.location
   vm_size              = local.vm_size
   vm_admin_name        = "dg-admin${count.index}_${random_string.dtgtwy_username[count.index].result}"
-  vm_admin_password    = "Wednesday123" # random_password.vm_password[count.index].result
+  vm_admin_password    = random_password.vm_password[count.index].result
   vm_availabilty_zones = local.vm_availabilty_zones[count.index]
   managed_disks        = var.vm_data_disks[count.index]
 
