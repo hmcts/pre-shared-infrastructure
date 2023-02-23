@@ -51,7 +51,7 @@ def branchesToSync = ['demo']
 
 withInfraPipeline(product) {
   enableSlackNotifications('#pre-builds')
-  // syncBranchesWithMaster(branchesToSync)
+  syncBranchesWithMaster(branchesToSync)
   //   onMaster() {
   //     env.ENV = 'stg'
   //   }
