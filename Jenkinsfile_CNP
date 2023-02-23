@@ -6,12 +6,6 @@ def product = "pre"
 
 def component = "shared-infrastructure"
 
-def branchesToSync = []
-
-withPipeline(product, component) {
-  syncBranchesWithMaster(branchesToSync)
-}
-
 static String encrypthost(String envName){
   def encryptvmdisk = "environment='" +  envName + "';" +
         'rgName="pre-sbox";' +
@@ -57,7 +51,7 @@ def branchesToSync = ['demo']
 
 withInfraPipeline(product) {
   enableSlackNotifications('#pre-builds')
-  // syncBranchesWithMaster(branchesToSync)
+  syncBranchesWithMaster(branchesToSync)
   //   onMaster() {
   //     env.ENV = 'stg'
   //   }
