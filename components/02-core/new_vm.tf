@@ -17,11 +17,11 @@ module "data_gateway_vm" {
   count                = local.vm_count
   source               = "git::https://github.com/hmcts/terraform-vm-module.git?ref=master"
   vm_type              = local.vm_type
-  vm_name              = "data-gateway-vm${count.index + 1}-${var.env}"
+  vm_name              = "dg-vm${count.index + 1}-${var.env}"
   vm_resource_group    = data.azurerm_resource_group.rg.name
   vm_location          = var.location
   vm_size              = local.vm_size
-  vm_admin_name        = "data_gateway${count.index}_${random_string.dtgtwy_username[count.index].result}"
+  vm_admin_name        = "dg-admin${count.index}_${random_string.dtgtwy_username[count.index].result}"
   vm_admin_password    = "Wednesday123" # random_password.vm_password[count.index].result
   vm_availabilty_zones = local.vm_availabilty_zones[count.index]
   managed_disks        = var.vm_data_disks[count.index]
