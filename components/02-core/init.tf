@@ -28,8 +28,8 @@ provider "azurerm" {
   features {}
 }
 
-provider "azurerm" {
-  alias = "cnp"
-  features {}
-  subscription_id = var.cnp_vault_sub
-}
+# provider "azurerm" {
+#   alias = "cnp"
+#   features {}
+#   subscription_id = var.cnp_vault_sub
+# }
