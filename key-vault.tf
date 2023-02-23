@@ -13,8 +13,6 @@ module "key-vault" {
   create_managed_identity         = true
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
-  network_acls_default_action     = "Deny"
-  network_acls_allowed_ip_ranges  = ["80.44.26.160", "86.179.180.2"]
 }
 
 // Power App Permissions
@@ -302,12 +300,13 @@ resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
 }
 
 // Access for the service connection App registrations dts_pre_<env>
-resource "azurerm_key_vault_access_policy" "appreg_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  object_id          = var.dts_pre_appreg_oid
-  tenant_id          = data.azurerm_client_config.current.tenant_id
-  secret_permissions = ["List", "Get", ]
-}
+# resource "azurerm_key_vault_access_policy" "appreg_access" {
+#   key_vault_id = module.key-vault.key_vault_id
+#   # application_id        = var.app_id
+#   object_id          = var.dts_pre_appreg_oid
+#   tenant_id          = data.azurerm_client_config.current.tenant_id
+#   secret_permissions = ["List", "Get", ]
+# }
 
 // VM credentials
 
@@ -438,6 +437,8 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
   resource_group_name = azurerm_resource_group.rg.name
+
+  depends_on = [module.key-vault]
 }
 
 ### Dynatrace
