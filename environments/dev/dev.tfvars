@@ -20,6 +20,7 @@ PeeringFromHubName     = "pre-recorded-evidence-dev"
 tenant_id      = "yrk32651"
 vm_private_ip  = ["10.40.12.20", "10.40.12.21"]
 cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+cnp_vault_rg   = "cnp-core-infra"
 # data disks
 vm_data_disks = [{
   datadisk1 = {
