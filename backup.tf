@@ -9,7 +9,7 @@ resource "azurerm_recovery_services_vault" "pre_backup" {
 }
 
 # backup policy on vault
-resource "azurerm_backup_policy_file_share" "pre_backup_policy" {
+resource "azurerm_backup_policy_file_share" "pre_backup_policy_file" {
   name                = "${var.product}-backuppolicy-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
