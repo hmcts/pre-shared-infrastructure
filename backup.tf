@@ -9,7 +9,7 @@ resource "azurerm_recovery_services_vault" "pre_backup" {
 }
 
 # backup policy on vault
-resource "azurerm_backup_policy_vm" "pre_backup_policy" {
+resource "azurerm_backup_policy_file_share" "pre_backup_policy" {
   name                = "${var.product}-backuppolicy-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
@@ -63,4 +63,46 @@ resource "azurerm_backup_container_storage_account" "ingestsa_container" {
   resource_group_name = azurerm_resource_group.rg.name
   recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
   storage_account_id  = module.ingestsa_storage_account.storageaccount_id
+}
+
+resource "azurerm_storage_share" "finalsa_share" {
+  name                 = "${var.product}-finalsashare-${var.env}"
+  storage_account_name = module.finalsa_storage_account.storageaccount_name
+  quota                = 1
+}
+
+resource "azurerm_storage_share" "sa_share" {
+  name                 = "${var.product}-sashare-${var.env}"
+  storage_account_name = module.sa_storage_account.storageaccount_name
+  quota                = 1
+}
+
+resource "azurerm_storage_share" "ingestsa_share" {
+  name                 = "${var.product}-ingestsashare-${var.env}"
+  storage_account_name = module.ingestsa_storage_account.storageaccount_name
+  quota                = 1
+}
+
+resource "azurerm_backup_protected_file_share" "finalsa" {
+  resource_group_name       = azurerm_resource_group.rg.name
+  recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
+  source_storage_account_id = module.finalsa_storage_account.storageaccount_id
+  source_file_share_name    = azurerm_storage_share.finalsa_share.name
+  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy.id
+}
+
+resource "azurerm_backup_protected_file_share" "sa" {
+  resource_group_name       = azurerm_resource_group.rg.name
+  recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
+  source_storage_account_id = module.sa_storage_account.storageaccount_id
+  source_file_share_name    = azurerm_storage_share.sa_share.name
+  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy.id
+}
+
+resource "azurerm_backup_protected_file_share" "ingestsa" {
+  resource_group_name       = azurerm_resource_group.rg.name
+  recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
+  source_storage_account_id = module.ingestsa_storage_account.storageaccount_id
+  source_file_share_name    = azurerm_storage_share.ingestsa_share.name
+  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy.id
 }
