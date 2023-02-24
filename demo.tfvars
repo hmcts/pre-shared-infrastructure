@@ -27,3 +27,8 @@ pg_databases = [
 ]
 #Name needs to be different on demo as both demo and test are both peered on the hmcts-hub-nonprodi virtual network
 PeeringFromHubName = "pre-recorded-evidence-demo"
+
+retention_daily   = "7"
+retention_weekly  = "1"
+retention_monthly = "1"
+retention_yearly  = "1"

@@ -24,3 +24,8 @@ pg_databases = [
     name : "pre-pdb-sbox"
   }
 ]
+
+retention_daily   = "7"
+retention_weekly  = "1"
+retention_monthly = "1"
+retention_yearly  = "1"
