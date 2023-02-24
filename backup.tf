@@ -88,7 +88,7 @@ resource "azurerm_backup_protected_file_share" "finalsa" {
   recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
   source_storage_account_id = module.finalsa_storage_account.storageaccount_id
   source_file_share_name    = azurerm_storage_share.finalsa_share.name
-  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy.id
+  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy_file.id
 }
 
 resource "azurerm_backup_protected_file_share" "sa" {
@@ -96,7 +96,7 @@ resource "azurerm_backup_protected_file_share" "sa" {
   recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
   source_storage_account_id = module.sa_storage_account.storageaccount_id
   source_file_share_name    = azurerm_storage_share.sa_share.name
-  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy.id
+  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy_file.id
 }
 
 resource "azurerm_backup_protected_file_share" "ingestsa" {
@@ -104,5 +104,5 @@ resource "azurerm_backup_protected_file_share" "ingestsa" {
   recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
   source_storage_account_id = module.ingestsa_storage_account.storageaccount_id
   source_file_share_name    = azurerm_storage_share.ingestsa_share.name
-  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy.id
+  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy_file.id
 }
