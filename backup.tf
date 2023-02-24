@@ -64,33 +64,3 @@ resource "azurerm_backup_container_storage_account" "ingestsa_container" {
   recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
   storage_account_id  = module.ingestsa_storage_account.storageaccount_id
 }
-
-# snapshot finalsa storage account
-resource "azurerm_snapshot" "snapshot_finalsa" {
-  name                = "${var.product}-finalsasnapshot-${var.env}"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
-  create_option       = "Copy"
-  storage_account_id  = module.finalsa_storage_account.storageaccount_id
-  tags                = var.common_tags
-}
-
-# snapshot sa storage account
-resource "azurerm_snapshot" "snapshot_sa" {
-  name                = "${var.product}-sasnapshot-${var.env}"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
-  create_option       = "Copy"
-  storage_account_id  = module.sa_storage_account.storageaccount_id
-  tags                = var.common_tags
-}
-
-# snapshot ingestsa storage account
-resource "azurerm_snapshot" "snapshot_ingestsa" {
-  name                = "${var.product}-ingestsasnapshot-${var.env}"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
-  create_option       = "Copy"
-  storage_account_id  = module.ingestsa_storage_account.storageaccount_id
-  tags                = var.common_tags
-}
