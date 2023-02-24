@@ -1,108 +1,64 @@
-
-# create recovery services backup vault
-resource "azurerm_recovery_services_vault" "pre_backup" {
-  name                = "${var.product}-backupvault-${var.env}"
+resource "azurerm_data_protection_backup_vault" "pre_backup_vault" {
+  name                = "${var.product}-backup-vault-${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
-  sku                 = "Standard"
-  tags                = var.common_tags
-}
-
-# backup policy on vault
-resource "azurerm_backup_policy_file_share" "pre_backup_policy_file" {
-  name                = "${var.product}-backuppolicy-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
-
-  timezone = "UTC"
-
-  backup {
-    frequency = "Daily"
-    time      = "03:00"
-  }
-
-  retention_daily {
-    count = var.retention_daily
-  }
-
-  retention_weekly {
-    count    = var.retention_weekly
-    weekdays = ["Sunday"]
-  }
-
-  retention_monthly {
-    count    = var.retention_monthly
-    weekdays = ["Sunday"]
-    weeks    = ["Last"]
-  }
-
-  retention_yearly {
-    count    = var.retention_yearly
-    weekdays = ["Sunday"]
-    weeks    = ["Last"]
-    months   = ["January"]
+  datastore_type      = "VaultStore"
+  redundancy          = "LocallyRedundant"
+  identity {
+    type = "SystemAssigned"
   }
 }
 
-# backup finalsa storage account
-resource "azurerm_backup_container_storage_account" "finalsa_container" {
-  resource_group_name = azurerm_resource_group.rg.name
-  recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
-  storage_account_id  = module.finalsa_storage_account.storageaccount_id
+resource "azurerm_role_assignment" "backup_role_finalsa" {
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Backup Contributor"
+  principal_id         = azurerm_data_protection_backup_vault.pre_backup_vault.identity[0].principal_id
 }
 
-# backup sa storage account
-resource "azurerm_backup_container_storage_account" "sa_container" {
-  resource_group_name = azurerm_resource_group.rg.name
-  recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
-  storage_account_id  = module.sa_storage_account.storageaccount_id
+resource "azurerm_role_assignment" "backup_role_sa" {
+  scope                = module.sa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Backup Contributor"
+  principal_id         = azurerm_data_protection_backup_vault.pre_backup_vault.identity[0].principal_id
 }
 
-# backup ingestsa storage account
-resource "azurerm_backup_container_storage_account" "ingestsa_container" {
-  resource_group_name = azurerm_resource_group.rg.name
-  recovery_vault_name = azurerm_recovery_services_vault.pre_backup.name
-  storage_account_id  = module.ingestsa_storage_account.storageaccount_id
+resource "azurerm_role_assignment" "backup_role_ingestsa" {
+  scope                = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Backup Contributor"
+  principal_id         = azurerm_data_protection_backup_vault.pre_backup_vault.identity[0].principal_id
 }
 
-resource "azurerm_storage_share" "finalsa_share" {
-  name                 = "${var.product}-finalsashare-${var.env}"
-  storage_account_name = module.finalsa_storage_account.storageaccount_name
-  quota                = 1
+resource "azurerm_data_protection_backup_policy_blob_storage" "pre_backup_policy_storage" {
+  name               = "${var.product}-backup-policy-${var.env}"
+  vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
+  retention_duration = "P30D"
 }
 
-resource "azurerm_storage_share" "sa_share" {
-  name                 = "${var.product}-sashare-${var.env}"
-  storage_account_name = module.sa_storage_account.storageaccount_name
-  quota                = 1
+resource "azurerm_data_protection_backup_instance_blob_storage" "finalsabackup" {
+  name               = "${var.product}-finalsa-backup-${var.env}"
+  vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
+  location           = var.location
+  storage_account_id = module.finalsa_storage_account.storageaccount_id
+  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.pre_backup_policy_storage.id
+
+  depends_on = [azurerm_role_assignment.backup_role_finalsa]
 }
 
-resource "azurerm_storage_share" "ingestsa_share" {
-  name                 = "${var.product}-ingestsashare-${var.env}"
-  storage_account_name = module.ingestsa_storage_account.storageaccount_name
-  quota                = 1
+resource "azurerm_data_protection_backup_instance_blob_storage" "sabackup" {
+  name               = "${var.product}-sa-backup-${var.env}"
+  vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
+  location           = var.location
+  storage_account_id = module.sa_storage_account.storageaccount_id
+  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.pre_backup_policy_storage.id
+
+  depends_on = [azurerm_role_assignment.backup_role_sa]
 }
 
-resource "azurerm_backup_protected_file_share" "finalsa" {
-  resource_group_name       = azurerm_resource_group.rg.name
-  recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
-  source_storage_account_id = module.finalsa_storage_account.storageaccount_id
-  source_file_share_name    = azurerm_storage_share.finalsa_share.name
-  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy_file.id
-}
+resource "azurerm_data_protection_backup_instance_blob_storage" "ingestsabackup" {
+  name               = "${var.product}-ingestsa-backup-${var.env}"
+  vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
+  location           = var.location
+  storage_account_id = module.ingestsa_storage_account.storageaccount_id
+  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.pre_backup_policy_storage.id
 
-resource "azurerm_backup_protected_file_share" "sa" {
-  resource_group_name       = azurerm_resource_group.rg.name
-  recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
-  source_storage_account_id = module.sa_storage_account.storageaccount_id
-  source_file_share_name    = azurerm_storage_share.sa_share.name
-  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy_file.id
-}
-
-resource "azurerm_backup_protected_file_share" "ingestsa" {
-  resource_group_name       = azurerm_resource_group.rg.name
-  recovery_vault_name       = azurerm_recovery_services_vault.pre_backup.name
-  source_storage_account_id = module.ingestsa_storage_account.storageaccount_id
-  source_file_share_name    = azurerm_storage_share.ingestsa_share.name
-  backup_policy_id          = azurerm_backup_policy_file_share.pre_backup_policy_file.id
+  depends_on = [azurerm_role_assignment.backup_role_ingestsa]
 }
