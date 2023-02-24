@@ -4,6 +4,7 @@ resource "azurerm_data_protection_backup_vault" "pre_backup_vault" {
   location            = var.location
   datastore_type      = "VaultStore"
   redundancy          = "LocallyRedundant"
+  tags                = var.common_tags
   identity {
     type = "SystemAssigned"
   }
