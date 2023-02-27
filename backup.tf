@@ -31,7 +31,7 @@ resource "azurerm_role_assignment" "backup_role_ingestsa" {
 resource "azurerm_data_protection_backup_policy_blob_storage" "pre_backup_policy_storage" {
   name               = "${var.product}-backup-policy-${var.env}"
   vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
-  retention_duration = "P30D"
+  retention_duration = var.retention_duration
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "finalsabackup" {
