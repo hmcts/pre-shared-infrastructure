@@ -49,13 +49,6 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 }
 
 # DTS-PRE-App-<env> Admin perms
-resource "azurerm_role_assignment" "pre_app_admin" {
-  for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
-  scope                = data.azurerm_resource_group.rg.id
-  role_definition_name = "Contributor"
-  principal_id         = each.value
-}
-
 # resource "azurerm_role_assignment" "pre_app_admin" {
 #   for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
 #   scope                = data.azurerm_resource_group.rg.id
@@ -63,14 +56,21 @@ resource "azurerm_role_assignment" "pre_app_admin" {
 #   principal_id         = each.value
 # }
 
-resource "azurerm_role_assignment" "pre_app_admin" {
+resource "azurerm_role_assignment" "pre_app_admin_contributor" {
+  for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Contributor"
+  principal_id         = each.value
+}
+
+resource "azurerm_role_assignment" "pre_app_admin_storage_contributor" {
   for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = each.value
 }
 
-resource "azurerm_role_assignment" "pre_app_admin" {
+resource "azurerm_role_assignment" "pre_app_admin_user_admin" {
   for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "User Access Administrator"

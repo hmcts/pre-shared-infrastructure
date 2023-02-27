@@ -18,7 +18,7 @@ data "azuread_groups" "VideoEditing_groups" {
 }
 
 data "azuread_groups" "contributor_groups" {
-  display_names = ["DTS-PRE-Contributor- (env:${var.env})"]
+  display_names = ["DTS PRE Contributor (env:${var.env})"]
 }
 
 data "azurerm_resource_group" "rg" {
