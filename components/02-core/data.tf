@@ -13,30 +13,13 @@ data "azurerm_user_assigned_identity" "managed-identity" {
   depends_on = [module.key-vault]
 }
 
-data "azuread_groups" "groups" {
+data "azuread_groups" "VideoEditing_groups" {
   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
-# data "azuread_groups" "pre-groups" {
-#   display_names = ["DTS Pre-recorded Evidence"]
-# }
-
-# data "azurerm_key_vault" "keyvault" {
-#   name                = var.env == "prod" ? "${var.prefix}-hmctskv-${var.env}" : "${var.prefix}-${var.env}" #module.key-vault.key_vault_name
-#   resource_group_name = data.azurerm_resource_group.rg.name
-# }
-
-# # Dynatrace
-# data "azurerm_key_vault_secret" "dynatrace-token" {
-#   name         = "dynatrace-token"
-#   key_vault_id = module.key-vault.key_vault_id
-# }
-
-# data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
-#   name         = "dynatrace-tenant-id"
-#   key_vault_id = module.key-vault.key_vault_id
-# }
-
+data "azuread_groups" "contributor_groups" {
+  display_names = ["DTS-PRE-Contributor- (env:${var.env})"]
+}
 
 data "azurerm_resource_group" "rg" {
   name = local.resource_group_name
@@ -72,3 +55,5 @@ data "azurerm_subnet" "datagateway_subnet" {
   resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
+
+# DTS-PRE-App-<env> Admins

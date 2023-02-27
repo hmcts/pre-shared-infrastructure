@@ -13,58 +13,6 @@ module "key-vault" {
   purge_protection_enabled = true
 }
 
-#####################################
-#    DTS Pre-recorded Evidence | Members Access to KV
-#####################################
-# resource "azurerm_key_vault_access_policy" "dts_pre_access" {
-#   key_vault_id = module.key-vault.key_vault_id
-#   # application_id        = var.app_id
-#   object_id               = var.dts_pre_oid
-#   tenant_id               = data.azurerm_client_config.current.tenant_id
-#   key_permissions         = ["List", "Get", ]
-#   certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
-#   secret_permissions      = ["List", "Get", ]
-#   storage_permissions     = ["List", "Get", ]
-# }
-
-# #####################################
-# #    DTS CFT Developers| Members Access to KV
-# #####################################
-# resource "azurerm_key_vault_access_policy" "dts_cft_developers_access" {
-#   key_vault_id = module.key-vault.key_vault_id
-#   # application_id        = var.app_id
-#   object_id               = var.dts_cft_developers_oid
-#   tenant_id               = data.azurerm_client_config.current.tenant_id
-#   key_permissions         = ["List", "Get", ]
-#   certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
-#   secret_permissions      = ["List", "Get", ]
-#   storage_permissions     = ["List", "Get", ]
-
-# }
-
-#####################################
-#    DTS PRE Admin
-#####################################
-# resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
-#   key_vault_id = module.key-vault.key_vault_id
-#   object_id               = var.dts_pre_project_admin
-#   tenant_id               = data.azurerm_client_config.current.tenant_id
-#   key_permissions         = ["List", "Get", ]
-#   certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
-#   secret_permissions      = ["List", "Get", ]
-#   storage_permissions     = ["List", "Get", ]
-# }
-
-# seems to be set already
-# # // Access for the service connection App registrations dts_pre_<env>
-# resource "azurerm_key_vault_access_policy" "appreg_access" {
-#   key_vault_id = module.key-vault.key_vault_id
-#   # application_id        = var.app_id
-#   object_id          = var.dts_pre_appreg_oid
-#   tenant_id          = data.azurerm_client_config.current.tenant_id
-#   secret_permissions = ["List", "Get", ]
-# }
-
 # Disk Encryption 
 
 resource "azurerm_key_vault_key" "pre_kv_key" {

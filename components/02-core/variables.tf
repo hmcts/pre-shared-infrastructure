@@ -65,11 +65,6 @@ variable "DNSResGroup" {
 
 variable "dts_pre_app_admin" {}
 
-# variable "lawSku" {
-#   type    = string
-#   default = "PerGB2018"
-# }
-
 # variable "lawRetention" {
 #   type    = number
 #   default = "30"
@@ -85,14 +80,12 @@ variable "dts_pre_app_admin" {}
 #   default = []
 # }
 
-
 # Dynatrace
 # variable "dynatrace_server" {
 #   description = "The server URL, if you want to configure an alternative communication endpoint."
 #   type        = string
 #   default     = null
 # }
-
 
 # variable "zone" {
 #   description = "Availability Zone for Postgres"
