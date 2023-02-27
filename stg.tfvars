@@ -25,7 +25,4 @@ pg_databases = [
   }
 ]
 
-retention_daily   = "35"
-retention_weekly  = "52"
-retention_monthly = "12"
-retention_yearly  = "7"
+retention_duration = "P5D"
