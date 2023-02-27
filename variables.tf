@@ -228,9 +228,6 @@ variable "PeeringFromHubName" {
   default = "pre-recorded-evidence"
 }
 
-variable "retention_daily" {}
-variable "retention_weekly" {}
-variable "retention_monthly" {}
-variable "retention_yearly" {}
+variable "retention_duration" {}
 
 
