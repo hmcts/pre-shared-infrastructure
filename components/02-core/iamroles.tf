@@ -56,12 +56,12 @@ resource "azurerm_role_assignment" "pre_app_admin" {
   principal_id         = each.value
 }
 
-resource "azurerm_role_assignment" "pre_app_admin" {
-  for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
-  scope                = data.azurerm_resource_group.rg.id
-  role_definition_name = "Storage Account Contributor"
-  principal_id         = each.value
-}
+# resource "azurerm_role_assignment" "pre_app_admin" {
+#   for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
+#   scope                = data.azurerm_resource_group.rg.id
+#   role_definition_name = "Storage Account Contributor"
+#   principal_id         = each.value
+# }
 
 resource "azurerm_role_assignment" "pre_app_admin" {
   for_each             = toset(data.azuread_groups.contributor_groups.object_ids)
