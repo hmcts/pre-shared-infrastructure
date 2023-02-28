@@ -43,5 +43,6 @@ provider "azurerm" {
   subscription_id            = local.hub[local.hub_name].subscription
   skip_provider_registration = "true"
   features {}
-  alias = "hub"
+  alias           = "hub"
+  request_timeout = "20m"
 }
