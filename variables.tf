@@ -170,6 +170,7 @@ variable "hostgroup" {
 
 # Addtional variables required for postgres
 
+// 2 variables with the same value???? see var "product"
 variable "component" {
   default = "pre"
 }
