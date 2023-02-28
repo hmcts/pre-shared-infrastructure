@@ -12,8 +12,6 @@ static String (String envName){
         'az account set -s "DTS-SHAREDSERVICES-${environment}";' +
         '' +
         'az feature register --namespace Microsoft.Compute --name EncryptionAtHost'
-        //'az ams account identity assign -n preams${environment} -g pre-${environment} --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${environment}/resourcegroups/managed-identities-${environment}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${environment}-mi";' +
-        //'az ams account storage set-authentication --storage-auth ManagedIdentity --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${environment}/resourcegroups/managed-identities-${environment}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${environment}-mi" --account-name preams${environment} --resource-group pre-${environment}'
 
     return amsstorageid;
 }
@@ -21,32 +19,4 @@ static String (String envName){
 def product = 'pre'
 
 withParameterizedInfraPipeline(product, 'sbox', 'sbox') {
-//
-  // before('buildinfra:sbox') {
-  //   sh "echo 'amsid'"
-  //   sh amsstorageid("sbox")
-  // }
-
-
 }
-// // properties([
-// //     parameters([
-// //         string(name: 'PRODUCT_NAME', defaultValue: 'pre', description: 'Pre-recorded Evidence')
-// //     ])
-// // ])
-
-// // withParameterizedInfraPipeline(params.PRODUCT_NAME, 'component', 'sbox') {
-// // }
-// // properties([
-// //   parameters([
-// //     choice(name: 'ENVIRONMENT', choices:  'sbox', description: 'Environment where code should be build and deployed')
-// //     choice(name: 'SUBSCRIPTION', choices: 'sbox', description: 'Subscription where code should be deployed to')
-// //   ])
-// // ])
-
-
-// def component = "shared-infrastructure"
-// def product = "pre"
-
-// withInfraPipeline(product) {
-//     enableSlackNotifications('#pre-builds')
