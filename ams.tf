@@ -80,7 +80,7 @@ resource "azapi_update_resource" "ams_auth" {
           id   = module.ingestsa_storage_account.storageaccount_id
           type = "Primary",
           identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-stg-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-stg-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-stg-mi"
             useSystemAssignedIdentity = "false"
           }
         },
@@ -89,7 +89,7 @@ resource "azapi_update_resource" "ams_auth" {
           id   = module.finalsa_storage_account.storageaccount_id
           type = "Secondary",
           identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-stg-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-stg-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-stg-mi"
             useSystemAssignedIdentity = "false"
           }
         }
