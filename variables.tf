@@ -37,7 +37,7 @@ variable "bastion_snet_address" {}
 
 variable "data_gateway_snet_address" {}
 
-variable "mgmt_net_name" {}
+# variable "mgmt_net_name" {}
 
 variable "mgmt_net_rg_name" {}
 

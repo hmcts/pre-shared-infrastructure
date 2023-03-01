@@ -31,7 +31,7 @@ data "azurerm_subnet" "pipelineagent_subnet" {
 module "sa_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = replace("${var.product}sa${var.env}", "-", "")
+  storage_account_name            = "${var.product}sa${var.env}"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = azurerm_resource_group.rg.location
   account_kind                    = "StorageV2"
@@ -160,4 +160,157 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
   name         = "ingestsa-storage-account-connection-string"
   value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
   key_vault_id = module.key-vault.key_vault_id
+}
+resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
+  name                       = module.sa_storage_account.storageaccount_name
+  target_resource_id         = "${module.sa_storage_account.storageaccount_id}/blobServices/default"
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "StorageRead"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageWrite"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageDelete"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  metric {
+    category = "Transaction"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+}
+
+resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
+  name                       = module.finalsa_storage_account.storageaccount_name
+  target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "StorageRead"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageWrite"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageDelete"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  metric {
+    category = "Transaction"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+}
+
+
+resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
+  name                       = module.ingestsa_storage_account.storageaccount_name
+  target_resource_id         = "${module.ingestsa_storage_account.storageaccount_id}/blobServices/default"
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "StorageRead"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageWrite"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageDelete"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  metric {
+    category = "Transaction"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+}
+
+module "log_analytics_workspace" {
+  source      = "git@github.com:hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
+  environment = var.env
+}
+
+#Storage Blob Data Contributor Role Assignment for Managed Identity
+resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
+  scope                            = azurerm_resource_group.rg.id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "mi_storage_1" {
+  scope                            = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  skip_service_principal_aad_check = true
+}
+
+resource "azurerm_role_assignment" "mi_storage_2" {
+  scope                            = module.finalsa_storage_account.storageaccount_id
+  role_definition_name             = "Storage Blob Data Contributor"
+  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+  skip_service_principal_aad_check = true
 }

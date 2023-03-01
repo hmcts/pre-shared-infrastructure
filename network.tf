@@ -155,3 +155,27 @@ resource "azurerm_subnet_route_table_association" "dg_subnet" {
   subnet_id      = azurerm_subnet.datagateway_subnet.id
   route_table_id = azurerm_route_table.postgres.id
 }
+
+resource "azurerm_monitor_diagnostic_setting" "vnet" {
+
+  name                       = azurerm_virtual_network.vnet.name
+  target_resource_id         = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "VMProtectionAlerts"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+}
