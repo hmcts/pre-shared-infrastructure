@@ -65,25 +65,25 @@ variable "jenkins_ptlsbox_oid" {
 variable "jenkins_ptlsbox_appid" {
   default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
 }
-variable "managed_oid" {}
-variable "dts_pre_oid" {}
-variable "dts_cft_developers_oid" {}
-variable "dts_pre_project_admin" {}
-variable "pre_mi_principal_id" {}
-variable "pre_mi_tenant_id" {}
+# variable "managed_oid" {}
+# variable "dts_pre_oid" {}
+# variable "dts_cft_developers_oid" {}
+# variable "dts_pre_project_admin" {}
+# variable "pre_mi_principal_id" {}
+# variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
-variable "devops_admin" {}
+# variable "devops_admin" {}
 # variable "providernamespace" {}
 # variable "featurename" {}
-variable "lawSku" {
-  type    = string
-  default = "PerGB2018"
-}
+# variable "lawSku" {
+#   type    = string
+#   default = "PerGB2018"
+# }
 
-variable "lawRetention" {
-  type    = number
-  default = "30"
-}
+# variable "lawRetention" {
+#   type    = number
+#   default = "30"
+# }
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
@@ -132,11 +132,6 @@ variable "ip_rules" {
     "51.140.148.0/28",
     "51.140.211.0/28",
     "51.140.212.224/27",
-    "86.24.226.11",  #Chris
-    "82.21.185.208", # Oli
-    "62.31.90.131",  #Indy
-    "82.12.61.131",  #Ayisha
-    "86.179.180.2",  #Darren
   ]
 }
 
