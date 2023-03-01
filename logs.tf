@@ -111,6 +111,7 @@ resource "azurerm_monitor_diagnostic_setting" "nic" {
     }
   }
 }
+
 resource "azurerm_monitor_diagnostic_setting" "vnet" {
 
   name                       = azurerm_virtual_network.vnet.name
