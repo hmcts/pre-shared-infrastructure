@@ -278,16 +278,16 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
 #####################################
-resource "azurerm_key_vault_access_policy" "dts_pre_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id               = data.azurerm_client_config.current.object_id
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = ["List", "Get", ]
-  certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
-  secret_permissions      = ["List", "Get", ]
-  storage_permissions     = ["List", "Get", ]
-}
+# resource "azurerm_key_vault_access_policy" "dts_pre_access" {
+#   key_vault_id = module.key-vault.key_vault_id
+#   # application_id        = var.app_id
+#   object_id               = data.azurerm_client_config.current.object_id
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+#   key_permissions         = ["List", "Get", ]
+#   certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
+#   secret_permissions      = ["List", "Get", ]
+#   storage_permissions     = ["List", "Get", ]
+# }
 
 #####################################
 #    DTS CFT Developers| Members Access to KV
