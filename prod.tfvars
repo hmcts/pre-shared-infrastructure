@@ -10,7 +10,7 @@ num_vid_edit_vms           = 1
 mgmt_net_name          = "ss-ptl-vnet"
 mgmt_net_rg_name       = "ss-ptl-network-rg"
 mgmt_subscription_id   = "6c4d2513-a873-41b4-afdd-b05a33206631"
-managed_oid            = "2008e85a-5f57-4a54-870e-abbacd6b4d09" # 2008e85a-5f57-4a54-870e-abbacd6b4d09
+managed_oid            = "2008e85a-5f57-4a54-870e-abbacd6b4d09"
 dts_pre_oid            = "b1fd4154-355f-4683-a795-d09cdb814d16"
 dts_cft_developers_oid = "d5c01893-b8bc-40ce-926c-d6faf53e0af5"
 power_app_user_oid     = "2757c27a-aa98-4cdf-9aaa-90cf47d0656c"
@@ -22,8 +22,3 @@ pre_mi_tenant_id       = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid     = "4f732c4d-d113-4a09-928d-6c035a26629b"
 dts_pre_ent_appreg_oid = "bec31833-3791-4d2a-80cc-871f5582f128"
 PeeringFromHubName     = "pre-recorded-evidence-prod"
-pg_databases = [
-  {
-    name : "pre-pdb-prod"
-  }
-]
