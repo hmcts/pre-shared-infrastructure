@@ -13,8 +13,6 @@ variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
 
-
-
 variable "common_tags" {
   type = map(string)
 }
@@ -36,8 +34,6 @@ variable "privatendpt_snet_address" {}
 variable "bastion_snet_address" {}
 
 variable "data_gateway_snet_address" {}
-
-# variable "mgmt_net_name" {}
 
 variable "mgmt_net_rg_name" {}
 
@@ -65,25 +61,8 @@ variable "jenkins_ptlsbox_oid" {
 variable "jenkins_ptlsbox_appid" {
   default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
 }
-# variable "managed_oid" {}
-# variable "dts_pre_oid" {}
-# variable "dts_cft_developers_oid" {}
-# variable "dts_pre_project_admin" {}
-# variable "pre_mi_principal_id" {}
-# variable "pre_mi_tenant_id" {}
-variable "dts_pre_app_admin" {}
-# variable "devops_admin" {}
-# variable "providernamespace" {}
-# variable "featurename" {}
-# variable "lawSku" {
-#   type    = string
-#   default = "PerGB2018"
-# }
 
-# variable "lawRetention" {
-#   type    = number
-#   default = "30"
-# }
+variable "dts_pre_app_admin" {}
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
@@ -154,8 +133,6 @@ variable "dynatrace_server" {
   default     = null
 }
 
-
-
 variable "server" {
   default = null
 }
@@ -204,8 +181,6 @@ variable "PrivateDNSZone" {
   default = "private.postgres.database.azure.com"
 }
 
-# variable "dts_pre_appreg_oid" {}
-
 variable "dts_pre_ent_appreg_oid" {}
 
 variable "cors_rules" {
@@ -231,5 +206,3 @@ variable "cors_rules" {
 variable "PeeringFromHubName" {
   default = "pre-recorded-evidence"
 }
-
-
