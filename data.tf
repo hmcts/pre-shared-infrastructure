@@ -7,8 +7,8 @@ data "azurerm_log_analytics_workspace" "loganalytics" {
 }
 
 data "azurerm_user_assigned_identity" "managed-identity" {
-  name                = "${var.product}-stg-mi"
-  resource_group_name = "managed-identities-stg-rg"
+  name                = "${var.product}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
   depends_on          = [module.key-vault]
 }
 
