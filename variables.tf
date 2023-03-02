@@ -50,6 +50,8 @@ variable "datagateway_spec" {
   default = "Standard_F8s_v2"
 }
 
+variable "mgmt_net_name" {}
+
 variable "mgmt_subscription_id" {} // set by jenkins library
 
 variable "power_app_user_oid" {
