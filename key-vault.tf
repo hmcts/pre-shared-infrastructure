@@ -1,5 +1,3 @@
-data "azurerm_client_config" "current" {}
-
 module "key-vault" {
   source                          = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name                            = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
@@ -57,9 +55,7 @@ resource "azurerm_key_vault_secret" "vm_password_secret" {
   key_vault_id = module.key-vault.key_vault_id
 }
 
-## Datagateway
-
-
+# Datagateway
 resource "random_string" "dtgtwy_username" {
   count   = var.num_datagateway
   length  = 4
@@ -138,18 +134,6 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
     "UnwrapKey"
   ]
 }
-
-
-
-### Dynatrace
-
-
-# data "azurerm_key_vault" "keyvault" {
-#   name                = module.key-vault.key_vault_name
-#   resource_group_name = azurerm_resource_group.rg.name
-# }
-
-
 
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name

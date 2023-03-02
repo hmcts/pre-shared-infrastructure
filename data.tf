@@ -1,9 +1,10 @@
+data "azurerm_client_config" "current" {}
+
 data "azurerm_log_analytics_workspace" "loganalytics" {
   provider            = azurerm.oms
   name                = module.log_analytics_workspace.name
   resource_group_name = module.log_analytics_workspace.resource_group_name
 }
-
 
 data "azurerm_user_assigned_identity" "managed-identity" {
   name                = "${var.product}-stg-mi"

@@ -12,6 +12,10 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
+  managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
+  role_assignments = [
+    "Storage Blob Data Contributor"
+  ]
 
   common_tags = var.common_tags
 
