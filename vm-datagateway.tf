@@ -133,18 +133,18 @@ resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
 }
 
 module "dynatrace-oneagent-dtgtway" {
+  source               = "git@github.com:hmcts/terraform-module-vm-bootstrap.git?ref=master"
+  os_type              = "Windows"
+  virtual_machine_id   = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+  virtual_machine_type = "vm"
 
-  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
-  count                      = var.num_datagateway
-  tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
-  token                      = data.azurerm_key_vault_secret.dynatrace-token.value
-  virtual_machine_os         = "Windows"
-  virtual_machine_type       = "vm"
-  virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-  auto_upgrade_minor_version = true
-  server                     = var.server
-  hostgroup                  = var.hostgroup
-  tags                       = var.common_tags
+  # Dynatrace OneAgent
+  dynatrace_hostgroup = var.hostgroup
+  dynatrace_server    = var.server
+  dynatrace_tenant_id = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
+  dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
+
+  tags = var.common_tags
 
 }
 
