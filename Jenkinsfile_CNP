@@ -50,6 +50,7 @@ def branchesToSync = ['demo']
 
 withInfraPipeline(product) {
   enableSlackNotifications('#pre-builds')
+  syncBranchesWithMaster(branchesToSync)
 
   before('buildinfra:stg') {
     sh "echo 'unlock RG stg'"
