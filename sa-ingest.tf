@@ -17,24 +17,10 @@ module "ingestsa_storage_account" {
     "Storage Blob Data Contributor"
   ]
 
-  depends_on  = [module.key-vault]
+  private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
+
   common_tags = var.common_tags
 
-}
-
-resource "azurerm_private_endpoint" "ingestsa" {
-  name                = "${var.product}stream-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
-
-  private_service_connection {
-    name                           = "${var.product}stream-psc-${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
-    subresource_names              = ["blob"]
-  }
-  tags = var.common_tags
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {

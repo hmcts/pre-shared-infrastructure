@@ -17,24 +17,9 @@ module "sa_storage_account" {
     "Storage Blob Data Contributor"
   ]
 
+  private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
+
   common_tags = var.common_tags
-
-  depends_on = [module.key-vault]
-}
-
-resource "azurerm_private_endpoint" "sa" {
-  name                = "${var.product}sa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
-
-  private_service_connection {
-    name                           = "${var.product}sa-psc-${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.sa_storage_account.storageaccount_id
-    subresource_names              = ["blob"]
-  }
-  tags = var.common_tags
 }
 
 # Store the connection string for the SAs in KV
