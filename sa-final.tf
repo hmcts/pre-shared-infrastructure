@@ -14,6 +14,7 @@ module "finalsa_storage_account" {
   enable_data_protection          = true
   cors_rules                      = var.cors_rules
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
+  private_endpoint_enabled        = true
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
@@ -23,20 +24,20 @@ module "finalsa_storage_account" {
   depends_on  = [module.key-vault]
 }
 
-resource "azurerm_private_endpoint" "finalsa" {
-  name                = "${var.product}finalsa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+# resource "azurerm_private_endpoint" "finalsa" {
+#   name                = "${var.product}finalsa-pe-${var.env}"
+#   resource_group_name = azurerm_resource_group.rg.name
+#   location            = azurerm_resource_group.rg.location
+#   subnet_id           = azurerm_subnet.endpoint_subnet.id
 
-  private_service_connection {
-    name                           = "${var.product}finalsa-psc-${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
-    subresource_names              = ["blob"]
-  }
-  tags = var.common_tags
-}
+#   private_service_connection {
+#     name                           = "${var.product}finalsa-psc-${var.env}"
+#     is_manual_connection           = false
+#     private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
+#     subresource_names              = ["blob"]
+#   }
+#   tags = var.common_tags
+# }
 
 resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" {
   name         = "finalsa-storage-account-connection-string"

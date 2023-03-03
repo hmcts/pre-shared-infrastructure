@@ -118,19 +118,19 @@ resource "azurerm_virtual_machine_extension" "dtgtwydaa-agent" {
 }
 
 
-# Add logging and monitoring extensions
-resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
-  depends_on                 = [azurerm_virtual_machine_extension.dtgtwydaa-agent]
-  name                       = "AzureMonitorWindowsAgent"
-  count                      = var.num_datagateway
-  virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
-  publisher                  = "Microsoft.Azure.Monitor"
-  type                       = "AzureMonitorWindowsAgent"
-  type_handler_version       = "1.5"
-  automatic_upgrade_enabled  = true
-  auto_upgrade_minor_version = true
-  tags                       = var.common_tags
-}
+# # Add logging and monitoring extensions
+# resource "azurerm_virtual_machine_extension" "dtgtwymonitor-agent" {
+#   depends_on                 = [azurerm_virtual_machine_extension.dtgtwydaa-agent]
+#   name                       = "AzureMonitorWindowsAgent"
+#   count                      = var.num_datagateway
+#   virtual_machine_id         = azurerm_windows_virtual_machine.dtgtwyvm.*.id[count.index]
+#   publisher                  = "Microsoft.Azure.Monitor"
+#   type                       = "AzureMonitorWindowsAgent"
+#   type_handler_version       = "1.5"
+#   automatic_upgrade_enabled  = true
+#   auto_upgrade_minor_version = true
+#   tags                       = var.common_tags
+# }
 
 module "dynatrace-oneagent-datagateway" {
   count = var.num_datagateway
