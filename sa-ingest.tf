@@ -17,7 +17,7 @@ module "ingestsa_storage_account" {
     "Storage Blob Data Contributor"
   ]
 
-  private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
+  #private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
   common_tags = var.common_tags
 
