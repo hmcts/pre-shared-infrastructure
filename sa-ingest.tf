@@ -21,6 +21,7 @@ module "ingestsa_storage_account" {
 
   common_tags = var.common_tags
 
+  depends_on          = [module.key-vault]
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {

@@ -21,6 +21,8 @@ module "finalsa_storage_account" {
   #private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
   common_tags = var.common_tags
+
+  depends_on          = [module.key-vault]
 }
 
 resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" {
