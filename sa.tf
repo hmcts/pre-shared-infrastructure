@@ -43,9 +43,9 @@ module "sa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
 
-  common_tags = var.common_tags
+  private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
-  depends_on = [module.key-vault]
+  common_tags = var.common_tags
 }
 
 module "finalsa_storage_account" {
@@ -53,7 +53,7 @@ module "finalsa_storage_account" {
   env                             = var.env
   storage_account_name            = replace("${var.product}finalsa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
-  location                        = var.location #"UKWest" #As recommended by MS
+  location                        = var.location
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
@@ -62,6 +62,8 @@ module "finalsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
+
+  private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
   cors_rules = var.cors_rules
 
@@ -74,7 +76,7 @@ module "ingestsa_storage_account" {
   env                             = var.env
   storage_account_name            = replace("${var.product}ingestsa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
-  location                        = var.location #"UKWest" #As recommended by MS azurerm_resource_group.rg.location
+  location                        = var.location
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
@@ -84,64 +86,9 @@ module "ingestsa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
 
-  depends_on  = [module.key-vault]
+  private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
+
   common_tags = var.common_tags
-
-
-}
-
-###################################################
-#                PRIVATE ENDPOINTS FOR STORAGES   
-###################################################
-resource "azurerm_private_endpoint" "sa" {
-  name                = "${var.product}sa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
-
-  private_service_connection {
-    name                           = "${var.product}sa-psc-${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.sa_storage_account.storageaccount_id
-    subresource_names              = ["blob"]
-  }
-  tags = var.common_tags
-}
-
-# ###################################################
-# #                PRIVATE ENDPOINTS FOR STORAGES   
-# ###################################################
-resource "azurerm_private_endpoint" "finalsa" {
-  name                = "${var.product}finalsa-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
-
-  private_service_connection {
-    name                           = "${var.product}finalsa-psc-${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
-    subresource_names              = ["blob"]
-  }
-  tags = var.common_tags
-}
-
-###################################################
-#                PRIVATE ENDPOINTS FOR STORAGES    
-###################################################
-resource "azurerm_private_endpoint" "ingestsa" {
-  name                = "${var.product}stream-pe-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
-
-  private_service_connection {
-    name                           = "${var.product}stream-psc-${var.env}"
-    is_manual_connection           = false
-    private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
-    subresource_names              = ["blob"]
-  }
-  tags = var.common_tags
 }
 
 # Store the connection string for the SAs in KV
