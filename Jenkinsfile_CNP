@@ -1,6 +1,6 @@
 #!groovy
 //noinspection GroovyUnusedAssignment
-@Library("Infrastructure@use-dev-sub") _
+@Library("Infrastructure") _
 
 def product = "pre"
 def component = "shared-infrastructure"

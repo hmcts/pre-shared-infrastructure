@@ -20,6 +20,8 @@ module "sa_storage_account" {
   #private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
   common_tags = var.common_tags
+
+  depends_on          = [module.key-vault]
 }
 
 # Store the connection string for the SAs in KV
