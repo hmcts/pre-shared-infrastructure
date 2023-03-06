@@ -1,7 +1,3 @@
-# ###################################################
-# #                EDIT VIRTUAL MACHINE                 #
-# ###################################################
-
 resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
   name                = "${var.product}-videditnic${count.index}-${var.env}"
