@@ -8,7 +8,7 @@ module "data_store_db_v14" {
   env    = var.env
 
   product       = var.product
-  component     = var.component
+  component     = var.product
   business_area = var.project
 
   common_tags = var.common_tags
@@ -65,5 +65,5 @@ resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)
   resource_group_name   = var.DNSResGroup
   private_dns_zone_name = var.PrivateDNSZone
-  virtual_network_id    = azurerm_virtual_network.vnet.id
+  virtual_network_id    = data.azurerm_virtual_network.vnet.id
 }
