@@ -59,7 +59,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   allow_extension_operations = true
   tags                       = var.common_tags
 
-  depends_on = [null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des]
+  depends_on = [module.key-vault, azurerm_disk_encryption_set.pre-des]
 }
 
 # # Datadisk 
