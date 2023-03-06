@@ -36,27 +36,27 @@ data "azurerm_subnet" "pipelineagent_subnet" {
 }
 
 data "azurerm_resource_group" "rg" {
-  name = "${var.prefix}-${var.env}"
+  name = "${var.product}-${var.env}"
 }
 
 data "azurerm_virtual_network" "vnet" {
-  name                = "${var.prefix}-vnet-${var.env}"
+  name                = "${var.product}-vnet-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 data "azurerm_subnet" "endpoint_subnet" {
-  name                 = "${var.prefix}-privatendpt-snet-${var.env}"
+  name                 = "${var.product}-privatendpt-snet-${var.env}"
   resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
 data "azurerm_subnet" "videoedit_subnet" {
-  name                 = "${var.prefix}-videoedit-snet-${var.env}"
+  name                 = "${var.product}-videoedit-snet-${var.env}"
   resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
 data "azurerm_subnet" "datagateway_subnet" {
-  name                 = "${var.prefix}-datagateway-snet-${var.env}"
+  name                 = "${var.product}-datagateway-snet-${var.env}"
   resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
+  virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
