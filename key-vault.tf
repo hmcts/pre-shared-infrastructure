@@ -12,8 +12,14 @@ module "key-vault" {
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   purge_protection_enabled        = true
 }
+resource "azurerm_key_vault_access_policy" "jenkins_access" {
+  key_vault_id                     = module.key-vault.key_vault_id
+  tenant_id                        = data.azurerm_client_config.current.tenant_id
+  key_permissions                  = ["List", "Update", "Create", "Import", "Delete", "Get", ]
+  secret_permissions               = ["List", "Set", "Delete", "Get", ]
+  object_id                        = data.azurerm_client_config.current.object_id
+}
 
-// Power App Permissions
 resource "azurerm_key_vault_access_policy" "power_app_access" {
   key_vault_id            = module.key-vault.key_vault_id
   object_id               = var.power_app_user_oid
@@ -24,7 +30,6 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 }
 
 // VM credentials
-
 resource "random_string" "vm_username" {
   count   = var.num_vid_edit_vms
   length  = 4
