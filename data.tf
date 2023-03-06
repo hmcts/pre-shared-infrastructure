@@ -57,6 +57,6 @@ data "azurerm_subnet" "videoedit_subnet" {
 
 data "azurerm_subnet" "datagateway_subnet" {
   name                 = "${var.product}-datagateway-snet-${var.env}"
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }

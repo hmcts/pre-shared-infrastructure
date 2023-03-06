@@ -23,7 +23,7 @@ module "data_store_db_v14" {
   backup_retention_days = 35
 
   location             = var.location
-  resource_group_name  = azurerm_resource_group.rg.name
+  resource_group_name  = data.azurerm_resource_group.rg.name
   pgsql_admin_username = var.pgsql_admin_username
   pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
