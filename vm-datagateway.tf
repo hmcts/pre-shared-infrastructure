@@ -7,7 +7,7 @@ resource "azurerm_network_interface" "dtgwnic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.datagateway_subnet.id
+    subnet_id                     = data.azurerm_subnet.datagateway_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
   tags = var.common_tags

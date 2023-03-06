@@ -6,7 +6,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.videoeditvm_subnet.id
+    subnet_id                     = data.azurerm_subnet.videoedit_subnet.id
     private_ip_address_allocation = "Dynamic"
   }
   tags = var.common_tags
