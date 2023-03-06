@@ -13,11 +13,11 @@ module "key-vault" {
   purge_protection_enabled        = true
 }
 resource "azurerm_key_vault_access_policy" "jenkins_access" {
-  key_vault_id                     = module.key-vault.key_vault_id
-  tenant_id                        = data.azurerm_client_config.current.tenant_id
-  key_permissions                  = ["List", "Update", "Create", "Import", "Delete", "Get", ]
-  secret_permissions               = ["List", "Set", "Delete", "Get", ]
-  object_id                        = data.azurerm_client_config.current.object_id
+  key_vault_id       = module.key-vault.key_vault_id
+  tenant_id          = data.azurerm_client_config.current.tenant_id
+  key_permissions    = ["List", "Update", "Create", "Import", "Delete", "Get", ]
+  secret_permissions = ["List", "Set", "Delete", "Get", ]
+  object_id          = var.jenkins_AAD_objectId
 }
 
 resource "azurerm_key_vault_access_policy" "power_app_access" {
