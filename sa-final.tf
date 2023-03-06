@@ -2,7 +2,7 @@ module "finalsa_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = replace("${var.product}finalsa${var.env}", "-", "")
-  resource_group_name             = azurerm_resource_group.rg.name
+  resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location #"UKWest" #As recommended by MS
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier

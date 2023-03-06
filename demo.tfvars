@@ -21,6 +21,6 @@ pre_mi_tenant_id       = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid     = "d47c3c69-6bec-4725-ac2d-45d2c21cbd7b"
 dts_pre_ent_appreg_oid = "863c5fa3-df86-4ebc-8b0f-cd2390028497"
 #Name needs to be different on demo as both demo and test are both peered on the hmcts-hub-nonprodi virtual network
-PeeringFromHubName = "pre-recorded-evidence-demo"
+# PeeringFromHubName = "pre-recorded-evidence-demo"
 
 retention_duration = "P14D"

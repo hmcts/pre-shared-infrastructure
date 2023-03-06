@@ -1,8 +1,8 @@
 resource "azurerm_network_interface" "nic" {
   count               = var.num_vid_edit_vms
   name                = "${var.product}-videditnic${count.index}-${var.env}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   ip_configuration {
     name                          = "internal"
@@ -16,8 +16,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   count                      = var.num_vid_edit_vms
   name                       = "${var.product}-videditvm${count.index}-${var.env}"
   computer_name              = "PREVIDED0${count.index}-${var.env}"
-  resource_group_name        = azurerm_resource_group.rg.name
-  location                   = azurerm_resource_group.rg.location
+  resource_group_name        = data.azurerm_resource_group.rg.name
+  location                   = data.azurerm_resource_group.rg.location
   size                       = var.vid_edit_vm_spec
   admin_username             = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   admin_password             = random_password.vm_password[count.index].result
@@ -75,8 +75,8 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
 resource "azurerm_managed_disk" "vmdatadisk" {
   count                  = var.num_vid_edit_vms
   name                   = "${var.product}-videditvm${count.index}-datadisk-${var.env}"
-  location               = azurerm_resource_group.rg.location
-  resource_group_name    = azurerm_resource_group.rg.name
+  location               = data.azurerm_resource_group.rg.location
+  resource_group_name    = data.azurerm_resource_group.rg.name
   storage_account_type   = "StandardSSD_LRS"
   create_option          = "Empty"
   disk_size_gb           = 1000

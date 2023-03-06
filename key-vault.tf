@@ -5,7 +5,7 @@ module "key-vault" {
   env                             = var.env
   tenant_id                       = data.azurerm_client_config.current.tenant_id
   object_id                       = var.jenkins_AAD_objectId
-  resource_group_name             = azurerm_resource_group.rg.name
+  resource_group_name             = data.azurerm_resource_group.rg.name
   product_group_name              = "DTS Pre-recorded Evidence"
   common_tags                     = var.common_tags
   create_managed_identity         = true
@@ -113,8 +113,8 @@ resource "azurerm_key_vault_key" "pre_kv_key" {
 
 resource "azurerm_disk_encryption_set" "pre-des" {
   name                = "pre-des" #"pre-des-${var.env}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   key_vault_key_id    = azurerm_key_vault_key.pre_kv_key.id
   identity {
     type = "SystemAssigned"
@@ -137,7 +137,7 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
 
 data "azurerm_key_vault" "keyvault" {
   name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = data.azurerm_resource_group.rg.name
   depends_on          = [module.key-vault]
 }
 
