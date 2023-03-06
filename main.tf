@@ -10,12 +10,6 @@ locals {
   mgmt_network_rg_name = var.mgmt_net_rg_name
 }
 
-data "azurerm_resource_group" "rg" {
-  name     = "${var.product}-${var.env}"
-  location = var.location
-  tags     = var.common_tags
-}
-
 resource "azurerm_role_assignment" "pre_reader_mi" {
   scope                            = data.azurerm_resource_group.rg.id
   role_definition_name             = "Reader"
