@@ -36,9 +36,7 @@ data "azurerm_subnet" "pipelineagent_subnet" {
 }
 
 data "azurerm_resource_group" "rg" {
-  name     = "${var.product}-${var.env}"
-  location = var.location
-  tags     = var.common_tags
+  name = "${var.product}-${var.env}"
 }
 
 data "azurerm_virtual_network" "vnet" {
