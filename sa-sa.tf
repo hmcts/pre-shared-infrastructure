@@ -21,7 +21,7 @@ module "sa_storage_account" {
 
   common_tags = var.common_tags
 
-  depends_on          = [module.key-vault]
+  depends_on = [module.key-vault]
 }
 
 # Store the connection string for the SAs in KV

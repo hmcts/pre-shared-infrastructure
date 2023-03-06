@@ -1,6 +1,3 @@
-###################################################
-#            Datagateway NETWORK INTERFACE CARD               #
-###################################################
 resource "azurerm_network_interface" "dtgwnic" {
   count                         = var.num_datagateway
   name                          = "${var.product}-dtgwnic${count.index}-${var.env}"
@@ -16,9 +13,6 @@ resource "azurerm_network_interface" "dtgwnic" {
   tags = var.common_tags
 }
 
-###################################################
-#                DATAGATEWAY VIRTUAL MACHINE                 #
-###################################################
 resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   count                      = var.num_datagateway
   zone                       = 2
