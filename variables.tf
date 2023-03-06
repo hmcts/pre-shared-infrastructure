@@ -207,5 +207,3 @@ variable "cors_rules" {
 # }
 
 variable "retention_duration" {}
-
-variable "jenkins_AAD_objectId" {}
