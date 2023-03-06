@@ -15,6 +15,6 @@ dts_pre_app_admin = "d055ba21-5814-4278-8752-aaffa7eaac62" #DTS-PRE-App-Sbx Admi
 
 # dts_pre_appreg_oid     = "b521e9e3-58e1-4c25-98b5-7f3157f68c16" # dts_pre_devapp reg
 dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev enterprise app/sp
-PeeringFromHubName     = "pre-recorded-evidence-dev"
-mgmt_subscription_id   = "6c4d2513-a873-41b4-afdd-b05a33206631"
-retention_duration     = "P8D"
+# PeeringFromHubName     = "pre-recorded-evidence-dev"
+mgmt_subscription_id = "6c4d2513-a873-41b4-afdd-b05a33206631"
+retention_duration   = "P8D"
