@@ -21,8 +21,8 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = data.azurerm_resource_group.rg.location
   size                       = var.datagateway_spec
-  admin_username             = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
-  admin_password             = random_password.dtgtwy_password[count.index].result
+  admin_username             = "Dtgtwy${count.index}_${data.azurerm_key_vault_secret.dtgtwy_username[count.index].value}"
+  admin_password             = data.azurerm_key_vault_secret.dtgtwy_password[count.index].value
   network_interface_ids      = [azurerm_network_interface.dtgwnic[count.index].id]
   encryption_at_host_enabled = true
 
@@ -30,11 +30,11 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
     name                   = "${var.product}dtgtwy${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
     storage_account_type   = "Standard_LRS"
-    disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
+    disk_encryption_set_id = data.azurerm_disk_encryption_set.pre-des.id
   }
   identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = module.key-vault.managed_identity_id
+    identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
   }
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
@@ -47,7 +47,6 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   provision_vm_agent         = true
   allow_extension_operations = true
   tags                       = var.common_tags
-  depends_on                 = [module.key-vault]
 }
 
 resource "azurerm_managed_disk" "dtgtwaydatadisk" {
@@ -59,7 +58,7 @@ resource "azurerm_managed_disk" "dtgtwaydatadisk" {
   create_option          = "Empty"
   disk_size_gb           = 1000
   zone                   = "2"
-  disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
+  disk_encryption_set_id = data.azurerm_disk_encryption_set.pre-des.id
   tags                   = var.common_tags
 }
 
