@@ -1,8 +1,3 @@
-
-////////////////////////////////
-// DB version 14.4              //
-////////////////////////////////
-
 module "data_store_db_v14" {
   source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
@@ -32,11 +27,6 @@ module "data_store_db_v14" {
 
 }
 
-////////////////////////////////
-// Populate Vault with DB info (the password is output from the module, the username is a standard var)
-////////////////////////////////
-
-#using own var for this
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
   name         = "postgresdb-username"
   value        = var.pgsql_admin_username

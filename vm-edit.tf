@@ -15,11 +15,11 @@ resource "azurerm_windows_virtual_machine" "vm" {
   zone                       = 2
   count                      = var.num_vid_edit_vms
   name                       = "${var.product}-videditvm${count.index}-${var.env}"
-  computer_name              = "PREVIDED0${count.index}-${var.env}"
+  computer_name              = "EDIT${count.index}-${var.env}"
   resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = data.azurerm_resource_group.rg.location
   size                       = var.vid_edit_vm_spec
-  admin_username             = "videdit${count.index}_${data.azurerm_key_vault_secret.vm_username[count.index].value}}"
+  admin_username             = "${data.azurerm_key_vault_secret.vm_username[count.index].value}}"
   admin_password             = data.azurerm_key_vault_secret.vm_password[count.index].value
   network_interface_ids      = [azurerm_network_interface.nic[count.index].id]
   encryption_at_host_enabled = true
