@@ -10,7 +10,7 @@ module "finalsa_storage_account" {
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
-  default_action                  = "Deny"
+  default_action                  = "Allow"
   enable_data_protection          = true
   cors_rules                      = var.cors_rules
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
@@ -30,44 +30,44 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
 }
 
 
-resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
-  name                       = module.finalsa_storage_account.storageaccount_name
-  target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"
-  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+# resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
+#   name                       = module.finalsa_storage_account.storageaccount_name
+#   target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"
+#   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  log {
-    category = "StorageRead"
-    enabled  = true
+#   log {
+#     category = "StorageRead"
+#     enabled  = true
 
-    retention_policy {
-      enabled = true
-    }
-  }
+#     retention_policy {
+#       enabled = true
+#     }
+#   }
 
-  log {
-    category = "StorageWrite"
-    enabled  = true
+#   log {
+#     category = "StorageWrite"
+#     enabled  = true
 
-    retention_policy {
-      enabled = true
-    }
-  }
+#     retention_policy {
+#       enabled = true
+#     }
+#   }
 
-  log {
-    category = "StorageDelete"
-    enabled  = true
+#   log {
+#     category = "StorageDelete"
+#     enabled  = true
 
-    retention_policy {
-      enabled = true
-    }
-  }
+#     retention_policy {
+#       enabled = true
+#     }
+#   }
 
-  metric {
-    category = "Transaction"
-    enabled  = true
+#   metric {
+#     category = "Transaction"
+#     enabled  = true
 
-    retention_policy {
-      enabled = true
-    }
-  }
-}
+#     retention_policy {
+#       enabled = true
+#     }
+#   }
+# }
