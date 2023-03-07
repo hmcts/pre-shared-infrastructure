@@ -21,7 +21,7 @@ resource "azurerm_windows_virtual_machine" "dtgtwyvm" {
   resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = data.azurerm_resource_group.rg.location
   size                       = var.datagateway_spec
-  admin_username             = "DG${count.index}_${data.azurerm_key_vault_secret.dtgtwy_username[count.index].value}"
+  admin_username             = data.azurerm_key_vault_secret.dtgtwy_username[count.index].value
   admin_password             = data.azurerm_key_vault_secret.dtgtwy_password[count.index].value
   network_interface_ids      = [azurerm_network_interface.dtgwnic[count.index].id]
   encryption_at_host_enabled = true
