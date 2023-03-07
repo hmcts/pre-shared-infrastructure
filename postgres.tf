@@ -30,8 +30,6 @@ module "data_store_db_v14" {
 
   admin_user_object_id = var.jenkins_AAD_objectId
 
-  depends_on = [module.key-vault]
-
 }
 
 ////////////////////////////////

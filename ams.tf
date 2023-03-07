@@ -5,7 +5,7 @@ resource "azurerm_media_services_account" "ams" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [data.azurerm_user_assigned_identity.managed-identity.id]
+    identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
   }
 
   storage_account {

@@ -12,7 +12,7 @@ module "ingestsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
-  managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
+  managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
@@ -20,14 +20,12 @@ module "ingestsa_storage_account" {
   #private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
   common_tags = var.common_tags
-
-  depends_on = [module.key-vault]
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
   name         = "ingestsa-storage-account-connection-string"
   value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {

@@ -6,10 +6,14 @@ data "azurerm_log_analytics_workspace" "loganalytics" {
   resource_group_name = module.log_analytics_workspace.resource_group_name
 }
 
-data "azurerm_user_assigned_identity" "managed-identity" {
+data "azurerm_key_vault" "keyvault" {
+  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
+data "azurerm_user_assigned_identity" "managed_identity" {
   name                = "${var.product}-${var.env}-mi"
   resource_group_name = "managed-identities-${var.env}-rg"
-  depends_on          = [module.key-vault]
 }
 
 data "azuread_groups" "groups" {
@@ -59,4 +63,42 @@ data "azurerm_subnet" "datagateway_subnet" {
   name                 = "${var.product}-datagateway-snet-${var.env}"
   resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
+}
+
+### Dynatrace
+data "azurerm_key_vault_secret" "dynatrace-token" {
+  name         = "dynatrace-token"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
+  name         = "dynatrace-tenant-id"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_disk_encryption_set" "pre-des" {
+  name                = "pre-des"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
+data "azurerm_key_vault_secret" "vm_username" {
+  count        = var.num_vid_edit_vms
+  name         = "videditvm${count.index}-username"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+data "azurerm_key_vault_secret" "vm_password" {
+  count        = var.num_vid_edit_vms
+  name         = "videditvm${count.index}-password"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_key_vault_secret" "dtgtwy_username" {
+  count        = var.num_datagateway
+  name         = "Dtgtwy${count.index}-username"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+data "azurerm_key_vault_secret" "dtgtwy_password" {
+  count        = var.num_datagateway
+  name         = "Dtgtwy${count.index}-password"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }

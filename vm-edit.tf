@@ -19,8 +19,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   resource_group_name        = data.azurerm_resource_group.rg.name
   location                   = data.azurerm_resource_group.rg.location
   size                       = var.vid_edit_vm_spec
-  admin_username             = "videdit${count.index}_${random_string.vm_username[count.index].result}"
-  admin_password             = random_password.vm_password[count.index].result
+  admin_username             = "videdit${count.index}_${data.azurerm_key_vault_secret.vm_username[count.index].value}}"
+  admin_password             = data.azurerm_key_vault_secret.vm_password[count.index].value
   network_interface_ids      = [azurerm_network_interface.nic[count.index].id]
   encryption_at_host_enabled = true
 
@@ -36,7 +36,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     name                   = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
     caching                = "ReadWrite"
     storage_account_type   = "StandardSSD_LRS" #UltraSSD_LRS?
-    disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
+    disk_encryption_set_id = data.azurerm_disk_encryption_set.pre-des.id
     disk_size_gb           = 1000
     # write_accelerator_enabled = true
   }
@@ -50,7 +50,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
   identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = module.key-vault.managed_identity_id
+    identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
   }
 
   timezone                   = "GMT Standard Time"
@@ -58,8 +58,6 @@ resource "azurerm_windows_virtual_machine" "vm" {
   provision_vm_agent         = true
   allow_extension_operations = true
   tags                       = var.common_tags
-
-  depends_on = [module.key-vault, azurerm_disk_encryption_set.pre-des]
 }
 
 # # Datadisk 
@@ -80,7 +78,7 @@ resource "azurerm_managed_disk" "vmdatadisk" {
   storage_account_type   = "StandardSSD_LRS"
   create_option          = "Empty"
   disk_size_gb           = 1000
-  disk_encryption_set_id = azurerm_disk_encryption_set.pre-des.id
+  disk_encryption_set_id = data.azurerm_disk_encryption_set.pre-des.id
   zone                   = "2"
   tags                   = var.common_tags
 
