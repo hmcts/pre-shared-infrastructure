@@ -207,3 +207,20 @@ variable "cors_rules" {
 # }
 
 variable "retention_duration" {}
+
+
+variable "tenant_id" {}
+variable "vm_count" {
+  default = 2
+}
+variable "vm_type" {
+  default = "windows"
+}
+
+variable "vm_data_disks" {}
+
+variable "vm_private_ip" {}
+
+variable "install_dynatrace_oa" {
+  default = true
+}
