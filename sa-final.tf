@@ -23,19 +23,19 @@ module "finalsa_storage_account" {
   common_tags = var.common_tags
 }
 
-module "finalsa_backup" {
-  count  = var.env == "stg" || var.env == "prod" ? 1 : 0
-  source = "./modules/backup_vault"
+# module "finalsa_backup" {
+#   count  = var.env == "stg" || var.env == "prod" ? 1 : 0
+#   source = "./modules/backup_vault"
 
-  env                  = var.env
-  product              = var.product
-  resource_group_name  = data.azurerm_resource_group.rg.name
-  storage_account_name = "${var.product}finalsa${var.env}"
-  location             = var.location
-  storage_account_id   = module.finalsa_storage_account.storageaccount_id
-  tags                 = var.common_tags
-  retention_duration   = var.retention_duration
-}
+#   env                  = var.env
+#   product              = var.product
+#   resource_group_name  = data.azurerm_resource_group.rg.name
+#   storage_account_name = "${var.product}finalsa${var.env}"
+#   location             = var.location
+#   storage_account_id   = module.finalsa_storage_account.storageaccount_id
+#   tags                 = var.common_tags
+#   retention_duration   = var.retention_duration
+# }
 
 resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" {
   name         = "finalsa-storage-account-connection-string"

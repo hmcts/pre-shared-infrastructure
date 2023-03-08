@@ -206,13 +206,10 @@ variable "cors_rules" {
 #   default = "pre-recorded-evidence"
 # }
 
-variable "retention_duration" {}
-
+# variable "retention_duration" {}
 
 variable "tenant_id" {}
-variable "vm_count" {
-  default = 2
-}
+
 variable "vm_type" {
   default = "windows"
 }
