@@ -119,16 +119,8 @@ module "data_gateway_vm" {
   vm_version        = local.vm_version
 
   boot_diagnostics_enabled = local.boot_diagnostics_enabled
-  # boot_storage_uri         = local.boot_storage_uri
-
-  # splunk_username     = try(data.azurerm_key_vault_secret.splunk_username[0].value, null)
-  # splunk_password     = try(data.azurerm_key_vault_secret.splunk_password[0].value, null)
-  # splunk_pass4symmkey = try(data.azurerm_key_vault_secret.splunk_pass4symmkey[0].value, null)
 
   nessus_install = false #var.nessus_install
-  # nessus_server  = var.nessus_server
-  # nessus_key     = try(data.azurerm_key_vault_secret.nessus_key[0].value, null)
-  # nessus_groups  = var.nessus_groups
 
   dynatrace_hostgroup = var.hostgroup
   dynatrace_server    = var.server
@@ -155,7 +147,6 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
 
   daily_recurrence_time = "1800"
   timezone              = "GMT Standard Time"
-
 
   notification_settings {
     enabled = false
