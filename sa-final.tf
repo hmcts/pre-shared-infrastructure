@@ -1,7 +1,7 @@
 module "finalsa_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = replace("${var.product}finalsa${var.env}", "-", "")
+  storage_account_name            = "${var.product}finalsa${var.env}"
   resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location
   account_kind                    = "StorageV2"
@@ -21,6 +21,20 @@ module "finalsa_storage_account" {
   #private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
   common_tags = var.common_tags
+}
+
+module "finalsa_backup" {
+  count  = var.env == "stg" || var.env == "prod" ? 1 : 0
+  source = "./modules/backup_vault"
+
+  env                  = var.env
+  product              = var.product
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  storage_account_name = "${var.product}finalsa${var.env}"
+  location             = var.location
+  storage_account_id   = module.finalsa_storage_account.storageaccount_id
+  tags                 = var.common_tags
+  retention_duration   = var.retention_duration
 }
 
 resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" {
