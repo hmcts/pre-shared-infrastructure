@@ -28,4 +28,4 @@ pg_databases = [
   }
 ]
 
-retention_duration = "P8D"
+retention_duration = "P1D"
