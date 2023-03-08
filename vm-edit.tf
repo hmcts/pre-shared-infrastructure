@@ -11,6 +11,7 @@ resource "azurerm_network_interface" "nic" {
   }
   tags = var.common_tags
 }
+
 resource "azurerm_windows_virtual_machine" "edit" {
   zone                       = 2
   count                      = var.num_vid_edit_vms
@@ -24,13 +25,11 @@ resource "azurerm_windows_virtual_machine" "edit" {
   network_interface_ids      = [azurerm_network_interface.nic[count.index].id]
   encryption_at_host_enabled = true
 
-
   # encryption_at_host_enabled  = true
 
   additional_capabilities {
     ultra_ssd_enabled = true
   }
-
 
   os_disk {
     name                   = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
@@ -40,7 +39,6 @@ resource "azurerm_windows_virtual_machine" "edit" {
     disk_size_gb           = 1000
     # write_accelerator_enabled = true
   }
-
 
   source_image_reference {
     publisher = "MicrosoftWindowsDesktop"
@@ -81,8 +79,6 @@ resource "azurerm_managed_disk" "vmdatadisk" {
   disk_encryption_set_id = data.azurerm_disk_encryption_set.pre-des.id
   zone                   = "2"
   tags                   = var.common_tags
-
-
 }
 
 module "dynatrace-oneagent-edit" {
@@ -99,75 +95,6 @@ module "dynatrace-oneagent-edit" {
   dynatrace_tenant_id = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
   dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
 }
-
-# # # This extension is needed for other extensions
-# resource "azurerm_virtual_machine_extension" "daa-agent" {
-#   name                       = "DependencyAgentWindows"
-#   count                      = var.num_vid_edit_vms
-#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-#   publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
-#   type                       = "DependencyAgentWindows"
-#   type_handler_version       = "9.10"
-#   automatic_upgrade_enabled  = true
-#   auto_upgrade_minor_version = true
-#   tags                       = var.common_tags
-# }
-
-
-# ## Add logging and monitoring extensions
-# resource "azurerm_virtual_machine_extension" "monitor-agent" {
-#   depends_on                 = [azurerm_virtual_machine_extension.daa-agent]
-#   name                       = "AzureMonitorWindowsAgent"
-#   count                      = var.num_vid_edit_vms
-#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-#   publisher                  = "Microsoft.Azure.Monitor"
-#   type                       = "AzureMonitorWindowsAgent"
-#   type_handler_version       = "1.5"
-#   automatic_upgrade_enabled  = true
-#   auto_upgrade_minor_version = true
-#   tags                       = var.common_tags
-# }
-
-
-# resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
-#   depends_on           = [azurerm_virtual_machine_extension.daa-agent]
-#   name                 = "MicrosoftMonitoringAgent" # Must be called this
-#   count                = var.num_vid_edit_vms
-#   virtual_machine_id   = azurerm_windows_virtual_machine.vm.*.id[count.index]
-#   publisher            = "Microsoft.EnterpriseCloud.Monitoring"
-#   type                 = "MicrosoftMonitoringAgent"
-#   type_handler_version = "1.0"
-#   tags                 = var.common_tags
-#   settings             = <<SETTINGS
-#     {
-#         "workspaceId": "${data.azurerm_log_analytics_workspace.loganalytics.workspace_id}",
-#         "azureResourceId": "${azurerm_windows_virtual_machine.vm.*.id[count.index]}",
-#         "stopOnMultipleConnections": "false"
-#     }
-#   SETTINGS
-#   protected_settings   = <<PROTECTED_SETTINGS
-#     {
-#       "workspaceKey": "${data.azurerm_log_analytics_workspace.loganalytics.primary_shared_key}"
-#     }
-#   PROTECTED_SETTINGS
-# }
-
-##DynaTrace
-
-# module "dynatrace-oneagent" {
-
-#   source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
-#   count                      = var.num_vid_edit_vms
-#   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
-#   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
-#   virtual_machine_os         = "windows"
-#   virtual_machine_type       = "vm"
-#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-#   auto_upgrade_minor_version = true
-#   server                     = var.server
-#   hostgroup                  = var.hostgroup
-#   tags                       = var.common_tags
-# }
 
 resource "azurerm_virtual_machine_extension" "aad" {
   count                      = var.num_vid_edit_vms
