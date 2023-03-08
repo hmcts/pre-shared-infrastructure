@@ -72,13 +72,6 @@ variable "dts_pre_project_admin" {}
 variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 variable "dts_pre_app_admin" {}
-variable "devops_admin" {}
-# variable "providernamespace" {}
-# variable "featurename" {}
-variable "lawSku" {
-  type    = string
-  default = "PerGB2018"
-}
 
 variable "lawRetention" {
   type    = number
