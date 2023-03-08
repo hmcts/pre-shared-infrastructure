@@ -11,7 +11,7 @@ resource "azurerm_network_interface" "nic" {
   }
   tags = var.common_tags
 }
-resource "azurerm_windows_virtual_machine" "vm" {
+resource "azurerm_windows_virtual_machine" "edit" {
   zone                       = 2
   count                      = var.num_vid_edit_vms
   name                       = "${var.product}-videditvm${count.index}-${var.env}"
@@ -64,7 +64,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
   count              = var.num_vid_edit_vms
   managed_disk_id    = azurerm_managed_disk.vmdatadisk.*.id[count.index]
-  virtual_machine_id = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  virtual_machine_id = azurerm_windows_virtual_machine.edit.*.id[count.index]
   lun                = "3"
   caching            = "ReadWrite"
 }
@@ -85,34 +85,48 @@ resource "azurerm_managed_disk" "vmdatadisk" {
 
 }
 
+module "dynatrace-oneagent-edit" {
+  count = var.num_vid_edit_vms
 
-# # This extension is needed for other extensions
-resource "azurerm_virtual_machine_extension" "daa-agent" {
-  name                       = "DependencyAgentWindows"
-  count                      = var.num_vid_edit_vms
-  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
-  type                       = "DependencyAgentWindows"
-  type_handler_version       = "9.10"
-  automatic_upgrade_enabled  = true
-  auto_upgrade_minor_version = true
-  tags                       = var.common_tags
+  source               = "git@github.com:hmcts/terraform-module-vm-bootstrap.git?ref=master"
+  os_type              = "Windows"
+  virtual_machine_id   = azurerm_windows_virtual_machine.edit.*.id[count.index]
+  virtual_machine_type = "vm"
+
+  # Dynatrace OneAgent
+  dynatrace_hostgroup = var.hostgroup
+  dynatrace_server    = var.server
+  dynatrace_tenant_id = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
+  dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
 }
 
+# # # This extension is needed for other extensions
+# resource "azurerm_virtual_machine_extension" "daa-agent" {
+#   name                       = "DependencyAgentWindows"
+#   count                      = var.num_vid_edit_vms
+#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
+#   type                       = "DependencyAgentWindows"
+#   type_handler_version       = "9.10"
+#   automatic_upgrade_enabled  = true
+#   auto_upgrade_minor_version = true
+#   tags                       = var.common_tags
+# }
 
-## Add logging and monitoring extensions
-resource "azurerm_virtual_machine_extension" "monitor-agent" {
-  depends_on                 = [azurerm_virtual_machine_extension.daa-agent]
-  name                       = "AzureMonitorWindowsAgent"
-  count                      = var.num_vid_edit_vms
-  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  publisher                  = "Microsoft.Azure.Monitor"
-  type                       = "AzureMonitorWindowsAgent"
-  type_handler_version       = "1.5"
-  automatic_upgrade_enabled  = true
-  auto_upgrade_minor_version = true
-  tags                       = var.common_tags
-}
+
+# ## Add logging and monitoring extensions
+# resource "azurerm_virtual_machine_extension" "monitor-agent" {
+#   depends_on                 = [azurerm_virtual_machine_extension.daa-agent]
+#   name                       = "AzureMonitorWindowsAgent"
+#   count                      = var.num_vid_edit_vms
+#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   publisher                  = "Microsoft.Azure.Monitor"
+#   type                       = "AzureMonitorWindowsAgent"
+#   type_handler_version       = "1.5"
+#   automatic_upgrade_enabled  = true
+#   auto_upgrade_minor_version = true
+#   tags                       = var.common_tags
+# }
 
 
 # resource "azurerm_virtual_machine_extension" "msmonitor-agent" {
@@ -140,25 +154,25 @@ resource "azurerm_virtual_machine_extension" "monitor-agent" {
 
 ##DynaTrace
 
-module "dynatrace-oneagent" {
+# module "dynatrace-oneagent" {
 
-  source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
-  count                      = var.num_vid_edit_vms
-  tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
-  token                      = data.azurerm_key_vault_secret.dynatrace-token.value
-  virtual_machine_os         = "windows"
-  virtual_machine_type       = "vm"
-  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
-  auto_upgrade_minor_version = true
-  server                     = var.server
-  hostgroup                  = var.hostgroup
-  tags                       = var.common_tags
-}
+#   source                     = "git@github.com:hmcts/terraform-module-dynatrace-oneagent.git?ref=master"
+#   count                      = var.num_vid_edit_vms
+#   tenant_id                  = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
+#   token                      = data.azurerm_key_vault_secret.dynatrace-token.value
+#   virtual_machine_os         = "windows"
+#   virtual_machine_type       = "vm"
+#   virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+#   auto_upgrade_minor_version = true
+#   server                     = var.server
+#   hostgroup                  = var.hostgroup
+#   tags                       = var.common_tags
+# }
 
-resource "azurerm_virtual_machine_extension" "vm_aad" {
+resource "azurerm_virtual_machine_extension" "aad" {
   count                      = var.num_vid_edit_vms
   name                       = "AADLoginForWindows"
-  virtual_machine_id         = azurerm_windows_virtual_machine.vm.*.id[count.index]
+  virtual_machine_id         = azurerm_windows_virtual_machine.edit.*.id[count.index]
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADLoginForWindows"
   type_handler_version       = "1.0"
@@ -167,7 +181,7 @@ resource "azurerm_virtual_machine_extension" "vm_aad" {
 
 }
 
-resource "azurerm_monitor_diagnostic_setting" "nic" {
+resource "azurerm_monitor_diagnostic_setting" "this" {
   count                      = var.num_vid_edit_vms
   name                       = azurerm_network_interface.nic[count.index].name
   target_resource_id         = azurerm_network_interface.nic[count.index].id
