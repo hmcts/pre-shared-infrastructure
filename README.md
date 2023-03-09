@@ -58,11 +58,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.36.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.37.0 |
-| <a name="provider_azurerm.mgmt"></a> [azurerm.mgmt](#provider\_azurerm.mgmt) | 3.37.0 |
-| <a name="provider_azurerm.oms"></a> [azurerm.oms](#provider\_azurerm.oms) | 3.37.0 |
-| <a name="provider_azurerm.private_dns"></a> [azurerm.private\_dns](#provider\_azurerm.private\_dns) | 3.37.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | n/a |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | = 3.37.0 |
+| <a name="provider_azurerm.mgmt"></a> [azurerm.mgmt](#provider\_azurerm.mgmt) | = 3.37.0 |
+| <a name="provider_azurerm.oms"></a> [azurerm.oms](#provider\_azurerm.oms) | = 3.37.0 |
+| <a name="provider_azurerm.private_dns"></a> [azurerm.private\_dns](#provider\_azurerm.private\_dns) | = 3.37.0 |
 
 ## Modules
 
@@ -70,7 +70,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 |------|--------|---------|
 | <a name="module_data_gateway_vm"></a> [data\_gateway\_vm](#module\_data\_gateway\_vm) | git@github.com:hmcts/terraform-vm-module.git | master |
 | <a name="module_data_store_db_v14"></a> [data\_store\_db\_v14](#module\_data\_store\_db\_v14) | git@github.com:hmcts/terraform-module-postgresql-flexible.git | master |
-| <a name="module_dynatrace-oneagent-edit"></a> [dynatrace-oneagent-edit](#module\_dynatrace-oneagent-edit) | git@github.com:hmcts/terraform-module-vm-bootstrap.git | master |
+| <a name="module_edit_vm"></a> [edit\_vm](#module\_edit\_vm) | git@github.com:hmcts/terraform-vm-module.git | master |
 | <a name="module_finalsa_storage_account"></a> [finalsa\_storage\_account](#module\_finalsa\_storage\_account) | git@github.com:hmcts/cnp-module-storage-account | master |
 | <a name="module_ingestsa_storage_account"></a> [ingestsa\_storage\_account](#module\_ingestsa\_storage\_account) | git@github.com:hmcts/cnp-module-storage-account | master |
 | <a name="module_log_analytics_workspace"></a> [log\_analytics\_workspace](#module\_log\_analytics\_workspace) | git@github.com:hmcts/terraform-module-log-analytics-workspace-id.git | master |
@@ -87,7 +87,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_key_vault_secret.finalsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.ingestsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.sa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_managed_disk.vmdatadisk](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/managed_disk) | resource |
 | [azurerm_media_services_account.ams](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/media_services_account) | resource |
 | [azurerm_media_transform.EncodeToMP](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/media_transform) | resource |
 | [azurerm_media_transform.analysevideo](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/media_transform) | resource |
@@ -95,12 +94,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_monitor_diagnostic_setting.storageblobfinalsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobingestsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_monitor_diagnostic_setting.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_network_interface.nic](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/network_interface) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.postgres_dg](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
-| [azurerm_virtual_machine_data_disk_attachment.vmdatadisk](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/virtual_machine_data_disk_attachment) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/virtual_machine_extension) | resource |
-| [azurerm_windows_virtual_machine.edit](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/windows_virtual_machine) | resource |
 | [azuread_groups.groups](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/groups) | data source |
 | [azuread_groups.pre-groups](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/groups) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/client_config) | data source |
@@ -110,8 +105,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_key_vault_secret.dtgtwy_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.dynatrace-tenant-id](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.dynatrace-token](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.vm_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.vm_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.edit_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.edit_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_log_analytics_workspace.loganalytics](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/log_analytics_workspace) | data source |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/resource_group) | data source |
 | [azurerm_subnet.datagateway_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/subnet) | data source |

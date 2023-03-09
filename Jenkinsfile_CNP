@@ -2,7 +2,7 @@
 //noinspection GroovyUnusedAssignment
 @Library("Infrastructure") _
 
-env.GIT_URL = 'https://github.com/hmcts/pre-vault.git'
+env.GIT_URL = 'https://github.com/hmcts/pre-shared-infrastructure.git'
 
 onMaster {
 
@@ -21,7 +21,7 @@ onPR {
 }
 
 def product = "pre"
-def component = "vault"
+def component = "shared-infrastructure"
 def expiresAfter = "3001-01-01"
 def branchesToSync = ['demo']
 def planOnly = params.PLAN_ONLY
