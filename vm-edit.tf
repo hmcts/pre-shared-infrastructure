@@ -1,105 +1,84 @@
-resource "azurerm_network_interface" "nic" {
-  count               = var.num_vid_edit_vms
-  name                = "${var.product}-videditnic${count.index}-${var.env}"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
+module "edit_vm" {
+  count                = var.num_vid_edit_vms
+  source               = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
+  vm_type              = local.edit_vm_type
+  vm_name              = "pre-edit-vm${count.index + 1}-${var.env}"
+  vm_resource_group    = data.azurerm_resource_group.rg.name
+  vm_location          = var.location
+  vm_size              = local.edit_vm_size
+  vm_admin_name        = data.azurerm_key_vault_secret.edit_username[count.index].value
+  vm_admin_password    = data.azurerm_key_vault_secret.edit_password[count.index].value
+  vm_availabilty_zones = local.edit_vm_availabilty_zones[count.index]
+  managed_disks        = var.vm_data_disks[count.index]
 
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = data.azurerm_subnet.videoedit_subnet.id
-    private_ip_address_allocation = "Dynamic"
-  }
-  tags = var.common_tags
-}
+  #Disk Encryption
+  kv_name     = "pre-${var.env}"
+  kv_rg_name  = "pre-${var.env}"
+  encrypt_ADE = true
 
-resource "azurerm_windows_virtual_machine" "edit" {
-  zone                       = 2
-  count                      = var.num_vid_edit_vms
-  name                       = "${var.product}-videditvm${count.index}-${var.env}"
-  computer_name              = "EDIT${count.index}-${var.env}"
-  resource_group_name        = data.azurerm_resource_group.rg.name
-  location                   = data.azurerm_resource_group.rg.location
-  size                       = var.vid_edit_vm_spec
-  admin_username             = "${data.azurerm_key_vault_secret.vm_username[count.index].value}}"
-  admin_password             = data.azurerm_key_vault_secret.vm_password[count.index].value
-  network_interface_ids      = [azurerm_network_interface.nic[count.index].id]
-  encryption_at_host_enabled = true
+  nic_name      = lower("edit-vm${count.index + 1}-nic-${var.env}")
+  ipconfig_name = local.edit_ipconfig_name
+  vm_subnet_id  = local.edit_vm_subnet_id
+  vm_private_ip = var.vm_private_ip[count.index]
 
-  # encryption_at_host_enabled  = true
+  marketplace_sku       = local.edit_marketplace_sku
+  marketplace_publisher = local.edit_marketplace_publisher
+  marketplace_product   = local.edit_marketplace_product
 
-  additional_capabilities {
-    ultra_ssd_enabled = true
-  }
+  #storage_image_reference
+  vm_publisher_name = local.edit_marketplace_publisher
+  vm_offer          = local.edit_marketplace_product
+  vm_sku            = local.edit_marketplace_sku
+  vm_version        = local.edit_vm_version
 
-  os_disk {
-    name                   = "${var.product}-videditvm${count.index}-osdisk-${var.env}"
-    caching                = "ReadWrite"
-    storage_account_type   = "StandardSSD_LRS" #UltraSSD_LRS?
-    disk_encryption_set_id = data.azurerm_disk_encryption_set.pre-des.id
-    disk_size_gb           = 1000
-    # write_accelerator_enabled = true
-  }
+  boot_diagnostics_enabled = local.edit_boot_diagnostics_enabled
 
-  source_image_reference {
-    publisher = "MicrosoftWindowsDesktop"
-    offer     = "Windows-10"
-    sku       = "20h1-pro-g2"
-    version   = "latest"
-  }
-  identity {
-    type         = "SystemAssigned, UserAssigned"
-    identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
-  }
+  nessus_install = false #var.nessus_install
 
-  timezone                   = "GMT Standard Time"
-  enable_automatic_updates   = true
-  provision_vm_agent         = true
-  allow_extension_operations = true
-  tags                       = var.common_tags
-}
-
-# # Datadisk 
-resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
-  count              = var.num_vid_edit_vms
-  managed_disk_id    = azurerm_managed_disk.vmdatadisk.*.id[count.index]
-  virtual_machine_id = azurerm_windows_virtual_machine.edit.*.id[count.index]
-  lun                = "3"
-  caching            = "ReadWrite"
-}
-
-## Managed Disk
-resource "azurerm_managed_disk" "vmdatadisk" {
-  count                  = var.num_vid_edit_vms
-  name                   = "${var.product}-videditvm${count.index}-datadisk-${var.env}"
-  location               = data.azurerm_resource_group.rg.location
-  resource_group_name    = data.azurerm_resource_group.rg.name
-  storage_account_type   = "StandardSSD_LRS"
-  create_option          = "Empty"
-  disk_size_gb           = 1000
-  disk_encryption_set_id = data.azurerm_disk_encryption_set.pre-des.id
-  zone                   = "2"
-  tags                   = var.common_tags
-}
-
-module "dynatrace-oneagent-edit" {
-  count = var.num_vid_edit_vms
-
-  source               = "git@github.com:hmcts/terraform-module-vm-bootstrap.git?ref=master"
-  os_type              = "Windows"
-  virtual_machine_id   = azurerm_windows_virtual_machine.edit.*.id[count.index]
-  virtual_machine_type = "vm"
-
-  # Dynatrace OneAgent
   dynatrace_hostgroup = var.hostgroup
   dynatrace_server    = var.server
-  dynatrace_tenant_id = data.azurerm_key_vault_secret.dynatrace-tenant-id.value
+  dynatrace_tenant_id = var.tenant_id
   dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
+
+  #mount the disks
+  additional_script_uri  = local.edit_additional_script_uri
+  additional_script_name = local.edit_additional_script_name
+
+  run_command    = true
+  rc_script_file = "scripts/windows_cis.ps1"
+
+
+  tags = var.common_tags
+
+}
+
+locals {
+  edit_vm_type = "windows"
+
+  edit_vm_size       = "Standard_E4s_v4"
+  edit_ipconfig_name = "IP_CONFIGURATION"
+
+  edit_vm_subnet_id = data.azurerm_subnet.videoedit_subnet.id
+
+  edit_vm_availabilty_zones  = [1, 2]
+  edit_marketplace_product   = "Windows-10"
+  edit_marketplace_publisher = "MicrosoftWindowsDesktop"
+  edit_marketplace_sku       = "20h1-pro-g2"
+  edit_vm_version            = "latest"
+
+  edit_boot_diagnostics_enabled = false
+  # boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
+
+  edit_dynatrace_env = var.tenant_id == "yrk32651" ? "nonprod" : var.tenant_id == "ebe20728" ? "prod" : null
+
+  edit_additional_script_uri  = "https://raw.githubusercontent.com/hmcts/CIS-harderning/master/windows-install.ps1"
+  edit_additional_script_name = "windows-install.ps1"
 }
 
 resource "azurerm_virtual_machine_extension" "aad" {
   count                      = var.num_vid_edit_vms
   name                       = "AADLoginForWindows"
-  virtual_machine_id         = azurerm_windows_virtual_machine.edit.*.id[count.index]
+  virtual_machine_id         = module.edit_vm.*.vm_id[count.index]
   publisher                  = "Microsoft.Azure.ActiveDirectory"
   type                       = "AADLoginForWindows"
   type_handler_version       = "1.0"
@@ -108,18 +87,18 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 }
 
-resource "azurerm_monitor_diagnostic_setting" "this" {
-  count                      = var.num_vid_edit_vms
-  name                       = azurerm_network_interface.nic[count.index].name
-  target_resource_id         = azurerm_network_interface.nic[count.index].id
-  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+# resource "azurerm_monitor_diagnostic_setting" "this" {
+#   count                      = var.num_vid_edit_vms
+#   name                       = azurerm_network_interface.nic[count.index].name
+#   target_resource_id         = azurerm_network_interface.nic[count.index].id
+#   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  metric {
-    category = "AllMetrics"
+#   metric {
+#     category = "AllMetrics"
 
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
-  }
-}
+#     retention_policy {
+#       enabled = true
+#       days    = 14
+#     }
+#   }
+# }
