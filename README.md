@@ -63,6 +63,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="provider_azurerm.mgmt"></a> [azurerm.mgmt](#provider\_azurerm.mgmt) | = 3.37.0 |
 | <a name="provider_azurerm.oms"></a> [azurerm.oms](#provider\_azurerm.oms) | = 3.37.0 |
 | <a name="provider_azurerm.private_dns"></a> [azurerm.private\_dns](#provider\_azurerm.private\_dns) | = 3.37.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | >= 2.2.0 |
 
 ## Modules
 
@@ -84,6 +85,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_dev_test_global_vm_shutdown_schedule.dtgtwyvm](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/dev_test_global_vm_shutdown_schedule) | resource |
 | [azurerm_key_vault_secret.POSTGRES_PASS](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.POSTGRES_USER](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.dtgtwy_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.dtgtwy_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.edit_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.edit_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.finalsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.ingestsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.sa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
@@ -96,17 +101,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.postgres_dg](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/virtual_machine_extension) | resource |
+| [random_password.dtgtwy_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [random_password.vm_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [random_string.dtgtwy_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [random_string.vm_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [azuread_groups.groups](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/groups) | data source |
 | [azuread_groups.pre-groups](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/groups) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/client_config) | data source |
 | [azurerm_disk_encryption_set.pre-des](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/disk_encryption_set) | data source |
 | [azurerm_key_vault.keyvault](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault) | data source |
-| [azurerm_key_vault_secret.dtgtwy_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.dtgtwy_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.dynatrace-tenant-id](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.dynatrace-token](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.edit_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.edit_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_log_analytics_workspace.loganalytics](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/log_analytics_workspace) | data source |
 | [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/resource_group) | data source |
 | [azurerm_subnet.datagateway_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/subnet) | data source |

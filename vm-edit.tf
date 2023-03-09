@@ -6,8 +6,8 @@ module "edit_vm" {
   vm_resource_group    = data.azurerm_resource_group.rg.name
   vm_location          = var.location
   vm_size              = local.edit_vm_size
-  vm_admin_name        = data.azurerm_key_vault_secret.edit_username[count.index].value
-  vm_admin_password    = data.azurerm_key_vault_secret.edit_password[count.index].value
+  vm_admin_name        = azurerm_key_vault_secret.edit_username[count.index].value
+  vm_admin_password    = azurerm_key_vault_secret.edit_password[count.index].value
   vm_availabilty_zones = local.edit_vm_availabilty_zones[count.index]
   managed_disks        = var.vm_data_disks[count.index]
 
@@ -102,3 +102,34 @@ resource "azurerm_virtual_machine_extension" "aad" {
 #     }
 #   }
 # }
+
+// VM credentials
+resource "random_string" "vm_username" {
+  count   = var.num_vid_edit_vms
+  length  = 4
+  special = false
+}
+
+resource "random_password" "vm_password" {
+  count            = var.num_vid_edit_vms
+  length           = 16
+  special          = true
+  override_special = "#$%&@()_[]{}<>:?"
+  min_upper        = 1
+  min_lower        = 1
+  min_numeric      = 1
+}
+
+resource "azurerm_key_vault_secret" "edit_username" {
+  count        = var.num_vid_edit_vms
+  name         = "videditvm${count.index}-username"
+  value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+  key_vault_id = data.azurerm_key_vault.pre_kv.id
+}
+
+resource "azurerm_key_vault_secret" "edit_password" {
+  count        = var.num_vid_edit_vms
+  name         = "videditvm${count.index}-password"
+  value        = random_password.vm_password[count.index].result
+  key_vault_id = data.azurerm_key_vault.pre_kv.id
+}
