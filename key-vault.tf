@@ -290,7 +290,7 @@ resource "azurerm_key_vault_access_policy" "dts_pre_access" {
 #    DTS PRE Admin
 #####################################
 resource "azurerm_key_vault_access_policy" "dts_dts_pre_project_admin_access" {
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id            = module.key-vault.key_vault_id
   object_id               = var.dts_pre_project_admin
   tenant_id               = data.azurerm_client_config.current.tenant_id
   key_permissions         = ["List", "Get", ]
