@@ -1,13 +1,12 @@
 resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
-  location            = var.location #"UKwest"
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  resource_group_name = data.azurerm_resource_group.rg.name
 
   identity {
-    type = "SystemAssigned"
+    type         = "UserAssigned"
+    identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
   }
-
-
 
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id
@@ -22,9 +21,10 @@ resource "azurerm_media_services_account" "ams" {
   tags = var.common_tags
 
 }
+
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
   description = "Analyse Video"
@@ -41,7 +41,7 @@ resource "azurerm_media_transform" "analysevideo" {
 
 resource "azurerm_media_transform" "EncodeToMP" {
   name                        = "EncodeToMP4"
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
 
@@ -56,44 +56,29 @@ resource "azurerm_media_transform" "EncodeToMP" {
   }
 }
 
-resource "null_resource" "amsid" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
+resource "azurerm_monitor_diagnostic_setting" "ams_1" {
+  name                       = azurerm_media_services_account.ams.name
+  target_resource_id         = azurerm_media_services_account.ams.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  depends_on = [azurerm_media_services_account.ams]
+  log {
+    category = "MediaAccount"
 
-
-}
-
-
-resource "azapi_update_resource" "ams_auth" {
-  depends_on  = [null_resource.amsid]
-  type        = "Microsoft.Media/mediaservices@2021-11-01"
-  resource_id = azurerm_media_services_account.ams.id
-
-  body = jsonencode({
-    properties = {
-      storageAuthentication = "ManagedIdentity"
-      storageAccounts = [
-        {
-          id   = module.ingestsa_storage_account.storageaccount_id
-          type = "Primary",
-          identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-            useSystemAssignedIdentity = "false"
-          }
-        },
-
-        {
-          id   = module.finalsa_storage_account.storageaccount_id
-          type = "Secondary",
-          identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-            useSystemAssignedIdentity = "false"
-          }
-        }
-      ]
+    retention_policy {
+      enabled = true
+      days    = 14
     }
-  })
+  }
+  log {
+    category = "KeyDeliveryRequests"
+    enabled  = true
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
 }
