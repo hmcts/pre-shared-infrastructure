@@ -2,7 +2,7 @@ module "data_gateway_vm" {
   count                = var.num_datagateway
   source               = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
   vm_type              = local.dg_vm_type
-  vm_name              = "pre-dg-vm${count.index + 1}-${var.env}"
+  vm_name              = "dg-vm${count.index + 1}-${var.env}"
   vm_resource_group    = data.azurerm_resource_group.rg.name
   vm_location          = var.location
   vm_size              = local.dg_vm_size
@@ -16,7 +16,7 @@ module "data_gateway_vm" {
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
-  nic_name      = lower("data-gateway-vm${count.index + 1}-nic-${var.env}")
+  nic_name      = lower("dg-vm${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.dg_ipconfig_name
   vm_subnet_id  = local.dg_vm_subnet_id
   vm_private_ip = var.dg_vm_private_ip[count.index]
