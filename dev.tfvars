@@ -19,8 +19,11 @@ dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev en
 mgmt_subscription_id = "6c4d2513-a873-41b4-afdd-b05a33206631"
 # retention_duration   = "P8D"
 
-vm_private_ip = ["10.40.12.22", "10.40.12.21"]
-tenant_id     = "yrk32651"
+dg_vm_private_ip = ["10.40.12.22", "10.40.12.23"]
+
+edit_vm_private_ip = ["10.40.12.6", "10.40.12.7"]
+
+tenant_id = "yrk32651"
 # cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 # cnp_vault_rg   = "cnp-core-infra"
 # data disks
