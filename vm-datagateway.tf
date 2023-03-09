@@ -19,7 +19,7 @@ module "data_gateway_vm" {
   nic_name      = lower("data-gateway-vm${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.dg_ipconfig_name
   vm_subnet_id  = local.dg_vm_subnet_id
-  vm_private_ip = var.vm_private_ip[count.index]
+  vm_private_ip = var.dg_vm_private_ip[count.index]
 
   marketplace_sku       = local.dg_marketplace_sku
   marketplace_publisher = local.dg_marketplace_publisher

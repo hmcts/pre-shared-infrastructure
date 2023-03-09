@@ -40,9 +40,9 @@ variable "mgmt_net_rg_name" {}
 variable "num_vid_edit_vms" {
   default = 2
 }
-variable "vid_edit_vm_spec" {
-  default = "Standard_E4s_v4"
-}
+# variable "vid_edit_vm_spec" {
+#   default = "Standard_E4s_v4"
+# }
 variable "num_datagateway" {
   default = 2
 }
@@ -216,7 +216,9 @@ variable "vm_type" {
 
 variable "vm_data_disks" {}
 
-variable "vm_private_ip" {}
+variable "dg_vm_private_ip" {}
+
+variable "edit_vm_private_ip" {}
 
 variable "install_dynatrace_oa" {
   default = true

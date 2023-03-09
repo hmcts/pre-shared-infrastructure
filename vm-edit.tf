@@ -19,7 +19,7 @@ module "edit_vm" {
   nic_name      = lower("edit-vm${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.edit_ipconfig_name
   vm_subnet_id  = local.edit_vm_subnet_id
-  vm_private_ip = var.vm_private_ip[count.index]
+  vm_private_ip = var.edit_vm_private_ip[count.index]
 
   marketplace_sku       = local.edit_marketplace_sku
   marketplace_publisher = local.edit_marketplace_publisher
