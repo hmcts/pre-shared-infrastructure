@@ -2,7 +2,7 @@ module "edit_vm" {
   count                = var.num_vid_edit_vms
   source               = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
   vm_type              = local.edit_vm_type
-  vm_name              = "pre-edit-vm${count.index + 1}-${var.env}"
+  vm_name              = "edit-vm${count.index + 1}-${var.env}"
   vm_resource_group    = data.azurerm_resource_group.rg.name
   vm_location          = var.location
   vm_size              = local.edit_vm_size
@@ -16,7 +16,7 @@ module "edit_vm" {
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
-  nic_name      = lower("edit-vm${count.index + 1}-nic-${var.env}")
+  nic_name      = lower("edit${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.edit_ipconfig_name
   vm_subnet_id  = local.edit_vm_subnet_id
   vm_private_ip = var.edit_vm_private_ip[count.index]
