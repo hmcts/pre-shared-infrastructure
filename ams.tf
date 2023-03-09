@@ -1,7 +1,12 @@
+data "azurerm_user_assigned_identity" "managed_identity" {
+  name                = "${var.product}-${var.env}-mi"
+  resource_group_name = "managed-identities-${var.env}-rg"
+}
+
 resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.rg.name
 
   identity {
     type         = "UserAssigned"
@@ -24,7 +29,7 @@ resource "azurerm_media_services_account" "ams" {
 
 resource "azurerm_media_transform" "analysevideo" {
   name                        = "AnalyseVideo"
-  resource_group_name         = data.azurerm_resource_group.rg.name
+  resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
   description = "Analyse Video"
@@ -41,7 +46,7 @@ resource "azurerm_media_transform" "analysevideo" {
 
 resource "azurerm_media_transform" "EncodeToMP" {
   name                        = "EncodeToMP4"
-  resource_group_name         = data.azurerm_resource_group.rg.name
+  resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
 
 
@@ -52,33 +57,6 @@ resource "azurerm_media_transform" "EncodeToMP" {
     on_error_action   = "ContinueJob"
     builtin_preset {
       preset_name = "H264SingleBitrate1080p"
-    }
-  }
-}
-
-resource "azurerm_monitor_diagnostic_setting" "ams_1" {
-  name                       = azurerm_media_services_account.ams.name
-  target_resource_id         = azurerm_media_services_account.ams.id
-  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
-
-  log {
-    category = "MediaAccount"
-
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
-  }
-  log {
-    category = "KeyDeliveryRequests"
-    enabled  = true
-  }
-  metric {
-    category = "AllMetrics"
-
-    retention_policy {
-      enabled = true
-      days    = 14
     }
   }
 }
