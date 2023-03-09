@@ -22,3 +22,5 @@ bin/main/application.yaml
 .DS_Store
 
 .terraform
+tfplan
+.terraform.lock.hcl

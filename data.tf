@@ -81,12 +81,12 @@ data "azurerm_disk_encryption_set" "pre-des" {
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 
-data "azurerm_key_vault_secret" "vm_username" {
+data "azurerm_key_vault_secret" "edit_username" {
   count        = var.num_vid_edit_vms
   name         = "videditvm${count.index}-username"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
-data "azurerm_key_vault_secret" "vm_password" {
+data "azurerm_key_vault_secret" "edit_password" {
   count        = var.num_vid_edit_vms
   name         = "videditvm${count.index}-password"
   key_vault_id = data.azurerm_key_vault.keyvault.id
