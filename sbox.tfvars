@@ -20,3 +20,50 @@ dts_pre_appreg_oid         = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
 dts_pre_ent_appreg_oid     = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
 
 retention_duration = "P8D"
+vm_private_ip = ["10.48.1.22", "10.48.1.23"]
+tenant_id     = "yrk32651"
+
+vm_data_disks = [{
+  datadisk1 = {
+    name                 = "data-gateway-vm01-data-01-dev"
+    location             = "uksouth"
+    resource_group_name  = "pre-dev"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "data-gateway-vm02-data-01-dev"
+      location             = "uksouth"
+      resource_group_name  = "pre-dev"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
