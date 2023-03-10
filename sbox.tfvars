@@ -20,7 +20,8 @@ dts_pre_appreg_oid         = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
 dts_pre_ent_appreg_oid     = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
 
 retention_duration = "P8D"
-vm_private_ip      = ["10.48.1.22", "10.48.1.23"]
+dg_vm_private_ip   = ["10.48.1.22", "10.48.1.23"]
+edit_vm_private_ip = ["10.48.1.7", "10.48.1.8"]
 tenant_id          = "yrk32651"
 
 edit_vm_data_disks = [{
