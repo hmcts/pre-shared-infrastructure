@@ -1,15 +1,16 @@
 module "data_gateway_vm" {
-  count                = var.num_datagateway
-  source               = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
-  vm_type              = local.dg_vm_type
-  vm_name              = "dg-vm${count.index + 1}-${var.env}"
-  vm_resource_group    = data.azurerm_resource_group.rg.name
-  vm_location          = var.location
-  vm_size              = local.dg_vm_size
-  vm_admin_name        = azurerm_key_vault_secret.dtgtwy_username[count.index].value
-  vm_admin_password    = azurerm_key_vault_secret.dtgtwy_password[count.index].value
-  vm_availabilty_zones = local.dg_vm_availabilty_zones[count.index]
-  managed_disks        = var.vm_data_disks[count.index]
+  count                          = var.num_datagateway
+  source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
+  vm_type                        = local.dg_vm_type
+  vm_name                        = "dg-vm${count.index + 1}-${var.env}"
+  vm_resource_group              = data.azurerm_resource_group.rg.name
+  vm_location                    = var.location
+  vm_size                        = local.dg_vm_size
+  vm_admin_name                  = azurerm_key_vault_secret.dtgtwy_username[count.index].value
+  vm_admin_password              = azurerm_key_vault_secret.dtgtwy_password[count.index].value
+  vm_availabilty_zones           = local.dg_vm_availabilty_zones[count.index]
+  managed_disks                  = var.dg_vm_data_disks[count.index]
+  accelerated_networking_enabled = true
 
   #Disk Encryption
   kv_name     = "pre-${var.env}"

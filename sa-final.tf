@@ -14,6 +14,9 @@ module "finalsa_storage_account" {
   enable_data_protection          = true
   cors_rules                      = var.cors_rules
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
+  enable_change_feed              = true
+  immutable_enabled               = true
+  immutability_period             = 100
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
