@@ -9,7 +9,7 @@ module "edit_vm" {
   vm_admin_name        = azurerm_key_vault_secret.edit_username[count.index].value
   vm_admin_password    = azurerm_key_vault_secret.edit_password[count.index].value
   vm_availabilty_zones = local.edit_vm_availabilty_zones[count.index]
-  managed_disks        = var.vm_data_disks[count.index]
+  managed_disks        = var.edit_vm_data_disks[count.index]
 
   #Disk Encryption
   kv_name     = "pre-${var.env}"

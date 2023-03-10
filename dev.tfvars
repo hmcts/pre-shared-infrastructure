@@ -27,9 +27,9 @@ tenant_id = "yrk32651"
 # cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 # cnp_vault_rg   = "cnp-core-infra"
 # data disks
-vm_data_disks = [{
+dg_vm_data_disks = [{
   datadisk1 = {
-    name                 = "data-gateway-vm01-data-01-dev"
+    name                 = "data-gateway-vm01-data-dev"
     location             = "uksouth"
     resource_group_name  = "pre-dev"
     storage_account_type = "StandardSSD_LRS"
@@ -51,7 +51,52 @@ vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "data-gateway-vm02-data-01-dev"
+      name                 = "data-gateway-vm02-data-dev"
+      location             = "uksouth"
+      resource_group_name  = "pre-dev"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
+
+edit_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "edit-vm01-data-dev"
+    location             = "uksouth"
+    resource_group_name  = "pre-dev"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "edit-vm02-data-dev"
       location             = "uksouth"
       resource_group_name  = "pre-dev"
       storage_account_type = "StandardSSD_LRS"

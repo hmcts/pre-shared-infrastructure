@@ -23,9 +23,9 @@ retention_duration = "P8D"
 vm_private_ip      = ["10.48.1.22", "10.48.1.23"]
 tenant_id          = "yrk32651"
 
-vm_data_disks = [{
+edit_vm_data_disks = [{
   datadisk1 = {
-    name                 = "data-gateway-vm01-data-01-dev"
+    name                 = "edit-vm01-data-dev"
     location             = "uksouth"
     resource_group_name  = "pre-dev"
     storage_account_type = "StandardSSD_LRS"
@@ -47,7 +47,7 @@ vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "data-gateway-vm02-data-01-dev"
+      name                 = "edit-vm02-data-dev"
       location             = "uksouth"
       resource_group_name  = "pre-dev"
       storage_account_type = "StandardSSD_LRS"
