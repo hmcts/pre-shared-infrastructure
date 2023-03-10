@@ -20,12 +20,13 @@ dts_pre_appreg_oid         = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
 dts_pre_ent_appreg_oid     = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
 
 retention_duration = "P8D"
-vm_private_ip      = ["10.48.1.22", "10.48.1.23"]
+dg_vm_private_ip   = ["10.48.1.22", "10.48.1.23"]
+edit_vm_private_ip = ["10.48.1.7", "10.48.1.8"]
 tenant_id          = "yrk32651"
 
-vm_data_disks = [{
+edit_vm_data_disks = [{
   datadisk1 = {
-    name                 = "data-gateway-vm01-data-01-dev"
+    name                 = "edit-vm01-data-dev"
     location             = "uksouth"
     resource_group_name  = "pre-dev"
     storage_account_type = "StandardSSD_LRS"
@@ -47,7 +48,7 @@ vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "data-gateway-vm02-data-01-dev"
+      name                 = "edit-vm02-data-dev"
       location             = "uksouth"
       resource_group_name  = "pre-dev"
       storage_account_type = "StandardSSD_LRS"
