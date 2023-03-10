@@ -58,12 +58,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | n/a |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | = 3.37.0 |
-| <a name="provider_azurerm.mgmt"></a> [azurerm.mgmt](#provider\_azurerm.mgmt) | = 3.37.0 |
-| <a name="provider_azurerm.oms"></a> [azurerm.oms](#provider\_azurerm.oms) | = 3.37.0 |
-| <a name="provider_azurerm.private_dns"></a> [azurerm.private\_dns](#provider\_azurerm.private\_dns) | = 3.37.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | >= 2.2.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.36.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.37.0 |
+| <a name="provider_azurerm.mgmt"></a> [azurerm.mgmt](#provider\_azurerm.mgmt) | 3.37.0 |
+| <a name="provider_azurerm.oms"></a> [azurerm.oms](#provider\_azurerm.oms) | 3.37.0 |
+| <a name="provider_azurerm.private_dns"></a> [azurerm.private\_dns](#provider\_azurerm.private\_dns) | 3.37.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | 3.4.3 |
 
 ## Modules
 
@@ -82,11 +82,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | Name | Type |
 |------|------|
 | [azurerm_automation_account.pre-aa](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/automation_account) | resource |
-| [azurerm_dev_test_global_vm_shutdown_schedule.dtgtwyvm](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/dev_test_global_vm_shutdown_schedule) | resource |
+| [azurerm_dev_test_global_vm_shutdown_schedule.dg_vm](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/dev_test_global_vm_shutdown_schedule) | resource |
 | [azurerm_key_vault_secret.POSTGRES_PASS](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.POSTGRES_USER](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.dtgtwy_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.dtgtwy_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.dg_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.dg_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.edit_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.edit_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.finalsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/key_vault_secret) | resource |
@@ -101,15 +101,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.postgres_dg](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/resources/virtual_machine_extension) | resource |
-| [random_password.dtgtwy_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [random_password.dg_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.vm_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
-| [random_string.dtgtwy_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [random_string.dg_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [random_string.vm_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [azuread_groups.groups](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/groups) | data source |
 | [azuread_groups.pre-groups](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/groups) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/client_config) | data source |
 | [azurerm_disk_encryption_set.pre-des](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/disk_encryption_set) | data source |
 | [azurerm_key_vault.keyvault](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault) | data source |
+| [azurerm_key_vault.pre_kv](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault) | data source |
 | [azurerm_key_vault_secret.dynatrace-tenant-id](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.dynatrace-token](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_log_analytics_workspace.loganalytics](https://registry.terraform.io/providers/hashicorp/azurerm/3.37.0/docs/data-sources/log_analytics_workspace) | data source |
@@ -134,9 +135,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_data_gateway_snet_address"></a> [data\_gateway\_snet\_address](#input\_data\_gateway\_snet\_address) | n/a | `any` | n/a | yes |
 | <a name="input_database_name"></a> [database\_name](#input\_database\_name) | n/a | `string` | `"pre-db"` | no |
 | <a name="input_datagateway_spec"></a> [datagateway\_spec](#input\_datagateway\_spec) | n/a | `string` | `"Standard_F8s_v2"` | no |
+| <a name="input_dg_vm_data_disks"></a> [dg\_vm\_data\_disks](#input\_dg\_vm\_data\_disks) | n/a | `any` | n/a | yes |
+| <a name="input_dg_vm_private_ip"></a> [dg\_vm\_private\_ip](#input\_dg\_vm\_private\_ip) | n/a | `any` | n/a | yes |
 | <a name="input_dts_pre_app_admin"></a> [dts\_pre\_app\_admin](#input\_dts\_pre\_app\_admin) | n/a | `any` | n/a | yes |
 | <a name="input_dts_pre_ent_appreg_oid"></a> [dts\_pre\_ent\_appreg\_oid](#input\_dts\_pre\_ent\_appreg\_oid) | n/a | `any` | n/a | yes |
 | <a name="input_dynatrace_server"></a> [dynatrace\_server](#input\_dynatrace\_server) | The server URL, if you want to configure an alternative communication endpoint. | `string` | `null` | no |
+| <a name="input_edit_vm_data_disks"></a> [edit\_vm\_data\_disks](#input\_edit\_vm\_data\_disks) | n/a | `any` | n/a | yes |
+| <a name="input_edit_vm_private_ip"></a> [edit\_vm\_private\_ip](#input\_edit\_vm\_private\_ip) | n/a | `any` | n/a | yes |
 | <a name="input_env"></a> [env](#input\_env) | n/a | `any` | n/a | yes |
 | <a name="input_hostgroup"></a> [hostgroup](#input\_hostgroup) | n/a | `any` | `null` | no |
 | <a name="input_install_dynatrace_oa"></a> [install\_dynatrace\_oa](#input\_install\_dynatrace\_oa) | n/a | `bool` | `true` | no |
@@ -148,7 +153,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_mgmt_net_name"></a> [mgmt\_net\_name](#input\_mgmt\_net\_name) | n/a | `any` | n/a | yes |
 | <a name="input_mgmt_net_rg_name"></a> [mgmt\_net\_rg\_name](#input\_mgmt\_net\_rg\_name) | n/a | `any` | n/a | yes |
 | <a name="input_mgmt_subscription_id"></a> [mgmt\_subscription\_id](#input\_mgmt\_subscription\_id) | n/a | `any` | n/a | yes |
-| <a name="input_num_datagateway"></a> [num\_datagateway](#input\_num\_datagateway) | n/a | `number` | `2` | no |
+| <a name="input_num_datagateway"></a> [num\_datagateway](#input\_num\_datagateway) | variable "vid\_edit\_vm\_spec" { default = "Standard\_E4s\_v4" } | `number` | `2` | no |
 | <a name="input_num_vid_edit_vms"></a> [num\_vid\_edit\_vms](#input\_num\_vid\_edit\_vms) | n/a | `number` | `2` | no |
 | <a name="input_pgsql_admin_username"></a> [pgsql\_admin\_username](#input\_pgsql\_admin\_username) | n/a | `string` | `"psqladmin"` | no |
 | <a name="input_pgsql_sku"></a> [pgsql\_sku](#input\_pgsql\_sku) | n/a | `string` | `"GP_Standard_D2s_v3"` | no |
@@ -163,10 +168,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_server"></a> [server](#input\_server) | n/a | `any` | `null` | no |
 | <a name="input_subscription"></a> [subscription](#input\_subscription) | n/a | `string` | `""` | no |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | n/a | `any` | n/a | yes |
-| <a name="input_vid_edit_vm_spec"></a> [vid\_edit\_vm\_spec](#input\_vid\_edit\_vm\_spec) | n/a | `string` | `"Standard_E4s_v4"` | no |
 | <a name="input_video_edit_vm_snet_address"></a> [video\_edit\_vm\_snet\_address](#input\_video\_edit\_vm\_snet\_address) | n/a | `any` | n/a | yes |
-| <a name="input_vm_data_disks"></a> [vm\_data\_disks](#input\_vm\_data\_disks) | n/a | `any` | n/a | yes |
-| <a name="input_vm_private_ip"></a> [vm\_private\_ip](#input\_vm\_private\_ip) | n/a | `any` | n/a | yes |
 | <a name="input_vm_type"></a> [vm\_type](#input\_vm\_type) | n/a | `string` | `"windows"` | no |
 | <a name="input_vnet_address_space"></a> [vnet\_address\_space](#input\_vnet\_address\_space) | n/a | `any` | n/a | yes |
 | <a name="input_zone"></a> [zone](#input\_zone) | Availability Zone for Postgres | `string` | `"1"` | no |

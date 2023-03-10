@@ -39,6 +39,8 @@ locals {
 #   principal_id         = each.value
 # }
 
+# "Contributor", "Storage Blob Data Contributor", and "User Access Administrator"
+
 resource "azurerm_automation_account" "pre-aa" {
   name                = "${var.product}-${var.env}-aa"
   location            = var.location

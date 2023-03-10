@@ -6,8 +6,8 @@ module "data_gateway_vm" {
   vm_resource_group              = data.azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.dg_vm_size
-  vm_admin_name                  = azurerm_key_vault_secret.dtgtwy_username[count.index].value
-  vm_admin_password              = azurerm_key_vault_secret.dtgtwy_password[count.index].value
+  vm_admin_name                  = azurerm_key_vault_secret.dg_username[count.index].value
+  vm_admin_password              = azurerm_key_vault_secret.dg_password[count.index].value
   vm_availabilty_zones           = local.dg_vm_availabilty_zones[count.index]
   managed_disks                  = var.dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
@@ -53,7 +53,7 @@ module "data_gateway_vm" {
 
 }
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "dtgtwyvm" {
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
   count              = var.num_datagateway
   virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
   location           = data.azurerm_resource_group.rg.location
@@ -95,13 +95,13 @@ locals {
 
 
 # Datagateway
-resource "random_string" "dtgtwy_username" {
+resource "random_string" "dg_username" {
   count   = var.num_datagateway
   length  = 4
   special = false
 }
 
-resource "random_password" "dtgtwy_password" {
+resource "random_password" "dg_password" {
   count            = var.num_datagateway
   length           = 16
   special          = true
@@ -111,16 +111,16 @@ resource "random_password" "dtgtwy_password" {
   min_numeric      = 1
 }
 
-resource "azurerm_key_vault_secret" "dtgtwy_username" {
+resource "azurerm_key_vault_secret" "dg_username" {
   count        = var.num_datagateway
-  name         = "Dtgtwy${count.index}-username"
-  value        = "Dtgtwy${count.index}_${random_string.dtgtwy_username[count.index].result}"
+  name         = "dg${count.index + 1}-username"
+  value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
 
-resource "azurerm_key_vault_secret" "dtgtwy_password" {
+resource "azurerm_key_vault_secret" "dg_password" {
   count        = var.num_datagateway
-  name         = "Dtgtwy${count.index}-password"
-  value        = random_password.dtgtwy_password[count.index].result
+  name         = "dg${count.index + 1}-password"
+  value        = random_password.dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
