@@ -2,7 +2,7 @@
 //noinspection GroovyUnusedAssignment
 @Library("Infrastructure") _
 
-env.GIT_URL = 'https://github.com/hmcts/pre-shared-infrastructure.git'
+env.GIT_URL = 'https://github.com/hmcts/pre-vault.git'
 
 onMaster {
 
