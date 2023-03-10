@@ -2,33 +2,13 @@
 //noinspection GroovyUnusedAssignment
 @Library("Infrastructure") _
 
-env.GIT_URL = 'https://github.com/hmcts/pre-vault.git'
-
-onMaster {
-
-    properties([
-            parameters([
-                    booleanParam(name: 'PLAN_ONLY', defaultValue: false, description: 'set to true for skipping terraform apply')
-            ])
-    ])
-}
-onPR {
-    properties([
-            parameters([
-                    booleanParam(name: 'PLAN_ONLY', defaultValue: true, description: 'set to true for skipping terraform apply')
-            ])
-    ])
-}
-
 def product = "pre"
 def component = "shared-infrastructure"
-def expiresAfter = "3001-01-01"
 def branchesToSync = ['demo']
-def planOnly = params.PLAN_ONLY
+
 
 withInfraPipeline(product, component) {
   enableSlackNotifications('#pre-builds')
   syncBranchesWithMaster(branchesToSync)
-  expires(expiresAfter)
-
+    
 }
