@@ -214,6 +214,10 @@ variable "vm_type" {
   default = "windows"
 }
 
+variable "dg_vm_data_disks" {}
+
+variable "edit_vm_data_disks" {}
+
 variable "dg_vm_private_ip" {}
 
 variable "edit_vm_private_ip" {}
