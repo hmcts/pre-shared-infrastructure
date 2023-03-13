@@ -92,7 +92,7 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   count                = var.num_vid_edit_vms
   name                 = "editCustomScript"
   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Azure.Extensions"
+  publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
 
