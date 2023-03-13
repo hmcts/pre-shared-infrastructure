@@ -92,9 +92,9 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   count                = var.num_vid_edit_vms
   name                 = "toolingScript"
   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Compute"
+  publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScriptExtension"
-  type_handler_version = "1.9"
+  type_handler_version = "2.1.3"
 
   settings = <<SETTINGS
  {
