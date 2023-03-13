@@ -57,9 +57,9 @@ resource "azurerm_virtual_machine_extension" "data_gateway_init" {
   count                = var.num_datagateway
   name                 = "toolingScript"
   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Compute"
+  publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScriptExtension"
-  type_handler_version = "1.9"
+  type_handler_version = "2.1.3"
 
   settings = <<SETTINGS
  {
