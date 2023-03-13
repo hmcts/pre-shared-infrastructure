@@ -98,14 +98,10 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
 
   settings = <<SETTINGS
  {
-    "fileUris": [
-      "edit-init.ps1"
-    ],
-    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File edit-init.ps1"
+    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./scripts/edit-init.ps1"
 
  }
 SETTINGS
-
 
   tags = var.common_tags
 }
