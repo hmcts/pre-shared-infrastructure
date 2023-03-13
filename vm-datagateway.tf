@@ -57,7 +57,7 @@ resource "azurerm_virtual_machine_extension" "dg_init" {
   count                = var.num_datagateway
   name                 = "dgCustomScript"
   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Azure.Extensions"
+  publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
 
