@@ -57,15 +57,15 @@ resource "azurerm_virtual_machine_extension" "data_gateway_init" {
   count                = var.num_datagateway
   name                 = "toolingScript"
   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Azure.Extensions"
+  publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
-  type_handler_version = "2.1.3"
+  type_handler_version = "1.9"
 
-  settings = <<SETTINGS
+  protected_settings = <<PROTECTED_SETTINGS
  {
     "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./$(System.DefaultWorkingDirectory)/scripts/datagateway-init.ps1"
  }
-SETTINGS
+PROTECTED_SETTINGS
 
   tags = var.common_tags
 }
