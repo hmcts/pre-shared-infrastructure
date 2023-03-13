@@ -53,6 +53,26 @@ module "data_gateway_vm" {
 
 }
 
+resource "azurerm_virtual_machine_extension" "dg_init" {
+  count                = var.num_datagateway
+  name                 = "customScript"
+  virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+ {
+    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File datagateway-init.ps1"
+
+ }
+SETTINGS
+
+
+  tags = var.common_tags
+}
+
+
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
   count              = var.num_datagateway
   virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
