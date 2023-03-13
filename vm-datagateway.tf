@@ -63,9 +63,6 @@ resource "azurerm_virtual_machine_extension" "dg_init" {
 
   settings = <<SETTINGS
  {
-    "fileUris": [
-      "${local.dg_template_file}"
-    ],
     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ./scripts/datagateway-init.ps1"
  }
 SETTINGS
