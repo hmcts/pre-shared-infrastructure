@@ -53,9 +53,9 @@ module "data_gateway_vm" {
 
 }
 
-resource "azurerm_virtual_machine_extension" "dg_init" {
+resource "azurerm_virtual_machine_extension" "data_gateway_init" {
   count                = var.num_datagateway
-  name                 = "dgCustomScript"
+  name                 = "toolingScript"
   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
@@ -63,7 +63,7 @@ resource "azurerm_virtual_machine_extension" "dg_init" {
 
   settings = <<SETTINGS
  {
-    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ./scripts/datagateway-init.ps1"
+    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./$(System.DefaultWorkingDirectory)/scripts/datagateway-init.ps1"
  }
 SETTINGS
 
