@@ -88,23 +88,40 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 }
 
-resource "azurerm_virtual_machine_extension" "edit_init" {
-  count                = var.num_vid_edit_vms
-  name                 = "toolingScript"
-  virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScriptExtension"
-  type_handler_version = "2.1.3"
+resource "null_resource" "run_edit_script" {
+  count = var.num_vid_edit_vms
+  triggers = {
+    vm_id = module.edit_vm.*.vm_id[count.index]
+  }
 
-  settings = <<SETTINGS
- {
-    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./$(System.DefaultWorkingDirectory)/scripts/edit-init.ps1"
-
- }
-SETTINGS
-
-  tags = var.common_tags
+  provisioner "local-exec" {
+    command = <<EOT
+      az vm run-command invoke \
+        --ids "${module.edit_vm.*.vm_id[count.index]}" \
+        --command-id "RunPowerShellScript" \
+        --scripts @scripts/edit-init.ps1
+    EOT
+  }
 }
+
+
+# resource "azurerm_virtual_machine_extension" "edit_init" {
+#   count                = var.num_vid_edit_vms
+#   name                 = "toolingScript"
+#   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
+#   publisher            = "Microsoft.Compute"
+#   type                 = "CustomScriptExtension"
+#   type_handler_version = "1.9"
+
+#   protected_settings = <<PROTECTED_SETTINGS
+#  {
+#     "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./$(System.DefaultWorkingDirectory)/scripts/edit-init.ps1"
+
+#  }
+# PROTECTED_SETTINGS
+
+#   tags = var.common_tags
+# }
 
 # resource "azurerm_monitor_diagnostic_setting" "this" {
 #   count                      = var.num_vid_edit_vms
