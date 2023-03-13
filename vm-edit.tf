@@ -90,7 +90,7 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 resource "azurerm_virtual_machine_extension" "edit_init" {
   count                = var.num_vid_edit_vms
-  name                 = "editCustomScript"
+  name                 = "toolingScript"
   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
@@ -98,7 +98,7 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
 
   settings = <<SETTINGS
  {
-    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./scripts/edit-init.ps1"
+    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./$(System.DefaultWorkingDirectory)/scripts/edit-init.ps1"
 
  }
 SETTINGS
