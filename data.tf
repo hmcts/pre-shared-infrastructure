@@ -76,10 +76,10 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
-data "azurerm_disk_encryption_set" "pre-des" {
-  name                = "pre-des"
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
+# data "azurerm_disk_encryption_set" "pre-des" {
+#   name                = "pre-des"
+#   resource_group_name = data.azurerm_resource_group.rg.name
+# }
 
 data "azurerm_key_vault" "pre_kv" {
   name                = "${var.product}-${var.env}"

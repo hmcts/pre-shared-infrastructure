@@ -1,15 +1,16 @@
 module "edit_vm" {
-  count                = var.num_vid_edit_vms
-  source               = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
-  vm_type              = local.edit_vm_type
-  vm_name              = "edit-vm${count.index + 1}-${var.env}"
-  vm_resource_group    = data.azurerm_resource_group.rg.name
-  vm_location          = var.location
-  vm_size              = local.edit_vm_size
-  vm_admin_name        = azurerm_key_vault_secret.edit_username[count.index].value
-  vm_admin_password    = azurerm_key_vault_secret.edit_password[count.index].value
-  vm_availabilty_zones = local.edit_vm_availabilty_zones[count.index]
-  managed_disks        = var.edit_vm_data_disks[count.index]
+  count                          = var.num_vid_edit_vms
+  source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
+  vm_type                        = local.edit_vm_type
+  vm_name                        = "edit-vm${count.index + 1}-${var.env}"
+  vm_resource_group              = data.azurerm_resource_group.rg.name
+  vm_location                    = var.location
+  vm_size                        = local.edit_vm_size
+  vm_admin_name                  = azurerm_key_vault_secret.edit_username[count.index].value
+  vm_admin_password              = azurerm_key_vault_secret.edit_password[count.index].value
+  vm_availabilty_zones           = local.edit_vm_availabilty_zones[count.index]
+  managed_disks                  = var.edit_vm_data_disks[count.index]
+  accelerated_networking_enabled = true
 
   #Disk Encryption
   kv_name     = "pre-${var.env}"
@@ -85,6 +86,25 @@ resource "azurerm_virtual_machine_extension" "aad" {
   auto_upgrade_minor_version = true
   tags                       = var.common_tags
 
+}
+
+resource "azurerm_virtual_machine_extension" "edit_init" {
+  count                = var.num_vid_edit_vms
+  name                 = "customScript"
+  virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+
+  settings = <<SETTINGS
+ {
+    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File edit-init.ps1"
+
+ }
+SETTINGS
+
+
+  tags = var.common_tags
 }
 
 # resource "azurerm_monitor_diagnostic_setting" "this" {
