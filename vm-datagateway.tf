@@ -59,10 +59,13 @@ resource "azurerm_virtual_machine_extension" "dg_init" {
   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScriptExtension"
-  type_handler_version = "2.0"
+  type_handler_version = "1.9"
 
   settings = <<SETTINGS
  {
+    "fileUris": [
+      "datagateway-init.ps1"
+    ],
     "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File datagateway-init.ps1"
 
  }
