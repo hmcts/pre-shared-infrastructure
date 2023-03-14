@@ -1,7 +1,11 @@
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
-choco feature enable -n allowGlobalConfirmation
+$newPath = "C:\ProgramData\chocolatey\bin"
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+[Environment]::SetEnvironmentVariable("Path", "$newPath;$currentPath", "Machine")
 
-choco install ffmpeg
+Start-Sleep -Seconds 5
 
-choco install microsoftazurestorageexplorer
+choco feature enable -n allowGlobalConfirmation;
+choco install ffmpeg;
+choco install microsoftazurestorageexplorer;
