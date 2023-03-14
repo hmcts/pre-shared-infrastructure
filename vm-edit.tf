@@ -11,6 +11,7 @@ module "edit_vm" {
   vm_availabilty_zones           = local.edit_vm_availabilty_zones[count.index]
   managed_disks                  = var.edit_vm_data_disks[count.index]
   accelerated_networking_enabled = true
+  custom_data                    = filebase64("./scripts/edit-init.ps1")
 
   #Disk Encryption
   kv_name     = "pre-${var.env}"
