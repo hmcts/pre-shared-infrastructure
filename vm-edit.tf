@@ -116,7 +116,7 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
 
   protected_settings = <<SETTINGS
  {
-    "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1\""
+    "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1""
  }
 SETTINGS
 
