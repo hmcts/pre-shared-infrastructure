@@ -115,21 +115,14 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   type_handler_version = "1.10"
 
   protected_settings = <<SETTINGS
-    { 
-        "fileUris": [
-            "https://raw.githubusercontent.com/hmcts/pre-shared-infrastructure/preview/scripts/edit-init.ps1?token=GHSAT0AAAAAAB55CCHLRJXUQ3MMOF2OHJ76ZAQ3RKA"
-        ],
-        "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./edit-init.ps1"
-    } 
+ {
+
+   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1\""
+ }
 SETTINGS
 
   tags = var.common_tags
 }
-
- #{
-
- #   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1\""
- #}
 
 # resource "azurerm_monitor_diagnostic_setting" "this" {
 #   count                      = var.num_vid_edit_vms

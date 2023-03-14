@@ -70,22 +70,22 @@ module "data_gateway_vm" {
 #   }
 # }
 
-# resource "azurerm_virtual_machine_extension" "data_gateway_init" {
-#   count                = var.num_datagateway
-#   name                 = "toolingScript"
-#   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-#   publisher            = "Microsoft.Compute"
-#   type                 = "CustomScriptExtension"
-#   type_handler_version = "1.9"
+resource "azurerm_virtual_machine_extension" "data_gateway_init" {
+  count                = var.num_datagateway
+  name                 = "toolingScript"
+  virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
+  type_handler_version = "1.9"
 
-#   protected_settings = <<PROTECTED_SETTINGS
-#  {
-#     "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File ./$(System.DefaultWorkingDirectory)/scripts/datagateway-init.ps1"
-#  }
-# PROTECTED_SETTINGS
+  protected_settings = <<SETTINGS
+ {
+    "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1\""
+ }
+SETTINGS
 
-#   tags = var.common_tags
-# }
+  tags = var.common_tags
+}
 
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
