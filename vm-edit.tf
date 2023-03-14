@@ -106,23 +106,23 @@ resource "azurerm_virtual_machine_extension" "aad" {
 # }
 
 
-resource "azurerm_virtual_machine_extension" "edit_init" {
-  count                = var.num_vid_edit_vms
-  name                 = "toolingScript"
-  virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Compute"
-  type                 = "CustomScriptExtension"
-  type_handler_version = "1.10"
+# resource "azurerm_virtual_machine_extension" "edit_init" {
+#   count                = var.num_vid_edit_vms
+#   name                 = "toolingScript"
+#   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
+#   publisher            = "Microsoft.Compute"
+#   type                 = "CustomScriptExtension"
+#   type_handler_version = "1.10"
 
-  protected_settings = <<SETTINGS
- {
-    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File c:/WindowsAzure/edit-init.ps1"
+#   protected_settings = <<SETTINGS
+#  {
+#     "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File c:/WindowsAzure/edit-init.ps1"
 
- }
-SETTINGS
+#  }
+# SETTINGS
 
-  tags = var.common_tags
-}
+#   tags = var.common_tags
+# }
 
 # resource "azurerm_monitor_diagnostic_setting" "this" {
 #   count                      = var.num_vid_edit_vms
