@@ -53,21 +53,21 @@ module "data_gateway_vm" {
 
 }
 
-resource "null_resource" "run_dg_script" {
-  count = var.num_datagateway
-  triggers = {
-    vm_id = module.data_gateway_vm.*.vm_id[count.index]
-  }
+# resource "null_resource" "run_dg_script" {
+#   count = var.num_datagateway
+#   triggers = {
+#     vm_id = module.data_gateway_vm.*.vm_id[count.index]
+#   }
 
-  provisioner "local-exec" {
-    command = <<EOT
-      az vm run-command invoke \
-        --ids "${module.data_gateway_vm.*.vm_id[count.index]}" \
-        --command-id "RunPowerShellScript" \
-        --scripts @scripts/datagateway-init.ps1
-    EOT
-  }
-}
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       az vm run-command invoke \
+#         --ids "${module.data_gateway_vm.*.vm_id[count.index]}" \
+#         --command-id "RunPowerShellScript" \
+#         --scripts @scripts/datagateway-init.ps1
+#     EOT
+#   }
+# }
 
 # resource "azurerm_virtual_machine_extension" "data_gateway_init" {
 #   count                = var.num_datagateway
