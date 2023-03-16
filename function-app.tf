@@ -66,7 +66,7 @@ resource "azurerm_function_app_function" "content_key_policy" {
   })
 }
 
-resource "azurerm_function_app_function" "get_sas_url" {
+resource "azurerm_function_app_function" "sas_url" {
   name            = "getSasUrl"
   function_app_id = module.ams_function_app.function_app_id
   language        = "Javascript"
@@ -94,7 +94,7 @@ resource "azurerm_function_app_function" "get_sas_url" {
   })
 }
 
-resource "azurerm_function_app_function" "get_streaming_url" {
+resource "azurerm_function_app_function" "streaming_url" {
   name            = "GetStreamingUrl"
   function_app_id = module.ams_function_app.function_app_id
   language        = "Javascript"
@@ -122,30 +122,143 @@ resource "azurerm_function_app_function" "get_streaming_url" {
   })
 }
 
-# resource "azurerm_function_app_function" "get_streaming_url" {
-#   name            = "GetStreamingUrl"
-#   function_app_id = module.ams_function_app.function_app_id
-#   language        = "Javascript"
-# #   test_data = jsonencode({
-# #     "name" = "Azure"
-# #   })
-#   config_json = jsonencode({
-#     "bindings" = [
-#       {
-#         "authLevel" = "function"
-#         "direction" = "in"
-#         "methods" = [
-#           "get",
-#           "post",
-#         ]
-#         "name" = "req"
-#         "type" = "httpTrigger"
-#       },
-#       {
-#         "direction" = "out"
-#         "name"      = "$return"
-#         "type"      = "http"
-#       },
-#     ]
-#   })
-# }
+resource "azurerm_function_app_function" "token" {
+  name            = "getToken"
+  function_app_id = module.ams_function_app.function_app_id
+  language        = "Javascript"
+  #   test_data = jsonencode({
+  #     "name" = "Azure"
+  #   })
+  config_json = jsonencode({
+    "bindings" = [
+      {
+        "authLevel" = "function"
+        "direction" = "in"
+        "methods" = [
+          "get",
+          "post",
+        ]
+        "name" = "req"
+        "type" = "httpTrigger"
+      },
+      {
+        "direction" = "out"
+        "name"      = "$return"
+        "type"      = "http"
+      },
+    ]
+  })
+}
+
+resource "azurerm_function_app_function" "list_container_assets" {
+  name            = "listContainerAssets"
+  function_app_id = module.ams_function_app.function_app_id
+  language        = "Javascript"
+  #   test_data = jsonencode({
+  #     "name" = "Azure"
+  #   })
+  config_json = jsonencode({
+    "bindings" = [
+      {
+        "authLevel" = "function"
+        "direction" = "in"
+        "methods" = [
+          "get",
+          "post",
+        ]
+        "name" = "req"
+        "type" = "httpTrigger"
+      },
+      {
+        "direction" = "out"
+        "name"      = "$return"
+        "type"      = "http"
+      },
+    ]
+  })
+}
+
+resource "azurerm_function_app_function" "list_containers" {
+  name            = "listContainers"
+  function_app_id = module.ams_function_app.function_app_id
+  language        = "Javascript"
+  #   test_data = jsonencode({
+  #     "name" = "Azure"
+  #   })
+  config_json = jsonencode({
+    "bindings" = [
+      {
+        "authLevel" = "function"
+        "direction" = "in"
+        "methods" = [
+          "get",
+          "post",
+        ]
+        "name" = "req"
+        "type" = "httpTrigger"
+      },
+      {
+        "direction" = "out"
+        "name"      = "$return"
+        "type"      = "http"
+      },
+    ]
+  })
+}
+
+resource "azurerm_function_app_function" "play_ready_content" {
+  name            = "PlayReadyContent"
+  function_app_id = module.ams_function_app.function_app_id
+  language        = "Javascript"
+  #   test_data = jsonencode({
+  #     "name" = "Azure"
+  #   })
+  config_json = jsonencode({
+    "bindings" = [
+      {
+        "authLevel" = "function"
+        "direction" = "in"
+        "methods" = [
+          "get",
+          "post",
+        ]
+        "name" = "req"
+        "type" = "httpTrigger"
+      },
+      {
+        "direction" = "out"
+        "name"      = "$return"
+        "type"      = "http"
+      },
+    ]
+  })
+}
+
+resource "azurerm_function_app_function" "verify_token" {
+  name            = "verifyToken"
+  function_app_id = module.ams_function_app.function_app_id
+  language        = "Javascript"
+  #   test_data = jsonencode({
+  #     "name" = "Azure"
+  #   })
+  config_json = jsonencode({
+    "bindings" = [
+      {
+        "authLevel" = "function"
+        "direction" = "in"
+        "methods" = [
+          "get",
+          "post",
+        ]
+        "name" = "req"
+        "type" = "httpTrigger"
+      },
+      {
+        "direction" = "out"
+        "name"      = "$return"
+        "type"      = "http"
+      },
+    ]
+  })
+}
+
