@@ -17,9 +17,9 @@ resource "azurerm_windows_function_app" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  storage_account_name       = var.storage_account_name
-  storage_account_access_key = var.storage_account_key #azurerm_storage_account.this.primary_access_key
-  service_plan_id            = azurerm_service_plan.this[0].id
+  # storage_account_name       = var.storage_account_name
+  # storage_account_access_key = var.storage_account_key #azurerm_storage_account.this.primary_access_key
+  service_plan_id = azurerm_service_plan.this[0].id
 
   app_settings = var.app_settings
   https_only   = true

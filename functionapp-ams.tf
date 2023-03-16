@@ -35,8 +35,8 @@ module "ams_function_app" {
     # "WEBSITE_RUN_FROM_PACKAGE" = ""
   }
 
-  storage_account_name = module.ingestsa_storage_account.storageaccount_name
-  storage_account_key  = module.ingestsa_storage_account.storageaccount_primary_access_key
+  # storage_account_name = module.ingestsa_storage_account.storageaccount_name
+  # storage_account_key  = module.ingestsa_storage_account.storageaccount_primary_access_key
 }
 
 resource "azurerm_function_app_function" "content_key_policy" {
