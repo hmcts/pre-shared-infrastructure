@@ -1,5 +1,7 @@
 
 module "ams_function_app" {
+#    source  =  "git@github.com:hmcts/pre-module-terraform-function-app.git?ref=master"
+#   source  = "./modules"
   source  = "git@github.com:hmcts/pre-shared-infrastructure//modules?ref=preview"
   os_type = "Linux"
   product = var.product
@@ -34,7 +36,6 @@ module "ams_function_app" {
   storage_account_name = module.ingestsa_storage_account.storageaccount_name
   storage_account_key  = module.ingestsa_storage_account.storageaccount_primary_access_key
 }
-
 resource "azurerm_function_app_function" "content_key_policy" {
   name            = "CreateContentKeyPolicy"
   function_app_id = module.ams_function_app.function_app_id
