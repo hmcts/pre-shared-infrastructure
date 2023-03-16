@@ -41,12 +41,12 @@ module "ams_function_app" {
 resource "azurerm_function_app_function" "content_key_policy" {
   name            = "CreateContentKeyPolicy"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
 
   #   test_data = jsonencode({
@@ -76,12 +76,12 @@ resource "azurerm_function_app_function" "content_key_policy" {
 resource "azurerm_function_app_function" "sas_url" {
   name            = "getSasUrl"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
 
   #   test_data = jsonencode({
@@ -111,12 +111,12 @@ resource "azurerm_function_app_function" "sas_url" {
 resource "azurerm_function_app_function" "streaming_url" {
   name            = "GetStreamingUrl"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
 
   #   test_data = jsonencode({
@@ -146,15 +146,15 @@ resource "azurerm_function_app_function" "streaming_url" {
 resource "azurerm_function_app_function" "token" {
   name            = "getToken"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
   #   test_data = jsonencode({
   #     "name" = "Azure"
   #   })
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
 
   config_json = jsonencode({
@@ -181,12 +181,12 @@ resource "azurerm_function_app_function" "token" {
 resource "azurerm_function_app_function" "list_container_assets" {
   name            = "listContainerAssets"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
   #   test_data = jsonencode({
   #     "name" = "Azure"
@@ -215,12 +215,12 @@ resource "azurerm_function_app_function" "list_container_assets" {
 resource "azurerm_function_app_function" "list_containers" {
   name            = "listContainers"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
   #   test_data = jsonencode({
   #     "name" = "Azure"
@@ -249,12 +249,12 @@ resource "azurerm_function_app_function" "list_containers" {
 resource "azurerm_function_app_function" "play_ready_content" {
   name            = "PlayReadyContent"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
   #   test_data = jsonencode({
   #     "name" = "Azure"
@@ -283,12 +283,12 @@ resource "azurerm_function_app_function" "play_ready_content" {
 resource "azurerm_function_app_function" "verify_token" {
   name            = "verifyToken"
   function_app_id = module.ams_function_app.function_app_id
-  language        = "Javascript"
+  #   language        = "Javascript"
 
-#   file {
-#     name    = "run.js"
-#     content = file("exampledata/run.js")
-#   }
+  #   file {
+  #     name    = "run.js"
+  #     content = file("exampledata/run.js")
+  #   }
 
 
   #   test_data = jsonencode({
