@@ -1,6 +1,6 @@
 
 module "ams_function_app" {
-  source  = "git@github.com:hmcts/pre-shared-infrastructure.git?ref=preview"
+  source  = "git@github.com:hmcts/pre-shared-infrastructure//modules?ref=preview"
   os_type = "Linux"
   product = var.product
 
