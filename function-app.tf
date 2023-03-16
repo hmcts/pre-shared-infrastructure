@@ -30,8 +30,8 @@ module "ams_function_app" {
     "TOKENENDPOINT"                         = ""
     "TOKENSIGNINGKEY"                       = ""
     # "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = ""
-    "WEBSITE_CONTENTSHARE"     = ""
-    "WEBSITE_RUN_FROM_PACKAGE" = ""
+    # "WEBSITE_CONTENTSHARE"     = ""
+    # "WEBSITE_RUN_FROM_PACKAGE" = ""
   }
 
   storage_account_name = module.ingestsa_storage_account.storageaccount_name
