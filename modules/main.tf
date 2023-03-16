@@ -1,11 +1,13 @@
 resource "azurerm_service_plan" "this" {
-  name                = "${var.product}-asp-${var.name}"
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  os_type             = var.os_type #"Windows"
-  sku_name            = "Y1"
-  worker_count        = var.worker_count
+  name                   = "${var.product}-asp-${var.name}"
+  resource_group_name    = var.resource_group_name
+  location               = var.location
+  os_type                = var.os_type #"Windows"
+  sku_name               = "Y1"
+  worker_count           = var.worker_count
   zone_balancing_enabled = true
+
+  tags = var.common_tags
 }
 
 resource "azurerm_windows_function_app" "this" {
@@ -18,7 +20,9 @@ resource "azurerm_windows_function_app" "this" {
   service_plan_id            = azurerm_service_plan.this.id
 
   app_settings = var.app_settings
-  https_only = true
+  https_only   = true
+
+  tags = var.common_tags
 
   site_config {}
 }
@@ -33,7 +37,9 @@ resource "azurerm_linux_function_app" "this" {
   service_plan_id            = azurerm_service_plan.this.id
 
   app_settings = var.app_settings
-  https_only = true
+  https_only   = true
+
+  tags = var.common_tags
 
   site_config {}
 }
