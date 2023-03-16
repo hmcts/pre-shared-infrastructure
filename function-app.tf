@@ -1,7 +1,7 @@
 
 module "ams_function_app" {
-#    source  =  "git@github.com:hmcts/pre-module-terraform-function-app.git?ref=master"
-#   source  = "./modules"
+  #    source  =  "git@github.com:hmcts/pre-module-terraform-function-app.git?ref=master"
+  #   source  = "./modules"
   source  = "git@github.com:hmcts/pre-shared-infrastructure//modules?ref=preview"
   os_type = "Linux"
   product = var.product
@@ -10,6 +10,7 @@ module "ams_function_app" {
   name                = "pre-ams-integration"
   location            = var.location
   worker_count        = 1
+  common_tags         = var.common_tags
   app_settings = {
     "ACCOUNTKEY" = ""
     "ALGO"       = "['RS256']"
