@@ -21,3 +21,8 @@ variable "product" {}
 variable "worker_count" {}
 
 variable "common_tags" {}
+
+variable "create_service_plan" {
+  description = " If true a new service plan is created"
+  default     = true
+}

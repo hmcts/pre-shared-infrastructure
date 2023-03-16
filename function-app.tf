@@ -1,10 +1,11 @@
 
 module "ams_function_app" {
   #    source  =  "git@github.com:hmcts/pre-module-terraform-function-app.git?ref=master"
-  #   source  = "./modules"
-  source  = "git@github.com:hmcts/pre-shared-infrastructure//modules?ref=preview"
-  os_type = "Linux"
-  product = var.product
+  #   source = "./modules"
+  source              = "git@github.com:hmcts/pre-shared-infrastructure//modules?ref=preview"
+  os_type             = "Linux"
+  product             = var.product
+  create_service_plan = true
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "pre-ams-integration"

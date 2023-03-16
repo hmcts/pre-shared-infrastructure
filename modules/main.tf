@@ -1,4 +1,5 @@
 resource "azurerm_service_plan" "this" {
+  count               = var.create_service_plan ? 1 : 0
   name                = "${var.product}-asp-${var.name}"
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -11,14 +12,14 @@ resource "azurerm_service_plan" "this" {
 }
 
 resource "azurerm_windows_function_app" "this" {
-  count               = var.os_type == "windows" ? 1 : 0
+  count               = var.os_type == "Windows" ? 1 : 0
   name                = var.name
   resource_group_name = var.resource_group_name
   location            = var.location
 
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_key #azurerm_storage_account.this.primary_access_key
-  service_plan_id            = azurerm_service_plan.this.id
+  service_plan_id            = azurerm_service_plan.this[0].id
 
   app_settings = var.app_settings
   https_only   = true
@@ -29,14 +30,14 @@ resource "azurerm_windows_function_app" "this" {
 }
 
 resource "azurerm_linux_function_app" "this" {
-  count               = var.os_type == "linux" ? 1 : 0
+  count               = var.os_type == "Linux" ? 1 : 0
   name                = var.name
   resource_group_name = var.resource_group_name
   location            = var.location
 
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_key
-  service_plan_id            = azurerm_service_plan.this.id
+  service_plan_id            = azurerm_service_plan.this[0].id
 
   app_settings = var.app_settings
   https_only   = true
