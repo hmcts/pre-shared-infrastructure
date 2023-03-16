@@ -5,6 +5,7 @@ resource "azurerm_service_plan" "this" {
   os_type             = var.os_type #"Windows"
   sku_name            = "Y1"
   worker_count        = var.worker_count
+  zone_balancing_enabled = true
 }
 
 resource "azurerm_windows_function_app" "this" {
