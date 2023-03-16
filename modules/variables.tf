@@ -5,7 +5,7 @@ variable "name" {}
 variable "location" {}
 
 variable "app_settings" {
-  type    = map(string)
+  type = map(string)
 }
 
 variable "storage_account_name" {}
@@ -19,3 +19,5 @@ variable "os_type" {
 variable "product" {}
 
 variable "worker_count" {}
+
+variable "common_tags" {}
