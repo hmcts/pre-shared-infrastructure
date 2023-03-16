@@ -9,7 +9,7 @@ module "video_test" {
   create_service_plan = true
 
   resource_group_name = data.azurerm_resource_group.rg.name
-  name                = "pre-rec-video-test"
+  name                = "pre-video-dev"
   location            = var.location
   worker_count        = 1
   common_tags         = var.common_tags
