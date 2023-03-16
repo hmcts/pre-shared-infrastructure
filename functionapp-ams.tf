@@ -3,7 +3,7 @@ module "ams_function_app" {
   #    source  =  "git@github.com:hmcts/pre-module-terraform-function-app.git?ref=master"
   #   source = "./modules"
   source              = "git@github.com:hmcts/pre-shared-infrastructure//modules?ref=preview"
-  os_type             = "Windows"
+  os_type             = "Linux"
   product             = var.product
   create_service_plan = true
 
@@ -35,283 +35,283 @@ module "ams_function_app" {
     # "WEBSITE_RUN_FROM_PACKAGE" = ""
   }
 
-  # storage_account_name = module.ingestsa_storage_account.storageaccount_name
-  # storage_account_key  = module.ingestsa_storage_account.storageaccount_primary_access_key
+  storage_account_name = module.ingestsa_storage_account.storageaccount_name
+  storage_account_key  = module.ingestsa_storage_account.storageaccount_primary_access_key
 }
 
-resource "azurerm_function_app_function" "content_key_policy" {
-  name            = "CreateContentKeyPolicy"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
+# resource "azurerm_function_app_function" "content_key_policy" {
+#   name            = "CreateContentKeyPolicy"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
 
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
-
-
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
-
-resource "azurerm_function_app_function" "sas_url" {
-  name            = "getSasUrl"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
-
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
 
 
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
 
-resource "azurerm_function_app_function" "streaming_url" {
-  name            = "GetStreamingUrl"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
+# resource "azurerm_function_app_function" "sas_url" {
+#   name            = "getSasUrl"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
 
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
-
-
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
-
-resource "azurerm_function_app_function" "token" {
-  name            = "getToken"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
 
 
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
 
-resource "azurerm_function_app_function" "list_container_assets" {
-  name            = "listContainerAssets"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
+# resource "azurerm_function_app_function" "streaming_url" {
+#   name            = "GetStreamingUrl"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
 
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
-
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
-
-resource "azurerm_function_app_function" "list_containers" {
-  name            = "listContainers"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
-
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
-
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
-
-resource "azurerm_function_app_function" "play_ready_content" {
-  name            = "PlayReadyContent"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
-
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
-
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
-
-resource "azurerm_function_app_function" "verify_token" {
-  name            = "verifyToken"
-  function_app_id = module.ams_function_app.function_app_id
-  #   language        = "Javascript"
-
-  #   file {
-  #     name    = "run.js"
-  #     content = file("exampledata/run.js")
-  #   }
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
 
 
-  #   test_data = jsonencode({
-  #     "name" = "Azure"
-  #   })
-  config_json = jsonencode({
-    "bindings" = [
-      {
-        "authLevel" = "function"
-        "direction" = "in"
-        "methods" = [
-          "get",
-          "post",
-        ]
-        "name" = "req"
-        "type" = "httpTrigger"
-      },
-      {
-        "direction" = "out"
-        "name"      = "$return"
-        "type"      = "http"
-      },
-    ]
-  })
-}
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
+
+# resource "azurerm_function_app_function" "token" {
+#   name            = "getToken"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
+
+
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
+
+# resource "azurerm_function_app_function" "list_container_assets" {
+#   name            = "listContainerAssets"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
+
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
+
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
+
+# resource "azurerm_function_app_function" "list_containers" {
+#   name            = "listContainers"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
+
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
+
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
+
+# resource "azurerm_function_app_function" "play_ready_content" {
+#   name            = "PlayReadyContent"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
+
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
+
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
+
+# resource "azurerm_function_app_function" "verify_token" {
+#   name            = "verifyToken"
+#   function_app_id = module.ams_function_app.function_app_id
+#   #   language        = "Javascript"
+
+#   #   file {
+#   #     name    = "run.js"
+#   #     content = file("exampledata/run.js")
+#   #   }
+
+
+#   #   test_data = jsonencode({
+#   #     "name" = "Azure"
+#   #   })
+#   config_json = jsonencode({
+#     "bindings" = [
+#       {
+#         "authLevel" = "function"
+#         "direction" = "in"
+#         "methods" = [
+#           "get",
+#           "post",
+#         ]
+#         "name" = "req"
+#         "type" = "httpTrigger"
+#       },
+#       {
+#         "direction" = "out"
+#         "name"      = "$return"
+#         "type"      = "http"
+#       },
+#     ]
+#   })
+# }
