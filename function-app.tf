@@ -118,3 +118,31 @@ resource "azurerm_function_app_function" "get_streaming_url" {
     ]
   })
 }
+
+resource "azurerm_function_app_function" "get_streaming_url" {
+  name            = "GetStreamingUrl"
+  function_app_id = module.ams_function_app.function_app_id
+  language        = "Javascript"
+#   test_data = jsonencode({
+#     "name" = "Azure"
+#   })
+  config_json = jsonencode({
+    "bindings" = [
+      {
+        "authLevel" = "function"
+        "direction" = "in"
+        "methods" = [
+          "get",
+          "post",
+        ]
+        "name" = "req"
+        "type" = "httpTrigger"
+      },
+      {
+        "direction" = "out"
+        "name"      = "$return"
+        "type"      = "http"
+      },
+    ]
+  })
+}
