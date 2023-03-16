@@ -3,7 +3,7 @@ module "ams_function_app" {
   #    source  =  "git@github.com:hmcts/pre-module-terraform-function-app.git?ref=master"
   #   source = "./modules"
   source              = "git@github.com:hmcts/pre-shared-infrastructure//modules?ref=preview"
-  os_type             = "Linux"
+  os_type             = "Windows"
   product             = var.product
   create_service_plan = true
 
