@@ -1,5 +1,5 @@
 output "function_app_id" {
-  value = lower(var.os_type) == "windows" ? azurerm_windows_function_ap.this[0].id : azurerm_linux_function_app.this[0].id
+  value = lower(var.os_type) == "windows" ? azurerm_windows_function_app.this[0].id : azurerm_linux_function_app.this[0].id
 }
 
 output "function_app_default_hostname" {
