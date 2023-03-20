@@ -24,6 +24,8 @@ dg_vm_private_ip = ["10.40.12.22", "10.40.12.23"]
 edit_vm_private_ip = ["10.40.12.6", "10.40.12.7"]
 
 tenant_id = "yrk32651"
+
+retention_duration = "P8D"
 # cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 # cnp_vault_rg   = "cnp-core-infra"
 # data disks
