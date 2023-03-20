@@ -92,7 +92,7 @@ resource "azurerm_private_endpoint" "ams_endpoint" {
     name                           = "ams-endpoint"
     is_manual_connection           = false
     private_connection_resource_id = azurerm_media_services_account.ams.id
-    subresource_names              = ["keydelivery", "liveevent", "streamingendpoint"]
+    subresource_names              = ["streamingendpoint"]
   }
 
   private_dns_zone_group {
