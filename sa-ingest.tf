@@ -13,28 +13,27 @@ module "ingestsa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
+  private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
 
-  #private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
-
   common_tags = var.common_tags
 }
 
-# module "ingestsa_backup" {
-#   count  = var.env == "stg" || var.env == "prod" ? 1 : 0
-#   source = "./modules/backup_vault"
+module "ingestsa_backup" {
+  count  = var.env == "stg" || var.env == "prod" ? 1 : 0
+  source = "./modules/backup_vault"
 
-#   env                  = var.env
-#   product              = var.product
-#   resource_group_name  = data.azurerm_resource_group.rg.name
-#   storage_account_name = "${var.product}ingestsa${var.env}"
-#   location             = var.location
-#   storage_account_id   = module.ingestsa_storage_account.storageaccount_id
-#   tags                 = var.common_tags
-#   retention_duration   = var.retention_duration
-# }
+  env                  = var.env
+  product              = var.product
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  storage_account_name = "${var.product}ingestsa${var.env}"
+  location             = var.location
+  storage_account_id   = module.ingestsa_storage_account.storageaccount_id
+  tags                 = var.common_tags
+  retention_duration   = var.retention_duration
+}
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
   name         = "ingestsa-storage-account-connection-string"

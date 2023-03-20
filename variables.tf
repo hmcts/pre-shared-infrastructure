@@ -206,7 +206,7 @@ variable "cors_rules" {
 #   default = "pre-recorded-evidence"
 # }
 
-# variable "retention_duration" {}
+variable "retention_duration" {}
 
 variable "tenant_id" {}
 
