@@ -17,6 +17,7 @@ module "finalsa_storage_account" {
   enable_change_feed              = true
   immutable_enabled               = true
   immutability_period             = 100
+  private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
