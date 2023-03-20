@@ -31,7 +31,7 @@ resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
 
 module "sa_backup" {
   count  = var.env == "stg" || var.env == "prod" ? 1 : 0
-  source = "./modules/backup_vault"
+  source = "git@github.com:hmcts/pre-shared-infrastructure//modules/backup_vault?ref=preview"
 
   env                  = var.env
   product              = var.product
