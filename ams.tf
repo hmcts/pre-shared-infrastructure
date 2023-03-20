@@ -97,3 +97,63 @@ resource "azapi_update_resource" "ams_auth" {
     }
   })
 }
+
+resource "azurerm_private_endpoint" "ams_endpoint" {
+  name                = "ams-endpoint"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
+  private_service_connection {
+    name                           = "ams-endpoint"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_media_services_account.ams.id
+    subresource_names              = ["streamingendpoint"]
+  }
+
+  private_dns_zone_group {
+    name                 = "endpoint-dnszonegroup"
+    private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"]
+  }
+
+  tags = var.common_tags
+}
+
+resource "azurerm_public_ip" "ams_pip" {
+  name                = "${var.prefix}-amspip-${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  allocation_method   = "Static"
+  sku                 = "Standard"
+  tags                = var.common_tags
+}
+
+resource "azurerm_private_link_service" "this" {
+  name = "${var.prefix}-ams"
+
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+
+  load_balancer_frontend_ip_configuration_ids = [azurerm_lb.ams_public.frontend_ip_configuration.0.id]
+
+  nat_ip_configuration {
+    name      = "primary"
+    subnet_id = azurerm_subnet.endpoint_subnet.id
+    primary   = true
+  }
+  tags = var.common_tags
+}
+
+resource "azurerm_lb" "ams_public" {
+  name = "${var.prefix}-ams-public"
+
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+
+  sku = "Standard"
+
+  frontend_ip_configuration {
+    name                 = "ams"
+    public_ip_address_id = azurerm_public_ip.ams_pip.id
+  }
+  tags = var.common_tags
+}
