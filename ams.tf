@@ -56,53 +56,11 @@ resource "azurerm_media_transform" "EncodeToMP" {
   }
 }
 
-resource "null_resource" "amsid" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-
-  depends_on = [azurerm_media_services_account.ams]
-
-
-}
-
-
-resource "azapi_update_resource" "ams_auth" {
-  depends_on  = [null_resource.amsid]
-  type        = "Microsoft.Media/mediaservices@2021-11-01"
-  resource_id = azurerm_media_services_account.ams.id
-
-  body = jsonencode({
-    properties = {
-      storageAuthentication = "ManagedIdentity"
-      storageAccounts = [
-        {
-          id   = module.ingestsa_storage_account.storageaccount_id
-          type = "Primary",
-          identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-            useSystemAssignedIdentity = "false"
-          }
-        },
-
-        {
-          id   = module.finalsa_storage_account.storageaccount_id
-          type = "Secondary",
-          identity = {
-            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
-            useSystemAssignedIdentity = "false"
-          }
-        }
-      ]
-    }
-  })
-}
-
 resource "azurerm_private_endpoint" "ams_endpoint" {
   name                = "ams-endpoint"
-  location            = data.azurerm_resource_group.rg.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  subnet_id           = azurerm_subnet.endpoint_subnet.id
   private_service_connection {
     name                           = "ams-endpoint"
     is_manual_connection           = false
@@ -119,7 +77,7 @@ resource "azurerm_private_endpoint" "ams_endpoint" {
 }
 
 resource "azurerm_public_ip" "ams_pip" {
-  name                = "${var.prefix}-amspip-${var.env}"
+  name                = "${var.product}-amspip-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   allocation_method   = "Static"
@@ -128,7 +86,7 @@ resource "azurerm_public_ip" "ams_pip" {
 }
 
 resource "azurerm_private_link_service" "this" {
-  name = "${var.prefix}-ams"
+  name = "${var.product}-ams"
 
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -144,7 +102,7 @@ resource "azurerm_private_link_service" "this" {
 }
 
 resource "azurerm_lb" "ams_public" {
-  name = "${var.prefix}-ams-public"
+  name = "${var.product}-ams-public"
 
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
