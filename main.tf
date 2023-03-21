@@ -55,13 +55,13 @@ resource "azurerm_automation_account" "pre-aa" {
 }
 
 resource "azurerm_role_assignment" "pre_developer" {
-  scope                = data.azurerm_resource_group.rg.id #azurerm_media_services_account.ams.id
+  scope                = module.ams_function_app.function_app_id
   role_definition_name = "Application Developer"
   principal_id         = "ffaee209-2441-499a-8d12-c38b20ec67cb"
 }
 
 resource "azurerm_role_assignment" "pre_admin" {
-  scope                = data.azurerm_resource_group.rg.id #azurerm_media_services_account.ams.id
+  scope                = module.ams_function_app.function_app_id #data.azurerm_resource_group.rg.id #azurerm_media_services_account.ams.id
   role_definition_name = "Power Platform Administrator"
   principal_id         = "ffaee209-2441-499a-8d12-c38b20ec67cb"
 }
