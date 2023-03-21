@@ -17,10 +17,10 @@ module "ams_function_app" {
     "ALGO"       = "['RS256']"
     #"APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.example.instrumentation_key
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = ""
-    "AZURE_CLIENT_ID"                       = data.azurerm_client_config.current.client_id
+    "AZURE_CLIENT_ID"                       = "${data.azurerm_client_config.current.client_id}"
     "AZURE_MEDIA_SERVICES_ACCOUNT_NAME"     = "preams${var.env}"
     "AZURE_STORAGE_ACCOUNT_NAME"            = "prefinalsa${var.env}"
-    "AZURE_TENANT_ID"                       = data.azurerm_client_config.current.tenant_id
+    "AZURE_TENANT_ID"                       = "${data.azurerm_client_config.current.tenant_id}"
     "AzureWebJobsStorage"                   = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
     "DRMSYMMETRICKEY"                       = ""
     "FUNCTIONS_EXTENSION_VERSION"           = "~4"
