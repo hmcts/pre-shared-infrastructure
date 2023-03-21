@@ -54,22 +54,6 @@ resource "azurerm_automation_account" "pre-aa" {
   tags = var.common_tags
 }
 
-resource "azurerm_role_assignment" "pre_developer" {
-  scope                = module.ams_function_app.function_app_id
-  role_definition_name = "Application Developer"
-  principal_id         = "ffaee209-2441-499a-8d12-c38b20ec67cb"
-}
-
-resource "azurerm_role_assignment" "pre_admin" {
-  scope                = module.ams_function_app.function_app_id #data.azurerm_resource_group.rg.id #azurerm_media_services_account.ams.id
-  role_definition_name = "Power Platform Administrator"
-  principal_id         = "ffaee209-2441-499a-8d12-c38b20ec67cb"
-}
-
-# Application Developer
-# Power Platform Administrator
-# User Administrator
-
 # resource "azurerm_role_assignment" "kv-mi" {
 #   scope                = module.sa_storage_account.storageaccount_id
 #   role_definition_name = "Storage Account Key Operator Service Role"
