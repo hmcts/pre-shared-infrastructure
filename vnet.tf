@@ -37,6 +37,7 @@ resource "azurerm_subnet" "endpoint_subnet" {
   virtual_network_name                          = azurerm_virtual_network.vnet.name
   address_prefixes                              = [var.privatendpt_snet_address]
   service_endpoints                             = ["Microsoft.Storage", "Microsoft.KeyVault"]
+  private_endpoint_network_policies_enabled     = false
   private_link_service_network_policies_enabled = false
 }
 
