@@ -27,7 +27,7 @@ module "ams_function_app" {
     "FUNCTIONS_WORKER_RUNTIME"              = "node"
     "ISSUER"                                = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
     "JWKSURI"                               = "https://login.microsoftonline.com/common/discovery/keys"
-    "SCOPE"                                 = "api://07587e3c-603e-401f-98d1-ff26206e93f8/.default"
+    "SCOPE"                                 = "api://7394ca1a-31de-4433-beca-2ca1a2043d5c/.default"
     "TOKENENDPOINT"                         = "https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/v2.0/token"
     "TOKENSIGNINGKEY"                       = ""
     # "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = ""
