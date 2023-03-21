@@ -56,6 +56,12 @@ resource "azurerm_media_transform" "EncodeToMP" {
   }
 }
 
+resource "null_resource" "amsid" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+  depends_on = [azurerm_media_services_account.ams]
+}
 resource "azurerm_private_endpoint" "ams_endpoint" {
   name                = "ams-endpoint"
   location            = azurerm_resource_group.rg.location
@@ -67,13 +73,44 @@ resource "azurerm_private_endpoint" "ams_endpoint" {
     private_connection_resource_id = azurerm_media_services_account.ams.id
     subresource_names              = ["streamingendpoint"]
   }
-
   private_dns_zone_group {
     name                 = "endpoint-dnszonegroup"
     private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"]
   }
-
   tags = var.common_tags
+
+}
+
+resource "azapi_update_resource" "ams_auth" {
+  depends_on  = [null_resource.amsid]
+  type        = "Microsoft.Media/mediaservices@2021-11-01"
+  resource_id = azurerm_media_services_account.ams.id
+
+  body = jsonencode({
+    properties = {
+      storageAuthentication = "ManagedIdentity"
+      storageAccounts = [
+        {
+          id   = module.ingestsa_storage_account.storageaccount_id
+          type = "Primary",
+          identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+            useSystemAssignedIdentity = "false"
+          }
+        },
+
+        {
+          id   = module.finalsa_storage_account.storageaccount_id
+          type = "Secondary",
+          identity = {
+            userAssignedIdentity      = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourcegroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"
+            useSystemAssignedIdentity = "false"
+          }
+        }
+      ]
+    }
+  })
+
 }
 
 resource "azurerm_public_ip" "ams_pip" {
