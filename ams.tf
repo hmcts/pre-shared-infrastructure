@@ -1,27 +1,22 @@
 resource "azurerm_media_services_account" "ams" {
-  name                        = "${var.product}ams${var.env}"
-  location                    = var.location
-  resource_group_name         = data.azurerm_resource_group.rg.name
-  # storage_authentication_type = "System"
+  name                = "${var.product}ams${var.env}"
+  location            = var.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
+  }
 
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id
     is_primary = true
-    # managed_identity {
-    #   user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
-    #   use_system_assigned_identity = false
-    # }
   }
 
   storage_account {
     id         = module.finalsa_storage_account.storageaccount_id
     is_primary = false
-    # managed_identity {
-    #   user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
-    #   use_system_assigned_identity = false
-    # }
   }
-
 
   tags = var.common_tags
 
@@ -66,7 +61,7 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   target_resource_id         = azurerm_media_services_account.ams.id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  enabled_log {
+  log {
     category = "MediaAccount"
 
     retention_policy {
@@ -74,8 +69,9 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
       days    = 14
     }
   }
-  enabled_log {
+  log {
     category = "KeyDeliveryRequests"
+    enabled  = true
   }
   metric {
     category = "AllMetrics"
@@ -87,22 +83,22 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   }
 }
 
-# resource "azurerm_private_endpoint" "ams_endpoint" {
-#   name                = "ams-endpoint"
-#   location            = data.azurerm_resource_group.rg.location
-#   resource_group_name = data.azurerm_resource_group.rg.name
-#   subnet_id           = data.azurerm_subnet.endpoint_subnet.id
-#   private_service_connection {
-#     name                           = "ams-endpoint"
-#     is_manual_connection           = false
-#     private_connection_resource_id = azurerm_media_services_account.ams.id
-#     subresource_names              = ["streamingendpoint"]
-#   }
+resource "azurerm_private_endpoint" "ams_endpoint" {
+  name                = "ams-endpoint"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
+  private_service_connection {
+    name                           = "ams-endpoint"
+    is_manual_connection           = false
+    private_connection_resource_id = azurerm_media_services_account.ams.id
+    subresource_names              = ["streamingendpoint"]
+  }
 
-#   private_dns_zone_group {
-#     name                 = "endpoint-dnszonegroup"
-#     private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"]
-#   }
+  private_dns_zone_group {
+    name                 = "endpoint-dnszonegroup"
+    private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.blob.core.windows.net"]
+  }
 
-#   tags = var.common_tags
-# }
+  tags = var.common_tags
+}
