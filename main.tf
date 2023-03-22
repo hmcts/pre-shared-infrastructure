@@ -26,13 +26,6 @@ locals {
 
 # Give PowerApp Appreg contributor access to resource groups
 
-data "azurerm_subscription" "current" {}
-resource "azurerm_role_assignment" "powerapp_contributor_subscription" {
-  scope                = data.azurerm_subscription.current.id
-  role_definition_name = "Contributor"
-  principal_id         = var.dts_pre_ent_appreg_oid
-}
-
 resource "azurerm_role_assignment" "powerapp_appreg" {
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
