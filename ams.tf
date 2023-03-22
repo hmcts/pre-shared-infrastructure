@@ -1,8 +1,8 @@
 resource "azurerm_media_services_account" "ams" {
-  name                = "${var.product}ams${var.env}"
-  location            = var.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-
+  name                        = "${var.product}ams${var.env}"
+  location                    = var.location
+  resource_group_name         = data.azurerm_resource_group.rg.name
+  storage_authentication_type = "ManagedIdentity"
   identity {
     type         = "UserAssigned"
     identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
@@ -17,6 +17,11 @@ resource "azurerm_media_services_account" "ams" {
     id         = module.finalsa_storage_account.storageaccount_id
     is_primary = false
   }
+
+  # managed_identity {
+  #   user_assigned_identity_id    = true
+  #   use_system_assigned_identity = false
+  # }
 
   tags = var.common_tags
 
