@@ -45,6 +45,10 @@ resource "azurerm_linux_function_app" "this" {
   tags = var.common_tags
 
   site_config {}
+
+  auth_settings_v2 {
+    auth_enabled = true
+  }
 }
 
 # resource "azurerm_linux_function_app_slot" "this" {
