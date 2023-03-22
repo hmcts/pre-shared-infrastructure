@@ -107,3 +107,5 @@ data "azurerm_key_vault" "pre_kv" {
 #   name         = "Dtgtwy${count.index}-password"
 #   key_vault_id = data.azurerm_key_vault.keyvault.id
 # }
+
+data "azurerm_subscriptions" "current" {}
