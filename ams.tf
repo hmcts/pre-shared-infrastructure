@@ -2,29 +2,24 @@ resource "azurerm_media_services_account" "ams" {
   name                        = "${var.product}ams${var.env}"
   location                    = var.location
   resource_group_name         = data.azurerm_resource_group.rg.name
-  # storage_authentication_type = "ManagedIdentity"
-  # identity {
-  #   type         = "UserAssigned"
-  #   identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
-  #   # identity_ids = ["/subscriptions/${data.azurerm_subscriptions.current.id}/resourceGroups/managed-identities-${var.env}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${var.env}-mi"]
-  # }
+  # storage_authentication_type = "System"
 
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id
     is_primary = true
-    managed_identity {
-      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
-      use_system_assigned_identity = false
-    }
+    # managed_identity {
+    #   user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
+    #   use_system_assigned_identity = false
+    # }
   }
 
   storage_account {
     id         = module.finalsa_storage_account.storageaccount_id
     is_primary = false
-    managed_identity {
-      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
-      use_system_assigned_identity = false
-    }
+    # managed_identity {
+    #   user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
+    #   use_system_assigned_identity = false
+    # }
   }
 
 
