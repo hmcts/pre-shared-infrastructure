@@ -225,3 +225,5 @@ variable "edit_vm_private_ip" {}
 variable "install_dynatrace_oa" {
   default = true
 }
+
+variable "pre_app_admin" {}

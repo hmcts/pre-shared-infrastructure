@@ -25,6 +25,8 @@ edit_vm_private_ip = ["10.40.12.6", "10.40.12.7"]
 
 tenant_id = "yrk32651"
 
+pre_app_admin = "d055ba21-5814-4278-8752-aaffa7eaac62"
+
 retention_duration = "P8D"
 # cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 # cnp_vault_rg   = "cnp-core-infra"
