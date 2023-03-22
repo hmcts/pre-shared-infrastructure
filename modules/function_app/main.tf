@@ -46,9 +46,9 @@ resource "azurerm_linux_function_app" "this" {
 
   site_config {}
 
-  auth_settings_v2 {
-    auth_enabled = true
-  }
+  # auth_settings_v2 {
+  #   auth_enabled = true
+  # }
 }
 
 # resource "azurerm_linux_function_app_slot" "this" {
