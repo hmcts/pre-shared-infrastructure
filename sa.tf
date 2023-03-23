@@ -49,7 +49,7 @@ module "sa_storage_account" {
 }
 
 module "finalsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=enablepointintime"
   env                             = var.env
   storage_account_name            = replace("${var.product}finalsa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
@@ -72,7 +72,7 @@ module "finalsa_storage_account" {
 }
 
 module "ingestsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=enablepointintime"
   env                             = var.env
   storage_account_name            = replace("${var.product}ingestsa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
