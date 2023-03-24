@@ -1,7 +1,5 @@
 
 module "ams_function_app" {
-  #    source  =  "git@github.com:hmcts/pre-module-terraform-function-app.git?ref=master"
-  #   source = "./modules"
   source              = "git@github.com:hmcts/pre-shared-infrastructure//modules/function_app?ref=preview"
   os_type             = "Linux"
   product             = var.product
