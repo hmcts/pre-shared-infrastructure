@@ -25,7 +25,7 @@ edit_vm_private_ip = ["10.40.12.6", "10.40.12.7"]
 
 tenant_id = "yrk32651"
 
-pre_app_admin = "8d48024b-9a39-4777-94b0-0751f0cb3832"
+pre_app_admin = "d055ba21-5814-4278-8752-aaffa7eaac62" #DTS-PRE-App-Sbx Admin
 
 retention_duration = "P8D"
 # cnp_vault_sub  = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
