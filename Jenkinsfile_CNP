@@ -6,6 +6,8 @@ def product = "pre"
 
 def component = "shared-infrastructure"
 
+def expiresAfter = "3000-01-01"
+
 static String encrypthost(String envName){
   def encryptvmdisk = "environment='" +  envName + "';" +
         'rgName="pre-sbox";' +
@@ -52,6 +54,7 @@ def branchesToSync = ['demo']
 withInfraPipeline(product) {
   enableSlackNotifications('#pre-builds')
   syncBranchesWithMaster(branchesToSync)
+  expires(expiresAfter)
   //   onMaster() {
   //     env.ENV = 'stg'
   //   }
