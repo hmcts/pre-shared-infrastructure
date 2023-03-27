@@ -42,7 +42,6 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
-  enable_change_feed              = true
 
   private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
@@ -89,7 +88,6 @@ module "ingestsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
-  enable_change_feed              = true
 
   private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
