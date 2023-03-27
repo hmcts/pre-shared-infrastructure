@@ -28,24 +28,6 @@ module "data_store_db_v14" {
 
 }
 
-////////////////////////////////
-// Populate Vault with DB info (the password is output from the module, the username is a standard var)
-////////////////////////////////
-
-#using own var for this
-resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  name         = "postgresdb-username"
-  value        = var.pgsql_admin_username
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
-resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
-  name         = "postgresdb-password"
-  value        = module.data_store_db_v14.password
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
 provider "azurerm" {
   alias           = "private_dns"
   subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
