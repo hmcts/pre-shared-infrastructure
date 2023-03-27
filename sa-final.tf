@@ -27,7 +27,7 @@ module "finalsa_storage_account" {
 
 module "finalsa_backup" {
   count  = var.env == "stg" || var.env == "prod" ? 1 : 0
-  source = "git@github.com:hmcts/pre-shared-infrastructure//modules/backup_vault?ref=preview"
+  source = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=preview"
 
   env                  = var.env
   product              = var.product

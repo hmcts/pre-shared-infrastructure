@@ -1,6 +1,6 @@
 
 module "ams_function_app" {
-  source              = "git@github.com:hmcts/pre-shared-infrastructure//modules/function_app?ref=preview"
+  source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
   os_type             = "Linux"
   product             = var.product
   create_service_plan = true
