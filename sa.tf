@@ -29,7 +29,7 @@ data "azurerm_subnet" "pipelineagent_subnet" {
 #                 STORAGES               #
 ###################################################
 module "sa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=enablepointintime"
   env                             = var.env
   storage_account_name            = replace("${var.product}sa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
@@ -49,7 +49,7 @@ module "sa_storage_account" {
 }
 
 module "finalsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=enablepointintime"
   env                             = var.env
   storage_account_name            = replace("${var.product}finalsa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
@@ -72,7 +72,7 @@ module "finalsa_storage_account" {
 }
 
 module "ingestsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=enablepointintime"
   env                             = var.env
   storage_account_name            = replace("${var.product}ingestsa${var.env}", "-", "")
   resource_group_name             = azurerm_resource_group.rg.name
@@ -89,6 +89,60 @@ module "ingestsa_storage_account" {
   private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
   common_tags = var.common_tags
+}
+
+###################################################
+#                PRIVATE ENDPOINTS FOR STORAGES   
+###################################################
+resource "azurerm_private_endpoint" "sa" {
+  name                = "${var.product}sa-pe-${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  subnet_id           = azurerm_subnet.endpoint_subnet.id
+
+  private_service_connection {
+    name                           = "${var.product}sa-psc-${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.sa_storage_account.storageaccount_id
+    subresource_names              = ["blob"]
+  }
+  tags = var.common_tags
+}
+
+# ###################################################
+# #                PRIVATE ENDPOINTS FOR STORAGES   
+# ###################################################
+resource "azurerm_private_endpoint" "finalsa" {
+  name                = "${var.product}finalsa-pe-${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  subnet_id           = azurerm_subnet.endpoint_subnet.id
+
+  private_service_connection {
+    name                           = "${var.product}finalsa-psc-${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.finalsa_storage_account.storageaccount_id
+    subresource_names              = ["blob"]
+  }
+  tags = var.common_tags
+}
+
+###################################################
+#                PRIVATE ENDPOINTS FOR STORAGES    
+###################################################
+resource "azurerm_private_endpoint" "ingestsa" {
+  name                = "${var.product}stream-pe-${var.env}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  subnet_id           = azurerm_subnet.endpoint_subnet.id
+
+  private_service_connection {
+    name                           = "${var.product}stream-psc-${var.env}"
+    is_manual_connection           = false
+    private_connection_resource_id = module.ingestsa_storage_account.storageaccount_id
+    subresource_names              = ["blob"]
+  }
+  tags = var.common_tags
 }
 
 # Store the connection string for the SAs in KV
