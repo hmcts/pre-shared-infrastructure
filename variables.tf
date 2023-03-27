@@ -63,8 +63,6 @@ variable "jenkins_ptlsbox_oid" {
 variable "jenkins_ptlsbox_appid" {
   default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
 }
-
-variable "dts_pre_app_admin" {}
 variable "ip_rules" {
   description = "PowerPlatformInfra.UKSouth"
   type        = list(string)
