@@ -25,4 +25,9 @@ variable "create_service_plan" {
   default     = true
 }
 
+variable "create_storage_account" {
+  description = " If true a new storage account is created"
+  default     = true
+}
+
 variable "env" {}
