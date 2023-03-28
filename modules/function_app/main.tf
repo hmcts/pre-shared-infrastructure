@@ -1,3 +1,11 @@
+data "azurerm_resource_group" "rg" {
+  name = "${var.product}-${var.env}"
+}
+
+data "azuread_application" "appreg" {
+  display_name = "dts_pre_${var.env}"
+}
+
 resource "azurerm_service_plan" "this" {
   count               = var.create_service_plan ? 1 : 0
   name                = "${var.product}-asp-${var.name}"
@@ -26,7 +34,23 @@ resource "azurerm_windows_function_app" "this" {
 
   tags = var.common_tags
 
-  site_config {}
+  site_config {
+    application_insights_connection_string = "InstrumentationKey=${azurerm_application_insights.appinsight.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  auth_settings {
+    enabled                       = true
+    unauthenticated_client_action = "RedirectToLoginPage"
+    default_provider              = "AzureActiveDirectory"
+    issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+    active_directory {
+      client_id = data.azuread_application.appreg.application_id
+    }
+  }
 }
 
 resource "azurerm_linux_function_app" "this" {
@@ -44,25 +68,34 @@ resource "azurerm_linux_function_app" "this" {
 
   tags = var.common_tags
 
-  site_config {}
+  site_config {
+    application_insights_connection_string = "InstrumentationKey=${azurerm_application_insights.appinsight.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  auth_settings {
+    enabled                       = true
+    unauthenticated_client_action = "RedirectToLoginPage"
+    default_provider              = "AzureActiveDirectory"
+    issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+    active_directory {
+      client_id = data.azuread_application.appreg.application_id
+    }
+  }
 
   # auth_settings_v2 {
   #   auth_enabled = true
   # }
 }
 
-# resource "azurerm_linux_function_app_slot" "this" {
-#   name                 = "${var.name}-slot"
-#   function_app_id      = azurerm_linux_function_app.this.id
-#   storage_account_name = var.storage_account_name
 
-#   site_config {}
-# }
-
-# resource "azurerm_windows_function_app_slot" "this" {
-#   name                 = "${var.name}-slot"
-#   function_app_id      = azurerm_windows_function_app.this.id
-#   storage_account_name = var.storage_account_name
-
-#   site_config {}
-# }
+resource "azurerm_application_insights" "appinsight" {
+  application_type    = "web"
+  location            = var.location
+  name                = "${var.product}-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  tags                = var.common_tags
+}
