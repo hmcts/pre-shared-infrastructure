@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "= 3.33.0"
+      version = "= 3.37.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -44,4 +44,11 @@ provider "azurerm" {
   skip_provider_registration = "true"
   features {}
   alias = "hub"
+}
+
+provider "azurerm" {
+  alias                      = "mgmt"
+  subscription_id            = var.mgmt_subscription_id
+  skip_provider_registration = true
+  features {}
 }
