@@ -65,8 +65,8 @@ module "zc_function_app" {
   # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
   app_settings = {}
 
-  storage_account_name = azurerm_storage_account.zc_storage.storageaccount_name
-  storage_account_key  = azurerm_storage_account.zc_storage.storageaccount_primary_access_key
+  storage_account_name = azurerm_storage_account.zc_storage.name
+  storage_account_key  = azurerm_storage_account.zc_storage.primary_access_key
 }
 
 # resource "azurerm_function_app_function" "content_key_policy" {
