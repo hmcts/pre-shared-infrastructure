@@ -76,16 +76,26 @@ resource "azurerm_linux_function_app" "this" {
   }
 
   auth_settings {
-    enabled                       = true
-    unauthenticated_client_action = "RedirectToLoginPage"
-    default_provider              = "AzureActiveDirectory"
-    issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-    active_directory {
-      client_id = data.azuread_application.appreg.application_id
-    }
+    # enabled                       = true
+    # unauthenticated_client_action = "RedirectToLoginPage"
+    # default_provider              = "AzureActiveDirectory"
+    # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+    # active_directory {
+    #   client_id = data.azuread_application.appreg.application_id
+    # }
   }
 }
 
+resource "azurerm_storage_account" "this" {
+  count                           = var.create_storage_account ? 1 : 0
+  name                            = replace("${var.name}storage", "-", "")
+  resource_group_name             = data.azurerm_resource_group.rg.name
+  location                        = var.location
+  account_tier                    = "Standard"
+  account_replication_type        = "ZRS"
+  tags                            = var.common_tags
+  allow_nested_items_to_be_public = false
+}
 
 resource "azurerm_application_insights" "appinsight" {
   application_type    = "web"

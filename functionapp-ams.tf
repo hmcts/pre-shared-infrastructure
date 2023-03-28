@@ -1,9 +1,10 @@
 
 module "ams_function_app" {
-  source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
-  os_type             = "Linux"
-  product             = var.product
-  create_service_plan = true
+  source                 = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
+  os_type                = "Linux"
+  product                = var.product
+  create_service_plan    = true
+  create_storage_account = true
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "pre-ams-integration"
@@ -40,21 +41,22 @@ module "ams_function_app" {
   storage_account_key  = module.sa_storage_account.storageaccount_primary_access_key
 }
 
-resource "azurerm_storage_account" "zc_storage" {
-  name                            = "zcstoragedev"
-  resource_group_name             = data.azurerm_resource_group.rg.name
-  location                        = var.location
-  account_tier                    = "Standard"
-  account_replication_type        = "ZRS"
-  tags                            = var.common_tags
-  allow_nested_items_to_be_public = false
-}
+# resource "azurerm_storage_account" "zc_storage" {
+#   name                            = "zcstoragedev"
+#   resource_group_name             = data.azurerm_resource_group.rg.name
+#   location                        = var.location
+#   account_tier                    = "Standard"
+#   account_replication_type        = "ZRS"
+#   tags                            = var.common_tags
+#   allow_nested_items_to_be_public = false
+# }
 
 module "zc_function_app" {
-  source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
-  os_type             = "Windows"
-  product             = var.product
-  create_service_plan = true
+  source                 = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
+  os_type                = "Windows"
+  product                = var.product
+  create_service_plan    = true
+  create_storage_account = true
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "zc-function-app"
