@@ -56,6 +56,11 @@ resource "azurerm_role_assignment" "admin_ingestsa_data_contributor" {
   principal_id         = var.pre_app_admin
 }
 
+resource "azurerm_role_assignment" "admin_sa_data_contributor" {
+  scope                = module.sa_storage_account.storageaccount_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = var.pre_app_admin
+}
 
 # DTS-PRE-VideoEditing-SecurityGroup-
 # resource "azurerm_role_assignment" "vmuser_login" {
