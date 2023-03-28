@@ -26,5 +26,3 @@ variable "create_service_plan" {
   description = " If true a new service plan is created"
   default     = true
 }
-
-variable "app_insights_key" {}
