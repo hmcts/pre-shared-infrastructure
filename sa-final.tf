@@ -12,13 +12,15 @@ module "finalsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Allow"
   enable_data_protection          = true
-  # enable_change_feed              = true
-  # immutable_enabled               = true
-  # immutability_period             = 100
-
-  # private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
-
-  cors_rules = var.cors_rules
+  cors_rules                      = var.cors_rules
+  managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
+  enable_change_feed              = true
+  immutable_enabled               = true
+  immutability_period             = 100
+  # private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
+  role_assignments = [
+    "Storage Blob Data Contributor"
+  ]
 
   common_tags = var.common_tags
   depends_on  = [module.key-vault]
