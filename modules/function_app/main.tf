@@ -88,7 +88,6 @@ resource "azurerm_linux_function_app" "this" {
 }
 
 resource "azurerm_storage_account" "this" {
-  count                           = var.create_storage_account ? 1 : 0
   name                            = replace("${var.name}storage", "-", "")
   resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location

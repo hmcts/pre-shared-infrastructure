@@ -4,7 +4,6 @@ module "ams_function_app" {
   os_type                = "Linux"
   product                = var.product
   create_service_plan    = true
-  create_storage_account = true
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "pre-ams-integration"
@@ -53,7 +52,6 @@ module "zc_function_app" {
   os_type                = "Windows"
   product                = var.product
   create_service_plan    = true
-  create_storage_account = true
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "zc-function-app"
