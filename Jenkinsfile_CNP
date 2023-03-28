@@ -3,118 +3,12 @@
 @Library("Infrastructure") _
 
 def product = "pre"
-
 def component = "shared-infrastructure"
-
-static String encrypthost(String envName){
-  def encryptvmdisk = "environment='" +  envName + "';" +
-        'rgName="pre-sbox";' +
-        'lockName="${environment}-lock";' +
-        '' +
-        'az login --identity;' +
-        'az account set -s "DTS-SHAREDSERVICES-${environment}";' +
-        '' +
-        'az feature register --namespace Microsoft.Compute --name EncryptionAtHost'
-        
-    return encryptvmdisk;
-}
-static String addamsid(String envName){
-  def amsstorageid = "environment='" +  envName + "';" +
-        'rgName="pip-ss-${environment}-rg";' +
-        'lockName="${environment}-lock";' +
-        '' +
-        'az login --identity;' +
-        'az account set -s "DTS-SHAREDSERVICES-${environment}";' +
-        '' +
-        'az ams account identity assign -n preams${environment} -g pre-${environment} --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${environment}/resourcegroups/managed-identities-${environment}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${environment}-mi";' +
-        'az ams account storage set-authentication --storage-auth ManagedIdentity --user-assigned "/subscriptions/DTS-SHAREDSERVICES-${environment}/resourcegroups/managed-identities-${environment}-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pre-${environment}-mi" --account-name preams${environment} --resource-group pre-${environment}' 
-        
-    return amsstorageid;
-}
-static String unlockRg(String envName){
-  def unlockScript = "environment='" +  envName + "';" +
-        'rgName="pre-${environment}";' +
-        'lockName="${environment}-lock";' +
-        '' +
-        'az login --identity;' +
-        'az account set -s "DTS-SHAREDSERVICES-${environment}";' +
-        '' +
-        'echo "Get ${lockName} lock from ${rgName}";' +
-        'lock=$(az lock list --resource-group ${rgName} --query "[? contains(name, \'${lockName}\')].{name:name}" -o tsv);' +
-        '' +
-        '$($lock != "" && echo "Delete Lock ${lockName} on ${rgName}"; az lock delete --name ${lockName} --resource-group ${rgName} || echo "${lockName} on ${rgName} not found")'
-
-    return unlockScript;
-}
-
 def branchesToSync = ['demo']
+def expiresAfter = "3000-01-01"
 
 withInfraPipeline(product) {
   enableSlackNotifications('#pre-builds')
   syncBranchesWithMaster(branchesToSync)
-  //   onMaster() {
-  //     env.ENV = 'stg'
-  //   }
-  //   onPR() {
-  //     env.ENV = 'dev'
-  //   }
-  //   onDemo {
-  //     env.ENV = 'demo'
-  //   }
-
-
-  // before('buildinfra:demo') {
-  //   sh "echo 'Enable Encrypt'"  
-  //   sh encrypthost("demo")
-  // }
-  
-  // after('buildinfra:demo') {
-  //   sh "echo 'Enable AMS ID'"
-  //   sh addamsid("demo")
-  // }
-
-  // before('buildinfra:stg') {
-  //   sh "echo 'Enable Encrypt'"  
-  //   sh encrypthost("STG")
-  // }
-  
-  // after('buildinfra:stg') {
-  //   sh "echo 'Enable AMS ID'"
-  //   sh addamsid("STG")
-  // }
-
-  // before('buildinfra:test') {
-  //   sh "echo 'Enable VM disk Encrypt'"  
-  //   sh encrypthost("TEST")
-  // }
-  
-  // after('buildinfra:test') {
-  //   sh "echo 'Enable AMS ID'"
-  //   sh addamsid("TEST")
-  // }
-
-
-
-
-  before('buildinfra:stg') {
-    sh "echo 'unlock RG stg'"
-    sh unlockRg("stg")
-  }
-
-  // before('buildinfra:prod') {
-  //   sh "echo 'Enable Encrypt'"  
-  //   sh encrypthost("PROD")
-  // }
-  
-  // after('buildinfra:prod') {
-  //   sh "echo 'Enable AMS ID'"
-  //   sh addamsid("PROD")
-  // }
-  
-  // before('buildinfra:stg') {
-  //   sh "echo 'unlock RG stg'"
-  //   sh unlockRg("stg")
-  // }
-
-    
+  expires(expiresAfter)
 }
