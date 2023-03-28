@@ -41,7 +41,7 @@ module "ams_function_app" {
 }
 
 resource "azurerm_storage_account" "zc_storage" {
-  name                            = "zc-storage"
+  name                            = "zcstoragedev"
   resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location
   account_tier                    = "Standard"
