@@ -41,7 +41,7 @@ resource "azurerm_windows_function_app" "this" {
     type = "SystemAssigned"
   }
 
-  auth_settings {
+  # auth_settings {
     # enabled                       = true
     # unauthenticated_client_action = "RedirectToLoginPage"
     # default_provider              = "AzureActiveDirectory"
@@ -49,7 +49,7 @@ resource "azurerm_windows_function_app" "this" {
     # active_directory {
     #   client_id = data.azuread_application.appreg.application_id
     # }
-  }
+  # }
 }
 
 resource "azurerm_linux_function_app" "this" {
@@ -76,7 +76,7 @@ resource "azurerm_linux_function_app" "this" {
     type = "SystemAssigned"
   }
 
-  auth_settings {
+  # auth_settings {
     # enabled                       = true
     # unauthenticated_client_action = "RedirectToLoginPage"
     # default_provider              = "AzureActiveDirectory"
@@ -84,7 +84,7 @@ resource "azurerm_linux_function_app" "this" {
     # active_directory {
     #   client_id = data.azuread_application.appreg.application_id
     # }
-  }
+  # }
 }
 
 resource "azurerm_storage_account" "this" {
