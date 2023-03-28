@@ -1,7 +1,7 @@
 module "finalsa_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = replace("${var.product}finalsa${var.env}", "-", "")
+  storage_account_name            = "${var.product}finalsa${var.env}"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = var.location
   account_kind                    = "StorageV2"
@@ -10,15 +10,17 @@ module "finalsa_storage_account" {
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   allow_nested_items_to_be_public = false
   ip_rules                        = var.ip_rules
-  default_action                  = "Deny"
+  default_action                  = "Allow"
   enable_data_protection          = true
+  cors_rules                      = var.cors_rules
+  managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
   enable_change_feed              = true
   immutable_enabled               = true
   immutability_period             = 100
-
-  # private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
-
-  cors_rules = var.cors_rules
+  # private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
+  role_assignments = [
+    "Storage Blob Data Contributor"
+  ]
 
   common_tags = var.common_tags
   depends_on  = [module.key-vault]
