@@ -19,7 +19,7 @@ module "ams_function_app" {
     "AZURE_MEDIA_SERVICES_ACCOUNT_NAME"     = "preams${var.env}"
     "AZURE_STORAGE_ACCOUNT_NAME"            = "prefinalsa${var.env}"
     "AZURE_TENANT_ID"                       = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-    "AzureWebJobsStorage"                   = "${module.ingestsa_storage_account.storageaccount_primary_connection_string}"
+    "AzureWebJobsStorage"                   = "${module.sa_storage_account.storageaccount_primary_connection_string}"
     "DRMSYMMETRICKEY"                       = ""
     "FUNCTIONS_EXTENSION_VERSION"           = "~4"
     "FUNCTIONS_WORKER_RUNTIME"              = "node"
@@ -33,8 +33,8 @@ module "ams_function_app" {
     # "WEBSITE_RUN_FROM_PACKAGE" = ""
   }
 
-  storage_account_name = module.ingestsa_storage_account.storageaccount_name
-  storage_account_key  = module.ingestsa_storage_account.storageaccount_primary_access_key
+  storage_account_name = module.sa_storage_account.storageaccount_name
+  storage_account_key  = module.sa_storage_account.storageaccount_primary_access_key
 }
 
 # resource "azurerm_function_app_function" "content_key_policy" {
