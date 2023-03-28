@@ -8,8 +8,6 @@ variable "app_settings" {
   type = map(string)
 }
 
-variable "storage_account_key" {}
-
 variable "os_type" {
   default = "Linux"
 }

@@ -60,7 +60,7 @@ resource "azurerm_linux_function_app" "this" {
 
   storage_account_name       = azurerm_storage_account.this.name
   storage_account_access_key = azurerm_storage_account.this.primary_access_key
-  # storage_account_access_key = var.storage_account_key
+
   service_plan_id = azurerm_service_plan.this[0].id
 
   app_settings = var.app_settings
