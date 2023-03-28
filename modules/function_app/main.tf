@@ -13,7 +13,6 @@ resource "azurerm_service_plan" "this" {
   location            = var.location
   os_type             = var.os_type #"Windows"
   sku_name            = "Y1"
-  worker_count        = var.worker_count
   # zone_balancing_enabled = true
 
   tags = var.common_tags
@@ -85,10 +84,6 @@ resource "azurerm_linux_function_app" "this" {
       client_id = data.azuread_application.appreg.application_id
     }
   }
-
-  # auth_settings_v2 {
-  #   auth_enabled = true
-  # }
 }
 
 

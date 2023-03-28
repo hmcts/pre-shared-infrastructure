@@ -18,8 +18,6 @@ variable "os_type" {
 
 variable "product" {}
 
-variable "worker_count" {}
-
 variable "common_tags" {}
 
 variable "create_service_plan" {

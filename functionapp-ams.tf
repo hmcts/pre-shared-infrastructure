@@ -8,7 +8,6 @@ module "ams_function_app" {
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "pre-ams-integration"
   location            = var.location
-  worker_count        = 1
   common_tags         = var.common_tags
   env                 = var.env
 
@@ -36,6 +35,25 @@ module "ams_function_app" {
     # "WEBSITE_CONTENTSHARE"     = ""
     # "WEBSITE_RUN_FROM_PACKAGE" = ""
   }
+
+  storage_account_name = module.sa_storage_account.storageaccount_name
+  storage_account_key  = module.sa_storage_account.storageaccount_primary_access_key
+}
+
+module "zc_function_app" {
+  source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
+  os_type             = "Windows"
+  product             = var.product
+  create_service_plan = true
+
+  resource_group_name = data.azurerm_resource_group.rg.name
+  name                = "zc-function-app"
+  location            = var.location
+  common_tags         = var.common_tags
+  env                 = var.env
+
+  # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
+  app_settings = {}
 
   storage_account_name = module.sa_storage_account.storageaccount_name
   storage_account_key  = module.sa_storage_account.storageaccount_primary_access_key
