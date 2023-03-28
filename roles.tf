@@ -12,27 +12,27 @@ data "azuread_groups" "pre-groups" {
   display_names = ["DTS Pre-recorded Evidence"]
 }
 
-#Storage Blob Data Contributor Role Assignment for Managed Identity
-resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
-  scope                            = azurerm_resource_group.rg.id
-  role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
-  skip_service_principal_aad_check = true
-}
+# #Storage Blob Data Contributor Role Assignment for Managed Identity
+# resource "azurerm_role_assignment" "pre_BlobContributor_mi" {
+#   scope                            = azurerm_resource_group.rg.id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+#   skip_service_principal_aad_check = true
+# }
 
-resource "azurerm_role_assignment" "mi_storage_1" {
-  scope                            = module.ingestsa_storage_account.storageaccount_id
-  role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
-  skip_service_principal_aad_check = true
-}
+# resource "azurerm_role_assignment" "mi_storage_1" {
+#   scope                            = module.ingestsa_storage_account.storageaccount_id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+#   skip_service_principal_aad_check = true
+# }
 
-resource "azurerm_role_assignment" "mi_storage_2" {
-  scope                            = module.finalsa_storage_account.storageaccount_id
-  role_definition_name             = "Storage Blob Data Contributor"
-  principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
-  skip_service_principal_aad_check = true
-}
+# resource "azurerm_role_assignment" "mi_storage_2" {
+#   scope                            = module.finalsa_storage_account.storageaccount_id
+#   role_definition_name             = "Storage Blob Data Contributor"
+#   principal_id                     = data.azurerm_user_assigned_identity.managed-identity.principal_id #var.pre_mi_principal_id
+#   skip_service_principal_aad_check = true
+# }
 
 resource "azurerm_role_assignment" "pre_reader_mi" {
   scope                            = azurerm_resource_group.rg.id
