@@ -24,8 +24,8 @@ resource "azurerm_windows_function_app" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  storage_account_name       = var.storage_account_name
-  storage_account_access_key = var.storage_account_key #azurerm_storage_account.this.primary_access_key
+  storage_account_name       = var.storage_account_name ? var.storage_account_name : azurerm_storage_account.this.name
+  storage_account_access_key = var.storage_account_name ? var.storage_account_name : azurerm_storage_account.this.primary_access_key
   service_plan_id            = azurerm_service_plan.this[0].id
 
   app_settings = var.app_settings
@@ -42,13 +42,13 @@ resource "azurerm_windows_function_app" "this" {
   }
 
   auth_settings {
-    enabled                       = true
-    unauthenticated_client_action = "RedirectToLoginPage"
-    default_provider              = "AzureActiveDirectory"
-    issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-    active_directory {
-      client_id = data.azuread_application.appreg.application_id
-    }
+    # enabled                       = true
+    # unauthenticated_client_action = "RedirectToLoginPage"
+    # default_provider              = "AzureActiveDirectory"
+    # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+    # active_directory {
+    #   client_id = data.azuread_application.appreg.application_id
+    # }
   }
 }
 
@@ -58,7 +58,8 @@ resource "azurerm_linux_function_app" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  storage_account_name = var.storage_account_name
+  storage_account_name       = var.storage_account_name ? var.storage_account_name : azurerm_storage_account.this.name
+  storage_account_access_key = var.storage_account_name ? var.storage_account_name : azurerm_storage_account.this.primary_access_key
   # storage_account_access_key = var.storage_account_key
   service_plan_id = azurerm_service_plan.this[0].id
 
