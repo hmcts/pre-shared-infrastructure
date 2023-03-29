@@ -4,7 +4,7 @@
 ////////////////////////////////
 
 module "data_store_db_v14" {
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=thomast1906-patch-1"
   env    = var.env
 
   product       = var.product
