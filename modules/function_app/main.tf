@@ -42,13 +42,13 @@ resource "azurerm_windows_function_app" "this" {
   }
 
   # auth_settings {
-    # enabled                       = true
-    # unauthenticated_client_action = "RedirectToLoginPage"
-    # default_provider              = "AzureActiveDirectory"
-    # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-    # active_directory {
-    #   client_id = data.azuread_application.appreg.application_id
-    # }
+  # enabled                       = true
+  # unauthenticated_client_action = "RedirectToLoginPage"
+  # default_provider              = "AzureActiveDirectory"
+  # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+  # active_directory {
+  #   client_id = data.azuread_application.appreg.application_id
+  # }
   # }
 }
 
@@ -70,6 +70,9 @@ resource "azurerm_linux_function_app" "this" {
 
   site_config {
     application_insights_connection_string = "InstrumentationKey=${azurerm_application_insights.appinsight.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
+    application_stack {
+      node_version = "18"
+    }
   }
 
   identity {
@@ -77,13 +80,13 @@ resource "azurerm_linux_function_app" "this" {
   }
 
   # auth_settings {
-    # enabled                       = true
-    # unauthenticated_client_action = "RedirectToLoginPage"
-    # default_provider              = "AzureActiveDirectory"
-    # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-    # active_directory {
-    #   client_id = data.azuread_application.appreg.application_id
-    # }
+  # enabled                       = true
+  # unauthenticated_client_action = "RedirectToLoginPage"
+  # default_provider              = "AzureActiveDirectory"
+  # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+  # active_directory {
+  #   client_id = data.azuread_application.appreg.application_id
+  # }
   # }
 }
 
