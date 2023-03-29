@@ -337,4 +337,4 @@ variable "PeeringFromHubName" {
 
 variable "retention_duration" {}
 
-variable "aks_subscription_id" {}
+# variable "aks_subscription_id" {}
