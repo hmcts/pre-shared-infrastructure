@@ -19,7 +19,7 @@ module "sa_storage_account" {
 }
 
 module "sa_backup" {
-  count  = var.env == "stg" || var.env == "prod" ? 1 : 0
+  count  = var.env == "prod" ? 1 : 0
   source = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=preview"
 
   env                  = var.env
