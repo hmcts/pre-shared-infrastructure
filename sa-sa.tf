@@ -36,12 +36,40 @@ module "sa_backup" {
   env                  = var.env
   product              = var.product
   resource_group_name  = data.azurerm_resource_group.rg.name
-  storage_account_name = "${var.product}sa${var.env}"
+  storage_account_name = module.sa_storage_account.storageaccount_name
   location             = var.location
   storage_account_id   = module.sa_storage_account.storageaccount_id
   tags                 = var.common_tags
   retention_duration   = var.retention_duration
 }
+
+# data "azurerm_data_protection_backup_vault" "this" {
+#   name                = "${var.product}-backup-vault-${var.env}"
+#   resource_group_name = data.azurerm_resource_group.rg.name
+# }
+
+# resource "azurerm_role_assignment" "sa_backup_contributor" {
+#   scope                = module.sa_storage_account.storageaccount_id
+#   role_definition_name = "Storage Account Backup Contributor"
+#   principal_id         = data.azurerm_data_protection_backup_vault.this.identity.0.principal_id #data.azurerm_data_protection_backup_vault.this.principal_id #data.azurerm_data_protection_backup_vault.this.identity.0.principal_id
+
+# }
+
+# resource "azurerm_data_protection_backup_policy_blob_storage" "this" {
+#   name               = "${var.product}-backup-policy-${var.env}"
+#   vault_id           = data.azurerm_data_protection_backup_vault.this.id
+#   retention_duration = var.retention_duration
+# }
+
+# resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
+#   name               = "${module.sa_storage_account.storageaccount_id}-backup-${var.env}"
+#   vault_id           = data.azurerm_data_protection_backup_vault.this.id
+#   location           = var.location
+#   storage_account_id = module.sa_storage_account.storageaccount_id
+#   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.this.id
+# }
+
+
 
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
