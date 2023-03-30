@@ -48,7 +48,7 @@ resource "azurerm_data_protection_backup_vault" "this" {
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = var.location
   datastore_type      = "VaultStore"
-  redundancy          = "LocallyRedundant"
+  redundancy          = "GeoRedundant"
   tags                = var.common_tags
   identity {
     type = "SystemAssigned"
