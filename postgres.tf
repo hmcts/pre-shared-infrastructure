@@ -9,7 +9,7 @@ module "data_store_db_v14" {
     azurerm.postgres_network = azurerm.postgres_network
   }
 
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=thomast1906-patch-1"
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=postgres-vnet-provider"
   env    = var.env
 
   product       = var.product
