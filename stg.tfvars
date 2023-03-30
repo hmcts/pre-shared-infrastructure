@@ -19,3 +19,93 @@ dts_pre_appreg_oid         = "1043d250-96eb-4cc3-af11-3215cfbf028f"
 dts_pre_ent_appreg_oid     = "0f7b27ab-60b6-4682-8491-8e4eb5498dad"
 
 retention_duration = "P35D"
+
+edit_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "edit-vm01-data-stg"
+    location             = "uksouth"
+    resource_group_name  = "pre-stg"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "edit-vm02-data-stg"
+      location             = "uksouth"
+      resource_group_name  = "pre-stg"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
+
+dg_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "data-gateway-vm01-data-stg"
+    location             = "uksouth"
+    resource_group_name  = "pre-stg"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "data-gateway-vm02-data-stg"
+      location             = "uksouth"
+      resource_group_name  = "pre-stg"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
