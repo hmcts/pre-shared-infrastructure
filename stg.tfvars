@@ -20,6 +20,9 @@ dts_pre_ent_appreg_oid     = "0f7b27ab-60b6-4682-8491-8e4eb5498dad"
 
 retention_duration = "P35D"
 
+dg_vm_private_ip   = ["10.101.0.22", "10.101.0.23"]
+edit_vm_private_ip = ["10.101.0.6", "10.101.0.7"]
+
 edit_vm_data_disks = [{
   datadisk1 = {
     name                 = "edit-vm01-data-stg"
