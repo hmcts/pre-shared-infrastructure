@@ -74,13 +74,11 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "this" {
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
-  name               = "${module.sa_storage_account.storageaccount_id}-backup-${var.env}"
+  name               = "${module.sa_storage_account.storageaccount_id}backup"
   vault_id           = azurerm_data_protection_backup_vault.this.id
   location           = var.location
   storage_account_id = module.sa_storage_account.storageaccount_id
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.this.id
 
-  depends_on = [
-    azurerm_role_assignment.sa_backup_contributor
-  ]
+  depends_on = [azurerm_role_assignment.sa_backup_contributor]
 }
