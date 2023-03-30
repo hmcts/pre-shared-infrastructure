@@ -30,7 +30,7 @@ resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
 }
 
 module "sa_backup" {
-  count  = var.env == "stg" || var.env == "prod" ? 1 : 0
+  count  = var.env == "dev" || var.env == "prod" ? 1 : 0
   source = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=preview"
 
   env                  = var.env
@@ -55,6 +55,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -64,6 +65,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -73,6 +75,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -82,6 +85,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 }
