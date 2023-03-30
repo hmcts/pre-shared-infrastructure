@@ -3,14 +3,10 @@ data "azurerm_data_protection_backup_vault" "this" {
   resource_group_name = var.resource_group_name
 }
 
-output "azurerm_data_protection_backup_vault_principal_id" {
-  value = data.azurerm_data_protection_backup_vault.example.identity.0.principal_id
-}
-
 resource "azurerm_role_assignment" "sa_backup_contributor" {
   scope                = var.storage_account_id
   role_definition_name = "Storage Account Backup Contributor"
-  principal_id         = data.azurerm_data_protection_backup_vault.example.identity.0.principal_id
+  principal_id         = data.azurerm_data_protection_backup_vault.this.identity.0.principal_id #data.azurerm_data_protection_backup_vault.this.principal_id #data.azurerm_data_protection_backup_vault.this.identity.0.principal_id
 }
 
 resource "azurerm_data_protection_backup_policy_blob_storage" "this" {
@@ -25,6 +21,4 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
   location           = var.location
   storage_account_id = var.storage_account_id
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.this.id
-
-  depends_on = [azurerm_role_assignment.sa_backup_contributor]
 }
