@@ -108,4 +108,4 @@ data "azurerm_key_vault" "pre_kv" {
 #   key_vault_id = data.azurerm_key_vault.keyvault.id
 # }
 
-data "azurerm_subscriptions" "current" {}
+data "azurerm_subscription" "current" {}

@@ -40,7 +40,7 @@ module "ams_function_app" {
     "STREAMINGPOLICYNAME"               = "PreStreamingPolicy"
     "TOKENENDPOINT"                     = "https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/token"
     "AZURE_RESOURCE_GROUP"              = "pre-${var.env}"
-    "AZURE_SUBSCRIPTION_ID"             = "${data.azurerm_subscriptions.current.id}"
+    "AZURE_SUBSCRIPTION_ID"             = "${data.azurerm_subscription.current.subscription_id}"
     "AZURE_STORAGE_ACCOUNT_KEY"         = "${data.azurerm_key_vault_secret.sa_key.value}"
     "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret.value}"
   }
