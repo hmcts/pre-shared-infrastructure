@@ -1,9 +1,23 @@
+data "azurerm_key_vault_secret" "sa_key" {
+  name         = "ams-sa-key"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_key_vault_secret" "symmetrickey" {
+  name         = "symmetrickey"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_key_vault_secret" "client_secret" {
+  name         = "client-secret"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
 
 module "ams_function_app" {
-  source                 = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
-  os_type                = "Linux"
-  product                = var.product
-  create_service_plan    = true
+  source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
+  os_type             = "Linux"
+  product             = var.product
+  create_service_plan = true
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "pre-ams-integration"
@@ -13,55 +27,40 @@ module "ams_function_app" {
 
   # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
   app_settings = {
-    # "ACCOUNTKEY" = ""
-    # "ALGO"       = "['RS256']"
-    #"APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.example.instrumentation_key
-    # "APPLICATIONINSIGHTS_CONNECTION_STRING" = ""
-    # "AZURE_CLIENT_ID"                       = "7394ca1a-31de-4433-beca-2ca1a2043d5c"
-    # "AZURE_MEDIA_SERVICES_ACCOUNT_NAME"     = "preams${var.env}"
-    # "AZURE_STORAGE_ACCOUNT_NAME"            = "prefinalsa${var.env}"
-    # ApplicationInsightsAgent_EXTENSION_VERSION = "~2"
-    # "AZURE_TENANT_ID"                          = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-    # "AzureWebJobsStorage"                      = "${module.sa_storage_account.storageaccount_primary_connection_string}"
-    # "DRMSYMMETRICKEY"                       = ""
-    # "FUNCTIONS_EXTENSION_VERSION" = "~4"
-    # "FUNCTIONS_WORKER_RUNTIME"    = "node"
-    # "ISSUER"                                = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-    # "JWKSURI"                               = "https://login.microsoftonline.com/common/discovery/keys"
-    # "SCOPE"                                 = "api://7394ca1a-31de-4433-beca-2ca1a2043d5c/.default"
-    # "TOKENENDPOINT"                         = "https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/v2.0/token"
-    # "TOKENSIGNINGKEY"                       = ""
-    # "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "${module.finalsa_storage_account.storageaccount_primary_connection_string}"
-    # "WEBSITE_CONTENTSHARE"     = ""
-    # "WEBSITE_RUN_FROM_PACKAGE" = ""
+    "ALGO"                              = "['RS256']"
+    "AZURE_CLIENT_ID"                   = "${var.pre_ent_appreg_app_id}"
+    "AZURE_MEDIA_SERVICES_ACCOUNT_NAME" = "preams${var.env}"
+    "AZURE_TENANT_ID"                   = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+    "SYMMETRICKEY"                      = "${data.azurerm_key_vault_secret.symmetrickey}"
+    "ISSUER"                            = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+    "JWKSURI"                           = "https://login.microsoftonline.com/common/discovery/keys"
+    "AUDIENCE"                          = "api://${var.pre_ent_appreg_app_id}"
+    "SCOPE"                             = "api://${var.pre_ent_appreg_app_id}/.default"
+    "CONTENTPOLICYKEYNAME"              = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
+    "STREAMINGPOLICYNAME"               = "PreStreamingPolicy"
+    "TOKENENDPOINT"                     = "https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/token"
+    "AZURE_RESOURCE_GROUP"              = "pre-${var.env}"
+    "AZURE_SUBSCRIPTION_ID"             = "${data.azurerm_subscriptions.current.id}"
+    "AZURE_STORAGE_ACCOUNT_KEY"         = "${data.azurerm_key_vault_secret.sa_key}"
+    "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret}"
   }
 }
 
-# resource "azurerm_storage_account" "zc_storage" {
-#   name                            = "zcstoragedev"
-#   resource_group_name             = data.azurerm_resource_group.rg.name
-#   location                        = var.location
-#   account_tier                    = "Standard"
-#   account_replication_type        = "ZRS"
-#   tags                            = var.common_tags
-#   allow_nested_items_to_be_public = false
+# module "zc_function_app" {
+#   source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
+#   os_type             = "Windows"
+#   product             = var.product
+#   create_service_plan = true
+
+#   resource_group_name = data.azurerm_resource_group.rg.name
+#   name                = "zc-function-app"
+#   location            = var.location
+#   common_tags         = var.common_tags
+#   env                 = var.env
+
+#   # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
+#   app_settings = {}
 # }
-
-module "zc_function_app" {
-  source                 = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
-  os_type                = "Windows"
-  product                = var.product
-  create_service_plan    = true
-
-  resource_group_name = data.azurerm_resource_group.rg.name
-  name                = "zc-function-app"
-  location            = var.location
-  common_tags         = var.common_tags
-  env                 = var.env
-
-  # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
-  app_settings = {}
-}
 
 # resource "azurerm_function_app_function" "content_key_policy" {
 #   name            = "CreateContentKeyPolicy"
