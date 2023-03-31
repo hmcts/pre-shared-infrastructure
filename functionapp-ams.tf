@@ -1,7 +1,7 @@
-# data "azurerm_key_vault_secret" "sa_key" {
-#   name         = "ams-sa-key"
-#   key_vault_id = data.azurerm_key_vault.keyvault.id
-# }
+data "azurerm_key_vault_secret" "sa_key" {
+  name         = "ams-sa-key"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
 
 data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
@@ -31,7 +31,7 @@ module "ams_function_app" {
     "AZURE_CLIENT_ID"                   = "${var.pre_ent_appreg_app_id}"
     "AZURE_MEDIA_SERVICES_ACCOUNT_NAME" = "preams${var.env}"
     "AZURE_TENANT_ID"                   = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-    "SYMMETRICKEY"                      = "${data.azurerm_key_vault_secret.symmetrickey}"
+    "SYMMETRICKEY"                      = "${data.azurerm_key_vault_secret.symmetrickey.value}"
     "ISSUER"                            = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
     "JWKSURI"                           = "https://login.microsoftonline.com/common/discovery/keys"
     "AUDIENCE"                          = "api://${var.pre_ent_appreg_app_id}"
@@ -41,8 +41,8 @@ module "ams_function_app" {
     "TOKENENDPOINT"                     = "https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/token"
     "AZURE_RESOURCE_GROUP"              = "pre-${var.env}"
     "AZURE_SUBSCRIPTION_ID"             = "${data.azurerm_subscriptions.current.id}"
-    # "AZURE_STORAGE_ACCOUNT_KEY"         = ""
-    "AZURE_CLIENT_SECRET" = "${data.azurerm_key_vault_secret.client_secret}"
+    "AZURE_STORAGE_ACCOUNT_KEY"         = "${data.azurerm_key_vault_secret.sa_key.value}"
+    "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret.value}"
   }
 }
 
