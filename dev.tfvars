@@ -16,6 +16,7 @@ pre_app_admin = "8d48024b-9a39-4777-94b0-0751f0cb3832"
 
 # dts_pre_appreg_oid     = "b521e9e3-58e1-4c25-98b5-7f3157f68c16" # dts_pre_devapp reg
 dts_pre_ent_appreg_oid = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev enterprise app/sp
+pre_ent_appreg_app_id  = "7394ca1a-31de-4433-beca-2ca1a2043d5c"
 # PeeringFromHubName     = "pre-recorded-evidence-dev"
 mgmt_subscription_id = "6c4d2513-a873-41b4-afdd-b05a33206631"
 # retention_duration   = "P8D"
