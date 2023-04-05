@@ -103,7 +103,7 @@ resource "azurerm_storage_account" "this" {
 resource "azurerm_application_insights" "appinsight" {
   application_type    = "web"
   location            = var.location
-  name                = "${var.product}-${var.env}"
+  name                = "${var.product}-${var.name}-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
   tags                = var.common_tags
 }
