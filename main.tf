@@ -14,6 +14,12 @@ resource "azurerm_resource_group" "rg" {
   tags     = var.common_tags
 }
 
+resource "azurerm_resource_group" "rg_backup" {
+  name     = local.resource_group_name-backup
+  location = var.location_backup
+  tags     = var.common_tags
+}
+
 
 data "azurerm_subnet" "jenkins_subnet" {
   provider             = azurerm.mgmt
