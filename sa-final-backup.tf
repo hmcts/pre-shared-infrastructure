@@ -31,13 +31,13 @@ module "finalsa_storage_account_backup" {
 #}
 
 # Give the appreg (managed application in local directory) OID Storage Blob Data Contributor role on both the storage account and backup storage account
-resource "azurerm_role_assignment" "powerapp_appreg" {
+resource "azurerm_role_assignment" "powerapp_appreg_final" {
   scope                = module.finalsa_storage_account.storageaccount_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
 }
 
-resource "azurerm_role_assignment" "powerapp_appreg" {
+resource "azurerm_role_assignment" "powerapp_appreg_finalbackup" {
   scope                = module.finalsa_storage_account_backup.storageaccount_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
