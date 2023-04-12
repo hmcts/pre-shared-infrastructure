@@ -17,6 +17,7 @@ pre_mi_principal_id        = "d03f73e6-40ed-40a2-a0ec-059286505905"
 pre_mi_tenant_id           = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid         = "913743c8-60eb-4cca-a15c-2033db5118cd"
 dts_pre_ent_appreg_oid     = "fd9eddbb-3ec9-4fda-81fc-d518d4718a70"
+dts_pre_backup_appreg_oid  = "7716f08a-c384-4113-bf26-05a04a1f909b"
 pg_databases = [
   {
     name : "pre-pdb-test"
@@ -24,3 +25,4 @@ pg_databases = [
 ]
 
 retention_duration = "P1D"
+immutability_period_backup = "31"

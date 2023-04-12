@@ -6,6 +6,10 @@ variable "location" {
   default = "UK South"
 }
 
+variable "location_backup" {
+  default = "UK West"
+}
+
 variable "subscription" {
   default = ""
 }
@@ -311,6 +315,8 @@ variable "dts_pre_appreg_oid" {}
 
 variable "dts_pre_ent_appreg_oid" {}
 
+variable "dts_pre_backup_appreg_oid" {}
+
 variable "cors_rules" {
   type = list(object({
     allowed_headers    = list(string)
@@ -336,5 +342,7 @@ variable "PeeringFromHubName" {
 }
 
 variable "retention_duration" {}
+
+variable "immutability_period_backup" {}
 
 
