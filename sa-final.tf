@@ -28,7 +28,7 @@ module "finalsa_storage_account" {
 
 
 module "finalsa_backup" {
-  count  = var.env == "stg" || var.env == "prod"  || var.env == "sandbox" ? 1 : 0
+  count  = var.env == "stg" || var.env == "prod"  || var.env == "sbox" ? 1 : 0
   source = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=sandbox"
 
   env                  = var.env
