@@ -13,6 +13,7 @@ module "ingestsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Allow"
   enable_data_protection          = true
+  enable_change_feed              = true
 
   # private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
 
