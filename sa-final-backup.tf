@@ -1,7 +1,7 @@
 module "finalsa_storage_account_backup" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
-  storage_account_name            = "${var.product}finalsa${var.env}backup"
+  storage_account_name            = "${var.product}finalsabackup${var.env}"
   resource_group_name             = azurerm_resource_group.rg_backup.name
   location                        = var.location_backup
   account_kind                    = "StorageV2"
@@ -10,7 +10,7 @@ module "finalsa_storage_account_backup" {
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id])
   allow_nested_items_to_be_public = false
   default_action                  = "Allow"
-
+  enable_data_protection          = true
   immutable_enabled   = true
   immutability_period = var.immutability_period_backup
 
