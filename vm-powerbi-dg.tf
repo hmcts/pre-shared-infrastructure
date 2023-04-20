@@ -153,6 +153,13 @@ resource "azurerm_key_vault_secret" "powerbi_dg_username" {
 resource "azurerm_key_vault_secret" "powerbi_dg_password" {
   count        = var.num_datagateway
   name         = "bi-dg${count.index + 1}-password"
-  value        = random_password.dg_password[count.index].result
+  value        = random_password.bi_dg_password[count.index].result
+  key_vault_id = data.azurerm_key_vault.pre_kv.id
+}
+
+resource "azurerm_key_vault_secret" "powerbi_dg_recovery" {
+  count        = var.num_datagateway
+  name         = "dg${count.index + 1}-recovery-key"
+  value        = random_password.bi_dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
