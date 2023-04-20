@@ -54,26 +54,10 @@ module "powerBI_data_gateway" {
 
 }
 
-# resource "null_resource" "run_dg_script" {
-#   count = var.1
-#   triggers = {
-#     vm_id = module.data_gateway_vm.*.vm_id[count.index]
-#   }
-
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       az vm run-command invoke \
-#         --ids "${module.data_gateway_vm.*.vm_id[count.index]}" \
-#         --command-id "RunPowerShellScript" \
-#         --scripts @scripts/datagateway-init.ps1
-#     EOT
-#   }
-# }
-
 resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
   count                      = var.num_datagateway
   name                       = "dgScript"
-  virtual_machine_id         = module.data_gateway_vm.*.vm_id[count.index]
+  virtual_machine_id         = module.powerBI_data_gateway.*.vm_id[count.index]
   publisher                  = "Microsoft.CPlat.Core"
   type                       = "RunCommandWindows"
   type_handler_version       = "1.1"
@@ -86,7 +70,7 @@ resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "bi_dg_vm" {
   count              = var.num_datagateway
-  virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
+  virtual_machine_id = module.powerBI_data_gateway.*.vm_id[count.index]
   location           = data.azurerm_resource_group.rg.location
   enabled            = false
 
@@ -98,7 +82,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "bi_dg_vm" {
   }
   tags = var.common_tags
 
-  depends_on = [module.data_gateway_vm]
+  depends_on = [module.powerBI_data_gateway]
 }
 
 locals {
