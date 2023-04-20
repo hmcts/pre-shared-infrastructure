@@ -1,4 +1,8 @@
 module "data_store_db_v14" {
+  providers = {
+    azurerm.postgres_network = azurerm.postgres_network
+  }
+
   source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
@@ -7,7 +11,7 @@ module "data_store_db_v14" {
   business_area = var.project
 
   common_tags = var.common_tags
-  name        = var.database_name #-${var.env}" removed as it looks like env gets added in root module
+  name        = var.database_name
   pgsql_databases = [
     {
       name : "pre-pdb-${var.env}"
