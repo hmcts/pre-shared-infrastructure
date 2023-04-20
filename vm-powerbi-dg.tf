@@ -1,5 +1,5 @@
-module "bi_data_gateway_vm" {
-  count                          = 1 #var.1
+module "powerBI_data_gateway" {
+  count                          = var.num_datagateway
   source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
   vm_type                        = local.bi_dg_vm_type
   vm_name                        = "bi-dg-vm${count.index + 1}-${var.env}"
@@ -71,7 +71,7 @@ module "bi_data_gateway_vm" {
 # }
 
 resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
-  count                      = 1
+  count                      = var.num_datagateway
   name                       = "dgScript"
   virtual_machine_id         = module.data_gateway_vm.*.vm_id[count.index]
   publisher                  = "Microsoft.CPlat.Core"
@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
 
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "bi_dg_vm" {
-  count              = 1 #var.1
+  count              = var.num_datagateway
   virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
   location           = data.azurerm_resource_group.rg.location
   enabled            = false
@@ -128,13 +128,13 @@ locals {
 
 # Datagateway
 resource "random_string" "bi_dg_username" {
-  count   = 1 #var.1
+  count   = var.num_datagateway
   length  = 4
   special = false
 }
 
 resource "random_password" "bi_dg_password" {
-  count            = 1 #var.1
+  count            = var.num_datagateway
   length           = 16
   special          = true
   override_special = "$%&@()-_=+[]{}<>:?"
@@ -144,14 +144,14 @@ resource "random_password" "bi_dg_password" {
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_username" {
-  count        = 1 #var.1
+  count        = var.num_datagateway
   name         = "bi-dg${count.index + 1}-username"
   value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_password" {
-  count        = 1 #var.1
+  count        = var.num_datagateway
   name         = "bi-dg${count.index + 1}-password"
   value        = random_password.dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.pre_kv.id
