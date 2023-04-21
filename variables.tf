@@ -216,7 +216,11 @@ variable "dg_vm_data_disks" {}
 
 variable "edit_vm_data_disks" {}
 
+variable "powerbi_dg_vm_data_disks" {}
+
 variable "dg_vm_private_ip" {}
+
+variable "powerbi_dg_vm_private_ip" {}
 
 variable "edit_vm_private_ip" {}
 
