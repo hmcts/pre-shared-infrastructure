@@ -125,7 +125,7 @@ edit_vm_data_disks = [{
 
 powerbi_dg_vm_data_disks = [{
   datadisk1 = {
-    name                 = "data-gateway-vm01-data-dev"
+    name                 = "powerbi-dg-vm01-data-dev"
     location             = "uksouth"
     resource_group_name  = "pre-dev"
     storage_account_type = "StandardSSD_LRS"
@@ -147,7 +147,7 @@ powerbi_dg_vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "data-gateway-vm02-data-dev"
+      name                 = "powerbi-dg-vm02-data-dev"
       location             = "uksouth"
       resource_group_name  = "pre-dev"
       storage_account_type = "StandardSSD_LRS"
