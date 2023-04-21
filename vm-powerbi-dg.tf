@@ -1,15 +1,15 @@
 module "powerBI_data_gateway" {
   count                          = var.num_datagateway
   source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
-  vm_type                        = local.bi_dg_vm_type
-  vm_name                        = "bi-dg-vm${count.index + 1}-${var.env}"
+  vm_type                        = local.powerbi_dg_vm_type
+  vm_name                        = "powerbi-dg${count.index + 1}-${var.env}"
   vm_resource_group              = data.azurerm_resource_group.rg.name
   vm_location                    = var.location
-  vm_size                        = local.bi_dg_vm_size
-  vm_admin_name                  = azurerm_key_vault_secret.dg_username[count.index].value
-  vm_admin_password              = azurerm_key_vault_secret.dg_password[count.index].value
-  vm_availabilty_zones           = local.bi_dg_vm_availabilty_zones[count.index]
-  managed_disks                  = var.dg_vm_data_disks[count.index]
+  vm_size                        = local.powerbi_dg_vm_size
+  vm_admin_name                  = azurerm_key_vault_secret.powerbi_dg_username[count.index].value
+  vm_admin_password              = azurerm_key_vault_secret.powerbi_dg_password[count.index].value
+  vm_availabilty_zones           = local.powerbi_dg_vm_availabilty_zones[count.index]
+  managed_disks                  = var.powerbi_dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
@@ -18,22 +18,22 @@ module "powerBI_data_gateway" {
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
-  nic_name      = lower("dg-vm${count.index + 1}-nic-${var.env}")
-  ipconfig_name = local.bi_dg_ipconfig_name
-  vm_subnet_id  = local.bi_dg_vm_subnet_id
-  vm_private_ip = var.dg_vm_private_ip[count.index]
+  nic_name      = lower("powerbi-dg${count.index + 1}-nic-${var.env}")
+  ipconfig_name = local.powerbi_dg_ipconfig_name
+  vm_subnet_id  = local.powerbi_dg_vm_subnet_id
+  vm_private_ip = var.powerbi_dg_vm_private_ip[count.index]
 
-  marketplace_sku       = local.bi_dg_marketplace_sku
-  marketplace_publisher = local.bi_dg_marketplace_publisher
-  marketplace_product   = local.bi_dg_marketplace_product
+  marketplace_sku       = local.powerbi_dg_marketplace_sku
+  marketplace_publisher = local.powerbi_dg_marketplace_publisher
+  marketplace_product   = local.powerbi_dg_marketplace_product
 
   #storage_image_reference
-  vm_publisher_name = local.bi_dg_marketplace_publisher
-  vm_offer          = local.bi_dg_marketplace_product
-  vm_sku            = local.bi_dg_marketplace_sku
-  vm_version        = local.dg_vm_version
+  vm_publisher_name = local.powerbi_dg_marketplace_publisher
+  vm_offer          = local.powerbi_dg_marketplace_product
+  vm_sku            = local.powerbi_dg_marketplace_sku
+  vm_version        = local.powerbi_dg_vm_version
 
-  boot_diagnostics_enabled = local.bi_dg_boot_diagnostics_enabled
+  boot_diagnostics_enabled = local.powerbi_dg_boot_diagnostics_enabled
 
   nessus_install = false #var.nessus_install
 
@@ -43,8 +43,8 @@ module "powerBI_data_gateway" {
   dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
 
   #mount the disks
-  additional_script_uri  = local.bi_dg_additional_script_uri
-  additional_script_name = local.bi_dg_additional_script_name
+  additional_script_uri  = local.powerbi_dg_additional_script_uri
+  additional_script_name = local.powerbi_dg_additional_script_name
 
   run_command    = true
   rc_script_file = "scripts/windows_cis.ps1"
@@ -68,7 +68,7 @@ resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
 }
 
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "bi_dg_vm" {
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
   count              = var.num_datagateway
   virtual_machine_id = module.powerBI_data_gateway.*.vm_id[count.index]
   location           = data.azurerm_resource_group.rg.location
@@ -86,38 +86,38 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "bi_dg_vm" {
 }
 
 locals {
-  bi_dg_vm_type = "windows"
+  powerbi_dg_vm_type = "windows"
 
-  bi_dg_vm_size       = "Standard_F8s_v2"
-  bi_dg_ipconfig_name = "IP_CONFIGURATION"
+  powerbi_dg_vm_size       = "Standard_F8s_v2"
+  powerbi_dg_ipconfig_name = "IP_CONFIGURATION"
 
-  bi_dg_vm_subnet_id = data.azurerm_subnet.datagateway_subnet.id
+  powerbi_dg_vm_subnet_id = data.azurerm_subnet.datagateway_subnet.id
 
-  bi_dg_vm_availabilty_zones  = [1, 2]
-  bi_dg_marketplace_product   = "WindowsServer"
-  bi_dg_marketplace_publisher = "MicrosoftWindowsServer"
-  bi_dg_marketplace_sku       = "2019-Datacenter-gensecond"
-  bi_dg_vm_version            = "latest"
+  powerbi_dg_vm_availabilty_zones  = [1, 2]
+  powerbi_dg_marketplace_product   = "WindowsServer"
+  powerbi_dg_marketplace_publisher = "MicrosoftWindowsServer"
+  powerbi_dg_marketplace_sku       = "2019-Datacenter-gensecond"
+  powerbi_dg_vm_version            = "latest"
 
-  bi_dg_boot_diagnostics_enabled = false
+  powerbi_dg_boot_diagnostics_enabled = false
   # boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
 
-  bi_dg_dynatrace_env = var.tenant_id == "yrk32651" ? "nonprod" : var.tenant_id == "ebe20728" ? "prod" : null
+  powerbi_dg_dynatrace_env = var.tenant_id == "yrk32651" ? "nonprod" : var.tenant_id == "ebe20728" ? "prod" : null
 
-  bi_dg_additional_script_uri  = "https://raw.githubusercontent.com/hmcts/CIS-harderning/master/windows-disk-mounting.ps1"
-  bi_dg_additional_script_name = "windows-disk-mounting.ps1"
+  powerbi_dg_additional_script_uri  = "https://raw.githubusercontent.com/hmcts/CIS-harderning/master/windows-disk-mounting.ps1"
+  powerbi_dg_additional_script_name = "windows-disk-mounting.ps1"
   # dg_init_script               = format("%s%s%s", "[ ", "\"https://raw.githubusercontent.com/hmcts/pre-shared-infrastructure/preview/scripts/datagateway-init.ps1\"", " ]")
 }
 
 
 # Datagateway
-resource "random_string" "bi_dg_username" {
+resource "random_string" "powerbi_dg_username" {
   count   = var.num_datagateway
   length  = 4
   special = false
 }
 
-resource "random_password" "bi_dg_password" {
+resource "random_password" "powerbi_dg_password" {
   count            = var.num_datagateway
   length           = 16
   special          = true
@@ -129,21 +129,21 @@ resource "random_password" "bi_dg_password" {
 
 resource "azurerm_key_vault_secret" "powerbi_dg_username" {
   count        = var.num_datagateway
-  name         = "bi-dg${count.index + 1}-username"
-  value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
+  name         = "powerbi-dg${count.index + 1}-username"
+  value        = "powerbi_dg${count.index + 1}_${random_string.powerbi_dg_username[count.index].result}"
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_password" {
   count        = var.num_datagateway
-  name         = "bi-dg${count.index + 1}-password"
-  value        = random_password.bi_dg_password[count.index].result
+  name         = "powerbi-dg${count.index + 1}-password"
+  value        = random_password.powerbi_dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_recovery" {
   count        = var.num_datagateway
-  name         = "dg${count.index + 1}-recovery-key"
-  value        = random_password.bi_dg_password[count.index].result
+  name         = "powerbi-dg${count.index + 1}-recovery-key"
+  value        = random_password.powerbi_dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
