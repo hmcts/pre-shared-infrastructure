@@ -26,11 +26,11 @@ Install-Module -Name DataGateway
 Connect-AzAccount
 $VaultName = "pre-dev"
 
-$recoverySecretName = "dg1-recovery-key"
+$recoverySecretName = "powerbi-dg1-recovery-key"
 $recoverySecret = Get-AzKeyVaultSecret -VaultName $VaultName -Name $recoverySecretName
 $recoverySecretValue = $recoverySecret.SecretValueText
 
-$passwordSecretName = "bi-dg1-password"
+$passwordSecretName = "powerbi-dg1-password"
 $passwordSecret = Get-AzKeyVaultSecret -VaultName $VaultName -Name $passwordSecretName
 $passwordSecretValue = $recoverySecret.SecretValueText
 
