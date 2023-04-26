@@ -14,16 +14,17 @@ dts_pre_oid                = "b1fd4154-355f-4683-a795-d09cdb814d16"
 dts_cft_developers_oid     = "b2a1773c-a5ae-48b5-b5fa-95b0e05eee05"
 dts_pre_project_admin      = "56a29187-3d5f-4262-99d6-c635776e0eac"
 dts_pre_app_admin          = "d055ba21-5814-4278-8752-aaffa7eaac62"
-devops_admin               = "a0c6507c-299c-4f46-96c6-8275d2c45242"
 pre_mi_principal_id        = "eb4aa503-5ffa-49ef-a69d-221e90eaf236"
 pre_mi_tenant_id           = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-providernamespace          = "Microsoft.Compute"
-featurename                = "EncryptionAtHost"
 dts_pre_appreg_oid         = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
 dts_pre_ent_appreg_oid     = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
+dts_pre_backup_appreg_oid  = "7716f08a-c384-4113-bf26-05a04a1f909b"
 
 pg_databases = [
   {
     name : "pre-pdb-sbox"
   }
 ]
+
+retention_duration = "P1D"
+immutability_period_backup = "1"
