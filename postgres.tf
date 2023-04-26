@@ -4,6 +4,10 @@
 ////////////////////////////////
 
 module "data_store_db_v14" {
+  providers = {
+    azurerm.postgres_network = azurerm.postgres_network
+  }
+  
   source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
