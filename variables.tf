@@ -345,4 +345,8 @@ variable "retention_duration" {}
 
 variable "immutability_period_backup" {}
 
+variable "aks_subscription_id" {
+  default = "867a878b-cb68-4de5-9741-361ac9e178b6"
+}
+
 
