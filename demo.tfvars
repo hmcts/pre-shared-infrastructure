@@ -30,4 +30,4 @@ pg_databases = [
 PeeringFromHubName = "pre-recorded-evidence-demo"
 
 retention_duration = "P1D"
-immutability_period_backup = "365"
+immutability_period_backup = "1"

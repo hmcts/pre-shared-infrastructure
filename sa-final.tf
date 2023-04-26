@@ -15,8 +15,6 @@ module "finalsa_storage_account" {
   cors_rules                      = var.cors_rules
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
   enable_change_feed              = true
-  immutable_enabled               = true #remove as will destroy existing container
-  immutability_period             = 100
   # private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
   role_assignments = [
     "Storage Blob Data Contributor"

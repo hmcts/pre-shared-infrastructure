@@ -26,5 +26,5 @@ pg_databases = [
   }
 ]
 
-retention_duration = "P35D"
-immutability_period_backup = "7"
+retention_duration = "P1D"
+immutability_period_backup = "1"
