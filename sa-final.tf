@@ -19,9 +19,6 @@ module "finalsa_storage_account" {
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
-  restore_policy {
-      days = 364
-    }
 
   common_tags = var.common_tags
   depends_on  = [module.key-vault]
