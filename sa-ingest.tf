@@ -47,7 +47,7 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
 module "test_storage_account" {
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=restorepolicy"
   env                             = var.env
-  storage_account_name            = "Darrentest001"
+  storage_account_name            = "darrentest001"
   resource_group_name             = azurerm_resource_group.rg.name
   location                        = var.location
   account_kind                    = "StorageV2"
