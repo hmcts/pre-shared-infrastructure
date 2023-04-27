@@ -17,6 +17,9 @@ module "ingestsa_storage_account" {
   enable_change_feed              = true
 
   # private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
+  role_assignments = [
+    "Storage Blob Data Contributor"
+  ]
 
   common_tags = var.common_tags
 }
