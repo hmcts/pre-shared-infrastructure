@@ -22,7 +22,7 @@
    principal_id         = azurerm_data_protection_backup_vault.pre_backup_vault.identity[0].principal_id
  }
 
- resource "azurerm_role_assignment" "backup_role_sa" {
+ resource "azurerm_role_assignment" "backup_role_sa_pitr" {
    scope                = module.sa_storage_account.storageaccount_id
    role_definition_name = "Storage Blob Data Contributor"
    principal_id         = azurerm_data_protection_backup_vault.pre_backup_vault.identity[0].principal_id
