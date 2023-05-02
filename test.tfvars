@@ -27,6 +27,7 @@ pg_databases = [
 retention_duration         = "P6D"
 immutability_period_backup = "7"
 
+tenant_id = "yrk32651"
 
 powerbi_dg_vm_private_ip = ["10.70.21.24", "10.70.21.25"]
 
