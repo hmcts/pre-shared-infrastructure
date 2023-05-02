@@ -33,7 +33,7 @@ immutability_period_backup = "1"
 
 powerbi_dg_vm_data_disks = [{
   datadisk1 = {
-    name                 = "powerbi-dg-vm01-data-sbox"
+    name                 = "powerbi-dg1-data-sbox"
     location             = "uksouth"
     resource_group_name  = "pre-sbox"
     storage_account_type = "StandardSSD_LRS"
@@ -55,7 +55,7 @@ powerbi_dg_vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "powerbi-dg-vm02-data-sbox"
+      name                 = "powerbi-dg2-data-sbox"
       location             = "uksouth"
       resource_group_name  = "pre-sbox"
       storage_account_type = "StandardSSD_LRS"

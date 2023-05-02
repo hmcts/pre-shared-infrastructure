@@ -29,11 +29,11 @@ immutability_period_backup = "7"
 
 tenant_id = "yrk32651"
 
-powerbi_dg_vm_private_ip = ["10.70.21.24", "10.70.21.25"]
+powerbi_dg_vm_private_ip = ["10.70.21.224", "10.70.21.225"]
 
 powerbi_dg_vm_data_disks = [{
   datadisk1 = {
-    name                 = "powerbi-dg-vm01-data-test"
+    name                 = "powerbi-dg1-data-test"
     location             = "uksouth"
     resource_group_name  = "pre-test"
     storage_account_type = "StandardSSD_LRS"
@@ -55,7 +55,7 @@ powerbi_dg_vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "powerbi-dg-vm02-data-test"
+      name                 = "powerbi-dg2-data-test"
       location             = "uksouth"
       resource_group_name  = "pre-test"
       storage_account_type = "StandardSSD_LRS"
