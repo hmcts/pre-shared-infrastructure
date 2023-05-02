@@ -354,3 +354,5 @@ variable "powerbi_dg_vm_private_ip" {}
 variable "powerbi_dg_vm_data_disks" {}
 
 variable "tenant_id" {}
+
+variable "pre_ent_appreg_app_id" {}

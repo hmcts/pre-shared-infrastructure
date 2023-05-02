@@ -21,7 +21,7 @@ dts_pre_ent_appreg_oid     = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
 dts_pre_backup_appreg_oid  = "7716f08a-c384-4113-bf26-05a04a1f909b"
 tenant_id                  = "yrk32651"
 powerbi_dg_vm_private_ip   = ["10.48.1.224", "10.48.1.225"]
-
+pre_ent_appreg_app_id      = "07587e3c-603e-401f-98d1-ff26206e93f8"
 pg_databases = [
   {
     name : "pre-pdb-sbox"
