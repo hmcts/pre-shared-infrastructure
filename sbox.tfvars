@@ -20,7 +20,7 @@ dts_pre_appreg_oid         = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
 dts_pre_ent_appreg_oid     = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
 dts_pre_backup_appreg_oid  = "7716f08a-c384-4113-bf26-05a04a1f909b"
 tenant_id                  = "yrk32651"
-powerbi_dg_vm_private_ip   = ["10.48.1.24", "10.48.1.25"]
+powerbi_dg_vm_private_ip   = ["10.48.1.224", "10.48.1.225"]
 
 pg_databases = [
   {
