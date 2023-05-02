@@ -349,4 +349,8 @@ variable "aks_subscription_id" {
   default = "867a878b-cb68-4de5-9741-361ac9e178b6"
 }
 
+variable "powerbi_dg_vm_private_ip" {}
 
+variable "powerbi_dg_vm_data_disks" {}
+
+variable "tenant_id" {}
