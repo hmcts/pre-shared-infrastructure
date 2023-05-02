@@ -352,3 +352,5 @@ variable "aks_subscription_id" {
 variable "powerbi_dg_vm_private_ip" {}
 
 variable "powerbi_dg_vm_data_disks" {}
+
+variable "tenant_id" {}
