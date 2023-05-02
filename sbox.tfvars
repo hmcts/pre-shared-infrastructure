@@ -1,6 +1,6 @@
 vnet_address_space         = "10.48.1.0/24"   #"10.136.3.0/24"  #
 video_edit_vm_snet_address = "10.48.1.0/28"   # /26 "10.136.3.0/28"  #
-privatendpt_snet_address   = "10.48.1.64/26"  #"10.136.3.64/26"  # 
+privatendpt_snet_address   = "10.48.1.64/26"  #"10.136.3.64/26"  #
 bastion_snet_address       = "10.48.1.128/26" #"10.136.3.128/26" #
 data_gateway_snet_address  = "10.48.1.192/26" #"10.136.3.192/26" #
 num_vid_edit_vms           = 1
@@ -20,11 +20,58 @@ dts_pre_appreg_oid         = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
 dts_pre_ent_appreg_oid     = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
 dts_pre_backup_appreg_oid  = "7716f08a-c384-4113-bf26-05a04a1f909b"
 
+powerbi_dg_vm_private_ip = ["10.48.1.24", "10.48.1.25"]
+
 pg_databases = [
   {
     name : "pre-pdb-sbox"
   }
 ]
 
-retention_duration = "P1D"
+retention_duration         = "P1D"
 immutability_period_backup = "1"
+
+powerbi_dg_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "powerbi-dg-vm01-data-sbox"
+    location             = "uksouth"
+    resource_group_name  = "pre-sbox"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "powerbi-dg-vm02-data-sbox"
+      location             = "uksouth"
+      resource_group_name  = "pre-sbox"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
