@@ -2,7 +2,7 @@ module "powerBI_data_gateway" {
   count                          = var.num_datagateway
   source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
   vm_type                        = local.powerbi_dg_vm_type
-  vm_name                        = "powerbi-dg${count.index + 1}-${var.env}"
+  vm_name                        = "powerbi-${count.index + 1}-${var.env}"
   vm_resource_group              = data.azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.powerbi_dg_vm_size
