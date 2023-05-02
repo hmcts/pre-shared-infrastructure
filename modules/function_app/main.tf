@@ -91,7 +91,7 @@ resource "azurerm_linux_function_app" "this" {
 }
 
 resource "azurerm_storage_account" "this" {
-  name                            = replace("${var.name}storage", "-", "")
+  name                            = replace("${var.name}storage${var.env}", "-", "")
   resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location
   account_tier                    = "Standard"
