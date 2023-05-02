@@ -20,7 +20,7 @@ resource "azurerm_service_plan" "this" {
 
 resource "azurerm_windows_function_app" "this" {
   count               = var.os_type == "Windows" ? 1 : 0
-  name                = var.name
+  name                = "${var.name}-${var.env}"
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -57,7 +57,7 @@ resource "azurerm_windows_function_app" "this" {
 
 resource "azurerm_linux_function_app" "this" {
   count               = var.os_type == "Linux" ? 1 : 0
-  name                = var.name
+  name                = "${var.name}-${var.env}"
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -94,7 +94,7 @@ resource "azurerm_linux_function_app" "this" {
 }
 
 resource "azurerm_storage_account" "this" {
-  name                            = replace("${var.name}storage", "-", "")
+  name                            = replace("${var.name}${var.env}", "-", "")
   resource_group_name             = data.azurerm_resource_group.rg.name
   location                        = var.location
   account_tier                    = "Standard"
