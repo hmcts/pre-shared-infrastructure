@@ -30,7 +30,7 @@ immutability_period_backup = "7"
 tenant_id = "yrk32651"
 
 powerbi_dg_vm_private_ip = ["10.70.21.224", "10.70.21.225"]
-
+pre_ent_appreg_app_id    = "66930c25-cbaa-4b9b-81ab-bea600666acb"
 powerbi_dg_vm_data_disks = [{
   datadisk1 = {
     name                 = "powerbi-dg1-data-test"
