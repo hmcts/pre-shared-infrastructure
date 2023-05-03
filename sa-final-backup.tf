@@ -11,8 +11,8 @@ module "finalsa_storage_account_backup" {
   allow_nested_items_to_be_public = false
   default_action                  = "Allow"
   enable_data_protection          = true
-  immutable_enabled   = true
-  immutability_period = var.immutability_period_backup
+  immutable_enabled               = true
+  immutability_period             = var.immutability_period_backup
 
   common_tags = var.common_tags
   depends_on  = [module.key-vault]

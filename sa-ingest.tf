@@ -24,20 +24,6 @@ module "ingestsa_storage_account" {
   common_tags = var.common_tags
 }
 
-#module "ingestsa_backup" {
-#  count  = var.env == "stg" || var.env == "prod"  || var.env == "sbox" ? 1 : 0
-#  source = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=sandbox"
-
-#  env                  = var.env
-#  product              = var.product
-#  resource_group_name  = azurerm_resource_group.rg.name
-#  storage_account_name = "${var.product}ingestsa${var.env}"
-#  location             = var.location
-#  storage_account_id   = module.ingestsa_storage_account.storageaccount_id
-#  tags                 = var.common_tags
-#  retention_duration   = var.retention_duration
-#}
-
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
   name         = "ingestsa-storage-account-connection-string"
   value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
