@@ -18,7 +18,7 @@ module "finalsa_storage_account_backup" {
   depends_on  = [module.key-vault]
 }
 
-resource "azurerm_management_lock" "storage-backup" {
+resource "azurerm_management_lock" "storage-backup-final" {
   name       = "storage-backup"
   scope      = module.finalsa_storage_account_backup.storageaccount_id
   lock_level = "CanNotDelete"
