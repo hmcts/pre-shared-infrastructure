@@ -23,6 +23,7 @@ resource "azurerm_management_lock" "storage-backup-final" {
   scope      = module.finalsa_storage_account_backup.storageaccount_id
   lock_level = "CanNotDelete"
   notes      = "prevent users from deleting storage accounts"
+  depends_on = [azurerm_media_services_account.ams]
 }
 
 # Give the appreg (managed application in local directory) OID Storage Blob Data Contributor role on both the storage account and backup storage account
