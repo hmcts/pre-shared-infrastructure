@@ -1,10 +1,13 @@
-
 ////////////////////////////////
 // DB version 14.4              //
 ////////////////////////////////
 
 module "data_store_db_v14" {
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=db-collation"
+  providers = {
+    azurerm.postgres_network = azurerm.postgres_network
+  }
+
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
   env    = var.env
 
   product       = var.product
@@ -26,24 +29,6 @@ module "data_store_db_v14" {
 
   admin_user_object_id = var.jenkins_AAD_objectId
 
-}
-
-////////////////////////////////
-// Populate Vault with DB info (the password is output from the module, the username is a standard var)
-////////////////////////////////
-
-#using own var for this
-resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  name         = "postgresdb-username"
-  value        = var.pgsql_admin_username
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
-resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
-  name         = "postgresdb-password"
-  value        = module.data_store_db_v14.password
-  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 provider "azurerm" {
