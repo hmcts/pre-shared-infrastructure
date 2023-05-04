@@ -12,7 +12,7 @@ power_app_user_oid         = "f6991ff8-d675-4f54-b2ba-99af86a8e01c"
 managed_oid                = "8fddd15b-724c-41ab-829c-d85b969a81f9" # or 806e3063-e10b-40f8-be91-ec916cfad103
 dts_pre_oid                = "b1fd4154-355f-4683-a795-d09cdb814d16" #DTS Pre-recorded Evidence
 dts_cft_developers_oid     = "b2a1773c-a5ae-48b5-b5fa-95b0e05eee05" # DTS CFT Developers
-dts_pre_project_admin      = "56a29187-3d5f-4262-99d6-c635776e0eac" # DTS-PRE-Project Admin DTS-PRE-Project@HMCTS.NET 
+dts_pre_project_admin      = "56a29187-3d5f-4262-99d6-c635776e0eac" # DTS-PRE-Project Admin DTS-PRE-Project@HMCTS.NET
 dts_pre_app_admin          = "d055ba21-5814-4278-8752-aaffa7eaac62" # DTS-PRE-App-Sbx Admin
 devops_admin               = "a0c6507c-299c-4f46-96c6-8275d2c45242" #Devops
 pre_mi_principal_id        = "d03f73e6-40ed-40a2-a0ec-059286505905" #pre-demo-mi
@@ -31,3 +31,51 @@ PeeringFromHubName = "pre-recorded-evidence-demo"
 
 retention_duration         = "P1D"
 immutability_period_backup = "1"
+
+tenant_id                = "yrk32651"
+powerbi_dg_vm_private_ip = ["10.50.12.224", "10.50.12.225"]
+pre_ent_appreg_app_id    = "14f8f054-8511-45ea-91fe-663daf87ec40"
+powerbi_dg_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "powerbi-dg1-data-demo"
+    location             = "uksouth"
+    resource_group_name  = "pre-demo"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "powerbi-dg2-data-demo"
+      location             = "uksouth"
+      resource_group_name  = "pre-demo"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
