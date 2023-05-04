@@ -32,6 +32,8 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "pre_backup_policy
   name               = "${var.product}-backup-policy-${var.env}"
   vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
   retention_duration = var.retention_duration
+
+  depends_on = [azurerm_media_services_account.ams]
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "finalsabackup" {
