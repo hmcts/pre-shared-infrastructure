@@ -43,7 +43,7 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "finalsabackup" 
   storage_account_id = module.finalsa_storage_account.storageaccount_id
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.pre_backup_policy_storage.id
 
-  depends_on = [azurerm_role_assignment.backup_role_finalsa]
+  depends_on = [azurerm_role_assignment.backup_role_finalsa, module.finalsa_storage_account]
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "sabackup" {
@@ -53,7 +53,7 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "sabackup" {
   storage_account_id = module.sa_storage_account.storageaccount_id
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.pre_backup_policy_storage.id
 
-  depends_on = [azurerm_role_assignment.backup_role_sa]
+  depends_on = [azurerm_role_assignment.backup_role_sa, module.sa_storage_account]
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "ingestsabackup" {
@@ -63,5 +63,5 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "ingestsabackup"
   storage_account_id = module.ingestsa_storage_account.storageaccount_id
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.pre_backup_policy_storage.id
 
-  depends_on = [azurerm_role_assignment.backup_role_ingestsa]
+  depends_on = [azurerm_role_assignment.backup_role_ingestsa, module.ingestsa_storage_account]
 }
