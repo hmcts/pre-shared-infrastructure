@@ -140,7 +140,7 @@ resource "azurerm_subnet_route_table_association" "dg_subnet" {
 }
 
 module "vnet_peer_to_hub" {
-  source = "github.com/hmcts/terraform-module-vnet-peering"
+  source = "git@github.com:hmcts/terraform-module-vnet-peering.git?ref=master"
   peerings = {
     source = {
       name           = "hub"
