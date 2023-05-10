@@ -159,3 +159,54 @@ resource "azurerm_subnet_route_table_association" "dg_subnet" {
   subnet_id      = azurerm_subnet.datagateway_subnet.id
   route_table_id = azurerm_route_table.postgres.id
 }
+
+
+
+
+
+# module "vnet_peer_to_hub" {
+#   source = "github.com/hmcts/terraform-module-vnet-peering"
+#   for_each = toset([for r in local.regions : r if contains(local.hub_to_env_mapping["to_hub"], var.environment)])
+
+#   peerings = {
+#     source = {
+#       name           = format("%s%s_To_%s", var.project, var.environment, local.hub["to_hub"][each.key].name)
+#       vnet           = azurerm_virtual_network.virtual_network.name
+#       resource_group = azurerm_virtual_network.virtual_network.resource_group_name
+#     }
+#     target = {
+#       name           = format("%s_To_%s%s", local.hub["to_hub"][each.key].name, var.project, var.environment)
+#       vnet           = local.hub["to_hub"][each.key].name
+#       resource_group = local.hub["to_hub"][each.key].name
+#     }
+#   }
+
+#   providers = {
+#     azurerm.initiator = azurerm.to_hub
+#     azurerm.target    = azurerm.hub
+#   }
+# } 
+
+
+# module "vnet_peer_from_hub" {
+#   source = "github.com/hmcts/terraform-module-vnet-peering"
+#   for_each = toset([for r in local.regions : r if contains(local.hub_to_env_mapping["from_hub"], var.environment)])
+
+#   peerings = {
+#     source = {
+#       name           = format("%s%s_To_%s", var.project, var.environment, local.hub["from_hub"][each.key].name)
+#       vnet           = azurerm_virtual_network.virtual_network.name
+#       resource_group = azurerm_virtual_network.virtual_network.resource_group_name
+#     }
+#     target = {
+#       name           = format("%s_To_%s%s", local.hub["from_hub"][each.key].name, var.project, var.environment)
+#       vnet           = local.hub["to_hub"][each.key].name
+#       resource_group = local.hub["to_hub"][each.key].name
+#     }
+#   }
+
+#   providers = {
+#     azurerm.initiator = azurerm.from_hub
+#     azurerm.target    = azurerm.hub
+#   }
+# } 
