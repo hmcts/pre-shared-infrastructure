@@ -39,7 +39,7 @@ resource "azurerm_role_assignment" "powerapp_appreg_sabackup" {
 
 # To get key and create container in backup sa storage account
 resource "azurerm_role_assignment" "powerapp_appreg_sa2" {
-  scope                = module.sa_storage_account.storageaccount_id
+  scope                = module.sa_storage_account_backup.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
 }
