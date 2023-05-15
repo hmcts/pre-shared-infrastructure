@@ -23,8 +23,6 @@ resource "azurerm_network_security_rule" "dg_allow_outbound" {
   destination_address_prefix  = "*"
   resource_group_name         = azurerm_resource_group.rg.name
   network_security_group_name = azurerm_network_security_group.dg_nsg.name
-
-  tags = var.common_tags
 }
 
 resource "azurerm_subnet_network_security_group_association" "dg_subnet_nsg" {
