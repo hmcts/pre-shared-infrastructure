@@ -28,7 +28,7 @@ pg_databases = [
   }
 ]
 
-retention_duration         = "P1D"
+retention_duration         = "P2D"
 immutability_period_backup = "1"
 
 powerbi_dg_vm_data_disks = [{
