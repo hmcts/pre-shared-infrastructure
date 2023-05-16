@@ -148,7 +148,7 @@ module "vnet_peer_to_hub" {
       resource_group = azurerm_virtual_network.vnet.resource_group_name
     }
     target = {
-      name           = var.PeeringFromHubName 
+      name           = var.PeeringFromHubName
       vnet           = local.hub[local.hub_name].ukSouth.name
       resource_group = local.hub[local.hub_name].ukSouth.name
     }
