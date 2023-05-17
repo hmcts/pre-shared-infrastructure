@@ -1,6 +1,5 @@
-
 module "ingestsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=restorepolicy"
   env                             = var.env
   storage_account_name            = "${var.product}ingestsa${var.env}"
   resource_group_name             = azurerm_resource_group.rg.name
@@ -13,6 +12,7 @@ module "ingestsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Allow"
   enable_data_protection          = true
+  restore_policy_days             = var.restore_policy_days
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
   enable_change_feed              = true
 
