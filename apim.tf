@@ -16,6 +16,7 @@ module "ams_product" {
 }
 
 module "ams_api" {
+  count          = local.env_to_deploy
   source         = "git@github.com:hmcts/cnp-module-api-mgmt-api?ref=master"
   name           = "${local.app_name}-api"
   api_mgmt_rg    = "ss-${var.env}-network-rg"
