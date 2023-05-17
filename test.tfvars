@@ -25,6 +25,7 @@ pg_databases = [
 ]
 
 retention_duration         = "P7D"
+restore_policy_days        = "7"
 immutability_period_backup = "7"
 
 tenant_id = "yrk32651"
