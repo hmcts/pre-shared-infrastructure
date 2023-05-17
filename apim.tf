@@ -4,7 +4,8 @@ locals {
   env_to_deploy = var.env == "sbox" ? 1 : 0
 }
 
-data "azurerm_key_vault_secret" "function_key" {
+data "azurerm_key_vault_secret" "ams_function_key" {
+  count        = local.env_to_deploy
   name         = "ams-function-key"
   key_vault_id = module.key-vault.key_vault_id
 }
@@ -30,7 +31,7 @@ module "ams_api" {
   product_id     = module.ams_product[0].product_id
   path           = "${local.app_name}-api"
   service_url    = null
-  swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.function_key.value}"
+  swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.ams_function_key[0].value}"
   content_format = "swagger-link-json"
 }
 
