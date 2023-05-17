@@ -1,5 +1,5 @@
 module "finalsa_storage_account_backup" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=restorepolicy"
   env                             = var.env
   storage_account_name            = "${var.product}finalsabackup${var.env}"
   resource_group_name             = azurerm_resource_group.rg_backup.name
@@ -10,7 +10,7 @@ module "finalsa_storage_account_backup" {
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id])
   allow_nested_items_to_be_public = false
   default_action                  = "Allow"
-  enable_data_protection          = true
+  enable_data_protection          = false #cannot be true as restore policy conflicts with immutability
   immutable_enabled               = true
   immutability_period             = var.immutability_period_backup
 

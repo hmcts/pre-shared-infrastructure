@@ -1,5 +1,5 @@
 module "sa_storage_account_backup" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=restorepolicy"
   env                             = var.env
   storage_account_name            = "${var.product}sabackup${var.env}"
   resource_group_name             = azurerm_resource_group.rg_backup.name
