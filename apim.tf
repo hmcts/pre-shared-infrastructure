@@ -23,7 +23,7 @@ module "ams_api" {
   api_mgmt_name  = "sds-api-mgmt-${var.env}"
   display_name   = "PRE AMS Integration API"
   revision       = "1"
-  product_id     = module.ams_product.product_id
+  product_id     = module.ams_product[0].product_id
   path           = "${local.app_name}-api"
   service_url    = null
   swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}" # "https://pre-ams-integration-dev.azurewebsites.net/api/CheckBlobExists"
