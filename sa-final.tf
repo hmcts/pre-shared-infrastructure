@@ -12,10 +12,10 @@ module "finalsa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Allow"
   enable_data_protection          = true
+  restore_policy_days             = var.restore_policy_days
   cors_rules                      = var.cors_rules
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
   enable_change_feed              = true
-  restore_policy                  = var.restore_policy_days
   # private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
   role_assignments = [
     "Storage Blob Data Contributor"
