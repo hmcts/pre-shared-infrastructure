@@ -1,5 +1,5 @@
 module "sa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=restorepolicy"
   env                             = var.env
   storage_account_name            = "${var.product}sa${var.env}"
   resource_group_name             = azurerm_resource_group.rg.name
@@ -12,6 +12,7 @@ module "sa_storage_account" {
   ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
+  restore_policy_days             = var.restore_policy_days
   enable_change_feed              = true
 
   # private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
