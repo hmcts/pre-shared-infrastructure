@@ -30,7 +30,7 @@ module "ams_api" {
   revision       = "1"
   product_id     = module.ams_product[0].product_id
   path           = "${local.app_name}-api"
-  service_url    = null
+  service_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.ams_function_key[0].value}"
   swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.ams_function_key[0].value}"
   content_format = "swagger-link-json"
 }
