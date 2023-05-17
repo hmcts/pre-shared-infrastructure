@@ -1,9 +1,11 @@
 locals {
   app_name      = "pre-ams-integration"
   function_name = "CheckBlobExists"
+  env_to_deploy = var.env == "sbox" ? 1 : 0
 }
 
 module "ams_product" {
+  count                 = local.env_to_deploy
   source                = "git@github.com:hmcts/cnp-module-api-mgmt-product?ref=master"
   api_mgmt_name         = "sds-api-mgmt-${var.env}"
   api_mgmt_rg           = "ss-${var.env}-network-rg"
