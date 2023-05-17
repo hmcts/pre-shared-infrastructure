@@ -4,6 +4,10 @@ locals {
   env_to_deploy = var.env == "sbox" ? 1 : 0
 }
 
+data "azurerm_key_vault_secret" "function_key" {
+  name         = "ams-function-key"
+  key_vault_id = module.key-vault.key_vault_id
+}
 module "ams_product" {
   count                 = local.env_to_deploy
   source                = "git@github.com:hmcts/cnp-module-api-mgmt-product?ref=master"
@@ -26,7 +30,7 @@ module "ams_api" {
   product_id     = module.ams_product[0].product_id
   path           = "${local.app_name}-api"
   service_url    = null
-  swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}" # "https://pre-ams-integration-dev.azurewebsites.net/api/CheckBlobExists"
+  swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.function_key.value}"
   content_format = "swagger-link-json"
 }
 
