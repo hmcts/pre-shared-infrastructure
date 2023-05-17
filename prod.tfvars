@@ -29,6 +29,7 @@ pg_databases = [
 ]
 
 retention_duration         = "P100D"
+restore_policy_days        = "100"
 immutability_period_backup = "2557"
 
 tenant_id                = "ebe20728"

@@ -30,6 +30,7 @@ pg_databases = [
 PeeringFromHubName = "pre-recorded-evidence-demo"
 
 retention_duration         = "P1D"
+restore_policy_days        = "1"
 immutability_period_backup = "1"
 
 tenant_id                = "yrk32651"

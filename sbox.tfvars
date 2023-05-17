@@ -28,7 +28,7 @@ pg_databases = [
   }
 ]
 
-retention_duration         = "P2D"
+retention_duration         = "P1D"
 restore_policy_days        = "1"
 immutability_period_backup = "1"
 
