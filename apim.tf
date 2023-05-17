@@ -8,7 +8,7 @@ module "ams_product" {
   api_mgmt_name         = "sds-api-mgmt-${var.env}"
   api_mgmt_rg           = "ss-${var.env}-network-rg"
   approval_required     = false
-  name                  = "pre-ams-integration"
+  name                  = local.app_name
   published             = true
   subscription_required = false
 }
