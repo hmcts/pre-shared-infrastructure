@@ -32,28 +32,28 @@ module "ams_api" {
   product_id     = module.ams_product[0].product_id
   path           = "${local.app_name}-api"
   service_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.ams_function_key[0].value}"
-  swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.ams_function_key[0].value}"
+  swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/?format=json"
   content_format = "swagger-link-json"
 }
 
-data "azurerm_function_app_host_keys" "ams_keys" {
-  name                = module.ams_function_app.function_app_name
-  resource_group_name = azurerm_resource_group.rg.name
-}
+# data "azurerm_function_app_host_keys" "ams_keys" {
+#   name                = module.ams_function_app.function_app_name
+#   resource_group_name = azurerm_resource_group.rg.name
+# }
 
-resource "azurerm_api_management_backend" "ams" {
-  name                = "pre-ams-integration"
-  resource_group_name = "ss-${var.env}-network-rg"
-  api_management_name = "sds-api-mgmt-${var.env}"
-  protocol            = "http"
-  url                 = "https://${local.app_name}-${var.env}.azurewebsites.net/api/"
+# resource "azurerm_api_management_backend" "ams" {
+#   name                = "pre-ams-integration"
+#   resource_group_name = "ss-${var.env}-network-rg"
+#   api_management_name = "sds-api-mgmt-${var.env}"
+#   protocol            = "http"
+#   url                 = "https://${local.app_name}-${var.env}.azurewebsites.net/api/"
 
-  credentials {
-    header = {
-      "x-functions-key" = "${data.azurerm_function_app_host_keys.ams_keys.default_function_key}"
-    }
-  }
-}
+#   credentials {
+#     header = {
+#       "x-functions-key" = "${data.azurerm_function_app_host_keys.ams_keys.default_function_key}"
+#     }
+#   }
+# }
 
 # module "ams_policy" {
 #   source        = "git@github.com:hmcts/cnp-module-api-mgmt-api-policy?ref=master"
