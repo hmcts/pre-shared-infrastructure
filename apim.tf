@@ -30,7 +30,7 @@ module "ams_api" {
   display_name   = "PRE AMS Integration API"
   revision       = "1"
   product_id     = module.ams_product[0].product_id
-  path           = "${local.app_name}-${var.env}" # "portal-${env}"
+  path           = "portal-${env}" #"${local.app_name}-${var.env}"
   service_url    = "https://portal-${var.env}.pre-recorded-evidence.justice.gov.uk" #"https://${local.app_name}-${var.env}.azurewebsites.net/api/${local.function_name}?code=${data.azurerm_key_vault_secret.ams_function_key[0].value}"
   swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/?format=json"
   content_format = "swagger-link-json"
