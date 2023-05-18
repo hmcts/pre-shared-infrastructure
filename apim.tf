@@ -30,7 +30,7 @@ module "ams_api" {
   display_name   = "${local.app_name}-${var.env}-api"
   revision       = "1"
   product_id     = module.ams_product[0].product_id
-  path           = "${local.app_name}-${var.env}-api"
+  path           = "${local.app_name}-${var.env}"
   service_url    = "https://sds-api-mgmt-${var.env}.azure-api.net/${local.app_name}-${var.env}"
   swagger_url    = "https://${local.app_name}-${var.env}.azurewebsites.net/?format=json"
   content_format = "swagger-link-json"
