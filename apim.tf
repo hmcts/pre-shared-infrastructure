@@ -22,17 +22,18 @@ module "ams_product" {
 }
 
 module "ams_api" {
-  count         = local.env_to_deploy
-  source        = "git@github.com:hmcts/cnp-module-api-mgmt-api?ref=master"
-  name          = "${local.app_name}-${var.env}-api"
-  api_mgmt_rg   = "ss-${var.env}-network-rg"
-  api_mgmt_name = "sds-api-mgmt-${var.env}"
-  display_name  = "${local.app_name}-${var.env}-api"
-  revision      = "1"
-  product_id    = module.ams_product[0].product_id
-  path          = ""
-  service_url   = "https://sds-api-mgmt-${var.env}.azure-api.net/${local.app_name}-${var.env}"
-  swagger_url   = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-ams.json"
+  count          = local.env_to_deploy
+  source         = "git@github.com:hmcts/cnp-module-api-mgmt-api?ref=master"
+  name           = "toffee-recipes-api"
+  api_mgmt_rg    = "ss-${var.env}-network-rg"
+  api_mgmt_name  = "sds-api-mgmt-${var.env}"
+  display_name   = "toffee-recipes"
+  revision       = "1"
+  product_id     = module.ams_product[0].product_id
+  path           = "toffee-recipes-api"
+  service_url    = "http://toffee-recipe-backend-${var.env}.service.core-compute-${var.env}.internal"
+  swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/sds-toffee-recipes-service.json"
+  content_format = "openapi+json-link"
 }
 
 # resource "azurerm_api_management_api" "api" {
