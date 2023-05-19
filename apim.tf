@@ -30,9 +30,9 @@ module "ams_api" {
   display_name  = "${local.app_name}-${var.env}-api"
   revision      = "1"
   product_id    = module.ams_product[0].product_id
-  path          = "${local.app_name}-${var.env}"
+  path          = ""
   service_url   = "https://sds-api-mgmt-${var.env}.azure-api.net/${local.app_name}-${var.env}"
-  swagger_url   = null
+  swagger_url   = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-ams.json"
 }
 
 # resource "azurerm_api_management_api" "api" {
