@@ -65,8 +65,8 @@ resource "azurerm_private_endpoint" "ams_private_endpoint" {
     private_connection_resource_id = azurerm_media_services_account.ams.id
     is_manual_connection           = false
     subresource_names = [
-      "keydelivery",
-      "liveevent",
+      # "keydelivery",
+      # "liveevent",
       "streamingendpoint",
     ]
   }
