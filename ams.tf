@@ -70,4 +70,9 @@ resource "azurerm_private_endpoint" "ams_private_endpoint" {
       "streamingendpoint",
     ]
   }
+  private_dns_zone_group {
+    name                 = "media-endpoint-dnszonegroup"
+    private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.media.azure.net"]
+  }
+  tags = var.common_tags
 }
