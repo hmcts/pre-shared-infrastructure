@@ -37,7 +37,6 @@ resource "azurerm_subnet" "endpoint_subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = [var.privatendpt_snet_address]
   service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
-  # enforce_private_link_endpoint_network_policies = true
 }
 
 resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
@@ -158,4 +157,4 @@ module "vnet_peer_to_hub" {
     azurerm.initiator = azurerm
     azurerm.target    = azurerm.hub
   }
-} 
+}
