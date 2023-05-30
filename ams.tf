@@ -54,3 +54,19 @@ resource "azurerm_media_transform" "EncodeToMP" {
     }
   }
 }
+
+resource "azurerm_private_endpoint" "ams_private_endpoint" {
+  name                = "ams-private-endpoint"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.location
+  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  private_service_connection {
+    name                           = "ams-private-link-connection"
+    private_connection_resource_id = azurerm_media_services_account.ams.id
+    subresource_names = [
+      "keydelivery",
+      "liveevent",
+      "streamingendpoint",
+    ]
+  }
+}

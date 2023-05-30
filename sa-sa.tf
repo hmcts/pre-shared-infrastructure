@@ -14,8 +14,7 @@ module "sa_storage_account" {
   enable_data_protection          = true
   restore_policy_days             = var.restore_policy_days
   enable_change_feed              = true
-
-  # private_endpoint_subnet_id = azurerm_subnet.endpoint_subnet.id
+  private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
 
   common_tags = var.common_tags
 }
