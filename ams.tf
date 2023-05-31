@@ -85,14 +85,14 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
 
 resource "azurerm_private_endpoint" "ams_private_endpoint" {
   name                = "ams-private-endpoint"
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = data.azurerm_resource_group.rg.name
   location            = var.location
-  subnet_id           = azurerm_subnet.endpoint_subnet.id
+  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
   private_service_connection {
     name                           = "ams-private-link-connection"
     private_connection_resource_id = azurerm_media_services_account.ams.id
     is_manual_connection           = false
-    subresource_names = ["streamingendpoint"]
+    subresource_names              = ["streamingendpoint"]
   }
   private_dns_zone_group {
     name                 = "media-endpoint-dnszonegroup"
