@@ -54,9 +54,6 @@ variable "mgmt_net_name" {}
 
 variable "mgmt_subscription_id" {} // set by jenkins library
 
-variable "power_app_user_oid" {
-  default = "56a29187-3d5f-4262-99d6-c635776e0eac"
-}
 variable "jenkins_ptlsbox_oid" {
   default = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
 }
@@ -199,10 +196,6 @@ variable "cors_rules" {
     }
   ]
 }
-
-# variable "PeeringFromHubName" {
-#   default = "pre-recorded-evidence"
-# }
 
 variable "retention_duration" {}
 
