@@ -7,9 +7,7 @@ module "sa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   allow_nested_items_to_be_public = false
-  ip_rules                        = var.ip_rules
   default_action                  = "Deny"
   enable_data_protection          = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
