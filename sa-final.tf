@@ -7,7 +7,6 @@ module "finalsa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   allow_nested_items_to_be_public = false
   default_action                  = "Allow"
   enable_data_protection          = true
