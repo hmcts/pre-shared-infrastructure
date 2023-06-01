@@ -22,9 +22,10 @@ pre_ent_appreg_app_id  = "2f4bf1fd-543c-4332-bc26-7a524f52d375"
 retention_duration = "P35D"
 
 #vms
-num_vid_edit_vms   = 1
-dg_vm_private_ip   = ["10.101.0.22", "10.101.0.23"]
-edit_vm_private_ip = ["10.101.0.6", "10.101.0.7"]
+num_vid_edit_vms         = 1
+powerbi_dg_vm_private_ip = ["10.101.0.24", "10.101.0.25"]
+dg_vm_private_ip         = ["10.101.0.22", "10.101.0.23"]
+edit_vm_private_ip       = ["10.101.0.6", "10.101.0.7"]
 edit_vm_data_disks = [{
   datadisk1 = {
     name                 = "edit-vm01-data-stg"

@@ -21,7 +21,11 @@ pre_ent_appreg_app_id  = "a4e4402d-25a8-40aa-ba12-ad040350086e"
 retention_duration = "P35D"
 
 #vms
-num_vid_edit_vms = 1
+tenant_id                = "ebe20728"
+num_vid_edit_vms         = 1
+powerbi_dg_vm_private_ip = ["10.101.3.24", "10.101.3.25"]
+dg_vm_private_ip         = ["10.101.3.22", "10.101.3.23"]
+edit_vm_private_ip       = ["10.101.3.6", "10.101.3.7"]
 edit_vm_data_disks = [{
   datadisk1 = {
     name                 = "edit-vm01-data-dev"
