@@ -23,3 +23,86 @@ dts_pre_ent_appreg_oid = "863c5fa3-df86-4ebc-8b0f-cd2390028497"
 # PeeringFromHubName = "pre-recorded-evidence-demo"
 
 retention_duration = "P14D"
+
+dg_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "data-gateway-vm01-data-demo"
+    location             = "uksouth"
+    resource_group_name  = "pre-demo"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "data-gateway-vm02-data-demo"
+      location             = "uksouth"
+      resource_group_name  = "pre-demo"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
+powerbi_dg_vm_data_disks = [{
+  datadisk1 = {
+    name                     = "powerbi-dg1-data-demo"
+    location                 = "uksouth"
+    resource_group_name      = "pre-demo"
+    storage_account_type     = "StandardSSD_LRS"
+    disk_create_option       = "Empty"
+    disk_size_gb             = "1000"
+    disk_tier                = null
+    disk_zone                = "1"
+    source_resource_id       = null
+    storage_account_id       = null
+    hyper_v_generation       = null
+    os_type                  = null
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+  }
+  },
+  {
+    datadisk1 = {
+      name                     = "powerbi-dg2-data-demo"
+      location                 = "uksouth"
+      resource_group_name      = "pre-demo"
+      storage_account_type     = "StandardSSD_LRS"
+      disk_create_option       = "Empty"
+      disk_size_gb             = "1000"
+      disk_tier                = null
+      disk_zone                = "2"
+      source_resource_id       = null
+      storage_account_id       = null
+      hyper_v_generation       = null
+      os_type                  = null
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+    }
+}]
