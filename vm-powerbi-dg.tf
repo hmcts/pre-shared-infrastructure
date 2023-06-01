@@ -1,9 +1,9 @@
 module "powerBI_data_gateway" {
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
   vm_type                        = local.powerbi_dg_vm_type
   vm_name                        = "powerbi-${count.index + 1}-${var.env}"
-  vm_resource_group              = data.azurerm_resource_group.rg.name
+  vm_resource_group              = azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.powerbi_dg_vm_size
   vm_admin_name                  = azurerm_key_vault_secret.powerbi_dg_username[count.index].value
@@ -14,7 +14,7 @@ module "powerBI_data_gateway" {
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
   #Disk Encryption
-  kv_name     = "pre-${var.env}"
+  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
@@ -54,24 +54,24 @@ module "powerBI_data_gateway" {
 
 }
 
-resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
-  count                      = var.num_datagateway
-  name                       = "dgScript"
-  virtual_machine_id         = module.powerBI_data_gateway.*.vm_id[count.index]
-  publisher                  = "Microsoft.CPlat.Core"
-  type                       = "RunCommandWindows"
-  type_handler_version       = "1.1"
-  auto_upgrade_minor_version = true
-  settings                   = jsonencode({ script = compact(tolist([file("scripts/datagateway-init.ps1")])) })
+# resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
+#   count                      = var.num_datagateway
+#   name                       = "dgScript"
+#   virtual_machine_id         = module.powerBI_data_gateway.*.vm_id[count.index]
+#   publisher                  = "Microsoft.CPlat.Core"
+#   type                       = "RunCommandWindows"
+#   type_handler_version       = "1.1"
+#   auto_upgrade_minor_version = true
+#   settings                   = jsonencode({ script = compact(tolist([file("scripts/datagateway-init.ps1")])) })
 
-  tags = var.common_tags
-}
+#   tags = var.common_tags
+# }
 
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
   count              = var.num_datagateway
   virtual_machine_id = module.powerBI_data_gateway.*.vm_id[count.index]
-  location           = data.azurerm_resource_group.rg.location
+  location           = var.location
   enabled            = false
 
   daily_recurrence_time = "1800"
@@ -91,7 +91,7 @@ locals {
   powerbi_dg_vm_size       = "Standard_F8s_v2"
   powerbi_dg_ipconfig_name = "IP_CONFIGURATION"
 
-  powerbi_dg_vm_subnet_id = data.azurerm_subnet.datagateway_subnet.id
+  powerbi_dg_vm_subnet_id = azurerm_subnet.datagateway_subnet.id
 
   powerbi_dg_vm_availabilty_zones  = [1, 2]
   powerbi_dg_marketplace_product   = "WindowsServer"
@@ -131,19 +131,19 @@ resource "azurerm_key_vault_secret" "powerbi_dg_username" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-username"
   value        = "powerbi_dg${count.index + 1}_${random_string.powerbi_dg_username[count.index].result}"
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = module.key-vault.key_vault_id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_password" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-password"
   value        = random_password.powerbi_dg_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = module.key-vault.key_vault_id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_recovery" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-recovery-key"
   value        = random_password.powerbi_dg_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = module.key-vault.key_vault_id
 }
