@@ -14,7 +14,7 @@ module "edit_vm" {
   custom_data                    = filebase64("./scripts/edit-init.ps1")
 
   #Disk Encryption
-  kv_name     = "pre-${var.env}"
+  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
