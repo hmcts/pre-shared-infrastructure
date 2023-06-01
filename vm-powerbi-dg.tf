@@ -23,10 +23,6 @@ module "powerBI_data_gateway" {
   vm_subnet_id  = local.powerbi_dg_vm_subnet_id
   vm_private_ip = var.powerbi_dg_vm_private_ip[count.index]
 
-  marketplace_sku       = local.powerbi_dg_marketplace_sku
-  marketplace_publisher = local.powerbi_dg_marketplace_publisher
-  marketplace_product   = local.powerbi_dg_marketplace_product
-
   #storage_image_reference
   vm_publisher_name = local.powerbi_dg_marketplace_publisher
   vm_offer          = local.powerbi_dg_marketplace_product
