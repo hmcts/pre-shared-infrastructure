@@ -1,6 +1,6 @@
 module "edit_vm" {
   count                          = var.num_vid_edit_vms
-  source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
   vm_resource_group              = data.azurerm_resource_group.rg.name
