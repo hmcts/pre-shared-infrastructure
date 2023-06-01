@@ -81,12 +81,6 @@ variable "lawRetention" {
   type    = number
   default = "30"
 }
-variable "ip_rules" {
-  description = "PowerPlatformInfra.UKSouth"
-  type        = list(string)
-  default = [
-  ]
-}
 
 variable "schedules" {
   type = list(object({
