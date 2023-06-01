@@ -23,10 +23,6 @@ module "data_gateway_vm" {
   vm_subnet_id  = local.dg_vm_subnet_id
   vm_private_ip = var.dg_vm_private_ip[count.index]
 
-  marketplace_sku       = local.dg_marketplace_sku
-  marketplace_publisher = local.dg_marketplace_publisher
-  marketplace_product   = local.dg_marketplace_product
-
   #storage_image_reference
   vm_publisher_name = local.dg_marketplace_publisher
   vm_offer          = local.dg_marketplace_product

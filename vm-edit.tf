@@ -23,10 +23,6 @@ module "edit_vm" {
   vm_subnet_id  = local.edit_vm_subnet_id
   vm_private_ip = var.edit_vm_private_ip[count.index]
 
-  marketplace_sku       = local.edit_marketplace_sku
-  marketplace_publisher = local.edit_marketplace_publisher
-  marketplace_product   = local.edit_marketplace_product
-
   #storage_image_reference
   vm_publisher_name = local.edit_marketplace_publisher
   vm_offer          = local.edit_marketplace_product
