@@ -14,7 +14,7 @@ module "powerBI_data_gateway" {
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
   #Disk Encryption
-  kv_name     = "pre-${var.env}"
+  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
@@ -22,10 +22,6 @@ module "powerBI_data_gateway" {
   ipconfig_name = local.powerbi_dg_ipconfig_name
   vm_subnet_id  = local.powerbi_dg_vm_subnet_id
   vm_private_ip = var.powerbi_dg_vm_private_ip[count.index]
-
-  marketplace_sku       = local.powerbi_dg_marketplace_sku
-  marketplace_publisher = local.powerbi_dg_marketplace_publisher
-  marketplace_product   = local.powerbi_dg_marketplace_product
 
   #storage_image_reference
   vm_publisher_name = local.powerbi_dg_marketplace_publisher
@@ -66,7 +62,6 @@ resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
 
   tags = var.common_tags
 }
-
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
   count              = var.num_datagateway

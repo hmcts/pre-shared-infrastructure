@@ -14,7 +14,7 @@ module "data_gateway_vm" {
   custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
   #Disk Encryption
-  kv_name     = "pre-${var.env}"
+  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
@@ -22,10 +22,6 @@ module "data_gateway_vm" {
   ipconfig_name = local.dg_ipconfig_name
   vm_subnet_id  = local.dg_vm_subnet_id
   vm_private_ip = var.dg_vm_private_ip[count.index]
-
-  marketplace_sku       = local.dg_marketplace_sku
-  marketplace_publisher = local.dg_marketplace_publisher
-  marketplace_product   = local.dg_marketplace_product
 
   #storage_image_reference
   vm_publisher_name = local.dg_marketplace_publisher

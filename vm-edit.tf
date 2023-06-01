@@ -14,7 +14,7 @@ module "edit_vm" {
   custom_data                    = filebase64("./scripts/edit-init.ps1")
 
   #Disk Encryption
-  kv_name     = "pre-${var.env}"
+  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
@@ -22,10 +22,6 @@ module "edit_vm" {
   ipconfig_name = local.edit_ipconfig_name
   vm_subnet_id  = local.edit_vm_subnet_id
   vm_private_ip = var.edit_vm_private_ip[count.index]
-
-  marketplace_sku       = local.edit_marketplace_sku
-  marketplace_publisher = local.edit_marketplace_publisher
-  marketplace_product   = local.edit_marketplace_product
 
   #storage_image_reference
   vm_publisher_name = local.edit_marketplace_publisher
