@@ -1,6 +1,6 @@
 module "data_gateway_vm" {
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
   vm_resource_group              = data.azurerm_resource_group.rg.name
