@@ -71,7 +71,7 @@ edit_vm_data_disks = [{
     }
 }]
 
-powerbi_dg_vm_data_disks = [{
+dg_vm_data_disks = [{
   datadisk1 = {
     name                 = "data-gateway-vm01-data-stg"
     location             = "uksouth"
