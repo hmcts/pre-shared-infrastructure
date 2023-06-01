@@ -50,6 +50,19 @@ module "powerBI_data_gateway" {
 
 }
 
+resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
+  count                      = var.num_datagateway
+  name                       = "dgScript"
+  virtual_machine_id         = module.powerBI_data_gateway.*.vm_id[count.index]
+  publisher                  = "Microsoft.CPlat.Core"
+  type                       = "RunCommandWindows"
+  type_handler_version       = "1.1"
+  auto_upgrade_minor_version = true
+  settings                   = jsonencode({ script = compact(tolist([file("scripts/datagateway-init.ps1")])) })
+
+  tags = var.common_tags
+}
+
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
   count              = var.num_datagateway
   virtual_machine_id = module.powerBI_data_gateway.*.vm_id[count.index]
