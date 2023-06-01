@@ -37,7 +37,7 @@ module "ams_function_app" {
     "AZURE_RESOURCE_GROUP"              = "pre-${var.env}"
     "AZURE_SUBSCRIPTION_ID"             = "${data.azurerm_subscription.current.subscription_id}"
     "AZURE_STORAGE_ACCOUNT_KEY"         = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
-    "PREFINALSADEV_KEY"                 = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
+    upper("PREFINALSA${var.env}_KEY")   = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
     "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret.value}"
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"   = "false"
   }
