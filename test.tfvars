@@ -112,3 +112,42 @@ dg_vm_data_disks = [{
 
     }
 }]
+
+powerbi_dg_vm_data_disks = [{
+  datadisk1 = {
+    name                     = "powerbi-dg1-data-test"
+    location                 = "uksouth"
+    resource_group_name      = "pre-test"
+    storage_account_type     = "StandardSSD_LRS"
+    disk_create_option       = "Empty"
+    disk_size_gb             = "1000"
+    disk_tier                = null
+    disk_zone                = "1"
+    source_resource_id       = null
+    storage_account_id       = null
+    hyper_v_generation       = null
+    os_type                  = null
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+  }
+  },
+  {
+    datadisk1 = {
+      name                     = "powerbi-dg2-data-test"
+      location                 = "uksouth"
+      resource_group_name      = "pre-test"
+      storage_account_type     = "StandardSSD_LRS"
+      disk_create_option       = "Empty"
+      disk_size_gb             = "1000"
+      disk_tier                = null
+      disk_zone                = "2"
+      source_resource_id       = null
+      storage_account_id       = null
+      hyper_v_generation       = null
+      os_type                  = null
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+    }
+}]
