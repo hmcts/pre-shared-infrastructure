@@ -83,6 +83,12 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   }
 }
 
+data "azurerm_private_dns_zone" "ams_dns_zone" {
+  provider            = azurerm.private_dns
+  name                = "privatelink.media.azure.net"
+  resource_group_name = "core-infra-intsvc-rg"
+}
+
 resource "azurerm_private_endpoint" "ams_private_endpoint" {
   name                = "ams-private-endpoint"
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -95,8 +101,8 @@ resource "azurerm_private_endpoint" "ams_private_endpoint" {
     subresource_names              = ["streamingendpoint"]
   }
   private_dns_zone_group {
-    name                 = "media-endpoint-dnszonegroup"
-    private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.media.azure.net"]
+    name                 = data.azurerm_private_dns_zone.ams_dns_zone.name
+    private_dns_zone_ids = [data.azurerm_private_dns_zone.ams_dns_zone.id]
   }
   tags = var.common_tags
 }
