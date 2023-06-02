@@ -80,3 +80,45 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "this" {
 
 #   depends_on = [azurerm_role_assignment.sa_backup_contributor]
 # }
+
+resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
+  name                       = module.sa_storage_account.storageaccount_name
+  target_resource_id         = "${module.sa_storage_account.storageaccount_id}/blobServices/default"
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "StorageRead"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageWrite"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageDelete"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  metric {
+    category = "Transaction"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+}
