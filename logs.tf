@@ -171,7 +171,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
     enabled  = true
 
     retention_policy {
-      enabled = true
+      enabled = false
     }
   }
 }
@@ -213,7 +213,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
     enabled  = true
 
     retention_policy {
-      enabled = true
+      enabled = false
     }
   }
 }
@@ -256,7 +256,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
     enabled  = true
 
     retention_policy {
-      enabled = true
+      enabled = false
     }
   }
 }
