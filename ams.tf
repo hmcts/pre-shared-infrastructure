@@ -4,7 +4,7 @@ resource "azurerm_media_services_account" "ams" {
   resource_group_name = data.azurerm_resource_group.rg.name
 
   identity {
-    type         = "SystemAssigned, UserAssigned"
+    type         = "UserAssigned"
     identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
   }
 
