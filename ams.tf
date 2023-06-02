@@ -61,7 +61,6 @@ data "azurerm_private_dns_zone" "ams_dns_zone" {
   resource_group_name = "core-infra-intsvc-rg"
 }
 
-# connect data gateway vnet to private dns zone (this will contain the A name for postgres)
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   provider              = azurerm.private_dns
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)
