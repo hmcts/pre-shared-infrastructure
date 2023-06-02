@@ -4,7 +4,7 @@ resource "azurerm_media_services_account" "ams" {
   resource_group_name = data.azurerm_resource_group.rg.name
 
   identity {
-    type         = "UserAssigned"
+    type         = "SystemAssigned, UserAssigned"
     identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
   }
 
@@ -87,6 +87,14 @@ data "azurerm_private_dns_zone" "ams_dns_zone" {
   provider            = azurerm.private_dns
   name                = "privatelink.media.azure.net"
   resource_group_name = "core-infra-intsvc-rg"
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
+  provider              = azurerm.private_dns
+  name                  = format("%s-%s-virtual-network-link", var.product, var.env)
+  resource_group_name   = var.dns_resource_group
+  private_dns_zone_name = "privatelink.media.azure.net"
+  virtual_network_id    = data.azurerm_virtual_network.vnet.id
 }
 
 resource "azurerm_private_endpoint" "ams_private_endpoint" {
