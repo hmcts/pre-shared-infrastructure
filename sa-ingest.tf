@@ -50,6 +50,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -59,6 +60,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -68,6 +70,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -77,6 +80,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 }
