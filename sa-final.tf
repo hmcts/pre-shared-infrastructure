@@ -83,8 +83,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
     enabled  = true
 
     retention_policy {
-      enabled = true
-      days    = 14
+      enabled = false
     }
   }
 }
