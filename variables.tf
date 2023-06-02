@@ -117,11 +117,11 @@ variable "zone" {
 }
 
 # Private DNS zone configuration (for postgres)
-variable "DNSResGroup" {
+variable "dns_resource_group" {
   default = "core-infra-intsvc-rg"
 }
 
-variable "PrivateDNSZone" {
+variable "private_dns_zone" {
   default = "private.postgres.database.azure.com"
 }
 
