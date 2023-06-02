@@ -54,6 +54,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -63,6 +64,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -72,6 +74,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 
@@ -81,6 +84,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
 
     retention_policy {
       enabled = true
+      days    = 14
     }
   }
 }
