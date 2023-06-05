@@ -11,7 +11,7 @@ module "sa_storage_account" {
   default_action                  = "Deny"
   enable_data_protection          = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
-  # private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
+  private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
 
   role_assignments = [
     "Storage Blob Data Contributor"
