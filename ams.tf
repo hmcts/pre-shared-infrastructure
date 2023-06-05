@@ -98,7 +98,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
 }
 
 resource "azurerm_private_endpoint" "ams_streamingendpoint_private_endpoint" {
-  name                = "${var.product}ams${var.env}"
+  name                = "ams-streamingendpoint-pe-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = var.location
   subnet_id           = data.azurerm_subnet.endpoint_subnet.id
