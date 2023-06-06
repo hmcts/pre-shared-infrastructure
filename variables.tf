@@ -44,9 +44,6 @@ variable "num_vid_edit_vms" {
 variable "num_datagateway" {
   default = 2
 }
-variable "datagateway_spec" {
-  default = "Standard_D8ds_v5"
-}
 
 variable "mgmt_net_name" {}
 
