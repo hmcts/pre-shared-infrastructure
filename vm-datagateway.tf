@@ -104,7 +104,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
 locals {
   dg_vm_type = "windows"
 
-  dg_vm_size       = "Standard_F8s_v2"
+  dg_vm_size       = "Standard_D8ds_v5"
   dg_ipconfig_name = "IP_CONFIGURATION"
 
   dg_vm_subnet_id = azurerm_subnet.datagateway_subnet.id
