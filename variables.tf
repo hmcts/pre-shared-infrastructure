@@ -17,8 +17,6 @@ variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
 
-
-
 variable "common_tags" {
   type = map(string)
 }
@@ -93,15 +91,12 @@ variable "schedules" {
   default = []
 }
 
-
 # Dynatrace
 variable "dynatrace_server" {
   description = "The server URL, if you want to configure an alternative communication endpoint."
   type        = string
   default     = null
 }
-
-
 
 variable "server" {
   default = null
