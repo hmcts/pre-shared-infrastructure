@@ -49,13 +49,13 @@ variable "num_vid_edit_vms" {
   default = 2
 }
 variable "vid_edit_vm_spec" {
-  default = "Standard_E2ds_v5"
+  default = "Standard_E4ds_v5"
 }
 variable "num_datagateway" {
   default = 2
 }
 variable "datagateway_spec" {
-  default = "Standard_D4ds_v5"
+  default = "Standard_D8ds_v5"
 }
 
 variable "mgmt_subscription_id" {} // set by jenkins library
@@ -93,7 +93,6 @@ variable "schedules" {
   default = []
 }
 
-
 # Dynatrace
 variable "dynatrace_server" {
   description = "The server URL, if you want to configure an alternative communication endpoint."
@@ -101,11 +100,10 @@ variable "dynatrace_server" {
   default     = null
 }
 
-
-
 variable "server" {
   default = null
 }
+
 variable "hostgroup" {
   default = null
 }
