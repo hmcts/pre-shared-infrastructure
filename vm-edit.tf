@@ -52,7 +52,7 @@ module "edit_vm" {
 locals {
   edit_vm_type = "windows"
 
-  edit_vm_size       = "Standard_E4s_v4"
+  edit_vm_size       = "Standard_E4ds_v5"
   edit_ipconfig_name = "IP_CONFIGURATION"
 
   edit_vm_subnet_id = azurerm_subnet.videoeditvm_subnet.id
