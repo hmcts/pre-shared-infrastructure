@@ -84,7 +84,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
 locals {
   powerbi_dg_vm_type = "windows"
 
-  powerbi_dg_vm_size       = "Standard_D4ds_v5"
+  powerbi_dg_vm_size       = "Standard_D8ds_v5"
   powerbi_dg_ipconfig_name = "IP_CONFIGURATION"
 
   powerbi_dg_vm_subnet_id = azurerm_subnet.datagateway_subnet.id
