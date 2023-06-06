@@ -40,14 +40,12 @@ variable "mgmt_net_rg_name" {}
 variable "num_vid_edit_vms" {
   default = 2
 }
-# variable "vid_edit_vm_spec" {
-#   default = "Standard_E4s_v4"
-# }
+
 variable "num_datagateway" {
   default = 2
 }
 variable "datagateway_spec" {
-  default = "Standard_F8s_v2"
+  default = "Standard_D8ds_v5"
 }
 
 variable "mgmt_net_name" {}
