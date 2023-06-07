@@ -3,6 +3,7 @@ module "data_gateway_vm" {
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
+  computer_name                  = "dgvm${count.index + 1}${var.env}"
   vm_resource_group              = data.azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.dg_vm_size
