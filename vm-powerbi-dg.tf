@@ -24,10 +24,6 @@ module "powerBI_data_gateway" {
   vm_private_ip        = var.powerbi_dg_vm_private_ip[count.index]
   privateip_allocation = "Static"
 
-  marketplace_sku       = local.powerbi_dg_marketplace_sku
-  marketplace_publisher = local.powerbi_dg_marketplace_publisher
-  marketplace_product   = local.powerbi_dg_marketplace_product
-
   #storage_image_reference
   vm_publisher_name = local.powerbi_dg_marketplace_publisher
   vm_offer          = local.powerbi_dg_marketplace_product
