@@ -8,7 +8,7 @@ module "powerBI_data_gateway" {
   vm_size                        = local.powerbi_dg_vm_size
   vm_admin_name                  = azurerm_key_vault_secret.powerbi_dg_username[count.index].value
   vm_admin_password              = azurerm_key_vault_secret.powerbi_dg_password[count.index].value
-  vm_availabilty_zones           = local.powerbi_dg_vm_availabilty_zones[count.index]
+  vm_availability_zones          = local.powerbi_dg_vm_availability_zones[count.index]
   managed_disks                  = var.powerbi_dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
@@ -18,10 +18,11 @@ module "powerBI_data_gateway" {
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
-  nic_name      = lower("powerbi-dg${count.index + 1}-nic-${var.env}")
-  ipconfig_name = local.powerbi_dg_ipconfig_name
-  vm_subnet_id  = local.powerbi_dg_vm_subnet_id
-  vm_private_ip = var.powerbi_dg_vm_private_ip[count.index]
+  nic_name             = lower("powerbi-dg${count.index + 1}-nic-${var.env}")
+  ipconfig_name        = local.powerbi_dg_ipconfig_name
+  vm_subnet_id         = local.powerbi_dg_vm_subnet_id
+  vm_private_ip        = var.powerbi_dg_vm_private_ip[count.index]
+  privateip_allocation = "Static"
 
   marketplace_sku       = local.powerbi_dg_marketplace_sku
   marketplace_publisher = local.powerbi_dg_marketplace_publisher
@@ -93,7 +94,7 @@ locals {
 
   powerbi_dg_vm_subnet_id = azurerm_subnet.datagateway_subnet.id
 
-  powerbi_dg_vm_availabilty_zones  = [1, 2]
+  powerbi_dg_vm_availability_zones = [1, 2]
   powerbi_dg_marketplace_product   = "WindowsServer"
   powerbi_dg_marketplace_publisher = "MicrosoftWindowsServer"
   powerbi_dg_marketplace_sku       = "2019-Datacenter-gensecond"
