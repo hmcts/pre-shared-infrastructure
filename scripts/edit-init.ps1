@@ -9,3 +9,4 @@ Start-Sleep -Seconds 5
 choco feature enable -n allowGlobalConfirmation;
 choco install ffmpeg;
 choco install microsoftazurestorageexplorer;
+choco install azure-cli;
