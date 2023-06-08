@@ -3,6 +3,7 @@ module "edit_vm" {
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
+  computer_name                  = "editvm${count.index + 1}${var.env}"
   vm_resource_group              = azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.edit_vm_size
