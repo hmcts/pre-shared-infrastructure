@@ -6,10 +6,6 @@ variable "location" {
   default = "UK South"
 }
 
-variable "location_backup" {
-  default = "UK West"
-}
-
 variable "subscription" {
   default = ""
 }
@@ -116,18 +112,14 @@ variable "zone" {
 
 # Private DNS zone configuration (for postgres)
 variable "dns_resource_group" {
-variable "dns_resource_group" {
   default = "core-infra-intsvc-rg"
 }
 
-variable "private_dns_zone" {
 variable "private_dns_zone" {
   default = "private.postgres.database.azure.com"
 }
 
 variable "dts_pre_ent_appreg_oid" {}
-
-variable "dts_pre_backup_appreg_oid" {}
 
 variable "cors_rules" {
   type = list(object({
