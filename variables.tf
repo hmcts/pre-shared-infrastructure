@@ -172,3 +172,11 @@ variable "pre_ent_appreg_app_id" {}
 variable "aks_subscription_id" {
   default = "867a878b-cb68-4de5-9741-361ac9e178b6"
 }
+
+variable "location_backup" {
+  default = "UK West"
+}
+
+variable "dts_pre_backup_appreg_oid" {}
+
+variable "immutability_period_backup" {}
