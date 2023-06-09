@@ -9,9 +9,10 @@ module "powerBI_data_gateway" {
   vm_size                        = local.powerbi_dg_vm_size
   vm_admin_name                  = azurerm_key_vault_secret.powerbi_dg_username[count.index].value
   vm_admin_password              = azurerm_key_vault_secret.powerbi_dg_password[count.index].value
-  vm_availabilty_zones           = local.powerbi_dg_vm_availabilty_zones[count.index]
+  vm_availabilty_zones           = local.powerbi_dg_vm_availability_zones[count.index]
   managed_disks                  = var.powerbi_dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
+  privateip_allocation           = "Static"
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
   #Disk Encryption
@@ -89,7 +90,7 @@ locals {
 
   powerbi_dg_vm_subnet_id = data.azurerm_subnet.datagateway_subnet.id
 
-  powerbi_dg_vm_availabilty_zones  = [1, 2]
+  powerbi_dg_vm_availability_zones = [1, 2]
   powerbi_dg_marketplace_product   = "WindowsServer"
   powerbi_dg_marketplace_publisher = "MicrosoftWindowsServer"
   powerbi_dg_marketplace_sku       = "2019-Datacenter-gensecond"

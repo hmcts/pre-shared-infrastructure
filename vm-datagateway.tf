@@ -9,10 +9,11 @@ module "data_gateway_vm" {
   vm_size                        = local.dg_vm_size
   vm_admin_name                  = azurerm_key_vault_secret.dg_username[count.index].value
   vm_admin_password              = azurerm_key_vault_secret.dg_password[count.index].value
-  vm_availabilty_zones           = local.dg_vm_availabilty_zones[count.index]
+  vm_availabilty_zones           = local.dg_vm_availability_zones[count.index]
   managed_disks                  = var.dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
   custom_data                    = filebase64("./scripts/datagateway-init.ps1")
+  privateip_allocation           = "Static"
 
   #Disk Encryption
   kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
@@ -110,7 +111,7 @@ locals {
 
   dg_vm_subnet_id = data.azurerm_subnet.datagateway_subnet.id
 
-  dg_vm_availabilty_zones  = [1, 2]
+  dg_vm_availability_zones = [1, 2]
   dg_marketplace_product   = "WindowsServer"
   dg_marketplace_publisher = "MicrosoftWindowsServer"
   dg_marketplace_sku       = "2019-Datacenter-gensecond"
