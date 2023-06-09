@@ -1,16 +1,13 @@
 #!groovy
-//noinspection GroovyUnusedAssignment
 @Library("Infrastructure") _
 
 def product = "pre"
 def component = "shared-infrastructure"
-def expiresAfter = "3000-01-01"
 def branchesToSync = ['demo']
-
+def expiresAfter = "3000-01-01"
 
 withInfraPipeline(product) {
-  enableSlackNotifications('#pre-builds')
   syncBranchesWithMaster(branchesToSync)
   expires(expiresAfter)
-
+  enableSlackNotifications('#pre-builds')
 }
