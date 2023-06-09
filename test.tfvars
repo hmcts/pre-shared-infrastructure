@@ -11,18 +11,21 @@ mgmt_net_rg_name           = "ss-ptl-network-rg"
 mgmt_subscription_id       = "6c4d2513-a873-41b4-afdd-b05a33206631"
 
 #identities
-dts_pre_project_admin  = "56a29187-3d5f-4262-99d6-c635776e0eac"
-pre_app_admin          = "dbe1ceab-c6a0-4155-8f9c-060dbbbd5c2a"
-pre_mi_principal_id    = "d03f73e6-40ed-40a2-a0ec-059286505905"
-pre_mi_tenant_id       = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-dts_pre_appreg_oid     = "913743c8-60eb-4cca-a15c-2033db5118cd"
-dts_pre_ent_appreg_oid = "fd9eddbb-3ec9-4fda-81fc-d518d4718a70"
-pre_ent_appreg_app_id  = "66930c25-cbaa-4b9b-81ab-bea600666acb"
+dts_pre_project_admin     = "56a29187-3d5f-4262-99d6-c635776e0eac"
+pre_app_admin             = "dbe1ceab-c6a0-4155-8f9c-060dbbbd5c2a"
+pre_mi_principal_id       = "d03f73e6-40ed-40a2-a0ec-059286505905"
+pre_mi_tenant_id          = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+dts_pre_appreg_oid        = "913743c8-60eb-4cca-a15c-2033db5118cd"
+dts_pre_ent_appreg_oid    = "fd9eddbb-3ec9-4fda-81fc-d518d4718a70"
+pre_ent_appreg_app_id     = "66930c25-cbaa-4b9b-81ab-bea600666acb"
+dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 
 #backups
-retention_duration = "P35D"
+retention_duration         = "P7D"
+immutability_period_backup = "7"
 
 #vms
+tenant_id                = "yrk32651"
 powerbi_dg_vm_private_ip = ["10.70.21.25", "10.70.21.26"]
 dg_vm_private_ip         = ["10.70.21.22", "10.70.21.23"]
 edit_vm_private_ip       = ["10.70.21.6", "10.70.21.7"]

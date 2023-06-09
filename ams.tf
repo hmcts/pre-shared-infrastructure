@@ -101,7 +101,7 @@ resource "azurerm_private_endpoint" "ams_streamingendpoint_private_endpoint" {
   location            = var.location
   subnet_id           = data.azurerm_subnet.endpoint_subnet.id
   private_service_connection {
-    name                           = "${var.product}ams${var.env}"
+    name                           = "ams-private-link-connection"
     private_connection_resource_id = azurerm_media_services_account.ams.id
     is_manual_connection           = false
     subresource_names              = ["streamingendpoint"]
@@ -112,21 +112,3 @@ resource "azurerm_private_endpoint" "ams_streamingendpoint_private_endpoint" {
   }
   tags = var.common_tags
 }
-
-# resource "azurerm_private_endpoint" "ams_liveevent_private_endpoint" {
-#   name                = "ams-liveevent-pe-${var.env}"
-#   resource_group_name = data.azurerm_resource_group.rg.name
-#   location            = var.location
-#   subnet_id           = data.azurerm_subnet.endpoint_subnet.id
-#   private_service_connection {
-#     name                           = "ams-private-link-connection"
-#     private_connection_resource_id = azurerm_media_services_account.ams.id
-#     is_manual_connection           = false
-#     subresource_names              = ["liveevent"]
-#   }
-#   private_dns_zone_group {
-#     name                 = data.azurerm_private_dns_zone.ams_dns_zone.name
-#     private_dns_zone_ids = [data.azurerm_private_dns_zone.ams_dns_zone.id]
-#   }
-#   tags = var.common_tags
-# }
