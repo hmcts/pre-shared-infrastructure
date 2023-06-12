@@ -122,6 +122,14 @@ SETTINGS
   tags = var.common_tags
 }
 
+# DTS-PRE-VideoEditing-SecurityGroup-
+resource "azurerm_role_assignment" "vmuser_login" {
+  for_each             = toset(data.azuread_groups.groups.object_ids)
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Virtual Machine User Login"
+  principal_id         = each.value
+}
+
 # resource "azurerm_monitor_diagnostic_setting" "this" {
 #   count                      = var.num_vid_edit_vms
 #   name                       = azurerm_network_interface.nic[count.index].name
