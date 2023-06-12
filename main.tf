@@ -1,3 +1,8 @@
+module "log_analytics_workspace" {
+  source      = "git@github.com:hmcts/terraform-module-log-analytics-workspace-id.git?ref=master"
+  environment = var.env
+}
+
 locals {
   prefix                     = "${var.product}-${var.env}"
   resource_group_name        = local.prefix
