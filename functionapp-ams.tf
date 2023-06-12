@@ -3,8 +3,6 @@
 #   key_vault_id = data.azurerm_key_vault.keyvault.id
 # }
 
-data "azurerm_subscription" "current" {}
-
 module "ams_function_app" {
   source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
   os_type             = "Linux"
