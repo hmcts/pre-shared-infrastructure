@@ -127,7 +127,7 @@ resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
 
 
 #################################
-##  Disk Encryption 
+##  Disk Encryption
 ###############################
 
 resource "azurerm_key_vault_key" "pre_kv_key" {
@@ -174,12 +174,12 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
   ]
 }
 
-data "azurerm_key_vault" "keyvault" {
-  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
-  resource_group_name = azurerm_resource_group.rg.name
+# data "azurerm_key_vault" "keyvault" {
+#   name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
+#   resource_group_name = azurerm_resource_group.rg.name
 
-  depends_on = [module.key-vault]
-}
+#   depends_on = [module.key-vault]
+# }
 
 ### Dynatrace
 data "azurerm_key_vault_secret" "dynatrace-token" {
