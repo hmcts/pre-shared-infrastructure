@@ -10,9 +10,47 @@ resource "azurerm_public_ip" "pip" {
   tags                = var.common_tags
 }
 
-##------------------------------------------------------###################
-##BASTION
-##------------------------------------------------------###################
+#bastion pip logs
+resource "azurerm_monitor_diagnostic_setting" "bastionpip" {
+  name                       = azurerm_public_ip.pip.name
+  target_resource_id         = azurerm_public_ip.pip.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "DDoSProtectionNotifications"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  log {
+    category = "DDoSMitigationFlowLogs"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  log {
+    category = "DDoSMitigationReports"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+}
+
+#bastion host
 resource "azurerm_bastion_host" "bastion" {
   name                   = "${var.product}-bastion-${var.env}"
   resource_group_name    = azurerm_resource_group.rg.name
@@ -47,6 +85,30 @@ resource "null_resource" "Encryption" {
     echo "Enable Encryption at Host"
     az feature register --namespace Microsoft.Compute --name EncryptionAtHost
 	  EOF
+  }
+}
+
+#bastion logs
+resource "azurerm_monitor_diagnostic_setting" "bastion" {
+  name                       = azurerm_bastion_host.bastion.name
+  target_resource_id         = azurerm_bastion_host.bastion.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "BastionAuditLogs"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
   }
 }
 
@@ -118,7 +180,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   depends_on = [null_resource.Encryption, module.key-vault, azurerm_disk_encryption_set.pre-des]
 }
 
-# # Datadisk 
+# # Datadisk
 resource "azurerm_virtual_machine_data_disk_attachment" "vmdatadisk" {
   count              = var.num_vid_edit_vms
   managed_disk_id    = azurerm_managed_disk.vmdatadisk.*.id[count.index]
@@ -241,6 +303,22 @@ module "dynatrace-oneagent" {
   tags                       = var.common_tags
 }
 
+#edit logs
+resource "azurerm_monitor_diagnostic_setting" "nic" {
+  count                      = var.num_vid_edit_vms
+  name                       = azurerm_network_interface.nic[count.index].name
+  target_resource_id         = azurerm_network_interface.nic[count.index].id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+}
 
 ####
 ## DataGateway VMs
