@@ -32,12 +32,12 @@ resource "azurerm_subnet" "videoeditvm_subnet" {
 
 
 resource "azurerm_subnet" "endpoint_subnet" {
-  name                                      = "${var.product}-privatendpt-snet-${var.env}"
-  resource_group_name                       = azurerm_resource_group.rg.name
-  virtual_network_name                      = azurerm_virtual_network.vnet.name
-  address_prefixes                          = [var.privatendpt_snet_address]
-  service_endpoints                         = ["Microsoft.Storage", "Microsoft.KeyVault"]
-  private_endpoint_network_policies_enabled = true
+  name                 = "${var.product}-privatendpt-snet-${var.env}"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = [var.privatendpt_snet_address]
+  service_endpoints    = ["Microsoft.Storage", "Microsoft.KeyVault"]
+  # enforce_private_link_endpoint_network_policies = true
 }
 
 resource "azurerm_subnet" "AzureBastionSubnet_subnet" {
