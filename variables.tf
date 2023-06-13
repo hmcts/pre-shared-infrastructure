@@ -10,9 +10,6 @@ variable "location_backup" {
   default = "UK West"
 }
 
-variable "subscription" {
-  default = ""
-}
 variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
