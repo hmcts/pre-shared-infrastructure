@@ -124,10 +124,6 @@ variable "database_name" {
   default = "pre-db"
 }
 
-variable "pgsql_sku" {
-  default = "GP_Standard_D2s_v3"
-}
-
 variable "pgsql_storage_mb" {
   default = "32768"
 }
@@ -187,6 +183,14 @@ variable "aks_subscription_id" {
 variable "powerbi_dg_vm_private_ip" {}
 
 variable "powerbi_dg_vm_data_disks" {}
+
+variable "dg_vm_data_disks" {}
+
+variable "dg_vm_private_ip" {}
+
+variable "edit_vm_data_disks" {}
+
+variable "edit_vm_private_ip" {}
 
 variable "tenant_id" {}
 
