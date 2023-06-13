@@ -17,12 +17,8 @@ data "azurerm_user_assigned_identity" "managed-identity" {
   resource_group_name = "managed-identities-${var.env}-rg"
 }
 
-data "azuread_groups" "groups" {
+data "azuread_groups" "group" {
   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
-}
-
-data "azuread_groups" "pre-groups" {
-  display_names = ["DTS Pre-recorded Evidence"]
 }
 
 data "azurerm_subnet" "jenkins_subnet" {
