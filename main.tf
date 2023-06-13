@@ -13,16 +13,9 @@ module "log_analytics_workspace" {
   environment = var.env
 }
 
-
 resource "azurerm_resource_group" "rg" {
   name     = local.resource_group_name
   location = var.location
-  tags     = var.common_tags
-}
-
-resource "azurerm_resource_group" "rg_backup" {
-  name     = "${var.product}-${var.env}-backup"
-  location = var.location_backup
   tags     = var.common_tags
 }
 
