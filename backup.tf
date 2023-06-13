@@ -1,10 +1,5 @@
-locals {
-  prefix_backup              = "${var.product}-${var.env}-backup"
-  resource_group_name_backup = local.prefix_backup
-}
-
 resource "azurerm_resource_group" "rg_backup" {
-  name     = local.resource_group_name_backup
+  name     = "${var.product}-${var.env}-backup"
   location = var.location_backup
   tags     = var.common_tags
 }
