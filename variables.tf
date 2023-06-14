@@ -6,9 +6,6 @@ variable "location" {
   default = "UK South"
 }
 
-variable "subscription" {
-  default = ""
-}
 variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
