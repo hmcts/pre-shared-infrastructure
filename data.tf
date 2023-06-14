@@ -17,7 +17,7 @@ data "azurerm_user_assigned_identity" "managed-identity" {
   resource_group_name = "managed-identities-${var.env}-rg"
 }
 
-data "azuread_groups" "group" {
+data "azuread_groups" "groups" {
   display_names = ["DTS-PRE-VideoEditing-SecurityGroup-${var.env}"]
 }
 
