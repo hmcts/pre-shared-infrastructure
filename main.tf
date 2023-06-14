@@ -26,7 +26,7 @@ resource "azurerm_resource_group" "rg" {
 #   skip_service_principal_aad_check = true
 # }
 
-Give PowerApp Appreg contributor access to resource groups
+#Give PowerApp Appreg contributor access to resource groups
 resource "azurerm_role_assignment" "powerapp_appreg" {
   scope                = azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
