@@ -1,5 +1,5 @@
 module "key-vault" {
-  source                          = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-key-vault?ref=private_endpoint"
   name                            = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   product                         = var.product
   env                             = var.env
@@ -11,6 +11,7 @@ module "key-vault" {
   create_managed_identity         = true
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
+  private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
 }
 
 // Power App Permissions
