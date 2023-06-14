@@ -55,6 +55,34 @@ resource "azurerm_media_transform" "EncodeToMP" {
   }
 }
 
+
+resource "azurerm_monitor_diagnostic_setting" "ams_1" {
+  name                       = azurerm_media_services_account.ams.name
+  target_resource_id         = azurerm_media_services_account.ams.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "MediaAccount"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  log {
+    category = "KeyDeliveryRequests"
+    enabled  = true
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+}
+
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   provider              = azurerm.private_dns
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)

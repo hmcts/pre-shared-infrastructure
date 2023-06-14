@@ -1,3 +1,9 @@
+resource "azurerm_resource_group" "rg_backup" {
+  name     = "${var.product}-${var.env}-backup"
+  location = var.location_backup
+  tags     = var.common_tags
+}
+
 resource "azurerm_data_protection_backup_vault" "pre_backup_vault" {
   name                = "${var.product}-backup-vault-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
