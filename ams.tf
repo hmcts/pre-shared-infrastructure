@@ -95,7 +95,7 @@ resource "azurerm_media_content_key_policy" "ams_default_policy" {
       token_type                  = "Jwt"
       audience                    = "api://${var.pre_ent_appreg_app_id}"
       issuer                      = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-      primary_symmetric_token_key = "tokenSigningKey"
+      primary_symmetric_token_key = data.azurerm_key_vault_secret.symmetrickey.value
     }
   }
 }
