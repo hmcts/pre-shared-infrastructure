@@ -34,6 +34,7 @@ module "ams_function_app" {
     "AZURE_STORAGE_ACCOUNT_NAME"        = "prefinalsa${var.env}"
     upper("PREINGESTSA${var.env}_KEY")  = "${module.ingestsa_storage_account.storageaccount_primary_access_key}"
     upper("PREFINALSA${var.env}_KEY")   = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
+    "SYMMETRICKEY"                      = "${data.azurerm_key_vault_secret.symmetrickey.value}"
     # "AZURE_CLIENT_SECRET"             = "${data.azurerm_key_vault_secret.client_secret.value}"
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE" = "false"
   }
