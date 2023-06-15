@@ -92,7 +92,10 @@ resource "azurerm_media_content_key_policy" "ams_default_policy" {
     name                            = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
     clear_key_configuration_enabled = true
     token_restriction {
-      token_type = "Jwt"
+      token_type                  = "Jwt"
+      audience                    = ""
+      issuer                      = ""
+      primary_symmetric_token_key = "tokenSigningKey"
     }
   }
 }
