@@ -5,7 +5,7 @@
 
 data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
-  key_vault_id = data.azurerm_key_vault.keyvault.id
+  key_vault_id = module.key-vault.key_vault_id
 }
 
 module "ams_function_app" {
