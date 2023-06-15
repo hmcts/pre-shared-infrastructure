@@ -1,5 +1,5 @@
 module "key-vault" {
-  source                          = "git@github.com:hmcts/cnp-module-key-vault?ref=private_endpoint"
+  source                          = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name                            = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   product                         = var.product
   env                             = var.env
