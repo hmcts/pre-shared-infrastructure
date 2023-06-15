@@ -83,7 +83,7 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
 
 resource "azurerm_media_content_key_policy" "ams_default_policy" {
   name                        = "pre-ams-integration-default-content-policy"
-  resource_group_name         = azurerm_resource_group.rg.name
+  resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
   description                 = "PRE Content Key Policy"
   policy_option {
