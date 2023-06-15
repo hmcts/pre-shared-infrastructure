@@ -83,6 +83,20 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   }
 }
 
+resource "azurerm_media_content_key_policy" "ams_default_policy" {
+  name                        = "pre-ams-integration-default-content-policy"
+  resource_group_name         = azurerm_resource_group.rg.name
+  media_services_account_name = azurerm_media_services_account.ams.name
+  description                 = "PRE Content Key Policy"
+  policy_option {
+    name                            = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
+    clear_key_configuration_enabled = true
+    token_restriction {
+      token_type = "Jwt"
+    }
+  }
+}
+
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   provider              = azurerm.private_dns
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)
