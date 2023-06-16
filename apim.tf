@@ -1,7 +1,7 @@
 locals {
   app_name      = "pre-ams-integration"
   function_name = "CheckBlobExists"
-  env_to_deploy = var.env == "sbox" ? 1 : 0
+  env_to_deploy = var.env == "sbox" || var.env == "dev" ? 1 : 0
 }
 
 data "azurerm_key_vault_secret" "ams_function_key" {

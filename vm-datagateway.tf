@@ -1,5 +1,5 @@
 module "data_gateway_vm" {
-  count                          = var.num_datagateway
+  count                          = local.dg_env_to_deploy #var.num_datagateway
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
@@ -103,7 +103,8 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
 }
 
 locals {
-  dg_vm_type = "windows"
+  dg_env_to_deploy = var.env == "sbox" || var.env == "dev" ? 2 : 0
+  dg_vm_type       = "windows"
 
   dg_vm_size       = "Standard_D8ds_v5"
   dg_ipconfig_name = "IP_CONFIGURATION"
