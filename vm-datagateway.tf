@@ -86,7 +86,7 @@ module "data_gateway_vm" {
 
 
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
-  count              = var.num_datagateway
+  count              = local.dg_env_to_deploy #var.num_datagateway
   virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
   location           = azurerm_resource_group.rg.location
   enabled            = false
