@@ -130,7 +130,7 @@ resource "random_string" "edit_username" {
 }
 
 resource "random_password" "vm_password" {
-  count            = local.edit_env_to_deploy #var.num_vid_edit_vms
+  count            = var.num_vid_edit_vms
   length           = 16
   special          = true
   override_special = "#$%&@()_[]{}<>:?"
