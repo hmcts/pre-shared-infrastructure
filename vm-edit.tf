@@ -147,7 +147,7 @@ resource "azurerm_key_vault_secret" "edit_username" {
 }
 
 resource "azurerm_key_vault_secret" "edit_password" {
-  count        = local.edit_env_to_deploy #var.num_vid_edit_vms
+  count        = var.num_vid_edit_vms
   name         = "videditvm${count.index}-password"
   value        = random_password.vm_password[count.index].result
   key_vault_id = module.key-vault.key_vault_id
