@@ -8,6 +8,11 @@ data "azurerm_key_vault_secret" "symmetrickey" {
 #   key_vault_id = module.key-vault.key_vault_id
 # }
 
+data "azurerm_key_vault_secret" "symmetrickey" {
+  name         = "symmetrickey"
+  key_vault_id = module.key-vault.key_vault_id
+}
+
 module "ams_function_app" {
   source              = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/function_app?ref=preview"
   os_type             = "Linux"
@@ -38,7 +43,8 @@ module "ams_function_app" {
     "AZURE_SUBSCRIPTION_ID"             = "${data.azurerm_subscription.current.subscription_id}"
     "AZURE_STORAGE_ACCOUNT_KEY"         = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
     upper("PREFINALSA${var.env}_KEY")   = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
-    # "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret.value}"
-    "WEBSITE_ENABLE_SYNC_UPDATE_SITE"   = "false"
+    "SYMMETRICKEY"                      = "${data.azurerm_key_vault_secret.symmetrickey.value}"
+    # "AZURE_CLIENT_SECRET"             = "${data.azurerm_key_vault_secret.client_secret.value}"
+    "WEBSITE_ENABLE_SYNC_UPDATE_SITE" = "false"
   }
 }
