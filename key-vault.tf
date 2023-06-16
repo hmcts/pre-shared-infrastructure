@@ -11,7 +11,7 @@ module "key-vault" {
   create_managed_identity         = true
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
-  private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
+  private_endpoint_subnet_id      = var.env == "sbox" ? azurerm_subnet.endpoint_subnet.id : null
 }
 
 // Power App Permissions
