@@ -61,7 +61,7 @@ locals {
   edit_vm_availabilty_zones  = [1, 2]
   edit_marketplace_product   = "Windows-10"
   edit_marketplace_publisher = "MicrosoftWindowsDesktop"
-  edit_marketplace_sku       = "22h2-pro-g2"
+  edit_marketplace_sku       = "win10-22h2-pro-g2"
   edit_vm_version            = "latest"
 
 
