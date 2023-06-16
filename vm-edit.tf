@@ -1,5 +1,5 @@
 module "edit_vm" {
-  count                          = var.num_vid_edit_vms
+  count                          = local.edit_env_to_deploy #var.num_vid_edit_vms
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
@@ -51,7 +51,8 @@ module "edit_vm" {
 }
 
 locals {
-  edit_vm_type = "windows"
+  edit_env_to_deploy = var.env == "sbox" || var.env == "dev" ? 1 : 0
+  edit_vm_type       = "windows"
 
   edit_vm_size       = "Standard_E4ds_v5"
   edit_ipconfig_name = "IP_CONFIGURATION"
@@ -76,7 +77,7 @@ locals {
 
 
 resource "azurerm_virtual_machine_extension" "aad" {
-  count                      = var.num_vid_edit_vms
+  count                      = local.edit_env_to_deploy #var.num_vid_edit_vms
   name                       = "AADLoginForWindows"
   virtual_machine_id         = module.edit_vm.*.vm_id[count.index]
   publisher                  = "Microsoft.Azure.ActiveDirectory"
@@ -87,25 +88,8 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 }
 
-# resource "null_resource" "run_edit_script" {
-#   count = var.num_vid_edit_vms
-#   triggers = {
-#     vm_id = module.edit_vm.*.vm_id[count.index]
-#   }
-
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       az vm run-command invoke \
-#         --ids "${module.edit_vm.*.vm_id[count.index]}" \
-#         --command-id "RunPowerShellScript" \
-#         --scripts @scripts/edit-init.ps1
-#     EOT
-#   }
-# }
-
-
 resource "azurerm_virtual_machine_extension" "edit_init" {
-  count                = var.num_vid_edit_vms
+  count                = local.edit_env_to_deploy #var.num_vid_edit_vms
   name                 = "toolingScript"
   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Compute"
@@ -140,13 +124,13 @@ SETTINGS
 
 // VM credentials
 resource "random_string" "edit_username" {
-  count   = var.num_vid_edit_vms
+  count   = local.edit_env_to_deploy #var.num_vid_edit_vms
   length  = 4
   special = false
 }
 
 resource "random_password" "vm_password" {
-  count            = var.num_vid_edit_vms
+  count            = local.edit_env_to_deploy #var.num_vid_edit_vms
   length           = 16
   special          = true
   override_special = "#$%&@()_[]{}<>:?"
@@ -156,14 +140,14 @@ resource "random_password" "vm_password" {
 }
 
 resource "azurerm_key_vault_secret" "edit_username" {
-  count        = var.num_vid_edit_vms
+  count        = local.edit_env_to_deploy #var.num_vid_edit_vms
   name         = "videditvm${count.index}-username"
   value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   key_vault_id = module.key-vault.key_vault_id
 }
 
 resource "azurerm_key_vault_secret" "edit_password" {
-  count        = var.num_vid_edit_vms
+  count        = local.edit_env_to_deploy #var.num_vid_edit_vms
   name         = "videditvm${count.index}-password"
   value        = random_password.vm_password[count.index].result
   key_vault_id = module.key-vault.key_vault_id
