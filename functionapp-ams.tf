@@ -1,8 +1,3 @@
-data "azurerm_key_vault_secret" "symmetrickey" {
-  name         = "symmetrickey"
-  key_vault_id = module.key-vault.key_vault_id
-}
-
 # data "azurerm_key_vault_secret" "client_secret" {
 #   name         = "client-secret"
 #   key_vault_id = module.key-vault.key_vault_id
