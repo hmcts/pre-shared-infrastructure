@@ -1,3 +1,8 @@
+locals {
+  ams_env_to_deploy = var.env == "sbox" || var.env == "dev" ? 1 : 0
+}
+
+
 resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
   location            = var.location
@@ -84,6 +89,7 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
 }
 
 resource "azurerm_media_content_key_policy" "ams_default_policy" {
+  count                       = local.ams_env_to_deploy
   name                        = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
   resource_group_name         = azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
@@ -101,7 +107,7 @@ resource "azurerm_media_content_key_policy" "ams_default_policy" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
-  count                 = local.env_to_deploy
+  count                 = local.ams_env_to_deploy
   provider              = azurerm.private_dns
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)
   resource_group_name   = var.dns_resource_group
@@ -110,7 +116,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
 }
 
 resource "azurerm_private_endpoint" "ams_streamingendpoint_private_endpoint" {
-  count               = local.env_to_deploy
+  count               = local.ams_env_to_deploy
   name                = "ams-streamingendpoint-pe-${var.env}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
