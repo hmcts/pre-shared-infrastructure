@@ -158,4 +158,29 @@ module "vnet_peer_to_hub" {
     azurerm.initiator = azurerm
     azurerm.target    = azurerm.hub
   }
-} 
+}
+
+#vnet logs
+resource "azurerm_monitor_diagnostic_setting" "vnet" {
+
+  name                       = azurerm_virtual_network.vnet.name
+  target_resource_id         = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "VMProtectionAlerts"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+}

@@ -1,8 +1,9 @@
 module "powerBI_data_gateway" {
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.powerbi_dg_vm_type
   vm_name                        = "powerbi-${count.index + 1}-${var.env}"
+  computer_name                  = "powerbi${count.index + 1}${var.env}"
   vm_resource_group              = azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.powerbi_dg_vm_size
@@ -22,10 +23,6 @@ module "powerBI_data_gateway" {
   ipconfig_name = local.powerbi_dg_ipconfig_name
   vm_subnet_id  = local.powerbi_dg_vm_subnet_id
   vm_private_ip = var.powerbi_dg_vm_private_ip[count.index]
-
-  marketplace_sku       = local.powerbi_dg_marketplace_sku
-  marketplace_publisher = local.powerbi_dg_marketplace_publisher
-  marketplace_product   = local.powerbi_dg_marketplace_product
 
   #storage_image_reference
   vm_publisher_name = local.powerbi_dg_marketplace_publisher
@@ -88,7 +85,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
 locals {
   powerbi_dg_vm_type = "windows"
 
-  powerbi_dg_vm_size       = "Standard_F8s_v2"
+  powerbi_dg_vm_size       = "Standard_D8ds_v5"
   powerbi_dg_ipconfig_name = "IP_CONFIGURATION"
 
   powerbi_dg_vm_subnet_id = azurerm_subnet.datagateway_subnet.id

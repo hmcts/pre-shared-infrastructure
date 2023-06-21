@@ -10,7 +10,7 @@ module "sa_storage_account_backup" {
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id])
   allow_nested_items_to_be_public = false
   default_action                  = "Allow"
-  enable_data_protection          = true
+  enable_data_protection          = false
 
   common_tags = var.common_tags
   depends_on  = [module.key-vault]
