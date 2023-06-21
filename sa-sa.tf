@@ -14,8 +14,7 @@ module "sa_storage_account" {
   enable_change_feed              = true
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
-
-  common_tags = var.common_tags
+  common_tags                     = var.common_tags
 }
 
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {

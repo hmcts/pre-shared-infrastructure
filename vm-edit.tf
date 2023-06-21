@@ -87,23 +87,6 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 }
 
-# resource "null_resource" "run_edit_script" {
-#   count = var.num_vid_edit_vms
-#   triggers = {
-#     vm_id = module.edit_vm.*.vm_id[count.index]
-#   }
-
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       az vm run-command invoke \
-#         --ids "${module.edit_vm.*.vm_id[count.index]}" \
-#         --command-id "RunPowerShellScript" \
-#         --scripts @scripts/edit-init.ps1
-#     EOT
-#   }
-# }
-
-
 resource "azurerm_virtual_machine_extension" "edit_init" {
   count                = var.num_vid_edit_vms
   name                 = "toolingScript"
