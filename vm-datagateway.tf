@@ -84,24 +84,6 @@ module "data_gateway_vm" {
 #   tags = var.common_tags
 # }
 
-
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
-  count              = var.num_datagateway
-  virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
-  location           = azurerm_resource_group.rg.location
-  enabled            = false
-
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
-
-  notification_settings {
-    enabled = false
-  }
-  tags = var.common_tags
-
-  depends_on = [module.data_gateway_vm]
-}
-
 locals {
   dg_vm_type = "windows"
 

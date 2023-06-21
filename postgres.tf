@@ -14,9 +14,13 @@ module "data_store_db_v14" {
   component     = var.component
   business_area = var.project
 
-  common_tags     = var.common_tags
-  name            = var.database_name #-${var.env}" removed as it looks like env gets added in root module
-  pgsql_databases = var.pg_databases
+  common_tags = var.common_tags
+  name        = var.database_name #-${var.env}" removed as it looks like env gets added in root module
+  pgsql_databases = [
+    {
+      name : "pre-pdb-${var.env}"
+    }
+  ]
 
   pgsql_version         = "14"
   backup_retention_days = 35
