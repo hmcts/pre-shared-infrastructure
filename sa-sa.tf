@@ -10,6 +10,7 @@ module "sa_storage_account" {
   allow_nested_items_to_be_public = false
   default_action                  = "Deny"
   enable_data_protection          = true
+  restore_policy_days             = var.restore_policy_days
   enable_change_feed              = true
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
