@@ -24,7 +24,7 @@ power_app_user_oid        = "dbe1ceab-c6a0-4155-8f9c-060dbbbd5c2a"
 dts_pre_oid = "b1fd4154-355f-4683-a795-d09cdb814d16"
 
 #backups
-retention_duration         = "P35D"
+retention_duration         = "P7D"
 immutability_period_backup = "7"
 restore_policy_days        = "1"
 
