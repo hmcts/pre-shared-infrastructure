@@ -1,5 +1,5 @@
 module "edit_vm" {
-  count                          = local.edit_env_to_deploy #var.num_vid_edit_vms
+  count                          = var.num_vid_edit_vms
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
@@ -51,8 +51,7 @@ module "edit_vm" {
 }
 
 locals {
-  edit_env_to_deploy = var.env == "sbox" || var.env == "dev" ? 1 : 0
-  edit_vm_type       = "windows"
+  edit_vm_type = "windows"
 
   edit_vm_size       = "Standard_E4ds_v5"
   edit_ipconfig_name = "IP_CONFIGURATION"
@@ -77,7 +76,7 @@ locals {
 
 
 resource "azurerm_virtual_machine_extension" "aad" {
-  count                      = local.edit_env_to_deploy #var.num_vid_edit_vms
+  count                      = var.num_vid_edit_vms
   name                       = "AADLoginForWindows"
   virtual_machine_id         = module.edit_vm.*.vm_id[count.index]
   publisher                  = "Microsoft.Azure.ActiveDirectory"
@@ -89,7 +88,7 @@ resource "azurerm_virtual_machine_extension" "aad" {
 }
 
 resource "azurerm_virtual_machine_extension" "edit_init" {
-  count                = local.edit_env_to_deploy #var.num_vid_edit_vms
+  count                = var.num_vid_edit_vms
   name                 = "toolingScript"
   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Compute"
@@ -124,7 +123,7 @@ SETTINGS
 
 // VM credentials
 resource "random_string" "edit_username" {
-  count   = local.edit_env_to_deploy #var.num_vid_edit_vms
+  count   = var.num_vid_edit_vms
   length  = 4
   special = false
 }
@@ -140,7 +139,7 @@ resource "random_password" "vm_password" {
 }
 
 resource "azurerm_key_vault_secret" "edit_username" {
-  count        = local.edit_env_to_deploy #var.num_vid_edit_vms
+  count        = var.num_vid_edit_vms
   name         = "videditvm${count.index}-username"
   value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
   key_vault_id = module.key-vault.key_vault_id

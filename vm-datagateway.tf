@@ -1,5 +1,5 @@
 module "data_gateway_vm" {
-  count                          = local.dg_env_to_deploy #var.num_datagateway
+  count                          = var.num_datagateway
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
@@ -84,27 +84,8 @@ module "data_gateway_vm" {
 #   tags = var.common_tags
 # }
 
-
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
-  count              = local.dg_env_to_deploy #var.num_datagateway
-  virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
-  location           = azurerm_resource_group.rg.location
-  enabled            = false
-
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
-
-  notification_settings {
-    enabled = false
-  }
-  tags = var.common_tags
-
-  depends_on = [module.data_gateway_vm]
-}
-
 locals {
-  dg_env_to_deploy = var.env == "sbox" || var.env == "dev" ? 2 : 0
-  dg_vm_type       = "windows"
+  dg_vm_type = "windows"
 
   dg_vm_size       = "Standard_D8ds_v5"
   dg_ipconfig_name = "IP_CONFIGURATION"
@@ -129,13 +110,13 @@ locals {
 
 # Datagateway
 resource "random_string" "dg_username" {
-  count   = local.dg_env_to_deploy #var.num_datagateway
+  count   = var.num_datagateway
   length  = 4
   special = false
 }
 
 resource "random_password" "dg_password" {
-  count            = local.dg_env_to_deploy #var.num_datagateway
+  count            = var.num_datagateway
   length           = 16
   special          = true
   override_special = "$%&@()-_=+[]{}<>:?"
@@ -145,14 +126,14 @@ resource "random_password" "dg_password" {
 }
 
 resource "azurerm_key_vault_secret" "dg_username" {
-  count        = local.dg_env_to_deploy #var.num_datagateway
+  count        = var.num_datagateway
   name         = "dg${count.index + 1}-username"
   value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
   key_vault_id = module.key-vault.key_vault_id
 }
 
 resource "azurerm_key_vault_secret" "dg_password" {
-  count        = local.dg_env_to_deploy #var.num_datagateway
+  count        = var.num_datagateway
   name         = "dg${count.index + 1}-password"
   value        = random_password.dg_password[count.index].result
   key_vault_id = module.key-vault.key_vault_id
