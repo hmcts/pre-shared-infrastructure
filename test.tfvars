@@ -30,7 +30,7 @@ restore_policy_days        = "1"
 
 #vms
 tenant_id                = "yrk32651"
-dg_vm_private_ip         = ["10.70.21.22", "10.70.21.23"]
+dg_vm_private_ip         = ["10.70.21.195", "10.70.21.196"]
 powerbi_dg_vm_private_ip = ["10.70.21.25", "10.70.21.26"]
 edit_vm_private_ip       = ["10.70.21.6", "10.70.21.7"]
 
