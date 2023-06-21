@@ -58,19 +58,20 @@ variable "mgmt_subscription_id" {} // set by jenkins library
 variable "power_app_user_oid" {
   default = "56a29187-3d5f-4262-99d6-c635776e0eac"
 }
+
 variable "jenkins_ptlsbox_oid" {
   default = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
 }
 variable "jenkins_ptlsbox_appid" {
   default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
 }
-variable "managed_oid" {}
+# variable "managed_oid" {}
 variable "dts_pre_oid" {}
-variable "dts_cft_developers_oid" {}
+# variable "dts_cft_developers_oid" {}
 variable "dts_pre_project_admin" {}
-variable "pre_mi_principal_id" {}
+# variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
-variable "dts_pre_app_admin" {}
+# variable "dts_pre_app_admin" {}
 
 variable "lawRetention" {
   type    = number
@@ -114,10 +115,6 @@ variable "project" {
 
 variable "pgsql_admin_username" {
   default = "psqladmin"
-}
-
-variable "pg_databases" {
-  description = "Databases to be deployed"
 }
 
 variable "database_name" {
