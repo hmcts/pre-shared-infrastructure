@@ -14,7 +14,6 @@ managed_oid               = "2008e85a-5f57-4a54-870e-abbacd6b4d09" # 2008e85a-5f
 dts_pre_oid               = "b1fd4154-355f-4683-a795-d09cdb814d16"
 dts_cft_developers_oid    = "d5c01893-b8bc-40ce-926c-d6faf53e0af5"
 power_app_user_oid        = "2757c27a-aa98-4cdf-9aaa-90cf47d0656c"
-dts_pre_app_admin         = "d055ba21-5814-4278-8752-aaffa7eaac62"
 dts_pre_project_admin     = "56a29187-3d5f-4262-99d6-c635776e0eac"
 pre_mi_principal_id       = "d03f73e6-40ed-40a2-a0ec-059286505905"
 pre_mi_tenant_id          = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
