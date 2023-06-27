@@ -20,6 +20,7 @@ pre_ent_appreg_app_id     = "66930c25-cbaa-4b9b-81ab-bea600666acb"
 dts_pre_project_admin     = "56a29187-3d5f-4262-99d6-c635776e0eac"
 dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 power_app_user_oid        = "dbe1ceab-c6a0-4155-8f9c-060dbbbd5c2a"
+dts_pre_app_admin         = "d055ba21-5814-4278-8752-aaffa7eaac62"
 dts_pre_oid               = "b1fd4154-355f-4683-a795-d09cdb814d16"
 
 #backups
