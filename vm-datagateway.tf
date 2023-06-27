@@ -14,7 +14,6 @@ module "data_gateway_vm" {
   accelerated_networking_enabled = true
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
-
   #Disk Encryption
   kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
   kv_rg_name  = "pre-${var.env}"
@@ -78,7 +77,7 @@ module "data_gateway_vm" {
 
 #   protected_settings = <<SETTINGS
 #  {
-#     "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/dg-init.ps1; c:/azuredata/dg-init.ps1\""
+#     "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1\""
 #  }
 # SETTINGS
 
