@@ -30,6 +30,13 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
   key_vault_id = module.key-vault.key_vault_id
 }
 
+# For container cleanup operations
+resource "azurerm_role_assignment" "powerapp_appreg_final_contrib" {
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.dts_pre_backup_appreg_oid
+}
+
 resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
   name                       = module.finalsa_storage_account.storageaccount_name
   target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"
