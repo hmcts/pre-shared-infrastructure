@@ -32,3 +32,14 @@ resource "azurerm_role_assignment" "powerapp_appreg" {
   role_definition_name = "Contributor"
   principal_id         = var.dts_pre_ent_appreg_oid
 }
+
+resource "time_rotating" "client_secret_rotation" {
+  rotation_days = 365
+}
+
+resource "azuread_application_password" "client_secret" {
+  application_object_id = data.azuread_application.appreg.object_id
+  rotate_when_changed = {
+    rotation = time_rotating.client_secret_rotation.id
+  }
+}
