@@ -12,17 +12,17 @@ module "data_gateway_vm" {
   vm_availabilty_zones           = local.dg_vm_availabilty_zones[count.index]
   managed_disks                  = var.dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
-  custom_data = base64encode(file("scripts/dg-init.ps1") + templatefile("scripts/dg-install.ps1", {
-    VaultName          = "${var.product}-${var.env}"
-    recoveryKey        = element(azurerm_key_vault_secret.dg_recovery, count.index).value
-    clientSecret       = data.azurerm_key_vault_secret.client_secret.value
-    clientId           = "YOUR_SERVICE_PRINCIPAL_CLIENT_ID"
-    tenantId           = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
-    ApplicationId      = var.pre_ent_appreg_app_id
-    userIDToAddasAdmin = var.pre_app_admin
-    GatewayName        = "${var.product}-dg${count.index + 1}-${var.env}"
-    gatewayNumber      = count.index + 1
-  }))
+  # custom_data = base64encode(file("scripts/dg-init.ps1") + templatefile("scripts/dg-install.ps1", {
+  #   VaultName          = "${var.product}-${var.env}"
+  #   recoveryKey        = element(azurerm_key_vault_secret.dg_recovery, count.index).value
+  #   clientSecret       = data.azurerm_key_vault_secret.client_secret.value
+  #   clientId           = "YOUR_SERVICE_PRINCIPAL_CLIENT_ID"
+  #   tenantId           = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
+  #   ApplicationId      = var.pre_ent_appreg_app_id
+  #   userIDToAddasAdmin = var.pre_app_admin
+  #   GatewayName        = "${var.product}-dg${count.index + 1}-${var.env}"
+  #   gatewayNumber      = count.index + 1
+  # }))
 
 
   #Disk Encryption
@@ -95,22 +95,22 @@ module "data_gateway_vm" {
 #   }
 # }
 
-resource "azurerm_virtual_machine_extension" "data_gateway_init" {
-  count                = var.num_datagateway
-  name                 = "toolingScript"
-  virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Compute"
-  type                 = "CustomScriptExtension"
-  type_handler_version = "1.9"
+# resource "azurerm_virtual_machine_extension" "data_gateway_init" {
+#   count                = var.num_datagateway
+#   name                 = "toolingScript"
+#   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
+#   publisher            = "Microsoft.Compute"
+#   type                 = "CustomScriptExtension"
+#   type_handler_version = "1.9"
 
-  protected_settings = <<SETTINGS
- {
-    "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/dg-init.ps1; c:/azuredata/dg-init.ps1\""
- }
-SETTINGS
+#   protected_settings = <<SETTINGS
+#  {
+#     "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/dg-init.ps1; c:/azuredata/dg-init.ps1\""
+#  }
+# SETTINGS
 
-  tags = var.common_tags
-}
+#   tags = var.common_tags
+# }
 
 locals {
   dg_vm_type = "windows"
