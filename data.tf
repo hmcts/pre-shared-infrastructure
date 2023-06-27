@@ -1,11 +1,11 @@
 data "azurerm_subscription" "current" {}
 
-
 data "azurerm_client_config" "current" {}
 
 data "azuread_application" "appreg" {
   display_name = "dts_pre_${var.env}"
 }
+
 data "azurerm_log_analytics_workspace" "loganalytics" {
   provider            = azurerm.oms
   name                = module.log_analytics_workspace.name
@@ -27,7 +27,6 @@ data "azurerm_subnet" "jenkins_subnet" {
   virtual_network_name = local.mgmt_network_name
   resource_group_name  = local.mgmt_network_rg_name
 }
-
 
 # adding this to allow postgres pipeline agent located on ss-ptlsbox-vnet to access keyvault
 data "azurerm_subnet" "pipelineagent_subnet" {
