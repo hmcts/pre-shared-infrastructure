@@ -1,5 +1,6 @@
-data "azurerm_key_vault_secret" "client_secret" {
+resource "azurerm_key_vault_secret" "client_secret" {
   name         = "client-secret"
+  value        = azuread_application_password.client_secret.value
   key_vault_id = module.key-vault.key_vault_id
 }
 
@@ -40,7 +41,7 @@ module "ams_function_app" {
     upper("PREINGESTSA${var.env}_KEY")  = "${module.ingestsa_storage_account.storageaccount_primary_access_key}"
     upper("PREFINALSA${var.env}_KEY")   = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
     "SYMMETRICKEY"                      = "${data.azurerm_key_vault_secret.symmetrickey.value}"
-    "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret.value}"
+    "AZURE_CLIENT_SECRET"               = "${azurerm_key_vault_secret.client_secret.value}"
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"   = "false"
   }
 }
