@@ -15,7 +15,7 @@ terraform {
 
     time = {
       source  = "hashicorp/time"
-      version = "~> 0.6"
+      version = "~> 0.9"
     }
   }
 }
@@ -39,7 +39,6 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  #subscription_id            = local.hub[var.env].subscription
   subscription_id            = local.hub[local.hub_name].subscription
   skip_provider_registration = "true"
   features {}
@@ -51,6 +50,13 @@ provider "azurerm" {
   subscription_id            = var.mgmt_subscription_id
   skip_provider_registration = true
   features {}
+}
+
+provider "azurerm" {
+  alias           = "private_dns"
+  subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
+  features {}
+
 }
 
 provider "azurerm" {
