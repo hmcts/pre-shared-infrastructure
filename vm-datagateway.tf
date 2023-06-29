@@ -61,7 +61,7 @@ resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
 
   protected_settings = <<SETTINGS
  {
-   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"Expand-Archive -Path 'C:/azuredata/datagateway-config.zip' -DestinationPath 'C:/azuredata' -Force; cp c:/azuredata/datagateway-init.ps1 c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1; if ($count.index -eq 0) { pwsh -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \\\"cp c:/azuredata/datagateway-config.ps1; c:/azuredata/datagateway-config.ps1\\\" }\"",
+   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"Expand-Archive -Path 'C:/azuredata/datagateway-config.zip' -DestinationPath 'C:/azuredata' -Force; cp c:/azuredata/datagateway-init.ps1 c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1; if ($count -eq 0) { pwsh -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \\\"cp c:/azuredata/datagateway-config.ps1; c:/azuredata/datagateway-config.ps1\\\" }\"",
     "scriptVariables": {
       "recoveryKey":        "element(azurerm_key_vault_secret.dg_recovery, count.index).value",
       "clientSecret":       "data.azurerm_key_vault_secret.client_secret.value",
