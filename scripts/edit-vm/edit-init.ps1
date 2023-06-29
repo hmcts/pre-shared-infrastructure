@@ -1,4 +1,4 @@
-iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 $newPath = "C:\ProgramData\chocolatey\bin"
 $currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
