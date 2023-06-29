@@ -12,7 +12,7 @@ module "data_gateway_vm" {
   vm_availabilty_zones           = local.dg_vm_availabilty_zones[count.index]
   managed_disks                  = var.dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
-  custom_data                    = filebase64("./scripts/datagateway-vm/datagateway-init.ps1")# filebase64("./scripts/datagateway-init.ps1")
+  custom_data                    = filebase64("./scripts/datagateway-vm/datagateway-config.zip")
 
   #Disk Encryption
   kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
@@ -54,19 +54,19 @@ module "data_gateway_vm" {
 resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
   count                = var.num_datagateway
   name                 = "dataGatewayInstallScript"
-  virtual_machine_id   = module.data_gateway_vm[0].vm_id
+  virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.10"
 
   protected_settings = <<SETTINGS
  {
-    "commandToExecute": "pwsh -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1; cp c:/azuredata/customdata.bin c:/azuredata/datagateway-config.ps1; c:/azuredata/datagateway-config.ps1\"",
+   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"Expand-Archive -Path 'C:/azuredata/datagateway-config.zip' -DestinationPath 'C:/azuredata'; cp c:/azuredata/datagateway-init.ps1 c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1; if(${count.index} -eq 0) { pwsh -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \\\"cp c:/azuredata/datagateway-config.ps1; c:/azuredata/datagateway-config.ps1\\\" }\"",
     "scriptVariables": {
       "recoveryKey":        "element(azurerm_key_vault_secret.dg_recovery, count.index).value",
       "clientSecret":       "data.azurerm_key_vault_secret.client_secret.value",
       "clientId":           "${var.pre_ent_appreg_app_id}",
-      "tenantId":           "531ff96d-0ae9-462a-8d2d-bec7c0b42082",
+      "tenantId":           "${var.pre_mi_tenant_id}",
       "userIDToAddasAdmin": "${var.pre_app_admin}",
       "gatewayName":        "${var.product}-dg-${var.env}",
       "gatewayNumber":      "${count.index + 1}"
@@ -74,9 +74,8 @@ resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
  }
 SETTINGS
 
-  tags       = var.common_tags
+  tags = var.common_tags
 }
-
 
 locals {
   dg_vm_type = "windows"
