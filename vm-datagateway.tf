@@ -51,24 +51,25 @@ module "data_gateway_vm" {
 
 }
 
+
 resource "azurerm_virtual_machine_extension" "data_gateway_init" {
   count                = var.num_datagateway
   name                 = "dataGatewayToolingScript"
   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Compute"
+  publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
-  type_handler_version = "1.10"
+  type_handler_version = "2.1"
+  timeouts {
+    create = "1h"
+    update = "1h"
+  }
 
   settings = <<SETTINGS
-{
-  "fileUris": [
-    "https://raw.githubusercontent.com/hmcts/pre-shared-infrastructure/884fdc626503e05b74e7c2e021ae4b9f04f8e485/scripts/datagateway-vm/datagateway-init.ps1"
-  ],
-  "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File datagateway-init.ps1"
-}
+    {
+        "script": "${local.dg_script}"
+    }
 SETTINGS
-
-  tags = var.common_tags
+  tags     = var.common_tags
 }
 
 resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
@@ -111,6 +112,8 @@ locals {
   dg_marketplace_publisher = "MicrosoftWindowsServer"
   dg_marketplace_sku       = "2019-Datacenter-gensecond"
   dg_vm_version            = "latest"
+
+  dg_script = filebase64("${path.module}/scripts/datagateway-vm/datagateway-config.ps1")
 
   dg_boot_diagnostics_enabled = false
   # boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
