@@ -53,7 +53,7 @@ module "data_gateway_vm" {
 
 resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
   count                = var.num_datagateway
-  name                 = "dataGatewayTooling"
+  name                 = "dataGatewayToolingScript"
   virtual_machine_id   = module.data_gateway_vm[0].vm_id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
