@@ -45,55 +45,61 @@ if ($rebootRequired) {
     $pendingReboot = $true
 }
 
-# Wait for the reboot to complete
-while ($pendingReboot) {
-    Write-Host "Reboot pending. Waiting for the system to become available..."
-    Start-Sleep -Seconds 30  # Adjust the sleep duration as needed
+workflow Install-DotNetFramework {
+  param()
 
-    # Check if the system is still in a reboot pending state
-    $rebootRequired = $windowsUpdate.DetectionResult.RebootRequired
+  # Install .NET Framework 4.8
+  InlineScript {
+      Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2088631" -OutFile dotnet-install.exe
+      Start-Process -FilePath "dotnet-install.exe" -ArgumentList "/q" -Wait
+  }
 
-    if (-not $rebootRequired) {
-        $pendingReboot = $false
-    }
+  # Continue script execution after the restart
+  InlineScript {
+      # Do additional tasks after the restart
+      Write-Host "Continuing script execution after restart..."
+
+      # use Powershell 7 from this point
+      pwsh
+
+      param (
+          [string]$recoveryKey,
+          [string]$clientSecret,
+          [string]$clientId,
+          [string]$tenantId,
+          [string]$userIDToAddasAdmin,
+          [string]$gatewayName,
+          [int]$gatewayNumber
+      )
+
+      $Psversion = (Get-Host).Version
+      if($Psversion.Major -ge 7)
+      {
+          if (!(Get-Module "DataGateway")) {
+              Install-Module -Name DataGateway -Force
+          }
+
+          # Connect to Azure and select the key vault
+
+          # Gateway Login
+          Connect-DataGatewayServiceAccount -ApplicationId $clientId -ClientSecret $clientSecret -Tenant $Tenant
+
+          # Install Gateway
+          Install-DataGateway -AcceptConditions
+
+          # Configure Gateway
+          Add-DataGatewayCluster -OverwriteExistingGateway -RegionKey uksouth -Name $GatewayName -RecoveryKey $recoveryKey
+
+          $gateway = (Get-DataGatewayCluster -RegionKey uksouth)[$gatewayNumber].Id
+
+          # Add User as Admin
+          Add-DataGatewayClusterUser -GatewayClusterId $gateway -PrincipalObjectId $userIDToAddasAdmin -AllowedDataSourceTypes $null -Role Admin -RegionKey uksouth
+      }
+      else {
+          exit 1
+      }
+  }
 }
 
-# use Powershell 7 from this point
-pwsh
-
-param (
-    [string]$recoveryKey,
-    [string]$clientSecret,
-    [string]$clientId,
-    [string]$tenantId,
-    [string]$userIDToAddasAdmin,
-    [string]$gatewayName,
-    [int]$gatewayNumber
-)
-
-$Psversion = (Get-Host).Version
-if($Psversion.Major -ge 7)
-{
-    if (!(Get-Module "DataGateway")) {
-        Install-Module -Name DataGateway -Force
-    }
-
-    # Connect to Azure and select the key vault
-
-    # Gateway Login
-    Connect-DataGatewayServiceAccount -ApplicationId $clientId -ClientSecret $clientSecret -Tenant $Tenant
-
-    # Install Gateway
-    Install-DataGateway -AcceptConditions
-
-    # Configure Gateway
-    Add-DataGatewayCluster -OverwriteExistingGateway -RegionKey uksouth -Name $GatewayName -RecoveryKey $recoveryKey
-
-    $gateway = (Get-DataGatewayCluster -RegionKey uksouth)[$gatewayNumber].Id
-
-    # Add User as Admin
-    Add-DataGatewayClusterUser -GatewayClusterId $gateway -PrincipalObjectId $userIDToAddasAdmin -AllowedDataSourceTypes $null -Role Admin -RegionKey uksouth
-}
-else {
-    exit 1
-}
+# Run the workflow
+Install-DotNetFramework
