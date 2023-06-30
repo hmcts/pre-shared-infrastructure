@@ -74,8 +74,7 @@ resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
  }
 SETTINGS
 
-  tags       = var.common_tags
-  depends_on = [azurerm_virtual_machine_extension.data_gateway_init]
+  tags = var.common_tags
 }
 
 locals {
