@@ -12,7 +12,7 @@ module "data_gateway_vm" {
   vm_availabilty_zones           = local.dg_vm_availabilty_zones[count.index]
   managed_disks                  = var.dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
-  custom_data                    = filebase64("./scripts/datagateway-vm/datagateway-config.ps1")
+  custom_data                    = filebase64("./scripts/datagateway-vm/datagateway-init.ps1")
 
   #Disk Encryption
   kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
@@ -51,27 +51,6 @@ module "data_gateway_vm" {
 
 }
 
-
-resource "azurerm_virtual_machine_extension" "data_gateway_init" {
-  count                = var.num_datagateway
-  name                 = "dataGatewayToolingScript"
-  virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.1"
-  timeouts {
-    create = "1h"
-    update = "1h"
-  }
-
-  settings = <<SETTINGS
-    {
-        "script": "${local.dg_script}"
-    }
-SETTINGS
-  tags     = var.common_tags
-}
-
 resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
   count                = var.num_datagateway
   name                 = "dataGatewayInstallScript"
@@ -82,7 +61,7 @@ resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
 
   protected_settings = <<SETTINGS
  {
-   "commandToExecute": "pwsh -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \\\"cp c:/azuredata/datagateway-config.ps1; c:/azuredata/datagateway-config.ps1\\\"\"",
+   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \\\"cp c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1\\\"\"",
     "scriptVariables": {
       "recoveryKey":        "element(azurerm_key_vault_secret.dg_recovery, count.index).value",
       "clientSecret":       "data.azurerm_key_vault_secret.client_secret.value",
