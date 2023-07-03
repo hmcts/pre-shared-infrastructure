@@ -1,3 +1,13 @@
+param (
+    [string]$recoveryKey,
+    [string]$clientSecret,
+    [string]$clientId,
+    [string]$tenantId,
+    [string]$userIDToAddasAdmin,
+    [string]$gatewayName,
+    [int]$gatewayNumber
+)
+
 # NuGet
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name PackageManagement -Force
@@ -35,16 +45,6 @@ Write-Host "PowerShell 7 has been installed"
 # Install Dotnet Framework 4.8
 Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2088631" -OutFile dotnet-install.exe
 Start-Process -Wait -FilePath "dotnet-install.exe" -ArgumentList "/q /norestart"
-
-param (
-    [string]$recoveryKey,
-    [string]$clientSecret,
-    [string]$clientId,
-    [string]$tenantId,
-    [string]$userIDToAddasAdmin,
-    [string]$gatewayName,
-    [int]$gatewayNumber
-)
 
 $Psversion = (Get-Host).Version
 if($Psversion.Major -ge 7)
