@@ -46,8 +46,10 @@ Write-Host "PowerShell 7 has been installed"
 Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2088631" -OutFile dotnet-install.exe
 Start-Process -Wait -FilePath "dotnet-install.exe" -ArgumentList "/q /norestart"
 
+pwsh
+
 $Psversion = (Get-Host).Version
-if($Psversion.Major -ge 7)
+if ($Psversion.Major -ge 7)
 {
     if (!(Get-Module "DataGateway")) {
         Install-Module -Name DataGateway -Force
@@ -72,5 +74,3 @@ if($Psversion.Major -ge 7)
 else {
     exit 1
 }
-
-Restart-Computer -Force
