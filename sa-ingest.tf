@@ -25,6 +25,13 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
+# For container cleanup operations
+resource "azurerm_role_assignment" "powerapp_appreg_ingest_contrib" {
+  scope                = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.dts_pre_backup_appreg_oid
+}
+
 resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
   name                       = module.ingestsa_storage_account.storageaccount_name
   target_resource_id         = "${module.ingestsa_storage_account.storageaccount_id}/blobServices/default"
