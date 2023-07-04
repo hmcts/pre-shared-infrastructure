@@ -27,22 +27,6 @@ Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI
 # install powershell 7
 Invoke-Expression "& { $(Invoke-RestMethod 'https://aka.ms/install-powershell.ps1') } –useMSI -EnablePSRemoting -Quiet"
 
-#Powershell 7
-# Define the download URL for PowerShell 7 MSI installer
-# $downloadUrl = "https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi"
-
-# # Define the temporary file path for downloading the installer
-# $tempFile = "$env:TEMP\PowerShell-7.2.0-win-x64.msi"
-
-# # Download the PowerShell 7 installer
-# Invoke-WebRequest -Uri $downloadUrl -OutFile $tempFile
-
-# # Install PowerShell 7 using the downloaded installer
-# Start-Process -Wait -FilePath msiexec.exe -ArgumentList "/i `"$tempFile`" /qn"
-
-# # Remove the temporary installer file
-# Remove-Item -Path $tempFile -Force
-
 Write-Host "PowerShell 7 has been installed"
 
 # Install Dotnet Framework 4.8
@@ -72,7 +56,6 @@ if ($Psversion.Major -ge 7)
     Add-DataGatewayCluster -OverwriteExistingGateway -RegionKey uksouth -Name $GatewayName -RecoveryKey $recoveryKey
 
     $gateway = (Get-DataGatewayCluster -RegionKey uksouth)[$gatewayNumber].Id
-
     # Add User as Admin
     Add-DataGatewayClusterUser -GatewayClusterId $gateway -PrincipalObjectId $userIDToAddasAdmin -AllowedDataSourceTypes $null -Role Admin -RegionKey uksouth
 }
