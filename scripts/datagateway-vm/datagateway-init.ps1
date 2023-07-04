@@ -34,7 +34,6 @@ Write-Host "PowerShell 7 has been installed"
 Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2088631" -OutFile dotnet-install.exe
 Start-Process -Wait -FilePath "dotnet-install.exe" -ArgumentList "/q /norestart"
 
-Set-ExecutionPolicy Bypass -Scope Process -Force
 # use Powershell 7 from this point
 pwsh
 
