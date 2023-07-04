@@ -5,7 +5,6 @@ $protectedSettings = Get-Content -Path $env:AZ_SCRIPTS_PATH | ConvertFrom-Json
 $recoveryKey        = $protectedSettings.scriptVariables.recoveryKey
 $clientSecret       = $protectedSettings.scriptVariables.clientSecret
 $clientId           = $protectedSettings.scriptVariables.clientId
-$tenantId           = $protectedSettings.scriptVariables.tenantId
 $userIDToAddasAdmin = $protectedSettings.scriptVariables.userIDToAddasAdmin
 $gatewayName        = $protectedSettings.scriptVariables.gatewayName
 $gatewayNumber      = $protectedSettings.scriptVariables.gatewayNumber
