@@ -7,10 +7,10 @@ bastion_snet_address       = "10.101.3.128/26"
 data_gateway_snet_address  = "10.101.3.192/26"
 num_vid_edit_vms           = 1
 
-mgmt_net_name             = "ss-ptl-vnet"
-mgmt_net_rg_name          = "ss-ptl-network-rg"
-mgmt_subscription_id      = "6c4d2513-a873-41b4-afdd-b05a33206631"
-managed_oid               = "2008e85a-5f57-4a54-870e-abbacd6b4d09" # 2008e85a-5f57-4a54-870e-abbacd6b4d09
+mgmt_net_name        = "ss-ptl-vnet"
+mgmt_net_rg_name     = "ss-ptl-network-rg"
+mgmt_subscription_id = "6c4d2513-a873-41b4-afdd-b05a33206631"
+# managed_oid               = "2008e85a-5f57-4a54-870e-abbacd6b4d09"
 dts_pre_oid               = "b1fd4154-355f-4683-a795-d09cdb814d16"
 dts_cft_developers_oid    = "d5c01893-b8bc-40ce-926c-d6faf53e0af5"
 power_app_user_oid        = "2757c27a-aa98-4cdf-9aaa-90cf47d0656c"
