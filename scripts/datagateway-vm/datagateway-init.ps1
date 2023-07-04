@@ -24,21 +24,24 @@ Invoke-WebRequest -Uri https://aka.ms/vs/16/release/vc_redist.x64.exe -OutFile v
 .\vc_redist.x64.exe /quiet /install
 Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
 
+# install powershell 7
+Invoke-Expression "& { $(Invoke-RestMethod 'https://aka.ms/install-powershell.ps1') } –useMSI -EnablePSRemoting -Quiet"
+
 #Powershell 7
 # Define the download URL for PowerShell 7 MSI installer
-$downloadUrl = "https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi"
+# $downloadUrl = "https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi"
 
-# Define the temporary file path for downloading the installer
-$tempFile = "$env:TEMP\PowerShell-7.2.0-win-x64.msi"
+# # Define the temporary file path for downloading the installer
+# $tempFile = "$env:TEMP\PowerShell-7.2.0-win-x64.msi"
 
-# Download the PowerShell 7 installer
-Invoke-WebRequest -Uri $downloadUrl -OutFile $tempFile
+# # Download the PowerShell 7 installer
+# Invoke-WebRequest -Uri $downloadUrl -OutFile $tempFile
 
-# Install PowerShell 7 using the downloaded installer
-Start-Process -Wait -FilePath msiexec.exe -ArgumentList "/i `"$tempFile`" /qn"
+# # Install PowerShell 7 using the downloaded installer
+# Start-Process -Wait -FilePath msiexec.exe -ArgumentList "/i `"$tempFile`" /qn"
 
-# Remove the temporary installer file
-Remove-Item -Path $tempFile -Force
+# # Remove the temporary installer file
+# Remove-Item -Path $tempFile -Force
 
 Write-Host "PowerShell 7 has been installed"
 
@@ -46,6 +49,8 @@ Write-Host "PowerShell 7 has been installed"
 Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2088631" -OutFile dotnet-install.exe
 Start-Process -Wait -FilePath "dotnet-install.exe" -ArgumentList "/q /norestart"
 
+Set-ExecutionPolicy Bypass -Scope Process -Force
+# use Powershell 7 from this point
 pwsh
 
 $Psversion = (Get-Host).Version
