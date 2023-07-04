@@ -43,36 +43,28 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
 
   log {
     category = "StorageRead"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
   log {
     category = "StorageWrite"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
   log {
     category = "StorageDelete"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
   metric {
     category = "Transaction"
-    enabled  = true
-
     retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+  metric {
+    category = "Capacity"
+    enabled  = false
+    retention_policy {
+      days    = 0
       enabled = false
     }
   }
