@@ -60,18 +60,18 @@ resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
   type_handler_version = "1.10"
 
   protected_settings = <<SETTINGS
- {
-   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1\"",
-    "scriptVariables": {
-      "recoveryKey":        "element(azurerm_key_vault_secret.dg_recovery, count.index).value",
-      "clientSecret":       "data.azurerm_key_vault_secret.client_secret.value",
-      "clientId":           "${var.pre_ent_appreg_app_id}",
-      "tenantId":           "${var.pre_mi_tenant_id}",
-      "userIDToAddasAdmin": "${var.pre_app_admin}",
-      "gatewayName":        "${var.product}-dg-${var.env}",
-      "gatewayNumber":      "${count.index + 1}"
-      }
- }
+{
+  "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \\"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1\\"",
+  "scriptVariables": {
+    "recoveryKey":        "element(azurerm_key_vault_secret.dg_recovery, count.index).value",
+    "clientSecret":       "data.azurerm_key_vault_secret.client_secret.value",
+    "clientId":           "${var.pre_ent_appreg_app_id}",
+    "tenantId":           "${var.pre_mi_tenant_id}",
+    "userIDToAddasAdmin": "${var.pre_app_admin}",
+    "gatewayName":        "${var.product}-dg-${var.env}",
+    "gatewayNumber":      "${count.index + 1}"
+  }
+}
 SETTINGS
 
   tags       = var.common_tags
