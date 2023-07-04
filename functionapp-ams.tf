@@ -40,5 +40,6 @@ module "ams_function_app" {
     upper("PREFINALSA${var.env}_KEY")   = "${module.finalsa_storage_account.storageaccount_primary_access_key}"
     "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret.value}"
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"   = "false"
+    "AMS_EVENT_LOGS_CONTAINER_NAME"     = "ams-event-logs"
   }
 }
