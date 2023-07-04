@@ -60,7 +60,7 @@ resource "azurerm_virtual_machine_extension" "data_gateway_configure" {
   type_handler_version = "1.10"
 
   protected_settings = jsonencode({
-    "commandToExecute" : "powershell -ExecutionPolicy Bypass -Force -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1;  c:/azuredata/datagateway-init.ps1\"",
+    "commandToExecute" : "powershell -ExecutionPolicy Bypass -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1;  c:/azuredata/datagateway-init.ps1\"",
     "scriptVariables" : {
       "recoveryKey" : element(azurerm_key_vault_secret.dg_recovery, count.index).value,
       "clientSecret" : data.azurerm_key_vault_secret.client_secret.value,
