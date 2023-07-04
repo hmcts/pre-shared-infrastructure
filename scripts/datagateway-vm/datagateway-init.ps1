@@ -1,12 +1,14 @@
-param (
-    [string]$recoveryKey,
-    [string]$clientSecret,
-    [string]$clientId,
-    [string]$tenantId,
-    [string]$userIDToAddasAdmin,
-    [string]$gatewayName,
-    [int]$gatewayNumber
-)
+# Retrieve the protected_settings JSON string
+$protectedSettings = Get-Content -Path $env:AZ_SCRIPTS_PATH | ConvertFrom-Json
+
+# Access the script variables
+$recoveryKey        = $protectedSettings.scriptVariables.recoveryKey
+$clientSecret       = $protectedSettings.scriptVariables.clientSecret
+$clientId           = $protectedSettings.scriptVariables.clientId
+$tenantId           = $protectedSettings.scriptVariables.tenantId
+$userIDToAddasAdmin = $protectedSettings.scriptVariables.userIDToAddasAdmin
+$gatewayName        = $protectedSettings.scriptVariables.gatewayName
+$gatewayNumber      = $protectedSettings.scriptVariables.gatewayNumber
 
 # NuGet
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
