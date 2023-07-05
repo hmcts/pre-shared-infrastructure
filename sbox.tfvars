@@ -11,10 +11,8 @@ env                        = "sbox"
 power_app_user_oid         = "d055ba21-5814-4278-8752-aaffa7eaac62"
 # managed_oid                = "2008e85a-5f57-4a54-870e-abbacd6b4d09"
 dts_pre_oid               = "b1fd4154-355f-4683-a795-d09cdb814d16"
-dts_cft_developers_oid    = "b2a1773c-a5ae-48b5-b5fa-95b0e05eee05"
 dts_pre_project_admin     = "56a29187-3d5f-4262-99d6-c635776e0eac"
-dts_pre_app_admin         = "d055ba21-5814-4278-8752-aaffa7eaac62"
-pre_mi_principal_id       = "eb4aa503-5ffa-49ef-a69d-221e90eaf236"
+# dts_pre_app_admin         = "d055ba21-5814-4278-8752-aaffa7eaac62"
 pre_mi_tenant_id          = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid        = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"
 dts_pre_ent_appreg_oid    = "c7ee0cd6-a440-49e9-8eb8-d050a49a5962"
@@ -24,11 +22,6 @@ dg_vm_private_ip          = ["10.48.1.222", "10.48.1.223"]
 powerbi_dg_vm_private_ip  = ["10.48.1.224", "10.48.1.225"]
 edit_vm_private_ip        = ["10.48.1.6", "10.48.1.7"]
 pre_ent_appreg_app_id     = "07587e3c-603e-401f-98d1-ff26206e93f8"
-pg_databases = [
-  {
-    name : "pre-pdb-sbox"
-  }
-]
 
 retention_duration         = "P1D"
 restore_policy_days        = "1"

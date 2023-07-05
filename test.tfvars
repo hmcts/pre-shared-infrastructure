@@ -12,7 +12,6 @@ mgmt_subscription_id       = "6c4d2513-a873-41b4-afdd-b05a33206631"
 
 #identities
 pre_app_admin             = "dbe1ceab-c6a0-4155-8f9c-060dbbbd5c2a"
-pre_mi_principal_id       = "d03f73e6-40ed-40a2-a0ec-059286505905"
 pre_mi_tenant_id          = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid        = "913743c8-60eb-4cca-a15c-2033db5118cd"
 dts_pre_ent_appreg_oid    = "fd9eddbb-3ec9-4fda-81fc-d518d4718a70"
