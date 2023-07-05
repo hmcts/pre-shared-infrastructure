@@ -41,15 +41,15 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
   target_resource_id         = "${module.ingestsa_storage_account.storageaccount_id}/blobServices/default"
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  log {
+  enabled_log {
     category = "StorageRead"
   }
 
-  log {
+  enabled_log {
     category = "StorageWrite"
   }
 
-  log {
+  enabled_log {
     category = "StorageDelete"
   }
 
