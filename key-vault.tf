@@ -1,5 +1,3 @@
-data "azurerm_client_config" "current" {}
-
 module "key-vault" {
   source                          = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
   name                            = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
@@ -13,6 +11,7 @@ module "key-vault" {
   create_managed_identity         = true
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
+  private_endpoint_subnet_id      = var.env == "sbox" ? azurerm_subnet.endpoint_subnet.id : null
 }
 
 // Power App Permissions
@@ -68,16 +67,6 @@ resource "random_string" "vm_username" {
   special = false
 }
 
-resource "random_password" "vm_password" {
-  count            = var.num_vid_edit_vms
-  length           = 16
-  special          = true
-  override_special = "#$%&@()_[]{}<>:?"
-  min_upper        = 1
-  min_lower        = 1
-  min_numeric      = 1
-}
-
 resource "azurerm_key_vault_secret" "vm_username_secret" {
   count        = var.num_vid_edit_vms
   name         = "videditvm${count.index}-username"
@@ -85,16 +74,7 @@ resource "azurerm_key_vault_secret" "vm_username_secret" {
   key_vault_id = module.key-vault.key_vault_id
 }
 
-resource "azurerm_key_vault_secret" "vm_password_secret" {
-  count        = var.num_vid_edit_vms
-  name         = "videditvm${count.index}-password"
-  value        = random_password.vm_password[count.index].result
-  key_vault_id = module.key-vault.key_vault_id
-}
-
 ## Datagateway
-
-
 resource "random_string" "dtgtwy_username" {
   count   = var.num_datagateway
   length  = 4
@@ -127,7 +107,7 @@ resource "azurerm_key_vault_secret" "dtgtwy_password_secret" {
 
 
 #################################
-##  Disk Encryption 
+##  Disk Encryption
 ###############################
 
 resource "azurerm_key_vault_key" "pre_kv_key" {
@@ -172,13 +152,6 @@ resource "azurerm_key_vault_access_policy" "pre-des-disk" {
     "WrapKey",
     "UnwrapKey"
   ]
-}
-
-data "azurerm_key_vault" "keyvault" {
-  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}" #module.key-vault.key_vault_name
-  resource_group_name = azurerm_resource_group.rg.name
-
-  depends_on = [module.key-vault]
 }
 
 ### Dynatrace
