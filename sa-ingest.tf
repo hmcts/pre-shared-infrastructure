@@ -14,7 +14,7 @@ module "ingestsa_storage_account" {
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
   enable_change_feed              = true
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
-  # private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
+  private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
