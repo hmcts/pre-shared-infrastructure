@@ -7,15 +7,15 @@ module "finalsa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   allow_nested_items_to_be_public = false
-  ip_rules                        = var.ip_rules
   default_action                  = "Allow"
   enable_data_protection          = true
+  restore_policy_days             = var.restore_policy_days
   cors_rules                      = var.cors_rules
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed-identity.principal_id
   enable_change_feed              = true
-  # private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
+  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
+  private_endpoint_subnet_id      = azurerm_subnet.endpoint_subnet.id
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
@@ -28,5 +28,54 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
   name         = "finalsa-storage-account-connection-string"
   value        = module.finalsa_storage_account.storageaccount_primary_connection_string
   key_vault_id = module.key-vault.key_vault_id
+}
+
+# For container cleanup operations
+resource "azurerm_role_assignment" "powerapp_appreg_final_contrib" {
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.dts_pre_backup_appreg_oid
+}
+
+resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
+  name                       = module.finalsa_storage_account.storageaccount_name
+  target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "StorageRead"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageWrite"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    category = "StorageDelete"
+    enabled  = true
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  metric {
+    category = "Transaction"
+    enabled  = true
+
+    retention_policy {
+      enabled = false
+    }
+  }
 }
 

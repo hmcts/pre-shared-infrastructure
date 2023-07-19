@@ -118,27 +118,6 @@ data "azurerm_virtual_network" "hub" {
   resource_group_name = local.hub[local.hub_name].ukSouth.name
 }
 
-resource "azurerm_virtual_network_peering" "to_hub" {
-  name                         = "hub"
-  resource_group_name          = azurerm_resource_group.rg.name
-  virtual_network_name         = azurerm_virtual_network.vnet.name
-  remote_virtual_network_id    = data.azurerm_virtual_network.hub.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-
-}
-
-resource "azurerm_virtual_network_peering" "from_hub" {
-  provider = azurerm.hub
-
-  name                         = var.PeeringFromHubName
-  resource_group_name          = local.hub[local.hub_name].ukSouth.name
-  virtual_network_name         = local.hub[local.hub_name].ukSouth.name
-  remote_virtual_network_id    = azurerm_virtual_network.vnet.id
-  allow_virtual_network_access = true
-  allow_forwarded_traffic      = true
-}
-
 resource "azurerm_route_table" "postgres" {
   name                          = "${var.product}-${var.env}-route-table"
   location                      = var.location
@@ -158,4 +137,50 @@ resource "azurerm_route_table" "postgres" {
 resource "azurerm_subnet_route_table_association" "dg_subnet" {
   subnet_id      = azurerm_subnet.datagateway_subnet.id
   route_table_id = azurerm_route_table.postgres.id
+}
+
+module "vnet_peer_to_hub" {
+  source = "git@github.com:hmcts/terraform-module-vnet-peering.git?ref=master"
+  peerings = {
+    source = {
+      name           = "hub"
+      vnet           = azurerm_virtual_network.vnet.name
+      resource_group = azurerm_virtual_network.vnet.resource_group_name
+    }
+    target = {
+      name           = var.PeeringFromHubName
+      vnet           = local.hub[local.hub_name].ukSouth.name
+      resource_group = local.hub[local.hub_name].ukSouth.name
+    }
+  }
+
+  providers = {
+    azurerm.initiator = azurerm
+    azurerm.target    = azurerm.hub
+  }
+}
+
+#vnet logs
+resource "azurerm_monitor_diagnostic_setting" "vnet" {
+
+  name                       = azurerm_virtual_network.vnet.name
+  target_resource_id         = azurerm_virtual_network.vnet.id
+  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
+
+  log {
+    category = "VMProtectionAlerts"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
+  metric {
+    category = "AllMetrics"
+
+    retention_policy {
+      enabled = true
+      days    = 14
+    }
+  }
 }

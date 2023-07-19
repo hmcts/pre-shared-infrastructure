@@ -1,14 +1,15 @@
 module "powerBI_data_gateway" {
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-vm-module.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.powerbi_dg_vm_type
   vm_name                        = "powerbi-${count.index + 1}-${var.env}"
+  computer_name                  = "powerbi${count.index + 1}${var.env}"
   vm_resource_group              = azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.powerbi_dg_vm_size
   vm_admin_name                  = azurerm_key_vault_secret.powerbi_dg_username[count.index].value
   vm_admin_password              = azurerm_key_vault_secret.powerbi_dg_password[count.index].value
-  vm_availability_zones          = local.powerbi_dg_vm_availability_zones[count.index]
+  vm_availabilty_zones           = local.powerbi_dg_vm_availabilty_zones[count.index]
   managed_disks                  = var.powerbi_dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
@@ -18,11 +19,10 @@ module "powerBI_data_gateway" {
   kv_rg_name  = "pre-${var.env}"
   encrypt_ADE = true
 
-  nic_name             = lower("powerbi-dg${count.index + 1}-nic-${var.env}")
-  ipconfig_name        = local.powerbi_dg_ipconfig_name
-  vm_subnet_id         = local.powerbi_dg_vm_subnet_id
-  vm_private_ip        = var.powerbi_dg_vm_private_ip[count.index]
-  privateip_allocation = "Static"
+  nic_name      = lower("powerbi-dg${count.index + 1}-nic-${var.env}")
+  ipconfig_name = local.powerbi_dg_ipconfig_name
+  vm_subnet_id  = local.powerbi_dg_vm_subnet_id
+  vm_private_ip = var.powerbi_dg_vm_private_ip[count.index]
 
   #storage_image_reference
   vm_publisher_name = local.powerbi_dg_marketplace_publisher
@@ -85,12 +85,12 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
 locals {
   powerbi_dg_vm_type = "windows"
 
-  powerbi_dg_vm_size       = "Standard_F8s_v2"
+  powerbi_dg_vm_size       = "Standard_D8ds_v5"
   powerbi_dg_ipconfig_name = "IP_CONFIGURATION"
 
   powerbi_dg_vm_subnet_id = azurerm_subnet.datagateway_subnet.id
 
-  powerbi_dg_vm_availability_zones = [1, 2]
+  powerbi_dg_vm_availabilty_zones  = [1, 2]
   powerbi_dg_marketplace_product   = "WindowsServer"
   powerbi_dg_marketplace_publisher = "MicrosoftWindowsServer"
   powerbi_dg_marketplace_sku       = "2019-Datacenter-gensecond"

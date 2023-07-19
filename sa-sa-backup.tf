@@ -10,7 +10,7 @@ module "sa_storage_account_backup" {
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id])
   allow_nested_items_to_be_public = false
   default_action                  = "Allow"
-  enable_data_protection          = true
+  enable_data_protection          = false
 
   common_tags = var.common_tags
   depends_on  = [module.key-vault]
@@ -34,6 +34,13 @@ resource "azurerm_role_assignment" "powerapp_appreg_sa" {
 resource "azurerm_role_assignment" "powerapp_appreg_sabackup" {
   scope                = module.sa_storage_account_backup.storageaccount_id
   role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = var.dts_pre_backup_appreg_oid
+}
+
+# To get key and create container in backup sa storage account
+resource "azurerm_role_assignment" "powerapp_appreg_sa2" {
+  scope                = module.sa_storage_account_backup.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
 }
 
