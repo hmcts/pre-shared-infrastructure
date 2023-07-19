@@ -167,7 +167,7 @@ resource "azurerm_monitor_diagnostic_setting" "vnet" {
   target_resource_id         = azurerm_virtual_network.vnet.id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  log {
+  enabled_log {
     category = "VMProtectionAlerts"
 
     retention_policy {

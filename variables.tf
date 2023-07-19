@@ -67,9 +67,7 @@ variable "jenkins_ptlsbox_appid" {
 }
 # variable "managed_oid" {}
 variable "dts_pre_oid" {}
-# variable "dts_cft_developers_oid" {}
 variable "dts_pre_project_admin" {}
-# variable "pre_mi_principal_id" {}
 variable "pre_mi_tenant_id" {}
 # variable "dts_pre_app_admin" {}
 
