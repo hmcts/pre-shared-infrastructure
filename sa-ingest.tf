@@ -20,7 +20,6 @@ module "ingestsa_storage_account" {
   ]
 
   common_tags = var.common_tags
-  depends_on  = [module.key-vault, module.vnet_peer_to_hub]
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
