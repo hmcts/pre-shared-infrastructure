@@ -11,11 +11,21 @@ resource "azurerm_media_services_account" "ams" {
   storage_account {
     id         = module.ingestsa_storage_account.storageaccount_id
     is_primary = true
+
+    managed_identity {
+      use_system_assigned_identity = false
+      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
+    }
   }
 
   storage_account {
     id         = module.finalsa_storage_account.storageaccount_id
     is_primary = false
+
+    managed_identity {
+      use_system_assigned_identity = false
+      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
+    }
   }
 
   tags = var.common_tags
@@ -59,7 +69,7 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   target_resource_id         = azurerm_media_services_account.ams.id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  log {
+  enabled_log {
     category = "MediaAccount"
 
     retention_policy {
@@ -67,9 +77,8 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
       days    = 14
     }
   }
-  log {
+  enabled_log {
     category = "KeyDeliveryRequests"
-    enabled  = true
   }
   metric {
     category = "AllMetrics"

@@ -32,40 +32,31 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
   name                       = module.sa_storage_account.storageaccount_name
   target_resource_id         = "${module.sa_storage_account.storageaccount_id}/blobServices/default"
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
-
-  log {
+  enabled_log {
     category = "StorageRead"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
-  log {
+  enabled_log {
     category = "StorageWrite"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
-  log {
+  enabled_log {
     category = "StorageDelete"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
   metric {
     category = "Transaction"
-    enabled  = true
-
     retention_policy {
-      enabled = true
+      days    = 0
+      enabled = false
+    }
+  }
+  metric {
+    category = "Capacity"
+    enabled  = false
+    retention_policy {
+      days    = 0
+      enabled = false
     }
   }
 }

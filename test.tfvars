@@ -9,6 +9,7 @@ num_vid_edit_vms           = 2
 mgmt_net_name              = "ss-ptl-vnet"
 mgmt_net_rg_name           = "ss-ptl-network-rg"
 mgmt_subscription_id       = "6c4d2513-a873-41b4-afdd-b05a33206631"
+PeeringFromHubName         = "pre-recorded-evidence-test"
 
 #identities
 dts_pre_project_admin     = "56a29187-3d5f-4262-99d6-c635776e0eac"
