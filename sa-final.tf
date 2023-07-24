@@ -41,41 +41,30 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
   target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  log {
+  enabled_log {
     category = "StorageRead"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
   }
 
-  log {
+  enabled_log {
     category = "StorageWrite"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
   }
 
-  log {
+  enabled_log {
     category = "StorageDelete"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
   }
 
   metric {
     category = "Transaction"
-    enabled  = true
-
     retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+  metric {
+    category = "Capacity"
+    enabled  = false
+    retention_policy {
+      days    = 0
       enabled = false
     }
   }
