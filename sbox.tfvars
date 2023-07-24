@@ -23,6 +23,102 @@ retention_duration         = "P1D"
 immutability_period_backup = "1"
 restore_policy_days        = "1"
 
+#vms
+powerbi_dg_vm_private_ip = ["10.48.1.25", "10.48.1.26"]
+dg_vm_private_ip         = ["10.48.1.22", "10.48.1.23"]
+edit_vm_private_ip       = ["10.48.1.7", "10.48.1.8"]
+tenant_id                = "yrk32651"
+num_vid_edit_vms         = 1
+edit_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "edit-vm01-data-dev"
+    location             = "uksouth"
+    resource_group_name  = "pre-dev"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "edit-vm02-data-dev"
+      location             = "uksouth"
+      resource_group_name  = "pre-dev"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
+
+
+dg_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "data-gateway-vm01-data-sbox"
+    location             = "uksouth"
+    resource_group_name  = "pre-sbox"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "data-gateway-vm02-data-sbox"
+      location             = "uksouth"
+      resource_group_name  = "pre-sbox"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
 powerbi_dg_vm_data_disks = [{
   datadisk1 = {
     name                     = "powerbi-dg1-data-sbox"
