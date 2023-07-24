@@ -94,10 +94,6 @@ variable "database_name" {
   default = "pre-db"
 }
 
-variable "pgsql_sku" {
-  default = "GP_Standard_D2s_v3"
-}
-
 variable "pgsql_storage_mb" {
   default = "32768"
 }
