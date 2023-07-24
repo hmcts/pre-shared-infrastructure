@@ -17,13 +17,18 @@ module "ingestsa_storage_account" {
   ]
 
   common_tags = var.common_tags
-  depends_on  = [module.key-vault, module.vnet_peer_to_hub]
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
   name         = "ingestsa-storage-account-connection-string"
   value        = module.ingestsa_storage_account.storageaccount_primary_connection_string
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.pre_kv.id
+}
+
+resource "azurerm_role_assignment" "powerapp_appreg_ingest_contrib" {
+  scope                = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.dts_pre_backup_appreg_oid
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {

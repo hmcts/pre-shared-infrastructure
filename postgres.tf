@@ -30,6 +30,19 @@ module "data_store_db_v14" {
 
 }
 
+resource "azurerm_key_vault_secret" "POSTGRES_USER" {
+  name         = "postgresdb-username"
+  value        = var.pgsql_admin_username
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
+resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
+  name         = "postgresdb-password"
+  value        = module.data_store_db_v14.password
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)
 resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
   provider              = azurerm.private_dns

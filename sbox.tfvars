@@ -21,51 +21,8 @@ dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 #backups
 retention_duration         = "P1D"
 immutability_period_backup = "1"
+restore_policy_days        = "1"
 
-powerbi_dg_vm_data_disks = [{
-  datadisk1 = {
-    name                 = "data-gateway-vm01-data-sbox"
-    location             = "uksouth"
-    resource_group_name  = "pre-sbox"
-    storage_account_type = "StandardSSD_LRS"
-    disk_create_option   = "Empty"
-    disk_size_gb         = "1000"
-    disk_tier            = null
-    disk_zone            = "1"
-    source_resource_id   = null
-    storage_account_id   = null
-    hyper_v_generation   = null
-    os_type              = null
-
-
-    disk_lun                 = "10"
-    attachment_create_option = "Attach"
-    disk_caching             = "ReadWrite"
-
-  }
-  },
-  {
-    datadisk1 = {
-      name                 = "data-gateway-vm02-data-sbox"
-      location             = "uksouth"
-      resource_group_name  = "pre-sbox"
-      storage_account_type = "StandardSSD_LRS"
-      disk_create_option   = "Empty"
-      disk_size_gb         = "1000"
-      disk_tier            = null
-      disk_zone            = "2"
-      source_resource_id   = null
-      storage_account_id   = null
-      hyper_v_generation   = null
-      os_type              = null
-
-
-      disk_lun                 = "10"
-      attachment_create_option = "Attach"
-      disk_caching             = "ReadWrite"
-
-    }
-}]
 powerbi_dg_vm_data_disks = [{
   datadisk1 = {
     name                     = "powerbi-dg1-data-sbox"
