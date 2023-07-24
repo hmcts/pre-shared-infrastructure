@@ -24,24 +24,10 @@ module "data_store_db_v14" {
   location             = var.location
   resource_group_name  = data.azurerm_resource_group.rg.name
   pgsql_admin_username = var.pgsql_admin_username
-  pgsql_sku            = var.pgsql_sku
   pgsql_storage_mb     = var.pgsql_storage_mb
 
   admin_user_object_id = var.jenkins_AAD_objectId
 
-}
-
-resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  name         = "postgresdb-username"
-  value        = var.pgsql_admin_username
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
-resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
-  name         = "postgresdb-password"
-  value        = module.data_store_db_v14.password
-  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 # connect data gateway vnet to private dns zone (this will contain the A name for postgres)

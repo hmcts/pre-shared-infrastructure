@@ -1,5 +1,7 @@
 #network
 env                        = "test"
+#network
+env                        = "test"
 vnet_address_space         = "10.70.21.0/24"
 video_edit_vm_snet_address = "10.70.21.0/26"
 privatendpt_snet_address   = "10.70.21.64/26"
@@ -22,8 +24,58 @@ pre_ent_appreg_app_id     = "66930c25-cbaa-4b9b-81ab-bea600666acb"
 dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 
 #backups
+#backups
 retention_duration         = "P7D"
 immutability_period_backup = "7"
+restore_policy_days        = "1"
+
+#vms
+tenant_id                = "yrk32651"
+dg_vm_private_ip         = ["10.70.21.198", "10.70.21.199"]
+powerbi_dg_vm_private_ip = ["10.70.21.221", "10.70.21.222"]
+edit_vm_private_ip       = ["10.70.21.6", "10.70.21.7"]
+
+edit_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "edit-vm01-data-test"
+    location             = "uksouth"
+    resource_group_name  = "pre-test"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "edit-vm02-data-test"
+      location             = "uksouth"
+      resource_group_name  = "pre-test"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
 
 #vms
 tenant_id                = "yrk32651"
@@ -118,6 +170,45 @@ dg_vm_data_disks = [{
       attachment_create_option = "Attach"
       disk_caching             = "ReadWrite"
 
+    }
+}]
+
+powerbi_dg_vm_data_disks = [{
+  datadisk1 = {
+    name                     = "powerbi-dg1-data-test"
+    location                 = "uksouth"
+    resource_group_name      = "pre-test"
+    storage_account_type     = "StandardSSD_LRS"
+    disk_create_option       = "Empty"
+    disk_size_gb             = "1000"
+    disk_tier                = null
+    disk_zone                = "1"
+    source_resource_id       = null
+    storage_account_id       = null
+    hyper_v_generation       = null
+    os_type                  = null
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+  }
+  },
+  {
+    datadisk1 = {
+      name                     = "powerbi-dg2-data-test"
+      location                 = "uksouth"
+      resource_group_name      = "pre-test"
+      storage_account_type     = "StandardSSD_LRS"
+      disk_create_option       = "Empty"
+      disk_size_gb             = "1000"
+      disk_tier                = null
+      disk_zone                = "2"
+      source_resource_id       = null
+      storage_account_id       = null
+      hyper_v_generation       = null
+      os_type                  = null
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
     }
 }]
 
