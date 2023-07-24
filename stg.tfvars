@@ -22,55 +22,11 @@ dts_pre_backup_appreg_oid = "8cb76e1e-ef5a-41a7-9cb4-9513a48535dc"
 #backups
 retention_duration         = "P1D"
 immutability_period_backup = "1"
+restore_policy_days        = "1"
 
 #vms
 tenant_id                = "yrk32651"
 powerbi_dg_vm_private_ip = ["10.101.0.224", "10.101.0.225"]
-pre_ent_appreg_app_id    = "2f4bf1fd-543c-4332-bc26-7a524f52d375"
-powerbi_dg_vm_data_disks = [{
-  datadisk1 = {
-    name                 = "data-gateway-vm01-data-stg"
-    location             = "uksouth"
-    resource_group_name  = "pre-stg"
-    storage_account_type = "StandardSSD_LRS"
-    disk_create_option   = "Empty"
-    disk_size_gb         = "1000"
-    disk_tier            = null
-    disk_zone            = "1"
-    source_resource_id   = null
-    storage_account_id   = null
-    hyper_v_generation   = null
-    os_type              = null
-
-
-    disk_lun                 = "10"
-    attachment_create_option = "Attach"
-    disk_caching             = "ReadWrite"
-
-  }
-  },
-  {
-    datadisk1 = {
-      name                 = "data-gateway-vm02-data-stg"
-      location             = "uksouth"
-      resource_group_name  = "pre-stg"
-      storage_account_type = "StandardSSD_LRS"
-      disk_create_option   = "Empty"
-      disk_size_gb         = "1000"
-      disk_tier            = null
-      disk_zone            = "2"
-      source_resource_id   = null
-      storage_account_id   = null
-      hyper_v_generation   = null
-      os_type              = null
-
-
-      disk_lun                 = "10"
-      attachment_create_option = "Attach"
-      disk_caching             = "ReadWrite"
-
-    }
-}]
 
 powerbi_dg_vm_data_disks = [{
   datadisk1 = {

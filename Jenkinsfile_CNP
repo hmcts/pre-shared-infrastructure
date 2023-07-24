@@ -10,6 +10,5 @@ withInfraPipeline(product, component) {
   enableSlackNotifications('#pre-builds')
   syncBranchesWithMaster(branchesToSync)
   expires(expiresAfter)
-  enableSlackNotifications('#pre-builds')
 }
 

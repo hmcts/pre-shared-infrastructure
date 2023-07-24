@@ -20,6 +20,7 @@ dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 #backups
 retention_duration         = "P1D"
 immutability_period_backup = "1"
+restore_policy_days        = "1"
 
 #vms
 num_vid_edit_vms         = 1

@@ -10,10 +10,22 @@ locals {
   mgmt_network_rg_name = var.mgmt_net_rg_name
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = local.resource_group_name
-  location = var.location
-  tags     = var.common_tags
+resource "azurerm_role_assignment" "powerapp_appreg" {
+  scope                = data.azurerm_resource_group.rg.id
+  role_definition_name = "Contributor"
+  principal_id         = var.pre_app_admin
+}
+
+resource "azurerm_role_assignment" "admin_ingestsa_contributor" {
+  scope                = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.pre_app_admin
+}
+
+resource "azurerm_role_assignment" "admin_finalsa_contributor" {
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.pre_app_admin
 }
 
 resource "azurerm_role_assignment" "admin_finalsa_data_contributor" {

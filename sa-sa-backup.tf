@@ -42,3 +42,10 @@ resource "azurerm_role_assignment" "powerapp_appreg_sa2" {
   role_definition_name = "Storage Account Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
 }
+
+# Used in storage account backups to get key and list containers
+resource "azurerm_role_assignment" "powerapp_appreg_sa_cont" {
+  scope                = module.sa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.dts_pre_backup_appreg_oid
+}

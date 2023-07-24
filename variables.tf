@@ -173,3 +173,5 @@ variable "location_backup" {
 variable "dts_pre_backup_appreg_oid" {}
 
 variable "immutability_period_backup" {}
+
+variable "restore_policy_days" {}
