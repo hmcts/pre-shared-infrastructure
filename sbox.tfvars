@@ -21,6 +21,7 @@ dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 #backups
 retention_duration         = "P1D"
 immutability_period_backup = "1"
+restore_policy_days        = "1"
 
 #vms
 powerbi_dg_vm_private_ip = ["10.48.1.25", "10.48.1.26"]

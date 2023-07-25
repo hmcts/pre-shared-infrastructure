@@ -24,6 +24,7 @@ dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 #backups
 retention_duration         = "P7D"
 immutability_period_backup = "7"
+restore_policy_days        = "1"
 
 #vms
 tenant_id                = "yrk32651"
