@@ -40,7 +40,7 @@ data "azurerm_resource_group" "rg" {
 }
 
 data "azurerm_virtual_network" "vnet" {
-  name                = "${var.product}-vnet-${var.env}"
+  name                = var.env == "dev" ? "${var.product}-vnet-${var.env}" : "${var.product}-vnet01-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 data "azurerm_subnet" "endpoint_subnet" {
@@ -50,7 +50,7 @@ data "azurerm_subnet" "endpoint_subnet" {
 }
 
 data "azurerm_subnet" "videoedit_subnet" {
-  name                 = "${var.product}-videoedit-snet-${var.env}"
+  name                 = var.env == "dev" ? "${var.product}-videoedit-snet-${var.env}" : "${var.product}-videoeditvm-snet-${var.env}"
   resource_group_name  = data.azurerm_resource_group.rg.name
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }

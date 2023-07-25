@@ -1,12 +1,14 @@
 #!groovy
+@Library("Infrastructure") _
 
-@Library('Infrastructure') _
-
-def product = 'pre'
+def product = "pre"
+def component = "shared-infrastructure"
+def branchesToSync = ['demo']
 def expiresAfter = "3000-01-01"
 
-withParameterizedInfraPipeline(product, 'sbox', 'sbox') {
-    expires(expiresAfter)
-
-
+withInfraPipeline(product, component) {
+  enableSlackNotifications('#pre-builds')
+  syncBranchesWithMaster(branchesToSync)
+  expires(expiresAfter)
 }
+
