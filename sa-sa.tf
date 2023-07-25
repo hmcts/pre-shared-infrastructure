@@ -10,10 +10,11 @@ module "sa_storage_account" {
   allow_nested_items_to_be_public = false
   default_action                  = "Deny"
   enable_data_protection          = true
+  restore_policy_days             = var.restore_policy_days
+  enable_change_feed              = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
-
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
@@ -25,7 +26,7 @@ module "sa_storage_account" {
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
   name         = "sa-storage-account-connection-string"
   value        = module.sa_storage_account.storageaccount_primary_connection_string
-  key_vault_id = data.azurerm_key_vault.keyvault.id
+  key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {

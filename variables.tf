@@ -94,10 +94,6 @@ variable "database_name" {
   default = "pre-db"
 }
 
-variable "pgsql_sku" {
-  default = "GP_Standard_D2s_v3"
-}
-
 variable "pgsql_storage_mb" {
   default = "32768"
 }
@@ -177,3 +173,5 @@ variable "location_backup" {
 variable "dts_pre_backup_appreg_oid" {}
 
 variable "immutability_period_backup" {}
+
+variable "restore_policy_days" {}

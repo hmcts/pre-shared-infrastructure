@@ -22,6 +22,7 @@ dts_pre_backup_appreg_oid = "8cb76e1e-ef5a-41a7-9cb4-9513a48535dc"
 #backups
 retention_duration         = "P1D"
 immutability_period_backup = "1"
+restore_policy_days        = "1"
 
 #vms
 tenant_id                = "yrk32651"
@@ -29,6 +30,7 @@ num_vid_edit_vms         = 1
 powerbi_dg_vm_private_ip = ["10.101.0.24", "10.101.0.25"]
 dg_vm_private_ip         = ["10.101.0.22", "10.101.0.23"]
 edit_vm_private_ip       = ["10.101.0.6", "10.101.0.7"]
+
 edit_vm_data_disks = [{
   datadisk1 = {
     name                 = "edit-vm01-data-stg"
