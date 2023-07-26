@@ -61,7 +61,7 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   target_resource_id         = azurerm_media_services_account.ams.id
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  log {
+  enabled_log {
     category = "MediaAccount"
 
     retention_policy {
@@ -69,9 +69,8 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
       days    = 14
     }
   }
-  log {
+  enabled_log {
     category = "KeyDeliveryRequests"
-    enabled  = true
   }
   metric {
     category = "AllMetrics"

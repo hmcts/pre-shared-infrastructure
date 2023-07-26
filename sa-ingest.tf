@@ -20,6 +20,7 @@ module "ingestsa_storage_account" {
   ]
 
   common_tags = var.common_tags
+  depends_on  = [module.key-vault, module.vnet_peer_to_hub]
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
@@ -41,38 +42,30 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
   target_resource_id         = "${module.ingestsa_storage_account.storageaccount_id}/blobServices/default"
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
 
-  log {
+  enabled_log {
     category = "StorageRead"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
-  log {
+  enabled_log {
     category = "StorageWrite"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
-  log {
+  enabled_log {
     category = "StorageDelete"
-    enabled  = true
-
-    retention_policy {
-      enabled = true
-    }
   }
 
   metric {
     category = "Transaction"
-    enabled  = true
-
     retention_policy {
+      days    = 0
+      enabled = false
+    }
+  }
+  metric {
+    category = "Capacity"
+    enabled  = false
+    retention_policy {
+      days    = 0
       enabled = false
     }
   }
