@@ -10,7 +10,7 @@ mgmt_net_rg_name           = "ss-ptlsbox-network-rg"
 mgmt_subscription_id       = "64b1c6d6-1481-44ad-b620-d8fe26a2c768"
 
 #identities
-pre_app_admin             = "d055ba21-5814-4278-8752-aaffa7eaac62"
+# pre_app_admin             = "d055ba21-5814-4278-8752-aaffa7eaac62"
 pre_mi_principal_id       = "eb4aa503-5ffa-49ef-a69d-221e90eaf236"
 pre_mi_tenant_id          = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_appreg_oid        = "e3fe0d7b-10a5-4e8a-9f31-863f8618b2f4"

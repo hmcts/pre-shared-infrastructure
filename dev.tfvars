@@ -10,7 +10,7 @@ mgmt_net_rg_name           = "ss-ptl-network-rg"
 mgmt_subscription_id       = "6c4d2513-a873-41b4-afdd-b05a33206631"
 
 #identities
-pre_app_admin             = "8d48024b-9a39-4777-94b0-0751f0cb3832"
+# pre_app_admin             = "8d48024b-9a39-4777-94b0-0751f0cb3832"
 dts_pre_ent_appreg_oid    = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev enterprise app/sp
 pre_ent_appreg_app_id     = "7394ca1a-31de-4433-beca-2ca1a2043d5c"
 dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
