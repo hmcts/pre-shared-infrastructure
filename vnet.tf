@@ -77,9 +77,9 @@ locals {
         name         = "hmcts-hub-prod-int"
         peering_name = "hubUkS"
         next_hop_ip  = "10.11.8.36"
+      }
     }
   }
-
   hub_to_env_mapping = {
     sbox    = ["sbox", "ptlsbox"]
     nonprod = ["demo", "dev", "aat", "test", "ithc", "ptl"]
