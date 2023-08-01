@@ -11,7 +11,7 @@ module "key-vault" {
   create_managed_identity         = true
   network_acls_allowed_subnet_ids = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.pipelineagent_subnet.id], [azurerm_subnet.endpoint_subnet.id], [azurerm_subnet.datagateway_subnet.id], [azurerm_subnet.videoeditvm_subnet.id])
   purge_protection_enabled        = true
-  private_endpoint_subnet_id      = var.env == "sbox" ? azurerm_subnet.endpoint_subnet.id : null
+  # private_endpoint_subnet_id      = var.env == "sbox" ? azurerm_subnet.endpoint_subnet.id : null
 }
 
 // Power App Permissions
@@ -27,16 +27,16 @@ resource "azurerm_key_vault_access_policy" "power_app_access" {
 #####################################
 #    DTS Pre-recorded Evidence | Members Access to KV
 #####################################
-resource "azurerm_key_vault_access_policy" "dts_pre_access" {
-  key_vault_id = module.key-vault.key_vault_id
-  # application_id        = var.app_id
-  object_id               = var.dts_pre_oid
-  tenant_id               = data.azurerm_client_config.current.tenant_id
-  key_permissions         = ["List", "Get", ]
-  certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
-  secret_permissions      = ["List", "Get", ]
-  storage_permissions     = ["List", "Get", ]
-}
+# resource "azurerm_key_vault_access_policy" "dts_pre_access" {
+#   key_vault_id = module.key-vault.key_vault_id
+#   # application_id        = var.app_id
+#   object_id               = var.dts_pre_oid
+#   tenant_id               = data.azurerm_client_config.current.tenant_id
+#   key_permissions         = ["List", "Get", ]
+#   certificate_permissions = ["List", "Get", "GetIssuers", "ListIssuers", ]
+#   secret_permissions      = ["List", "Get", ]
+#   storage_permissions     = ["List", "Get", ]
+# }
 #####################################
 #    DTS PRE Admin
 #####################################
