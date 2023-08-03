@@ -105,3 +105,8 @@ data "azurerm_key_vault" "pre_kv" {
 # }
 
 data "azurerm_subscription" "current" {}
+
+data "azurerm_key_vault_secret" "symmetrickey" {
+  name         = "symmetrickey"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
