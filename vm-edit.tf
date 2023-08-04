@@ -177,7 +177,7 @@ resource "azurerm_key_vault_secret" "edit_password" {
 }
 
 resource "azurerm_role_assignment" "edit_admin" {
-  scope                = module.edit_vm.*.vm_id[count.index]
+  scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Virtual Machine Administrator Login"
   principal_id         = "3083d1ef-be3d-4c21-a98a-ce52b97dcdc3"
 }
