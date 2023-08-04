@@ -36,3 +36,17 @@ data "azurerm_subnet" "pipelineagent_subnet" {
   virtual_network_name = local.mgmt_network_name
   resource_group_name  = local.mgmt_network_rg_name
 }
+
+data "azurerm_key_vault" "keyvault" {
+  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
+data "azurerm_key_vault_secret" "symmetrickey" {
+  name         = "symmetrickey"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_resource_group" "rg" {
+  name = "${var.product}-${var.env}"
+}
