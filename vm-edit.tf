@@ -14,6 +14,7 @@ module "edit_vm" {
   accelerated_networking_enabled = true
   custom_data                    = filebase64("./scripts/edit-init.ps1")
   privateip_allocation           = "Static"
+  systemassigned_identity        = true
 
   #Disk Encryption
   kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
@@ -176,6 +177,7 @@ resource "azurerm_key_vault_secret" "edit_password" {
   key_vault_id = data.azurerm_key_vault.pre_kv.id
 }
 
+#experimental - to be removed
 resource "azurerm_role_assignment" "edit_admin" {
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Virtual Machine Administrator Login"
