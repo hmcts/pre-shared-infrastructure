@@ -12,7 +12,6 @@ module "data_gateway_vm" {
   vm_availabilty_zones           = local.dg_vm_availability_zones[count.index]
   managed_disks                  = var.dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
-  custom_data                    = filebase64("./scripts/datagateway-init.ps1")
   privateip_allocation           = "Static"
 
   #Disk Encryption
