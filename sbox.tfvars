@@ -31,9 +31,9 @@ tenant_id                = "yrk32651"
 num_vid_edit_vms         = 1
 edit_vm_data_disks = [{
   datadisk1 = {
-    name                 = "edit-vm01-data-dev"
+    name                 = "edit-vm01-data-sbox"
     location             = "uksouth"
-    resource_group_name  = "pre-dev"
+    resource_group_name  = "pre-sbox"
     storage_account_type = "StandardSSD_LRS"
     disk_create_option   = "Empty"
     disk_size_gb         = "1000"
@@ -53,9 +53,9 @@ edit_vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "edit-vm02-data-dev"
+      name                 = "edit-vm02-data-sbox"
       location             = "uksouth"
-      resource_group_name  = "pre-dev"
+      resource_group_name  = "pre-sbox"
       storage_account_type = "StandardSSD_LRS"
       disk_create_option   = "Empty"
       disk_size_gb         = "1000"
