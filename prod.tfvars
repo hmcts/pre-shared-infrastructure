@@ -33,9 +33,9 @@ edit_vm_private_ip       = ["10.101.3.6", "10.101.3.7"]
 
 edit_vm_data_disks = [{
   datadisk1 = {
-    name                 = "edit-vm01-data-dev"
+    name                 = "edit-vm01-data-prod"
     location             = "uksouth"
-    resource_group_name  = "pre-dev"
+    resource_group_name  = "pre-prod"
     storage_account_type = "StandardSSD_LRS"
     disk_create_option   = "Empty"
     disk_size_gb         = "1000"
@@ -55,9 +55,9 @@ edit_vm_data_disks = [{
   },
   {
     datadisk1 = {
-      name                 = "edit-vm02-data-dev"
+      name                 = "edit-vm02-data-prod"
       location             = "uksouth"
-      resource_group_name  = "pre-dev"
+      resource_group_name  = "pre-prod"
       storage_account_type = "StandardSSD_LRS"
       disk_create_option   = "Empty"
       disk_size_gb         = "1000"
