@@ -77,11 +77,6 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
 #   resource_group_name = data.azurerm_resource_group.rg.name
 # }
 
-data "azurerm_key_vault" "pre_kv" {
-  name                = "${var.product}-${var.env}"
-  resource_group_name = "${var.product}-${var.env}"
-}
-
 # data "azurerm_key_vault_secret" "edit_username" {
 #   count        = var.num_vid_edit_vms
 #   name         = "videditvm${count.index}-username"
