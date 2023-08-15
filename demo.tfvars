@@ -25,9 +25,55 @@ restore_policy_days        = "1"
 #vms
 num_vid_edit_vms         = 1
 tenant_id                = "yrk32651"
-dg_vm_private_ip         = ["10.40.12.22", "10.40.12.23"]
-powerbi_dg_vm_private_ip = ["10.40.12.24", "10.40.12.25"]
-edit_vm_private_ip       = ["10.40.12.6", "10.40.12.7"]
+dg_vm_private_ip         = ["10.50.12.222", "10.50.12.223"]
+powerbi_dg_vm_private_ip = ["10.50.12.224", "10.50.12.225"]
+edit_vm_private_ip       = ["10.50.12.6", "10.50.12.7"]
+
+edit_vm_data_disks = [{
+  datadisk1 = {
+    name                 = "edit-vm01-data-demo"
+    location             = "uksouth"
+    resource_group_name  = "pre-demo"
+    storage_account_type = "StandardSSD_LRS"
+    disk_create_option   = "Empty"
+    disk_size_gb         = "1000"
+    disk_tier            = null
+    disk_zone            = "1"
+    source_resource_id   = null
+    storage_account_id   = null
+    hyper_v_generation   = null
+    os_type              = null
+
+
+    disk_lun                 = "10"
+    attachment_create_option = "Attach"
+    disk_caching             = "ReadWrite"
+
+  }
+  },
+  {
+    datadisk1 = {
+      name                 = "edit-vm02-data-demo"
+      location             = "uksouth"
+      resource_group_name  = "pre-demo"
+      storage_account_type = "StandardSSD_LRS"
+      disk_create_option   = "Empty"
+      disk_size_gb         = "1000"
+      disk_tier            = null
+      disk_zone            = "2"
+      source_resource_id   = null
+      storage_account_id   = null
+      hyper_v_generation   = null
+      os_type              = null
+
+
+      disk_lun                 = "10"
+      attachment_create_option = "Attach"
+      disk_caching             = "ReadWrite"
+
+    }
+}]
+
 dg_vm_data_disks = [{
   datadisk1 = {
     name                 = "data-gateway-vm01-data-demo"

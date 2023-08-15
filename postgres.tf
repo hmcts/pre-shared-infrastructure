@@ -42,12 +42,3 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
   value        = module.data_store_db_v14.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
-
-# connect data gateway vnet to private dns zone (this will contain the A name for postgres)
-resource "azurerm_private_dns_zone_virtual_network_link" "postgres_dg" {
-  provider              = azurerm.private_dns
-  name                  = format("%s-%s-virtual-network-link", var.product, var.env)
-  resource_group_name   = var.dns_resource_group
-  private_dns_zone_name = var.private_dns_zone
-  virtual_network_id    = data.azurerm_virtual_network.vnet.id
-}

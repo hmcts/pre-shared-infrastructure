@@ -52,23 +52,6 @@ module "powerBI_data_gateway" {
 
 }
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
-  count              = var.num_datagateway
-  virtual_machine_id = module.powerBI_data_gateway.*.vm_id[count.index]
-  location           = data.azurerm_resource_group.rg.location
-  enabled            = false
-
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
-
-  notification_settings {
-    enabled = false
-  }
-  tags = var.common_tags
-
-  depends_on = [module.powerBI_data_gateway]
-}
-
 locals {
   powerbi_dg_vm_type = "windows"
 
@@ -115,19 +98,19 @@ resource "azurerm_key_vault_secret" "powerbi_dg_username" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-username"
   value        = "powerbi_dg${count.index + 1}_${random_string.powerbi_dg_username[count.index].result}"
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_password" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-password"
   value        = random_password.powerbi_dg_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_recovery" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-recovery-key"
   value        = random_password.powerbi_dg_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
