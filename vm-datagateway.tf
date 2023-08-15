@@ -84,24 +84,6 @@ module "data_gateway_vm" {
 #   tags = var.common_tags
 # }
 
-
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "dg_vm" {
-  count              = var.num_datagateway
-  virtual_machine_id = module.data_gateway_vm.*.vm_id[count.index]
-  location           = data.azurerm_resource_group.rg.location
-  enabled            = false
-
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
-
-  notification_settings {
-    enabled = false
-  }
-  tags = var.common_tags
-
-  depends_on = [module.data_gateway_vm]
-}
-
 locals {
   dg_vm_type = "windows"
 
@@ -147,12 +129,12 @@ resource "azurerm_key_vault_secret" "dg_username" {
   count        = var.num_datagateway
   name         = "dg${count.index + 1}-username"
   value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "dg_password" {
   count        = var.num_datagateway
   name         = "dg${count.index + 1}-password"
   value        = random_password.dg_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.pre_kv.id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
