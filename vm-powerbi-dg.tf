@@ -4,14 +4,15 @@ module "powerBI_data_gateway" {
   vm_type                        = local.powerbi_dg_vm_type
   vm_name                        = "powerbi-${count.index + 1}-${var.env}"
   computer_name                  = "powerbi${count.index + 1}${var.env}"
-  vm_resource_group              = azurerm_resource_group.rg.name
+  vm_resource_group              = data.azurerm_resource_group.rg.name
   vm_location                    = var.location
   vm_size                        = local.powerbi_dg_vm_size
   vm_admin_name                  = azurerm_key_vault_secret.powerbi_dg_username[count.index].value
   vm_admin_password              = azurerm_key_vault_secret.powerbi_dg_password[count.index].value
-  vm_availabilty_zones           = local.powerbi_dg_vm_availabilty_zones[count.index]
+  vm_availabilty_zones           = local.powerbi_dg_vm_availability_zones[count.index]
   managed_disks                  = var.powerbi_dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
+  privateip_allocation           = "Static"
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
   #Disk Encryption
@@ -51,46 +52,15 @@ module "powerBI_data_gateway" {
 
 }
 
-# resource "azurerm_virtual_machine_extension" "powerbi_gateway_init" {
-#   count                      = var.num_datagateway
-#   name                       = "dgScript"
-#   virtual_machine_id         = module.powerBI_data_gateway.*.vm_id[count.index]
-#   publisher                  = "Microsoft.CPlat.Core"
-#   type                       = "RunCommandWindows"
-#   type_handler_version       = "1.1"
-#   auto_upgrade_minor_version = true
-#   settings                   = jsonencode({ script = compact(tolist([file("scripts/datagateway-init.ps1")])) })
-
-#   tags = var.common_tags
-# }
-
-
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "powerbi_dg_vm" {
-  count              = var.num_datagateway
-  virtual_machine_id = module.powerBI_data_gateway.*.vm_id[count.index]
-  location           = var.location
-  enabled            = false
-
-  daily_recurrence_time = "1800"
-  timezone              = "GMT Standard Time"
-
-  notification_settings {
-    enabled = false
-  }
-  tags = var.common_tags
-
-  depends_on = [module.powerBI_data_gateway]
-}
-
 locals {
   powerbi_dg_vm_type = "windows"
 
   powerbi_dg_vm_size       = "Standard_D8ds_v5"
   powerbi_dg_ipconfig_name = "IP_CONFIGURATION"
 
-  powerbi_dg_vm_subnet_id = azurerm_subnet.datagateway_subnet.id
+  powerbi_dg_vm_subnet_id = data.azurerm_subnet.datagateway_subnet.id
 
-  powerbi_dg_vm_availabilty_zones  = [1, 2]
+  powerbi_dg_vm_availability_zones = [1, 2]
   powerbi_dg_marketplace_product   = "WindowsServer"
   powerbi_dg_marketplace_publisher = "MicrosoftWindowsServer"
   powerbi_dg_marketplace_sku       = "2019-Datacenter-gensecond"
@@ -128,19 +98,19 @@ resource "azurerm_key_vault_secret" "powerbi_dg_username" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-username"
   value        = "powerbi_dg${count.index + 1}_${random_string.powerbi_dg_username[count.index].result}"
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_password" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-password"
   value        = random_password.powerbi_dg_password[count.index].result
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "powerbi_dg_recovery" {
   count        = var.num_datagateway
   name         = "powerbi-dg${count.index + 1}-recovery-key"
   value        = random_password.powerbi_dg_password[count.index].result
-  key_vault_id = module.key-vault.key_vault_id
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
