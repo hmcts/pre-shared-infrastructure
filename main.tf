@@ -10,10 +10,10 @@ locals {
   mgmt_network_rg_name = var.mgmt_net_rg_name
 }
 
-resource "azurerm_role_assignment" "powerapp_appreg" {
+resource "azurerm_role_assignment" "sp_contributor" {
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
-  principal_id         = var.dts_pre_appreg_oid
+  principal_id         = data.azuread_service_principal.pre_sp.object_id
 }
 
 # resource "azurerm_role_assignment" "admin_ingestsa_contributor" {
