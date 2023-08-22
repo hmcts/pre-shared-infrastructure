@@ -27,6 +27,8 @@ retention_duration         = "P1D"
 restore_policy_days        = "1"
 immutability_period_backup = "1"
 
+# VM Bootstrap module
+cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 
 edit_vm_data_disks = [{
   datadisk1 = {

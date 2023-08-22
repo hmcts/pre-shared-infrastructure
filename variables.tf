@@ -101,6 +101,11 @@ variable "hostgroup" {
   default = null
 }
 
+variable "cnp_vault_sub" {
+  description = "The subscription ID of the subscription that contains the CNP KeyVault"
+  type        = string
+}
+
 # Addtional variables required for postgres
 
 variable "component" {
