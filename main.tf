@@ -13,7 +13,7 @@ locals {
 resource "azurerm_role_assignment" "powerapp_appreg" {
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
-  principal_id         = var.dts_pre_appreg_oid
+  principal_id         = data.azuread_service_principal.pre_sp.object_id
 }
 
 # resource "azurerm_role_assignment" "admin_ingestsa_contributor" {
