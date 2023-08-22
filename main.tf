@@ -11,6 +11,7 @@ locals {
 }
 
 resource "azurerm_role_assignment" "sp_contributor" {
+  count                = var.env == "demo" ? 1 : 0
   scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Contributor"
   principal_id         = data.azuread_service_principal.pre_sp.object_id
