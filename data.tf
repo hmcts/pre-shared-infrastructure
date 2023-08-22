@@ -1,5 +1,8 @@
 data "azurerm_client_config" "current" {}
 
+data "azuread_service_principal" "pre_sp" {
+  display_name = "dts_pre_${var.env}"
+}
 data "azurerm_log_analytics_workspace" "loganalytics" {
   provider            = azurerm.oms
   name                = module.log_analytics_workspace.name
@@ -104,8 +107,4 @@ data "azurerm_subscription" "current" {}
 data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
   key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-data "azuread_application" "appreg" {
-  display_name = "dts_pre_${var.env}"
 }
