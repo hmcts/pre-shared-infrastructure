@@ -105,3 +105,7 @@ data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
+
+data "azuread_application" "appreg" {
+  display_name = "dts_pre_${var.env}"
+}
