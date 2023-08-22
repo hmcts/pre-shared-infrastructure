@@ -1,4 +1,9 @@
 module "data_gateway_vm" {
+  providers = {
+    azurerm     = azurerm
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+  }
   count                          = var.num_datagateway
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   vm_type                        = local.dg_vm_type

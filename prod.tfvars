@@ -31,6 +31,8 @@ powerbi_dg_vm_private_ip = ["10.101.3.224", "10.101.3.225"]
 edit_vm_private_ip       = ["10.101.3.6", "10.101.3.7"]
 pre_ent_appreg_app_id    = "a4e4402d-25a8-40aa-ba12-ad040350086e"
 
+# VM Bootstrap module
+cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
 
 edit_vm_data_disks = [{
   datadisk1 = {
