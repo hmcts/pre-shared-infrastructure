@@ -175,3 +175,8 @@ variable "dts_pre_backup_appreg_oid" {}
 variable "immutability_period_backup" {}
 
 variable "restore_policy_days" {}
+
+variable "cnp_vault_sub" {
+  description = "The subscription ID of the subscription that contains the CNP KeyVault"
+  type        = string
+}
