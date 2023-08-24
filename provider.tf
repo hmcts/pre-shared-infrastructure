@@ -9,9 +9,6 @@ terraform {
       source  = "hashicorp/random"
       version = ">= 2.2.0"
     }
-    azapi = {
-      source = "Azure/azapi"
-    }
 
     time = {
       source  = "hashicorp/time"
@@ -20,8 +17,6 @@ terraform {
   }
 }
 
-provider "azapi" {
-}
 
 provider "azurerm" {
   skip_provider_registration = true
@@ -36,13 +31,6 @@ provider "azurerm" {
   alias           = "oms"
   subscription_id = module.log_analytics_workspace.subscription_id
   features {}
-}
-
-provider "azurerm" {
-  subscription_id            = local.hub[local.hub_name].subscription
-  skip_provider_registration = "true"
-  features {}
-  alias = "hub"
 }
 
 provider "azurerm" {
@@ -65,3 +53,5 @@ provider "azurerm" {
   alias                      = "postgres_network"
   subscription_id            = var.aks_subscription_id
 }
+
+provider "azuread" {}

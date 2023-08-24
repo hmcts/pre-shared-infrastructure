@@ -15,7 +15,6 @@ module "ingestsa_storage_account_backup" {
   immutability_period             = var.immutability_period_backup
 
   common_tags = var.common_tags
-  depends_on  = [module.key-vault]
 }
 
 resource "azurerm_management_lock" "storage-backup-ingest" {
@@ -38,4 +37,3 @@ resource "azurerm_role_assignment" "powerapp_appreg_ingestfinal" {
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
 }
-

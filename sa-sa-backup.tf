@@ -13,7 +13,6 @@ module "sa_storage_account_backup" {
   enable_data_protection          = false
 
   common_tags = var.common_tags
-  depends_on  = [module.key-vault]
 }
 
 resource "azurerm_management_lock" "storage-backup-sa" {
@@ -44,3 +43,9 @@ resource "azurerm_role_assignment" "powerapp_appreg_sa2" {
   principal_id         = var.dts_pre_backup_appreg_oid
 }
 
+# Used in storage account backups to get key and list containers
+resource "azurerm_role_assignment" "powerapp_appreg_sa_cont" {
+  scope                = module.sa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = var.dts_pre_backup_appreg_oid
+}

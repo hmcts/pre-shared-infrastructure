@@ -6,10 +6,6 @@ variable "location" {
   default = "UK South"
 }
 
-variable "location_backup" {
-  default = "UK West"
-}
-
 variable "env" {}
 
 variable "jenkins_AAD_objectId" {}
@@ -36,44 +32,25 @@ variable "bastion_snet_address" {}
 
 variable "data_gateway_snet_address" {}
 
-variable "mgmt_net_name" {}
-
 variable "mgmt_net_rg_name" {}
 
 variable "num_vid_edit_vms" {
   default = 2
 }
-variable "vid_edit_vm_spec" {
-  default = "Standard_E4s_v4"
-}
+
 variable "num_datagateway" {
   default = 2
 }
-variable "datagateway_spec" {
-  default = "Standard_F8s_v2"
-}
+
+variable "mgmt_net_name" {}
 
 variable "mgmt_subscription_id" {} // set by jenkins library
-
-variable "power_app_user_oid" {
-  default = "56a29187-3d5f-4262-99d6-c635776e0eac"
-}
 
 variable "jenkins_ptlsbox_oid" {
   default = "6df94cb5-c203-4493-bc8a-3f6aad1133e1"
 }
 variable "jenkins_ptlsbox_appid" {
   default = "a87b3880-6dce-4f9d-b4c4-c4cf3622cb5d"
-}
-# variable "managed_oid" {}
-variable "dts_pre_oid" {}
-variable "dts_pre_project_admin" {}
-variable "pre_mi_tenant_id" {}
-# variable "dts_pre_app_admin" {}
-
-variable "lawRetention" {
-  type    = number
-  default = "30"
 }
 
 variable "schedules" {
@@ -103,9 +80,7 @@ variable "hostgroup" {
 
 # Addtional variables required for postgres
 
-variable "component" {
-  default = "pre"
-}
+// 2 variables with the same value???? see var "product"
 
 variable "project" {
   default = "sds"
@@ -137,11 +112,7 @@ variable "private_dns_zone" {
   default = "private.postgres.database.azure.com"
 }
 
-variable "dts_pre_appreg_oid" {}
-
 variable "dts_pre_ent_appreg_oid" {}
-
-variable "dts_pre_backup_appreg_oid" {}
 
 variable "cors_rules" {
   type = list(object({
@@ -163,32 +134,44 @@ variable "cors_rules" {
   ]
 }
 
-variable "PeeringFromHubName" {
-  default = "pre-recorded-evidence"
-}
-
 variable "retention_duration" {}
 
-variable "immutability_period_backup" {}
+variable "tenant_id" {}
+
+variable "vm_type" {
+  default = "windows"
+}
+
+variable "dg_vm_data_disks" {}
+
+variable "edit_vm_data_disks" {}
+
+variable "powerbi_dg_vm_data_disks" {}
+
+variable "dg_vm_private_ip" {}
+
+variable "powerbi_dg_vm_private_ip" {}
+
+variable "edit_vm_private_ip" {}
+
+variable "install_dynatrace_oa" {
+  default = true
+}
+
+# variable "pre_app_admin" {}
+
+variable "pre_ent_appreg_app_id" {}
 
 variable "aks_subscription_id" {
   default = "867a878b-cb68-4de5-9741-361ac9e178b6"
 }
 
-variable "powerbi_dg_vm_private_ip" {}
+variable "location_backup" {
+  default = "UK West"
+}
 
-variable "powerbi_dg_vm_data_disks" {}
+variable "dts_pre_backup_appreg_oid" {}
 
-variable "dg_vm_data_disks" {}
-
-variable "dg_vm_private_ip" {}
-
-variable "edit_vm_data_disks" {}
-
-variable "edit_vm_private_ip" {}
-
-variable "tenant_id" {}
-
-variable "pre_ent_appreg_app_id" {}
+variable "immutability_period_backup" {}
 
 variable "restore_policy_days" {}
