@@ -2,10 +2,10 @@ locals {
   backup_service_name = format("%s-%s", var.product, var.env)
 }
 
-resource "azurerm_private_endpoint" "this" {
+resource "azurerm_private_endpoint" "backup_service_pe" {
 
-  name                = var.private_endpoint_name == null ? "${local.backup_service_name}-pe" : var.private_endpoint_name
-  resource_group_name = data.azurerm_resource_group.rg
+  name                = "${local.backup_service_name}-backup-pe"
+  resource_group_name = data.azurerm_resource_group.rg.name
   location            = var.location
   subnet_id           = data.azurerm_subnet.endpoint_subnet.id
 
