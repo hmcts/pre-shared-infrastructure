@@ -1,6 +1,6 @@
 module "powerBI_data_gateway" {
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=DTSPO-14774-Before-change"
   vm_type                        = local.powerbi_dg_vm_type
   vm_name                        = "powerbi-${count.index + 1}-${var.env}"
   computer_name                  = "powerbi${count.index + 1}${var.env}"

@@ -1,6 +1,6 @@
 module "edit_vm" {
   count                          = var.num_vid_edit_vms
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=DTSPO-14774-Before-change"
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
   computer_name                  = "editvm${count.index + 1}${var.env}"
