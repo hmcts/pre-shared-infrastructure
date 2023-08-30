@@ -1,6 +1,6 @@
 module "data_gateway_vm" {
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=DTSPO-14774-Before-change"
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
   computer_name                  = "dgvm${count.index + 1}${var.env}"
