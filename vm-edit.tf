@@ -131,7 +131,7 @@ resource "azurerm_role_assignment" "vmuser_login" {
 }
 
 resource "azurerm_role_assignment" "vmuser_reader" {
-  count                = var.num_vid_edit_vms
+  count                = var.env == "dev" ? 1 : 0
   scope                = data.azurerm_bastion_host.bastion.id
   role_definition_name = "Reader"
   principal_id         = data.azuread_group.edit_group.object_id
