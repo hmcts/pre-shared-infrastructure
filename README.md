@@ -119,6 +119,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.ams_zone_link](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/private_dns_zone_virtual_network_link) | resource |
 | [azurerm_private_endpoint.ams_streamingendpoint_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/private_endpoint) | resource |
+| [azurerm_private_endpoint.backup_service_pe](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/private_endpoint) | resource |
 | [azurerm_resource_group.rg_backup](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/resource_group) | resource |
 | [azurerm_role_assignment.backup_role_finalsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.backup_role_ingestsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
@@ -133,6 +134,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_role_assignment.powerapp_appreg_sa2](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.powerapp_appreg_sa_cont](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.powerapp_appreg_sabackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.sp_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.vmuser_login](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/virtual_machine_extension) | resource |
@@ -143,6 +145,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [random_string.powerbi_dg_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [random_string.vm_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [azuread_group.edit_group](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group) | data source |
+| [azuread_service_principal.pre_sp](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/data-sources/client_config) | data source |
 | [azurerm_key_vault.keyvault](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/data-sources/key_vault) | data source |
 | [azurerm_key_vault_secret.ams_function_key](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/data-sources/key_vault_secret) | data source |
