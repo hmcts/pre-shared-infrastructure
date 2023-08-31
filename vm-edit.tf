@@ -130,6 +130,13 @@ resource "azurerm_role_assignment" "vmuser_login" {
   principal_id         = data.azuread_group.edit_group.object_id
 }
 
+resource "azurerm_role_assignment" "vmuser_reader" {
+  count                = var.env == "dev" ? 1 : 0
+  scope                = data.azurerm_bastion_host.bastion.id
+  role_definition_name = "Reader"
+  principal_id         = data.azuread_group.edit_group.object_id
+}
+
 # resource "azurerm_monitor_diagnostic_setting" "this" {
 #   count                      = var.num_vid_edit_vms
 #   name                       = azurerm_network_interface.nic[count.index].name
