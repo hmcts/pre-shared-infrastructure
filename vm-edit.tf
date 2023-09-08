@@ -17,7 +17,7 @@ module "edit_vm" {
   vm_availabilty_zones           = local.edit_vm_availability_zones[count.index]
   managed_disks                  = var.edit_vm_data_disks[count.index]
   accelerated_networking_enabled = true
-  custom_data                    = filebase64("./scripts/edit-init.ps1")
+  custom_data                    = var.env == "prod" || var.env == "stg" ? filebase64("./scripts/edit-init.ps1") : filebase64("./scripts/edit-init-nonprod.ps1")
   privateip_allocation           = "Static"
   systemassigned_identity        = true
 
@@ -132,6 +132,13 @@ resource "azurerm_role_assignment" "vmuser_login" {
   count                = var.num_vid_edit_vms
   scope                = module.edit_vm.*.vm_id[count.index]
   role_definition_name = "Virtual Machine User Login"
+  principal_id         = data.azuread_group.edit_group.object_id
+}
+
+resource "azurerm_role_assignment" "vmuser_reader" {
+  count                = var.env == "dev" ? 1 : 0
+  scope                = data.azurerm_bastion_host.bastion.id
+  role_definition_name = "Reader"
   principal_id         = data.azuread_group.edit_group.object_id
 }
 
