@@ -64,6 +64,7 @@ provider "azurerm" {
 provider "azurerm" {
   alias = "cnp"
   features {}
+  skip_provider_registration = true
   subscription_id = var.cnp_vault_sub
 }
 
