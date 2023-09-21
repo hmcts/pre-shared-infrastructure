@@ -15,9 +15,8 @@ module "data_gateway_vm" {
   privateip_allocation           = "Static"
 
   #Disk Encryption
-  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  kv_rg_name  = "pre-${var.env}"
-  encrypt_ADE = true
+  kv_name    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  kv_rg_name = "pre-${var.env}"
 
   nic_name      = lower("dg-vm${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.dg_ipconfig_name

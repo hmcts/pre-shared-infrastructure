@@ -17,9 +17,8 @@ module "edit_vm" {
   systemassigned_identity        = true
 
   #Disk Encryption
-  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  kv_rg_name  = "pre-${var.env}"
-  encrypt_ADE = true
+  kv_name    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  kv_rg_name = "pre-${var.env}"
 
   nic_name      = lower("edit${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.edit_ipconfig_name
