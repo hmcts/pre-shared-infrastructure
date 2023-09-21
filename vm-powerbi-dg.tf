@@ -22,9 +22,8 @@ module "powerBI_data_gateway" {
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
   #Disk Encryption
-  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  kv_rg_name  = "pre-${var.env}"
-  encrypt_ADE = true
+  kv_name    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  kv_rg_name = "pre-${var.env}"
 
   nic_name      = lower("powerbi-dg${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.powerbi_dg_ipconfig_name
