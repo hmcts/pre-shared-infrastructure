@@ -51,9 +51,8 @@ module "data_gateway_vm" {
   run_command    = true
   rc_script_file = "scripts/windows_cis.ps1"
 
-
-  tags = var.common_tags
-
+  custom_script_extension_name = "HMCTSVMBootstrap"
+  tags                         = var.common_tags
 }
 
 # resource "null_resource" "run_dg_script" {
