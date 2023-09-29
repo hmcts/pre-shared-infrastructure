@@ -49,9 +49,9 @@ module "powerBI_data_gateway" {
   additional_script_uri  = local.powerbi_dg_additional_script_uri
   additional_script_name = local.powerbi_dg_additional_script_name
 
-  run_command    = true
-  rc_script_file = "scripts/windows_cis.ps1"
-
+  run_command                  = true
+  rc_script_file               = "scripts/windows_cis.ps1"
+  custom_script_extension_name = "HMCTSVMBootstrap"
 
   tags = var.common_tags
 
