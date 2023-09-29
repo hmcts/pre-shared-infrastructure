@@ -20,9 +20,9 @@ module "data_gateway_vm" {
   accelerated_networking_enabled = true
   privateip_allocation           = "Static"
 
-  #Disk Encryption
-  kv_name    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  kv_rg_name = "pre-${var.env}"
+  # #Disk Encryption
+  # kv_name    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  # kv_rg_name = "pre-${var.env}"
 
   nic_name      = lower("dg-vm${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.dg_ipconfig_name
@@ -48,8 +48,9 @@ module "data_gateway_vm" {
   additional_script_uri  = local.dg_additional_script_uri
   additional_script_name = local.dg_additional_script_name
 
-  run_command    = true
-  rc_script_file = "scripts/windows_cis.ps1"
+  run_command                  = true
+  rc_script_file               = "scripts/windows_cis.ps1"
+  custom_script_extension_name = "HMCTSVMBootstrap"
 
   tags = var.common_tags
 }
