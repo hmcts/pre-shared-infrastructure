@@ -50,10 +50,10 @@ module "edit_vm" {
   additional_script_uri  = local.edit_additional_script_uri
   additional_script_name = local.edit_additional_script_name
 
-  run_command    = true
-  rc_script_file = "scripts/windows_cis.ps1"
-
-  tags = var.common_tags
+  run_command                  = true
+  rc_script_file               = "scripts/windows_cis.ps1"
+  custom_script_extension_name = "HMCTSVMBootstrap"
+  tags                         = var.common_tags
 
 }
 
