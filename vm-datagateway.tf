@@ -37,7 +37,8 @@ module "data_gateway_vm" {
 
   boot_diagnostics_enabled = local.dg_boot_diagnostics_enabled
 
-  nessus_install = false #var.nessus_install
+  nessus_install    = false #var.nessus_install
+  install_splunk_uf = false
 
   dynatrace_hostgroup = var.hostgroup
   dynatrace_server    = var.server

@@ -38,7 +38,8 @@ module "powerBI_data_gateway" {
 
   boot_diagnostics_enabled = local.powerbi_dg_boot_diagnostics_enabled
 
-  nessus_install = false #var.nessus_install
+  nessus_install    = false #var.nessus_
+  install_splunk_uf = false
 
   dynatrace_hostgroup = var.hostgroup
   dynatrace_server    = var.server
