@@ -5,7 +5,7 @@ module "edit_vm" {
     azurerm.soc = azurerm.soc
   }
   count                          = var.num_vid_edit_vms
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=ADE-Support"
   env                            = var.env
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
@@ -22,9 +22,10 @@ module "edit_vm" {
   privateip_allocation           = "Static"
   systemassigned_identity        = true
 
-  # #Disk Encryption
-  # kv_name    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  # kv_rg_name = "pre-${var.env}"
+  #Disk Encryption
+  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  kv_rg_name  = "pre-${var.env}"
+  encrypt_ADE = true
 
   nic_name      = lower("edit${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.edit_ipconfig_name
