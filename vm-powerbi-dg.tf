@@ -5,7 +5,7 @@ module "powerBI_data_gateway" {
     azurerm.soc = azurerm.soc
   }
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=ADE-Support"
   env                            = var.env
   vm_type                        = local.powerbi_dg_vm_type
   vm_name                        = "powerbi-${count.index + 1}-${var.env}"
@@ -21,9 +21,10 @@ module "powerBI_data_gateway" {
   privateip_allocation           = "Static"
   # custom_data                    = filebase64("./scripts/datagateway-init.ps1")
 
-  # #Disk Encryption
-  # kv_name    = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  # kv_rg_name = "pre-${var.env}"
+  #Disk Encryption
+  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  kv_rg_name  = "pre-${var.env}"
+  encrypt_ADE = true
 
   nic_name      = lower("powerbi-dg${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.powerbi_dg_ipconfig_name
