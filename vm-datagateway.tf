@@ -5,7 +5,7 @@ module "data_gateway_vm" {
     azurerm.soc = azurerm.soc
   }
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=ADE-support"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=ADE-Support"
   env                            = var.env
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
