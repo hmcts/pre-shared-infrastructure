@@ -5,7 +5,7 @@ module "edit_vm" {
     azurerm.soc = azurerm.soc
   }
   count                          = var.num_vid_edit_vms
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=ADE-support"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=ADE-Support"
   env                            = var.env
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
