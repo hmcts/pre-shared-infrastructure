@@ -5,7 +5,7 @@ module "data_gateway_vm" {
     azurerm.soc = azurerm.soc
   }
   count                          = var.num_datagateway
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=ADE-Support"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   env                            = var.env
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
@@ -41,9 +41,10 @@ module "data_gateway_vm" {
   install_splunk_uf = false
 
   #Disk Encryption
-  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  kv_rg_name  = "pre-${var.env}"
-  encrypt_ADE = true
+  # kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  # kv_rg_name  = "pre-${var.env}"
+  # encrypt_ADE = true
+  os_disk_size_gb      = 127
 
   dynatrace_hostgroup = var.hostgroup
   dynatrace_server    = var.server
