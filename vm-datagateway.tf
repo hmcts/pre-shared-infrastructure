@@ -1,6 +1,12 @@
 module "data_gateway_vm" {
+  providers = {
+    azurerm     = azurerm
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+  }
   count                          = var.num_datagateway
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  env                            = var.env
   vm_type                        = local.dg_vm_type
   vm_name                        = "dg-vm${count.index + 1}-${var.env}"
   computer_name                  = "dgvm${count.index + 1}${var.env}"
@@ -13,11 +19,6 @@ module "data_gateway_vm" {
   managed_disks                  = var.dg_vm_data_disks[count.index]
   accelerated_networking_enabled = true
   privateip_allocation           = "Static"
-
-  #Disk Encryption
-  kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  kv_rg_name  = "pre-${var.env}"
-  encrypt_ADE = true
 
   nic_name      = lower("dg-vm${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.dg_ipconfig_name
@@ -32,7 +33,14 @@ module "data_gateway_vm" {
 
   boot_diagnostics_enabled = local.dg_boot_diagnostics_enabled
 
-  nessus_install = false #var.nessus_install
+  nessus_install    = false #var.nessus_install
+  install_splunk_uf = false
+
+  #Disk Encryption
+  # kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  # kv_rg_name  = "pre-${var.env}"
+  # encrypt_ADE = true
+  os_disk_size_gb = 127
 
   dynatrace_hostgroup = var.hostgroup
   dynatrace_server    = var.server
@@ -43,12 +51,11 @@ module "data_gateway_vm" {
   additional_script_uri  = local.dg_additional_script_uri
   additional_script_name = local.dg_additional_script_name
 
-  run_command    = true
-  rc_script_file = "scripts/windows_cis.ps1"
-
+  run_command                  = true
+  rc_script_file               = "scripts/windows_cis.ps1"
+  custom_script_extension_name = "HMCTSVMBootstrap"
 
   tags = var.common_tags
-
 }
 
 # resource "null_resource" "run_dg_script" {
