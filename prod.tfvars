@@ -27,7 +27,7 @@ restore_policy_days        = "100"
 #vms
 tenant_id                = "ebe20728"
 num_vid_edit_vms         = 1
-powerbi_dg_vm_private_ip = ["10.101.3.24", "10.101.3.25"]
+powerbi_dg_vm_private_ip = ["10.101.3.224", "10.101.3.225"]
 dg_vm_private_ip         = ["10.101.3.222", "10.101.3.223"]
 edit_vm_private_ip       = ["10.101.3.6", "10.101.3.7"]
 
@@ -159,3 +159,6 @@ powerbi_dg_vm_data_disks = [{
       disk_caching             = "ReadWrite"
     }
 }]
+
+# Dynatrace
+cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
