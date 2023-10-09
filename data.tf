@@ -113,3 +113,8 @@ data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
+
+data "azurerm_linux_function_app" "ams_function_app" {
+  name                = "pre-ams-integration-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}

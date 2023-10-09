@@ -132,3 +132,37 @@ resource "azurerm_private_endpoint" "ams_streamingendpoint_private_endpoint" {
   }
   tags = var.common_tags
 }
+
+resource "azurerm_eventgrid_topic" "ams_eventgrid_topic" {
+  name                = "exampleTopic"
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  tags = var.common_tags
+}
+
+resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
+  name  = "pre-timestamp-mgmt-dev-TransformJobTimestampEvent"
+  scope = azurerm_media_services_account.ams.id
+
+  azure_function_endpoint {
+    function_id = "${data.azurerm_linux_function_app.ams_function_app.id}/functions/GenerateVtt"
+  }
+
+  included_event_types = [
+    "Microsoft.Media.JobOutputStateChange"
+  ]
+
+  advanced_filter {
+    string_contains {
+      key    = "subject"
+      values = ["EncodetoMP4"]
+    }
+  }
+}
+
+resource "azurerm_media_services_account_filter" "ams_filter" {
+  media_services_account_name = azurerm_media_services_account.ams.name
+  name                        = "amsFilter"
+  resource_group_name         = data.azurerm_resource_group.rg.name
+}
