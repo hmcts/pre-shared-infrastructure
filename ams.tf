@@ -4,7 +4,7 @@ resource "azurerm_media_services_account" "ams" {
   resource_group_name = data.azurerm_resource_group.rg.name
 
   identity {
-    type         = "UserAssigned"
+    type         = "SystemAssigned, UserAssigned"
     identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
   }
 
@@ -146,7 +146,9 @@ resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
   scope = azurerm_media_services_account.ams.id
 
   azure_function_endpoint {
-    function_id = "${data.azurerm_linux_function_app.ams_function_app.id}/functions/GenerateVtt"
+    function_id                       = "${data.azurerm_linux_function_app.ams_function_app.id}/functions/GenerateVtt"
+    max_events_per_batch              = 1
+    preferred_batch_size_in_kilobytes = 64
   }
 
   included_event_types = [
