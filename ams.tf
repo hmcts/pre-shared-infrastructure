@@ -142,7 +142,7 @@ resource "azurerm_eventgrid_topic" "ams_eventgrid_topic" {
 }
 
 resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
-  name  = "pre-timestamp-mgmt-dev-TransformJobTimestampEvent"
+  name  = "pre-timestamp-mgmt-${var.env}-TransformJobTimestampEvent"
   scope = azurerm_media_services_account.ams.id
 
   azure_function_endpoint {
@@ -153,6 +153,30 @@ resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
 
   included_event_types = [
     "Microsoft.Media.JobOutputStateChange"
+  ]
+
+  advanced_filter {
+    string_contains {
+      key    = "subject"
+      values = ["EncodetoMP4"]
+    }
+  }
+}
+
+resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
+  name  = "pre-timestamp-mgmt-${var.env}-PRE-EventHealthMonitoring"
+  scope = azurerm_media_services_account.ams.id
+
+  azure_function_endpoint {
+    function_id                       = "${data.azurerm_linux_function_app.ams_function_app.id}/functions/GenerateVtt"
+    max_events_per_batch              = 1
+    preferred_batch_size_in_kilobytes = 64
+  }
+
+  included_event_types = [
+    "Microsoft.Media.LiveEventEncoderConnected",
+    "Microsoft.Media.LiveEventIncomingStreamReceived",
+    "Microsoft.Media.LiveEventEncoderDisconnected"
   ]
 
   advanced_filter {
