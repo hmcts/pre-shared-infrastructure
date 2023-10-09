@@ -141,7 +141,7 @@ resource "azurerm_eventgrid_topic" "ams_eventgrid_topic" {
   tags = var.common_tags
 }
 
-resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
+resource "azurerm_eventgrid_event_subscription" "ams_state_event" {
   name  = "pre-timestamp-mgmt-${var.env}-TransformJobTimestampEvent"
   scope = azurerm_media_services_account.ams.id
 
@@ -163,7 +163,7 @@ resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
   }
 }
 
-resource "azurerm_eventgrid_event_subscription" "ams_eventgrid_subscription" {
+resource "azurerm_eventgrid_event_subscription" "ams_health_event" {
   name  = "pre-timestamp-mgmt-${var.env}-PRE-EventHealthMonitoring"
   scope = azurerm_media_services_account.ams.id
 
