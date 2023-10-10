@@ -59,7 +59,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.41.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.43.0 |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.62.1 |
 | <a name="provider_azurerm.mgmt"></a> [azurerm.mgmt](#provider\_azurerm.mgmt) | 3.62.1 |
 | <a name="provider_azurerm.oms"></a> [azurerm.oms](#provider\_azurerm.oms) | 3.62.1 |
@@ -80,7 +80,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="module_ingestsa_storage_account"></a> [ingestsa\_storage\_account](#module\_ingestsa\_storage\_account) | git@github.com:hmcts/cnp-module-storage-account | master |
 | <a name="module_ingestsa_storage_account_backup"></a> [ingestsa\_storage\_account\_backup](#module\_ingestsa\_storage\_account\_backup) | git@github.com:hmcts/cnp-module-storage-account | master |
 | <a name="module_log_analytics_workspace"></a> [log\_analytics\_workspace](#module\_log\_analytics\_workspace) | git@github.com:hmcts/terraform-module-log-analytics-workspace-id.git | master |
-| <a name="module_powerBI_data_gateway"></a> [powerBI\_data\_gateway](#module\_powerBI\_data\_gateway) | git@github.com:hmcts/terraform-module-virtual-machine.git | master |
 | <a name="module_sa_storage_account"></a> [sa\_storage\_account](#module\_sa\_storage\_account) | git@github.com:hmcts/cnp-module-storage-account | master |
 | <a name="module_sa_storage_account_backup"></a> [sa\_storage\_account\_backup](#module\_sa\_storage\_account\_backup) | git@github.com:hmcts/cnp-module-storage-account | master |
 
@@ -102,9 +101,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_key_vault_secret.edit_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.finalsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.ingestsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.powerbi_dg_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.powerbi_dg_recovery](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.powerbi_dg_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.sa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/key_vault_secret) | resource |
 | [azurerm_management_lock.storage-backup-final](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/management_lock) | resource |
 | [azurerm_management_lock.storage-backup-ingest](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/management_lock) | resource |
@@ -119,7 +115,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_private_dns_zone_virtual_network_link.ams_zone_link](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/private_dns_zone_virtual_network_link) | resource |
 | [azurerm_private_endpoint.ams_streamingendpoint_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/private_endpoint) | resource |
-| [azurerm_private_endpoint.backup_service_pe](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/private_endpoint) | resource |
 | [azurerm_resource_group.rg_backup](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/resource_group) | resource |
 | [azurerm_role_assignment.backup_role_finalsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.backup_role_ingestsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
@@ -136,16 +131,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_role_assignment.powerapp_appreg_sabackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.sp_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.vmuser_login](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.vmuser_reader](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/role_assignment) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/resources/virtual_machine_extension) | resource |
 | [random_password.dg_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
-| [random_password.powerbi_dg_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.vm_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_string.dg_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
-| [random_string.powerbi_dg_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [random_string.vm_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [azuread_group.edit_group](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group) | data source |
 | [azuread_service_principal.pre_sp](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
+| [azurerm_bastion_host.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/data-sources/bastion_host) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/data-sources/client_config) | data source |
 | [azurerm_key_vault.keyvault](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/data-sources/key_vault) | data source |
 | [azurerm_key_vault_secret.ams_function_key](https://registry.terraform.io/providers/hashicorp/azurerm/3.62.1/docs/data-sources/key_vault_secret) | data source |
@@ -169,6 +164,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 |------|-------------|------|---------|:--------:|
 | <a name="input_aks_subscription_id"></a> [aks\_subscription\_id](#input\_aks\_subscription\_id) | n/a | `string` | `"867a878b-cb68-4de5-9741-361ac9e178b6"` | no |
 | <a name="input_bastion_snet_address"></a> [bastion\_snet\_address](#input\_bastion\_snet\_address) | n/a | `any` | n/a | yes |
+| <a name="input_cnp_vault_sub"></a> [cnp\_vault\_sub](#input\_cnp\_vault\_sub) | The subscription ID of the subscription that contains the CNP KeyVault | `string` | n/a | yes |
 | <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | n/a | `map(string)` | n/a | yes |
 | <a name="input_cors_rules"></a> [cors\_rules](#input\_cors\_rules) | cors rule for final storage account | <pre>list(object({<br>    allowed_headers    = list(string)<br>    allowed_methods    = list(string)<br>    allowed_origins    = list(string)<br>    exposed_headers    = list(string)<br>    max_age_in_seconds = number<br>  }))</pre> | <pre>[<br>  {<br>    "allowed_headers": [<br>      "*"<br>    ],<br>    "allowed_methods": [<br>      "GET",<br>      "POST"<br>    ],<br>    "allowed_origins": [<br>      "https://*.justice.gov.uk",<br>      "https://*.blob.core.windows.net",<br>      "https://*.files.core.windows.net"<br>    ],<br>    "exposed_headers": [<br>      "*"<br>    ],<br>    "max_age_in_seconds": 600<br>  }<br>]</pre> | no |
 | <a name="input_data_gateway_snet_address"></a> [data\_gateway\_snet\_address](#input\_data\_gateway\_snet\_address) | n/a | `any` | n/a | yes |
