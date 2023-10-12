@@ -27,10 +27,10 @@ module "pre_api" {
   name           = local.app_name
   api_mgmt_rg    = "ss-${var.env}-network-rg"
   api_mgmt_name  = "sds-api-mgmt-${var.env}"
-  display_name   = "pre-api"
+  display_name   = local.app_name
   revision       = "1"
   product_id     = module.ams_product[0].product_id
-  path           = "pre-api"
+  path           = local.app_name
   service_url    = "http://pre-api-{{ .Values.global.environment }}}.service.core-compute-${var.env}.internal"
   swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
   content_format = "openapi+json-link"
