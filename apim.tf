@@ -29,7 +29,7 @@ module "pre_api" {
   api_mgmt_name  = "sds-api-mgmt-${var.env}"
   display_name   = local.app_name
   revision       = "1"
-  product_id     = module.ams_product[0].product_id
+  product_id     = module.pre_product[0].product_id
   path           = local.app_name
   service_url    = "http://pre-api-{{ .Values.global.environment }}}.service.core-compute-${var.env}.internal"
   swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
