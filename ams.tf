@@ -59,7 +59,7 @@ resource "azurerm_media_transform" "EncodeToMP" {
     relative_priority = "Normal"
     on_error_action   = "ContinueJob"
     builtin_preset {
-      preset_name = "H264SingleBitrate1080p"
+      preset_name = "H264SingleBitrate720p"
     }
   }
 }
