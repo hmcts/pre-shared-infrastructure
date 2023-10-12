@@ -1,6 +1,6 @@
 locals {
-  app_name      = "pre-ams-integration"
-  function_name = "CheckBlobExists"
+  app_name = "pre-api"
+  # function_name = "CheckBlobExists"
   env_to_deploy = var.env == "sbox" ? 1 : 0
 }
 
@@ -10,7 +10,7 @@ data "azurerm_key_vault_secret" "ams_function_key" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
-module "ams_product" {
+module "pre_product" {
   count                 = local.env_to_deploy
   source                = "git@github.com:hmcts/cnp-module-api-mgmt-product?ref=master"
   api_mgmt_name         = "sds-api-mgmt-${var.env}"
@@ -21,10 +21,10 @@ module "ams_product" {
   subscription_required = false
 }
 
-module "ams_api" {
+module "pre_api" {
   count          = local.env_to_deploy
   source         = "git@github.com:hmcts/cnp-module-api-mgmt-api?ref=master"
-  name           = "pre-api"
+  name           = local.app_name
   api_mgmt_rg    = "ss-${var.env}-network-rg"
   api_mgmt_name  = "sds-api-mgmt-${var.env}"
   display_name   = "pre-api"
