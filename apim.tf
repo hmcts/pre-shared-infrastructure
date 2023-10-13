@@ -21,17 +21,17 @@ module "pre_product" {
   subscription_required = false
 }
 
-# module "pre_api" {
-#   count          = local.env_to_deploy
-#   source         = "git@github.com:hmcts/cnp-module-api-mgmt-api?ref=master"
-#   name           = local.app_name
-#   api_mgmt_rg    = "ss-${var.env}-network-rg"
-#   api_mgmt_name  = "sds-api-mgmt-${var.env}"
-#   display_name   = local.app_name
-#   revision       = "1"
-#   product_id     = module.pre_product[0].product_id
-#   path           = local.app_name
-#   service_url    = "http://pre-api-{{ .Values.global.environment }}}.service.core-compute-${var.env}.internal"
-#   swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
-#   content_format = "openapi+json-link"
-# }
+module "pre_api" {
+  count          = local.env_to_deploy
+  source         = "git@github.com:hmcts/cnp-module-api-mgmt-api?ref=master"
+  name           = local.app_name
+  api_mgmt_rg    = "ss-${var.env}-network-rg"
+  api_mgmt_name  = "sds-api-mgmt-${var.env}"
+  display_name   = local.app_name
+  revision       = "1"
+  product_id     = module.pre_product[0].product_id
+  path           = local.app_name
+  service_url    = "http://pre-api-{{ .Values.global.environment }}}.service.core-compute-${var.env}.internal"
+  swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
+  content_format = "openapi+json-link"
+}
