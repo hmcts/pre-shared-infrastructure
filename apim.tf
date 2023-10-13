@@ -20,7 +20,7 @@ module "pre_product" {
   published             = true
   subscription_required = false
 
-  depends_on = [module.module.pre_api]
+  depends_on = [module.pre_api]
 }
 
 module "pre_api" {
