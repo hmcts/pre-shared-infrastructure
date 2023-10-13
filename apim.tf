@@ -19,6 +19,8 @@ module "pre_product" {
   name                  = local.app_name
   published             = true
   subscription_required = false
+
+  depends_on = [module.module.pre_api]
 }
 
 module "pre_api" {
