@@ -4,11 +4,9 @@
 def product = "pre"
 def component = "shared-infrastructure"
 def branchesToSync = ['demo']
-def expiresAfter = "3000-01-01"
 
 withInfraPipeline(product, component) {
   enableSlackNotifications('#pre-builds')
   syncBranchesWithMaster(branchesToSync)
-  expires(expiresAfter)
 }
 
