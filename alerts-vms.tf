@@ -21,7 +21,7 @@ resource "azurerm_monitor_metric_alert" "vm_alert_availability" {
   count               = var.env == "sbox" ? 1 : 0
   name                = "vm_availability"
   resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = module.edit_vm.vm_name
+  scopes              = "${module.edit_vm.*.vm_id[count.index]}"
   description         = "Whenever the vm is unavailabile"
 
   criteria {
