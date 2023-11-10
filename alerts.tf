@@ -31,7 +31,7 @@ resource "azurerm_monitor_action_group" "pre-support" {
 
   email_receiver {
     name          = "PRE Support Mailing List"
-    email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value.value
+    email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
   }
 }
 
