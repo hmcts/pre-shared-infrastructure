@@ -36,9 +36,9 @@ resource "azurerm_monitor_metric_alert" "vm_alert_availability" {
   }
 }
 
-resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
+resource "azurerm_monitor_metric_alert" "vm_alert_memory" {
   count               = var.env == "sbox" ? 1 : 0
-  name                = "postgres_memory_percent_95"
+  name                = "vm_memory_percent_95"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
   description         = "Whenever the memory utilization is greater than 95"
