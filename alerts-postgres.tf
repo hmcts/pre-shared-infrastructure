@@ -82,26 +82,26 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
   }
 }
 
-resource "azurerm_monitor_metric_alert" "postgres_alert_io_utilization" {
-  count               = var.env == "sbox" ? 1 : 0
-  name                = "postgres_io_utilization_90"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = [module.data_store_db_v14.instance_id]
-  description         = "Whenever the io utilization is greater than 90"
+# resource "azurerm_monitor_metric_alert" "postgres_alert_io_utilization" {
+#   count               = var.env == "sbox" ? 1 : 0
+#   name                = "postgres_io_utilization_90"
+#   resource_group_name = data.azurerm_resource_group.rg.name
+#   scopes              = [module.data_store_db_v14.instance_id]
+#   description         = "Whenever the io utilization is greater than 90"
 
-  criteria {
-    metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
-    metric_name      = "io_consumption_percent"
-    aggregation      = "Average"
-    operator         = "GreaterThan"
-    threshold        = 95
-  }
-  window_size = "PT1H"
-  frequency   = "PT5M"
-  action {
-    action_group_id = azurerm_monitor_action_group.pre-support.id
-  }
-}
+#   criteria {
+#     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
+#     metric_name      = "io_consumption_percent"
+#     aggregation      = "Average"
+#     operator         = "GreaterThan"
+#     threshold        = 95
+#   }
+#   window_size = "PT1H"
+#   frequency   = "PT5M"
+#   action {
+#     action_group_id = azurerm_monitor_action_group.pre-support.id
+#   }
+# }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
   count               = var.env == "sbox" ? 1 : 0

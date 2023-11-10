@@ -35,21 +35,21 @@ resource "azurerm_monitor_action_group" "pre-support" {
   }
 }
 
-module "vms-alert" {
-  source            = "git@github.com:hmcts/cnp-module-metric-alert?ref=master"
-  location          = azurerm_application_insights.this.location
-  app_insights_name = azurerm_application_insights.this.name
+# module "vms-alert" {
+#   source            = "git@github.com:hmcts/cnp-module-metric-alert?ref=master"
+#   location          = azurerm_application_insights.this.location
+#   app_insights_name = azurerm_application_insights.this.name
 
-  alert_name                 = "vms-alert"
-  alert_desc                 = "Triggers when a VM exception is received in a 5 minute poll."
-  app_insights_query         = "requests | where toint(resultCode) >= 400 | sort by timestamp desc"
-  frequency_in_minutes       = 15
-  time_window_in_minutes     = 15
-  severity_level             = "3"
-  action_group_name          = azurerm_monitor_action_group.pre-support.id
-  custom_email_subject       = "Virtual Machine Exception"
-  trigger_threshold_operator = "GreaterThan"
-  trigger_threshold          = 0
-  resourcegroup_name         = data.azurerm_resource_group.rg.name
-  common_tags                = var.common_tags
-}
+#   alert_name                 = "vms-alert"
+#   alert_desc                 = "Triggers when a VM exception is received in a 5 minute poll."
+#   app_insights_query         = "requests | where toint(resultCode) >= 400 | sort by timestamp desc"
+#   frequency_in_minutes       = 15
+#   time_window_in_minutes     = 15
+#   severity_level             = "3"
+#   action_group_name          = azurerm_monitor_action_group.pre-support.id
+#   custom_email_subject       = "Virtual Machine Exception"
+#   trigger_threshold_operator = "GreaterThan"
+#   trigger_threshold          = 0
+#   resourcegroup_name         = data.azurerm_resource_group.rg.name
+#   common_tags                = var.common_tags
+# }
