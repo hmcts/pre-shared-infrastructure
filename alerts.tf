@@ -20,7 +20,7 @@ resource "azurerm_application_insights" "this" {
 #   action_group_name      = "pre-support"
 #   short_name             = "pre-support"
 #   email_receiver_name    = "PRE Support Mailing List"
-#   email_receiver_address = data.azurerm_key_vault_secret.slack_monitoring_address
+#   email_receiver_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
 # }
 
 resource "azurerm_monitor_action_group" "pre-support" {
@@ -31,7 +31,7 @@ resource "azurerm_monitor_action_group" "pre-support" {
 
   email_receiver {
     name          = "PRE Support Mailing List"
-    email_address = data.azurerm_key_vault_secret.slack_monitoring_address
+    email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value.value
   }
 }
 
