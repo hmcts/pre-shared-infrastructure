@@ -15,7 +15,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
   window_size = "PT30M"
   frequency   = "PT5M"
   action {
-    action_group_id = module.pre-action-group.action_group_name
+    action_group_id = azurerm_monitor_action_group.pre-support.id
   }
 }
 
@@ -36,7 +36,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
   window_size = "PT30M"
   frequency   = "PT5M"
   action {
-    action_group_id = module.pre-action-group.action_group_name
+    action_group_id = azurerm_monitor_action_group.pre-support.id
   }
 }
 
@@ -57,7 +57,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
   window_size = "PT30M"
   frequency   = "PT5M"
   action {
-    action_group_id = module.pre-action-group.action_group_name
+    action_group_id = azurerm_monitor_action_group.pre-support.id
   }
 }
 
@@ -78,7 +78,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
   window_size = "PT30M"
   frequency   = "PT5M"
   action {
-    action_group_id = module.pre-action-group.action_group_name
+    action_group_id = azurerm_monitor_action_group.pre-support.id
   }
 }
 
@@ -99,7 +99,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_io_utilization" {
   window_size = "PT1H"
   frequency   = "PT5M"
   action {
-    action_group_id = module.pre-action-group.action_group_name
+    action_group_id = azurerm_monitor_action_group.pre-support.id
   }
 }
 
@@ -118,6 +118,6 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
     threshold        = 90
   }
   action {
-    action_group_id = module.pre-action-group.action_group_name
+    action_group_id = azurerm_monitor_action_group.pre-support.id
   }
 }
