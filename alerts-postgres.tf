@@ -99,7 +99,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_io_utilization" {
   window_size = "PT1H"
   frequency   = "PT5M"
   action {
-    action_group_id =  module.pre-action-group.action_group_name
+    action_group_id = module.pre-action-group.action_group_name
   }
 }
 

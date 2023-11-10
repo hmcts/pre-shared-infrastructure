@@ -12,7 +12,7 @@ resource "azurerm_application_insights" "this" {
 
 module "pre-action-group" {
   # count    = var.env == "prod" ? 1 : 0
-  source   = "github.com/hmcts/cnp-module-action-group"
+  source   = "git@github.com:hmcts/cnp-module-action-group?ref=master"
   location = "global"
   env      = var.env
 
@@ -24,7 +24,7 @@ module "pre-action-group" {
 }
 
 module "vms-alert" {
-  source            = "git@github.com:hmcts/cnp-module-metric-alert"
+  source            = "git@github.com:hmcts/cnp-module-metric-alert?ref=master"
   location          = azurerm_application_insights.this.location
   app_insights_name = azurerm_application_insights.this.name
 
@@ -39,6 +39,6 @@ module "vms-alert" {
   trigger_threshold_operator = "GreaterThan"
   trigger_threshold          = 0
   resourcegroup_name         = data.azurerm_resource_group.rg.name
-  common_tags = var.common_tags
+  common_tags                = var.common_tags
 }
 
