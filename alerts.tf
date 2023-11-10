@@ -46,7 +46,7 @@ module "vms-alert" {
   frequency_in_minutes       = 15
   time_window_in_minutes     = 15
   severity_level             = "3"
-  action_group_name          = module.pre-action-group.action_group_name
+  action_group_name          = azurerm_monitor_action_group.pre-support.id
   custom_email_subject       = "Virtual Machine Exception"
   trigger_threshold_operator = "GreaterThan"
   trigger_threshold          = 0
