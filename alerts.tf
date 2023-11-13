@@ -10,6 +10,18 @@ resource "azurerm_application_insights" "this" {
   application_type    = "other"
 }
 
+resource "azurerm_monitor_action_group" "pre-support" {
+  # count    = var.env == "prod" ? 1 : 0
+  name                = "CriticalAlertsAction"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  short_name          = "pre-support"
+
+  email_receiver {
+    name          = "PRE Support Mailing List"
+    email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
+  }
+}
+
 # module "pre-action-group" {
 #   # count    = var.env == "prod" ? 1 : 0
 #   source   = "git@github.com:hmcts/cnp-module-action-group?ref=master"
@@ -22,18 +34,6 @@ resource "azurerm_application_insights" "this" {
 #   email_receiver_name    = "PRE Support Mailing List"
 #   email_receiver_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
 # }
-
-resource "azurerm_monitor_action_group" "pre-support" {
-  # count    = var.env == "prod" ? 1 : 0
-  name                = "CriticalAlertsAction"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  short_name          = "pre-support"
-
-  email_receiver {
-    name          = "PRE Support Mailing List"
-    email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
-  }
-}
 
 # module "vms-alert" {
 #   source            = "git@github.com:hmcts/cnp-module-metric-alert?ref=master"
