@@ -12,7 +12,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
     operator         = "GreaterThanOrEqual"
     threshold        = 200
   }
-  window_size = "PT30M"
+  window_size = "P1D"
   frequency   = "PT1H"
   action {
     action_group_id = azurerm_monitor_action_group.pre-support.id
@@ -33,7 +33,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
     operator         = "GreaterThan"
     threshold        = 10
   }
-  window_size = "PT30M"
+  window_size = "P1D"
   frequency   = "PT1H"
   action {
     action_group_id = azurerm_monitor_action_group.pre-support.id
@@ -47,6 +47,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
   scopes              = [module.data_store_db_v14.instance_id]
   description         = "Whenever the cpu utilization is greater than 95"
   frequency           = "PT1H"
+  window_size         = "P1D"
 
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
@@ -67,6 +68,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
   scopes              = [module.data_store_db_v14.instance_id]
   description         = "Whenever the memory utilization is greater than 95"
   frequency           = "PT1H"
+  window_size         = "P1D"
 
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
@@ -108,6 +110,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
   scopes              = [module.data_store_db_v14.instance_id]
   description         = "Whenever the storage utilization is greater than 90"
   frequency           = "PT1H"
+  window_size         = "P1D"
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
     metric_name      = "storage_percent"
