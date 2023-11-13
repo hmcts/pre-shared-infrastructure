@@ -5,6 +5,7 @@ resource "azurerm_monitor_metric_alert" "storage_final_alert_capacity" {
   scopes              = [module.finalsa_storage_account.storageaccount_id]
   description         = "When the used storage capacity is over 4TiB"
   frequency           = "PT1H"
+  window_size         = "P1D"
 
   criteria {
     metric_namespace = "Microsoft.Storage/storageAccounts"
@@ -25,6 +26,7 @@ resource "azurerm_monitor_metric_alert" "storage_ingest_alert_capacity" {
   scopes              = [module.ingestsa_storage_account.storageaccount_id]
   description         = "When the used storage capacity is over 4TiB"
   frequency           = "PT1H"
+  window_size         = "P1D"
 
   criteria {
     metric_namespace = "Microsoft.Storage/storageAccounts"
