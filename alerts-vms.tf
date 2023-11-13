@@ -7,7 +7,7 @@ resource "azurerm_monitor_metric_alert" "vm_alert_availability" {
 
   criteria {
     metric_namespace = "Microsoft.Compute/virtualMachines"
-    metric_name      = "availability"
+    metric_name      = "Availability"
     aggregation      = "Average"
     operator         = "LessThan"
     threshold        = 1
