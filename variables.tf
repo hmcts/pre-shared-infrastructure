@@ -179,8 +179,3 @@ variable "restore_policy_days" {}
 variable "cnp_vault_sub" {
   description = "The subscription ID of the subscription that contains the CNP KeyVault"
 }
-
-variable "support_email" {
-  description = "The subscription ID of the subscription that contains the CNP KeyVault"
-  default     = "PREApplicationSupportTeam@HMCTS.NET"
-}
