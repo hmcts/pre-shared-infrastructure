@@ -1,5 +1,5 @@
 resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
-  count               = var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_active_connections_greater_than_80_percent"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -20,7 +20,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
-  count               = var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_failed_connections_greater_than_10"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -41,7 +41,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
-  count               = var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_cpu_percent_95"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -62,7 +62,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
-  count               = var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_memory_percent_95"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -82,29 +82,8 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
   }
 }
 
-# resource "azurerm_monitor_metric_alert" "postgres_alert_io_utilization" {
-#   count               = var.env == "sbox" ? 1 : 0
-#   name                = "postgres_io_utilization_90"
-#   resource_group_name = data.azurerm_resource_group.rg.name
-#   scopes              = [module.data_store_db_v14.instance_id]
-#   description         = "Whenever the io utilization is greater than 90"
-
-#   criteria {
-#     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
-#     metric_name      = "io_consumption_percent"
-#     aggregation      = "Average"
-#     operator         = "GreaterThan"
-#     threshold        = 95
-#   }
-#   window_size = "PT1H"
-#   frequency   = "PT5M"
-#   action {
-#     action_group_id = azurerm_monitor_action_group.pre-support.id
-#   }
-# }
-
 resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
-  count               = var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_storage_utilization_90"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
