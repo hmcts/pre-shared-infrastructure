@@ -4,7 +4,7 @@ data "azurerm_key_vault_secret" "slack_monitoring_address" {
 }
 
 resource "azurerm_application_insights" "this" {
-  count               = var.env == "prod"
+  count               = var.env == "prod" ? 1 : 0
   name                = "pre-${var.env}-appinsights"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
