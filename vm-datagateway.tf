@@ -145,3 +145,41 @@ resource "azurerm_key_vault_secret" "dg_password" {
   value        = random_password.dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
+
+resource "azurerm_monitor_metric_alert" "vm_alert_network_in" {
+  count               = var.env == "prod" ? 1 : 0
+  name                = "vm_network_in"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  scopes              = [module.data_gateway_vm.*.vm_id[count.index]]
+  description         = "network traffic to the vm is "
+
+  criteria {
+    metric_namespace = "Microsoft.Compute/virtualMachines"
+    metric_name      = "Availability"
+    aggregation      = "Average"
+    operator         = "LessThan"
+    threshold        = 1
+  }
+  action {
+    action_group_id = azurerm_monitor_action_group.pre-support.id
+  }
+}
+
+resource "azurerm_monitor_metric_alert" "vm_alert_network_out" {
+  count               = var.env == "prod" ? 1 : 0
+  name                = "vm_network_out"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  scopes              = [module.data_gateway_vm.*.vm_id[count.index]]
+  description         = "Whenever the cpu utilization is greater than 80"
+
+  criteria {
+    metric_namespace = "Microsoft.Compute/virtualMachines"
+    metric_name      = "cpu_percent"
+    aggregation      = "Average"
+    operator         = "GreaterThan"
+    threshold        = 80
+  }
+  action {
+    action_group_id = azurerm_monitor_action_group.pre-support.id
+  }
+}
