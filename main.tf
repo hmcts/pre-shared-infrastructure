@@ -67,7 +67,7 @@ data "azurerm_key_vault_secret" "slack_monitoring_address" {
 }
 
 resource "azurerm_application_insights" "this" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "pre-${var.env}-appinsights"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -75,7 +75,7 @@ resource "azurerm_application_insights" "this" {
 }
 
 resource "azurerm_monitor_action_group" "pre-support" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "CriticalAlertsAction"
   resource_group_name = data.azurerm_resource_group.rg.name
   short_name          = "pre-support"
