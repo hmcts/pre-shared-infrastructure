@@ -44,7 +44,7 @@ resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_active_connections_greater_than_80_percent"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -65,7 +65,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_failed_connections_greater_than_10"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -86,7 +86,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_cpu_percent_95"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -107,7 +107,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_memory_percent_95"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
@@ -128,7 +128,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "postgres_storage_utilization_90"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
