@@ -79,6 +79,8 @@ resource "azurerm_key_vault_secret" "appinsights-key" {
   name         = "AppInsightsInstrumentationKey"
   value        = azurerm_application_insights.this[count.index].instrumentation_key[1]
   key_vault_id = data.azurerm_key_vault.keyvault.id
+
+  depends_on = [ azurerm_application_insights.this ]
 }
 
 resource "azurerm_monitor_action_group" "pre-support" {
