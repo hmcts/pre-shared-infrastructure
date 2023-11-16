@@ -67,7 +67,7 @@ data "azurerm_key_vault_secret" "slack_monitoring_address" {
 }
 
 resource "azurerm_application_insights" "this" {
-  count               = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "pre-${var.env}-appinsights"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -75,7 +75,7 @@ resource "azurerm_application_insights" "this" {
 }
 
 resource "azurerm_key_vault_secret" "appinsights-key" {
-  count        = var.env == "prod" || var.env == "sbox" ? 1 : 0
+  count        = var.env == "prod" ? 1 : 0
   name         = "AppInsightsInstrumentationKey"
   value        = azurerm_application_insights.this[0].instrumentation_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
