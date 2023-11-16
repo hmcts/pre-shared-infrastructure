@@ -76,7 +76,7 @@ resource "azurerm_application_insights" "this" {
 
 resource "azurerm_key_vault_secret" "appinsights-key" {
   name         = "AppInsightsInstrumentationKey"
-  value        = azurerm_application_insights.this.instrumentation_key
+  value        = azurerm_application_insights.this[count.index].instrumentation_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
