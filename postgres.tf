@@ -30,6 +30,12 @@ module "data_store_db_v14" {
 
 }
 
+resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
+  name         = "postgresdb-host"
+  value        = module.data_store_db_v14.fqdn
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
   name         = "postgresdb-username"
   value        = var.pgsql_admin_username
