@@ -77,7 +77,7 @@ resource "azurerm_application_insights" "this" {
 resource "azurerm_key_vault_secret" "appinsights-key" {
   count        = var.env == "prod" || var.env == "sbox" ? 1 : 0
   name         = "AppInsightsInstrumentationKey"
-  value        = azurerm_application_insights.this[count.index].instrumentation_key[0]
+  value        = azurerm_application_insights.this[count.index].instrumentation_key[1]
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
