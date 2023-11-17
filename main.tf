@@ -74,6 +74,15 @@ resource "azurerm_application_insights" "this" {
   application_type    = "other"
 }
 
+resource "azurerm_key_vault_secret" "appinsights-key" {
+  count        = var.env == "prod" ? 1 : 0
+  name         = "AppInsightsInstrumentationKey"
+  value        = azurerm_application_insights.this[0].instrumentation_key
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+
+  depends_on = [azurerm_application_insights.this]
+}
+
 resource "azurerm_monitor_action_group" "pre-support" {
   count               = var.env == "prod" ? 1 : 0
   name                = "CriticalAlertsAction"
