@@ -47,17 +47,9 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 
   metric {
     category = "Transaction"
-    retention_policy {
-      days    = 0
-      enabled = false
-    }
   }
   metric {
     category = "Capacity"
     enabled  = false
-    retention_policy {
-      days    = 0
-      enabled = false
-    }
   }
 }

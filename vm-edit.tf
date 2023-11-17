@@ -144,22 +144,6 @@ resource "azurerm_role_assignment" "vmuser_reader" {
   principal_id         = data.azuread_group.edit_group.object_id
 }
 
-# resource "azurerm_monitor_diagnostic_setting" "this" {
-#   count                      = var.num_vid_edit_vms
-#   name                       = azurerm_network_interface.nic[count.index].name
-#   target_resource_id         = azurerm_network_interface.nic[count.index].id
-#   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
-
-#   metric {
-#     category = "AllMetrics"
-
-#     retention_policy {
-#       enabled = true
-#       days    = 14
-#     }
-#   }
-# }
-
 // VM credentials
 resource "random_string" "vm_username" {
   count   = var.num_vid_edit_vms
