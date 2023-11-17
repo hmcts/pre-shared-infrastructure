@@ -37,7 +37,7 @@ resource "azurerm_role_assignment" "backup_role_ingestsa" {
 resource "azurerm_data_protection_backup_policy_blob_storage" "pre_backup_policy_storage" {
   name               = "${var.product}-backup-policy-${var.env}"
   vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
-  retention_duration = var.env == "prod" ? "P100D" : "P7D"
+  retention_duration = var.retention_duration
 
   depends_on = [azurerm_media_services_account.ams]
 }
