@@ -15,6 +15,9 @@ module "data_store_db_v14" {
   pgsql_databases = [
     {
       name : "pre-pdb-${var.env}"
+    },
+    {
+      name : "api"
     }
   ]
 
