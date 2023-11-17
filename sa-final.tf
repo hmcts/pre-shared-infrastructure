@@ -68,6 +68,8 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
       enabled = false
     }
   }
+}
+
 resource "azurerm_monitor_metric_alert" "storage_final_alert_capacity" {
   count               = var.env == "prod" ? 1 : 0
   name                = "used_capacity"
