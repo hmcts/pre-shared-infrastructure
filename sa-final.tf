@@ -76,7 +76,7 @@ resource "azurerm_monitor_metric_alert" "storage_final_alert_capacity" {
     metric_name      = "UsedCapacity"
     aggregation      = "Average"
     operator         = "GreaterThan"
-    threshold        = 4294967296 # 4 TiB in bytes (1 TiB = 2^40 bytes)
+    threshold        = 4398046511104 # 4 TiB in bytes (1 TiB = 2^40 bytes)
   }
   action {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
