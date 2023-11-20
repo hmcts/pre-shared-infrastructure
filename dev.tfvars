@@ -15,7 +15,6 @@ dts_pre_ent_appreg_oid    = "9168b884-7ccd-4e71-860f-7f63455818e1" # dts_pre_dev
 pre_ent_appreg_app_id     = "7394ca1a-31de-4433-beca-2ca1a2043d5c"
 dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 
-
 #backups
 retention_duration         = "P1D"
 immutability_period_backup = "1"

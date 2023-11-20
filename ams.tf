@@ -71,22 +71,12 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
 
   enabled_log {
     category = "MediaAccount"
-
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
   }
   enabled_log {
     category = "KeyDeliveryRequests"
   }
   metric {
     category = "AllMetrics"
-
-    retention_policy {
-      enabled = true
-      days    = 14
-    }
   }
 }
 
