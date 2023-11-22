@@ -4,12 +4,6 @@ locals {
   env_to_deploy = var.env == "sbox" ? 1 : 0
 }
 
-data "azurerm_key_vault_secret" "ams_function_key" {
-  count        = local.env_to_deploy
-  name         = "ams-function-key"
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
 module "ams_product" {
   count                 = local.env_to_deploy
   source                = "git@github.com:hmcts/cnp-module-api-mgmt-product?ref=master"
