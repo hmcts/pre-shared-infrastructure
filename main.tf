@@ -17,24 +17,6 @@ resource "azurerm_role_assignment" "sp_contributor" {
   principal_id         = data.azuread_service_principal.pre_sp.object_id
 }
 
-resource "azurerm_automation_account" "pre-aa" {
-  name                = "${var.product}-${var.env}-aa"
-  location            = var.location
-  resource_group_name = data.azurerm_resource_group.rg.name
-  sku_name            = "Basic"
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  tags = var.common_tags
-}
-
-data "azurerm_key_vault_secret" "slack_monitoring_address" {
-  name         = "slack-monitoring-address"
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
 resource "azurerm_application_insights" "this" {
   count               = var.env == "prod" ? 1 : 0
   name                = "pre-${var.env}-appinsights"
