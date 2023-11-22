@@ -103,14 +103,3 @@ resource "azurerm_monitor_action_group" "pre-support" {
     email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
   }
 }
-
-resource "azuread_group_member" "pre_team_groups" {
-  group_object_id  = azuread_group.pre_group.object_id
-  member_object_id = azuread_group.edit_group.object_id
-}
-
-resource "azurerm_role_assignment" "rg_reader" {
-  scope                = data.azurerm_resource_group.rg.id
-  role_definition_name = "Reader"
-  principal_id         = var.pre_contributor_group
-}
