@@ -80,36 +80,20 @@ data "azurerm_key_vault_secret" "dynatrace-tenant-id" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
-# data "azurerm_disk_encryption_set" "pre-des" {
-#   name                = "pre-des"
-#   resource_group_name = data.azurerm_resource_group.rg.name
-# }
-
-# data "azurerm_key_vault_secret" "edit_username" {
-#   count        = var.num_vid_edit_vms
-#   name         = "videditvm${count.index}-username"
-#   key_vault_id = data.azurerm_key_vault.keyvault.id
-# }
-# data "azurerm_key_vault_secret" "edit_password" {
-#   count        = var.num_vid_edit_vms
-#   name         = "videditvm${count.index}-password"
-#   key_vault_id = data.azurerm_key_vault.keyvault.id
-# }
-
-# data "azurerm_key_vault_secret" "dtgtwy_username" {
-#   count        = var.num_datagateway
-#   name         = "Dtgtwy${count.index}-username"
-#   key_vault_id = data.azurerm_key_vault.keyvault.id
-# }
-# data "azurerm_key_vault_secret" "dtgtwy_password" {
-#   count        = var.num_datagateway
-#   name         = "Dtgtwy${count.index}-password"
-#   key_vault_id = data.azurerm_key_vault.keyvault.id
-# }
+data "azurerm_key_vault_secret" "slack_monitoring_address" {
+  name         = "slack-monitoring-address"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
 
 data "azurerm_subscription" "current" {}
 
 data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_key_vault_secret" "ams_function_key" {
+  count        = local.env_to_deploy
+  name         = "ams-function-key"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
