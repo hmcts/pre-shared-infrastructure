@@ -20,7 +20,11 @@ data "azurerm_user_assigned_identity" "managed_identity" {
 }
 
 data "azuread_group" "edit_group" {
-  display_name = "DTS-PRE-VideoEditing-SecurityGroup-${var.env}"
+  display_name = "DTS PRE Contributor (env:${var.env})"
+}
+
+data "azuread_group" "pre_group" {
+  display_name = "DTS Pre-recorded Evidence"
 }
 
 data "azurerm_subnet" "jenkins_subnet" {
