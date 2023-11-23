@@ -33,6 +33,29 @@ module "data_store_db_v14" {
 
 }
 
+# @todo remove once we have switched PowerApps to use the API
+resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
+  name         = "postgresdb-host"
+  value        = module.data_store_db_v14.fqdn
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+# @todo remove once we have switched PowerApps to use the API
+resource "azurerm_key_vault_secret" "POSTGRES_USER" {
+  name         = "postgresdb-username"
+  value        = var.pgsql_admin_username
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
+# @todo remove once we have switched PowerApps to use the API
+resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
+  name         = "postgresdb-password"
+  value        = module.data_store_db_v14.password
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+# Needed by the Common Pipeline db migration step
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
   name         = "api-POSTGRES-HOST"
   value        = module.data_store_db_v14.fqdn
