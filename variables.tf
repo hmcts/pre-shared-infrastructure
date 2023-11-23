@@ -35,7 +35,7 @@ variable "data_gateway_snet_address" {}
 variable "mgmt_net_rg_name" {}
 
 variable "num_vid_edit_vms" {
-  default = 2
+  default = 1
 }
 
 variable "num_datagateway" {

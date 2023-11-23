@@ -21,7 +21,6 @@ immutability_period_backup = "1"
 restore_policy_days        = "1"
 
 #vms
-num_vid_edit_vms         = 1
 tenant_id                = "yrk32651"
 dg_vm_private_ip         = ["10.40.12.22", "10.40.12.23"]
 powerbi_dg_vm_private_ip = ["10.40.12.24", "10.40.12.25"]
