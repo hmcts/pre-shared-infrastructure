@@ -158,8 +158,6 @@ variable "install_dynatrace_oa" {
   default = true
 }
 
-# variable "pre_app_admin" {}
-
 variable "pre_ent_appreg_app_id" {}
 
 variable "aks_subscription_id" {

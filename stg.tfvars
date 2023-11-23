@@ -1,5 +1,4 @@
 #network
-env                        = "stg"
 vnet_address_space         = "10.101.0.0/24"
 video_edit_vm_snet_address = "10.101.0.0/26"
 privatendpt_snet_address   = "10.101.0.64/26"
@@ -10,8 +9,6 @@ mgmt_net_rg_name           = "ss-ptl-network-rg"
 mgmt_subscription_id       = "6c4d2513-a873-41b4-afdd-b05a33206631"
 
 #identities
-# pre_app_admin             = "2757c27a-aa98-4cdf-9aaa-90cf47d0656c"
-pre_mi_tenant_id          = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
 dts_pre_ent_appreg_oid    = "0f7b27ab-60b6-4682-8491-8e4eb5498dad"
 pre_ent_appreg_app_id     = "2f4bf1fd-543c-4332-bc26-7a524f52d375"
 dts_pre_backup_appreg_oid = "8cb76e1e-ef5a-41a7-9cb4-9513a48535dc"
