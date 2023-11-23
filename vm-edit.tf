@@ -130,16 +130,15 @@ SETTINGS
 }
 
 # DTS-PRE-VideoEditing-SecurityGroup-
-resource "azurerm_role_assignment" "vmuser_login" {
+resource "azurerm_role_assignment" "vm_contributor" {
   count                = var.num_vid_edit_vms
   scope                = module.edit_vm.*.vm_id[count.index]
-  role_definition_name = "Virtual Machine User Login"
+  role_definition_name = "Virtual Machine Contributor"
   principal_id         = data.azuread_group.edit_group.object_id
 }
 
-resource "azurerm_role_assignment" "vmuser_reader" {
-  count                = var.env == "dev" ? 1 : 0
-  scope                = data.azurerm_bastion_host.bastion.id
+resource "azurerm_role_assignment" "vm_reader" {
+  scope                = data.azurerm_resource_group.rg.id
   role_definition_name = "Reader"
   principal_id         = data.azuread_group.edit_group.object_id
 }
