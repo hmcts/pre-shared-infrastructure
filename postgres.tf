@@ -34,20 +34,34 @@ module "data_store_db_v14" {
 }
 
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
-  name         = "postgresdb-host"
+  name         = "api-POSTGRES-HOST"
   value        = module.data_store_db_v14.fqdn
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
+# Not returned by the module outputs but needed for the pipeline migration step so hardcoding
+resource "azurerm_key_vault_secret" "POSTGRES_PORT" {
+  name         = "api-POSTGRES-PORT"
+  value        = "5432"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+# Not returned by the module outputs but needed for the pipeline migration step so hardcoding
+resource "azurerm_key_vault_secret" "POSTGRES_DATABASE" {
+  name         = "api-POSTGRES-DATABASE"
+  value        = "api"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
 resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  name         = "postgresdb-username"
+  name         = "api-POSTGRES-USER"
   value        = var.pgsql_admin_username
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 #https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
 resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
-  name         = "postgresdb-password"
+  name         = "api-POSTGRES-PASS"
   value        = module.data_store_db_v14.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
