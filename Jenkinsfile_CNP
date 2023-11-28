@@ -3,7 +3,7 @@
 
 def product = "pre"
 def component = "shared-infrastructure"
-def branchesToSync = ['demo']
+def branchesToSync = ['demo', 'perftest', 'preview']
 
 withInfraPipeline(product, component) {
   enableSlackNotifications('#pre-builds')
