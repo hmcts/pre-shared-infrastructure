@@ -95,9 +95,3 @@ data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
-
-data "azurerm_key_vault_secret" "ams_function_key" {
-  count        = local.env_to_deploy
-  name         = "ams-function-key"
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
