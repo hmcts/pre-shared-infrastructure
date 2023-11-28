@@ -29,7 +29,7 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "pre_backup_policy
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "sabackup" {
   for_each           = { for sa in var.storageaccount_ids : sa => sa }
-  name               = "${var.product}-${var.name}-backup-${var.env}"
+  name               = "${var.product}-${var.sa_name}-backup-${var.env}"
   vault_id           = azurerm_data_protection_backup_vault.pre_backup_vault.id
   location           = var.location
   storage_account_id = each.value
