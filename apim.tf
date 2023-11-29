@@ -1,6 +1,6 @@
 locals {
   app_name      = "pre-api"
-  env_to_deploy = var.env == "sbox" ? 1 : 0
+  env_to_deploy = var.env != "prod" ? 1 : 0
 }
 
 module "ams_product" {
