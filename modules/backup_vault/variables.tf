@@ -16,10 +16,10 @@ variable "env" {}
 
 variable "location" {}
 
-# variable "storageaccount_id" {
-# }
-
 variable "storageaccount_ids" {
+  type        = list(string)
+  description = "List of storage accounts to take a backup of"
+  default     = []
 }
 
 variable "rg_name" {}
