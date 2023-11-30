@@ -73,7 +73,8 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "ingestsabackup"
 }
 
 module "sabackup" {
-  source             = "./modules/backup_vault"
+  count              = var.env == "sbox" ? 1 : 0
+  source             = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=remove_vaults"
   rg_name            = data.azurerm_resource_group.rg.name
   sa_name            = "final"
   location           = var.location
