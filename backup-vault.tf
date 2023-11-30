@@ -72,16 +72,17 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "ingestsabackup"
   depends_on = [azurerm_role_assignment.backup_role_ingestsa, module.ingestsa_storage_account]
 }
 
-module "sabackup" {
+module "backup_vault" {
   count              = var.env == "sbox" ? 1 : 0
-  source             = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=remove_vaults"
-  rg_name            = data.azurerm_resource_group.rg.name
-  sa_name            = "final"
+  source             = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=remove_vaults" #"./modules/backup_vault"
+  rg_name            = data.azurerm_resource_group.rg.names
   location           = var.location
   env                = var.env
   product            = var.product
-  retention_duration = "P100D"
-  # storageaccount_id = module.finalsa_storage_account.storageaccount_id
-  storageaccount_ids = [module.finalsa_storage_account.storageaccount_id]
-  # location_backup =
+  retention_duration = var.retention_duration #"P100D"
+  storageaccount_ids = [
+    module.finalsa_storage_account.storageaccount_id,
+    module.ingestsa_storage_account.storageaccount_id,
+    module.sa_storage_account.storageaccount_id
+  ]
 }

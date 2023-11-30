@@ -21,7 +21,7 @@ resource "azurerm_role_assignment" "backup_contributor" {
   principal_id         = azurerm_data_protection_backup_vault.this.identity[0].principal_id
 }
 
-resource "azurerm_data_protection_backup_policy_blob_storage" "thise" {
+resource "azurerm_data_protection_backup_policy_blob_storage" "this" {
   name               = "${var.product}-backup-policy-${var.env}"
   vault_id           = azurerm_data_protection_backup_vault.this.id
   retention_duration = var.retention_duration
@@ -29,11 +29,11 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "thise" {
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
   for_each           = { for sa in var.storageaccount_ids : sa => sa }
-  name               = "${var.product}-${var.sa_name}-backup-${var.env}"
+  name               = "${each.key}backup${var.env}"
   vault_id           = azurerm_data_protection_backup_vault.this.id
   location           = var.location
   storage_account_id = each.value
-  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.thise.id
+  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.this.id
 
   depends_on = [azurerm_role_assignment.backup_contributor]
 }

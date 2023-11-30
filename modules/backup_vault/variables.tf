@@ -23,5 +23,3 @@ variable "storageaccount_ids" {
 }
 
 variable "rg_name" {}
-
-variable "sa_name" {}
