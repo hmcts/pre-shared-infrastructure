@@ -1,3 +1,8 @@
+locals {
+  storageaccount_names = [for id in var.storageaccount_ids : basename(id)]
+  transformed_name   = [for name in local.storageaccount_names : replace(replace(name, "/^.../", ""), var.env, "")]
+}
+
 resource "azurerm_resource_group" "this" {
   name     = "${var.product}-${var.env}-backup"
   location = var.location_backup
@@ -40,9 +45,4 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.this.id
 
   depends_on = [azurerm_role_assignment.backup_contributor]
-}
-
-locals {
-  storageaccount_names = [for id in var.storageaccount_ids : basename(id)]
-  transformed_name   = [for name in local.storageaccount_names : replace(replace(name, "/^.../", ""), var.env, "")]
 }

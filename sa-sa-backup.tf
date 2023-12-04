@@ -15,39 +15,3 @@ module "sa_storage_account_backup" {
 
   common_tags = var.common_tags
 }
-
-resource "azurerm_management_lock" "storage-backup-sa" {
-  count      = var.env == "prod" ? 1 : 0
-  name       = "storage-backup"
-  scope      = module.sa_storage_account_backup.storageaccount_id
-  lock_level = "CanNotDelete"
-  notes      = "prevent users from deleting storage accounts"
-  depends_on = [azurerm_media_services_account.ams]
-}
-
-# Give the appreg (managed application in local directory) OID Storage Blob Data Contributor role on both the storage account and backup storage account
-resource "azurerm_role_assignment" "powerapp_appreg_sa" {
-  scope                = module.sa_storage_account.storageaccount_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = var.dts_pre_backup_appreg_oid
-}
-
-resource "azurerm_role_assignment" "powerapp_appreg_sabackup" {
-  scope                = module.sa_storage_account_backup.storageaccount_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = var.dts_pre_backup_appreg_oid
-}
-
-# To get key and create container in backup sa storage account
-resource "azurerm_role_assignment" "powerapp_appreg_sa2" {
-  scope                = module.sa_storage_account_backup.storageaccount_id
-  role_definition_name = "Storage Account Contributor"
-  principal_id         = var.dts_pre_backup_appreg_oid
-}
-
-# Used in storage account backups to get key and list containers
-resource "azurerm_role_assignment" "powerapp_appreg_sa_cont" {
-  scope                = module.sa_storage_account.storageaccount_id
-  role_definition_name = "Storage Account Contributor"
-  principal_id         = var.dts_pre_backup_appreg_oid
-}
