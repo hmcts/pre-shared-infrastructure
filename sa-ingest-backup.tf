@@ -1,4 +1,5 @@
 module "ingestsa_storage_account_backup" {
+  count                           = var.env == "prod" || var.env == "test" ? 1 : 0
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = "${var.product}ingestsabackup${var.env}"
