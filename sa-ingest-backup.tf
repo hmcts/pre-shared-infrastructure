@@ -18,6 +18,7 @@ module "ingestsa_storage_account_backup" {
 }
 
 resource "azurerm_management_lock" "storage-backup-ingest" {
+  count      = var.env == "prod" ? 1 : 0
   name       = "storage-backup"
   scope      = module.ingestsa_storage_account_backup.storageaccount_id
   lock_level = "CanNotDelete"

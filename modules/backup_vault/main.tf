@@ -28,12 +28,21 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "this" {
 }
 
 resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
-  for_each           = { for sa in var.storageaccount_ids : sa => sa }
-  name               = "${each.key}backup${var.env}"
+  for_each = { for idx, sa_id in var.storageaccount_ids : idx => {
+    storage_account_id   = sa_id
+    storage_account_name = local.storage_account_names[idx]
+    }
+  }
+  name               = "pre-${local.transformed_string[each.key]}-backup-${var.env}" #eg "pre-ingestsa-backup-sbox"
   vault_id           = azurerm_data_protection_backup_vault.this.id
   location           = var.location
-  storage_account_id = each.value
+  storage_account_id = each.value.storage_account_id
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.this.id
 
   depends_on = [azurerm_role_assignment.backup_contributor]
+}
+
+locals {
+  storage_account_names = [for id in var.storageaccount_ids : basename(id)]
+  transformed_string    = [for name in local.storage_account_names : replace(replace(name, "/^.../", ""), var.env, "")]
 }

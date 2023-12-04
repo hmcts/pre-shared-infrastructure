@@ -18,6 +18,7 @@ module "finalsa_storage_account_backup" {
 }
 
 resource "azurerm_management_lock" "storage-backup-final" {
+  count      = var.env == "prod" ? 1 : 0
   name       = "storage-backup"
   scope      = module.finalsa_storage_account_backup.storageaccount_id
   lock_level = "CanNotDelete"
