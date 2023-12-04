@@ -22,4 +22,6 @@ variable "storageaccount_ids" {
   default     = []
 }
 
+# variable "storageaccount_name" {}
+
 variable "rg_name" {}
