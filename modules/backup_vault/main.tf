@@ -30,7 +30,7 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "this" {
 resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
   for_each = { for idx, sa_id in var.storageaccount_ids : idx => {
     storage_account_id   = sa_id
-    storage_account_name = local.storage_account_names[idx]
+    storage_account_name = local.storageaccount_names[idx]
     }
   }
   name               = "pre-${local.transformed_string[each.key]}-backup-${var.env}" #eg "pre-ingestsa-backup-sbox"
@@ -43,6 +43,6 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
 }
 
 locals {
-  storage_account_names = [for id in var.storageaccount_ids : basename(id)]
-  transformed_string    = [for name in local.storage_account_names : replace(replace(name, "/^.../", ""), var.env, "")]
+  storageaccount_names = [for id in var.storageaccount_ids : basename(id)]
+  transformed_string    = [for name in local.storageaccount_names : replace(replace(name, "/^.../", ""), var.env, "")]
 }
