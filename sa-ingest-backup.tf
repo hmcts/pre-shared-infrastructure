@@ -17,25 +17,3 @@ module "ingestsa_storage_account_backup" {
 
   common_tags = var.common_tags
 }
-
-resource "azurerm_management_lock" "storage-backup-ingest" {
-  count      = var.env == "prod" ? 1 : 0
-  name       = "storage-backup"
-  scope      = module.ingestsa_storage_account_backup.storageaccount_id
-  lock_level = "CanNotDelete"
-  notes      = "prevent users from deleting storage accounts"
-  depends_on = [azurerm_media_services_account.ams]
-}
-
-# Give the appreg (managed application in local directory) OID Storage Blob Data Contributor role on both the storage account and backup storage account
-resource "azurerm_role_assignment" "powerapp_appreg_ingest" {
-  scope                = module.ingestsa_storage_account.storageaccount_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = var.dts_pre_backup_appreg_oid
-}
-
-resource "azurerm_role_assignment" "powerapp_appreg_ingestfinal" {
-  scope                = module.ingestsa_storage_account_backup.storageaccount_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = var.dts_pre_backup_appreg_oid
-}
