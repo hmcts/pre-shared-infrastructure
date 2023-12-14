@@ -162,3 +162,5 @@ powerbi_dg_vm_data_disks = [{
 
 # Dynatrace
 cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+
+apim_service_url = "https://pre-api-dev.dev.platform.hmcts.net"
