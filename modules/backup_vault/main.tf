@@ -33,7 +33,7 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
     storage_account_name = local.storageaccount_names[idx]
     }
   }
-  name               = "pre-${local.transformed_name[each.key]}-backup-${var.env}" #eg "pre-ingestsa-backup-sbox"
+  name               = "${var.product}-${local.transformed_name[each.key]}-backup-${var.env}" #eg "pre-ingestsa-backup-sbox"
   vault_id           = azurerm_data_protection_backup_vault.this.id
   location           = var.location
   storage_account_id = each.value.storage_account_id
@@ -44,5 +44,5 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "this" {
 
 locals {
   storageaccount_names = [for id in var.storageaccount_ids : basename(id)]
-  transformed_name   = [for name in local.storageaccount_names : replace(replace(name, "/^.../", ""), var.env, "")]
+  transformed_name     = [for name in local.storageaccount_names : replace(replace(name, "/^.../", ""), var.env, "")]
 }
