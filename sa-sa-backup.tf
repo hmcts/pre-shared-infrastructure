@@ -1,5 +1,5 @@
 module "sa_storage_account_backup" {
-  count                           = var.env == "prod" || var.env == "test" ? 1 : 0
+  count                           = var.env == "prod" || var.env == "test" || var.env == "sbox" ? 1 : 0
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = "${var.product}sabackup${var.env}"
@@ -41,7 +41,7 @@ resource "azurerm_role_assignment" "powerapp_appreg_sabackup" {
 
 # To get key and create container in backup sa storage account
 resource "azurerm_role_assignment" "powerapp_appreg_sa2" {
-  count                = var.env == "prod" || var.env == "test" ? 1 : 0
+  count                = var.env == "prod" || var.env == "test" || var.env == "sbox" ? 1 : 0
   scope                = module.sa_storage_account_backup[0].storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
