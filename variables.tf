@@ -179,3 +179,8 @@ variable "restore_policy_days" {}
 variable "cnp_vault_sub" {
   description = "The subscription ID of the subscription that contains the CNP KeyVault"
 }
+
+variable "apim_service_url" {
+  description = "The URL of the pre-api for the APIm service"
+  default = "http://pre-api-${var.env}.service.core-compute-${var.env}.internal"
+}
