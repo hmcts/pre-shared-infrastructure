@@ -182,5 +182,4 @@ variable "cnp_vault_sub" {
 
 variable "apim_service_url" {
   description = "The URL of the pre-api for the APIm service"
-  default = "http://pre-api-${var.env}.service.core-compute-${var.env}.internal"
 }
