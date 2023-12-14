@@ -21,7 +21,7 @@ module "ams_api" {
   api_mgmt_rg    = "ss-${var.env}-network-rg"
   api_mgmt_name  = "sds-api-mgmt-${var.env}"
   display_name   = "Pre Recorded Evidence API"
-  revision       = "4"
+  revision       = "5"
   product_id     = module.ams_product[0].product_id
   path           = "pre-api"
   service_url    = "http://pre-api-${var.env}.service.core-compute-${var.env}.internal"
