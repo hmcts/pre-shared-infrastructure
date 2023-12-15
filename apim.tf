@@ -37,19 +37,30 @@ module "pre-api-mgmt-api-policy" {
     api_name = "pre-api"
     api_policy_xml_content = <<XML
 <policies>
-  <inbound>
-    <cors>
-        <allowed-origins>
-            <origin>https://flow.microsoft.com</origin>
-        </allowed-origins>
-        <allowed-methods>
-            <method>*</method>
-        </allowed-methods>
-        <allowed-headers>
-            <header>*</header>
-        </allowed-headers>
-    </cors>
-  </inbound>
+    <inbound>
+        <base />
+        <set-backend-service base-url="${var.apim_service_url}" />
+        <cors allow-credentials="false">
+            <allowed-origins>
+                <origin>*</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>*</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+        </cors>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
 </policies>
 XML
 }
