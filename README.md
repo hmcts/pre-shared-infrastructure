@@ -70,8 +70,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ams_api"></a> [ams\_api](#module\_ams\_api) | git@github.com:hmcts/cnp-module-api-mgmt-api | master |
-| <a name="module_ams_product"></a> [ams\_product](#module\_ams\_product) | git@github.com:hmcts/cnp-module-api-mgmt-product | master |
 | <a name="module_data_gateway_vm"></a> [data\_gateway\_vm](#module\_data\_gateway\_vm) | git@github.com:hmcts/terraform-module-virtual-machine.git | master |
 | <a name="module_data_store_db_v14"></a> [data\_store\_db\_v14](#module\_data\_store\_db\_v14) | git@github.com:hmcts/terraform-module-postgresql-flexible.git | master |
 | <a name="module_edit_vm"></a> [edit\_vm](#module\_edit\_vm) | git@github.com:hmcts/terraform-module-virtual-machine.git | master |
@@ -154,7 +152,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_bastion_host.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/bastion_host) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/client_config) | data source |
 | [azurerm_key_vault.keyvault](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault) | data source |
-| [azurerm_key_vault_secret.ams_function_key](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.dynatrace-tenant-id](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.dynatrace-token](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault_secret) | data source |
 | [azurerm_key_vault_secret.slack_monitoring_address](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/data-sources/key_vault_secret) | data source |
