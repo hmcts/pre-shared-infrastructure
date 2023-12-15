@@ -31,6 +31,7 @@ module "ams_api" {
 }
 
 module "cnp-module-api-mgmt-api-policy" {
+    source                 = "git@github.com:hmcts/cnp-module-api-mgmt-api-policy?ref=master"
     api_mgmt_name = "sds-api-mgmt-${var.env}"
     api_mgmt_rg = "ss-${var.env}-network-rg"
     api_name = "pre-api"
