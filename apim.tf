@@ -24,7 +24,7 @@ module "ams_api" {
   revision       = "5"
   product_id     = module.ams_product[0].product_id
   path           = "pre-api"
-  service_url    = "http://pre-api-${var.env}.service.core-compute-${var.env}.internal"
+  service_url    = var.apim_service_url
   swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
   content_format = "openapi+json-link"
 }
