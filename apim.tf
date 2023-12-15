@@ -31,8 +31,9 @@ module "ams_api" {
 }
 
 module "pre-api-mgmt-api-policy" {
+  count         = local.env_to_deploy
   source        = "git@github.com:hmcts/cnp-module-api-mgmt-api-policy?ref=master"
-  api_name      = module.ams_api.name
+  api_name      = module.ams_api[0].name
   api_mgmt_name = "sds-api-mgmt-${var.env}"
   api_mgmt_rg   = "ss-${var.env}-network-rg"
 
