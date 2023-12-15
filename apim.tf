@@ -29,3 +29,20 @@ module "ams_api" {
   content_format = "openapi+json-link"
   protocols      = ["http", "https"]
 }
+
+module "cnp-module-api-mgmt-api-policy" {
+    api_mgmt_name = "sds-api-mgmt-${var.env}"
+    api_mgmt_rg = "ss-${var.env}-network-rg"
+    api_name = "pre-api"
+    api_policy_xml_content = <<XML
+<policies>
+  <inbound>
+    <cors allow-credentials="false | true" terminate-unmatched-request="true | false">
+        <allowed-origins>
+            <origin>https://flow.microsoft.com</origin>
+        </allowed-origins>
+    </cors>
+  </inbound>
+</policies>
+XML
+}
