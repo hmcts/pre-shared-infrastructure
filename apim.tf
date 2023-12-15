@@ -41,6 +41,12 @@ module "cnp-module-api-mgmt-api-policy" {
         <allowed-origins>
             <origin>https://flow.microsoft.com</origin>
         </allowed-origins>
+        <allowed-methods>
+            <method>*</method>
+        </allowed-methods>
+        <allowed-headers>
+            <header>*</header>
+        </allowed-headers>
     </cors>
   </inbound>
 </policies>
