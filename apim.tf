@@ -37,7 +37,7 @@ module "cnp-module-api-mgmt-api-policy" {
     api_policy_xml_content = <<XML
 <policies>
   <inbound>
-    <cors allow-credentials="false | true" terminate-unmatched-request="true | false">
+    <cors>
         <allowed-origins>
             <origin>https://flow.microsoft.com</origin>
         </allowed-origins>
