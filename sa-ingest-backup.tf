@@ -1,5 +1,5 @@
 module "ingestsa_storage_account_backup" {
-  count                           = var.env == "prod" || var.env == "test" || var.env == "sbox" ? 1 : 0
+  count                           = var.env == "prod" || var.env == "test" ? 1 : 0
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = "${var.product}ingestsabackup${var.env}"
@@ -12,8 +12,8 @@ module "ingestsa_storage_account_backup" {
   allow_nested_items_to_be_public = false
   default_action                  = "Allow"
   enable_data_protection          = false
-  immutable_enabled               = var.env == "prod" || var.env == "test" ? true : false
-  immutability_period             = var.env == "prod" || var.env == "test" ? var.immutability_period_backup : null
+  immutable_enabled               = true
+  immutability_period             = var.immutability_period_backup
 
   common_tags = var.common_tags
 }
@@ -34,7 +34,7 @@ resource "azurerm_role_assignment" "powerapp_appreg_ingest" {
 }
 
 resource "azurerm_role_assignment" "powerapp_appreg_ingestfinal" {
-  count                = var.env == "prod" || var.env == "test" || var.env == "sbox" ? 1 : 0
+  count                = var.env == "prod" || var.env == "test" ? 1 : 0
   scope                = module.ingestsa_storage_account_backup[0].storageaccount_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
