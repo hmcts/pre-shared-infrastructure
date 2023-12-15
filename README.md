@@ -86,7 +86,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | Name | Type |
 |------|------|
 | [azurerm_application_insights.this](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/application_insights) | resource |
-| [azurerm_automation_account.pre-aa](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/automation_account) | resource |
 | [azurerm_data_protection_backup_instance_blob_storage.finalsabackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/data_protection_backup_instance_blob_storage) | resource |
 | [azurerm_data_protection_backup_instance_blob_storage.ingestsabackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/data_protection_backup_instance_blob_storage) | resource |
 | [azurerm_data_protection_backup_instance_blob_storage.sabackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/data_protection_backup_instance_blob_storage) | resource |
@@ -95,6 +94,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_key_vault_secret.POSTGRES_HOST](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.POSTGRES_PASS](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.POSTGRES_USER](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.appinsights-key](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.appinsights-non-prod-key](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.dg_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.dg_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.edit_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/key_vault_secret) | resource |
@@ -198,7 +199,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_mgmt_net_rg_name"></a> [mgmt\_net\_rg\_name](#input\_mgmt\_net\_rg\_name) | n/a | `any` | n/a | yes |
 | <a name="input_mgmt_subscription_id"></a> [mgmt\_subscription\_id](#input\_mgmt\_subscription\_id) | n/a | `any` | n/a | yes |
 | <a name="input_num_datagateway"></a> [num\_datagateway](#input\_num\_datagateway) | n/a | `number` | `2` | no |
-| <a name="input_num_vid_edit_vms"></a> [num\_vid\_edit\_vms](#input\_num\_vid\_edit\_vms) | n/a | `number` | `2` | no |
+| <a name="input_num_vid_edit_vms"></a> [num\_vid\_edit\_vms](#input\_num\_vid\_edit\_vms) | n/a | `number` | `1` | no |
 | <a name="input_pgsql_admin_username"></a> [pgsql\_admin\_username](#input\_pgsql\_admin\_username) | n/a | `string` | `"psqladmin"` | no |
 | <a name="input_pgsql_storage_mb"></a> [pgsql\_storage\_mb](#input\_pgsql\_storage\_mb) | n/a | `string` | `"32768"` | no |
 | <a name="input_powerbi_dg_vm_data_disks"></a> [powerbi\_dg\_vm\_data\_disks](#input\_powerbi\_dg\_vm\_data\_disks) | n/a | `any` | n/a | yes |
