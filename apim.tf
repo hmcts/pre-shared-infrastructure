@@ -1,7 +1,6 @@
 locals {
-  app_name      = "pre-ams-integration"
-  function_name = "CheckBlobExists"
-  env_to_deploy = var.env == "sbox" ? 1 : 0
+  app_name      = "pre-api"
+  env_to_deploy = var.env != "prod" ? 1 : 0
 }
 
 module "ams_product" {
@@ -15,18 +14,17 @@ module "ams_product" {
   subscription_required = false
 }
 
-#WIP used toffee for test purposes
 module "ams_api" {
   count          = local.env_to_deploy
   source         = "git@github.com:hmcts/cnp-module-api-mgmt-api?ref=master"
-  name           = "toffee-recipes-api"
+  name           = "pre-api"
   api_mgmt_rg    = "ss-${var.env}-network-rg"
   api_mgmt_name  = "sds-api-mgmt-${var.env}"
-  display_name   = "toffee-recipes"
-  revision       = "1"
+  display_name   = "Pre Recorded Evidence API"
+  revision       = "5"
   product_id     = module.ams_product[0].product_id
-  path           = "toffee-recipes-api"
-  service_url    = "http://toffee-recipe-backend-${var.env}.service.core-compute-${var.env}.internal"
-  swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/sds-toffee-recipes-service.json"
+  path           = "pre-api"
+  service_url    = var.apim_service_url
+  swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
   content_format = "openapi+json-link"
 }
