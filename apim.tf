@@ -27,4 +27,5 @@ module "ams_api" {
   service_url    = var.apim_service_url
   swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
   content_format = "openapi+json-link"
+  protocols      = ["http", "https"]
 }
