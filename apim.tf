@@ -27,4 +27,40 @@ module "ams_api" {
   service_url    = var.apim_service_url
   swagger_url    = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
   content_format = "openapi+json-link"
+  protocols      = ["http", "https"]
+}
+
+module "pre-api-mgmt-api-policy" {
+    source                 = "git@github.com:hmcts/cnp-module-api-mgmt-api-policy?ref=master"
+    api_mgmt_name = "sds-api-mgmt-${var.env}"
+    api_mgmt_rg = "ss-${var.env}-network-rg"
+    api_name = "pre-api"
+    api_policy_xml_content = <<XML
+<policies>
+    <inbound>
+        <base />
+        <set-backend-service base-url="${var.apim_service_url}" />
+        <cors allow-credentials="false">
+            <allowed-origins>
+                <origin>*</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>*</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+        </cors>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
+XML
 }
