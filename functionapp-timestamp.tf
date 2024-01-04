@@ -10,6 +10,6 @@ module "timestamp_function_app" {
   common_tags         = var.common_tags
   env                 = var.env
 
-  # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
+
   app_settings = {}
 }
