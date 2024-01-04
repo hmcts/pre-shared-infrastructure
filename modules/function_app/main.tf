@@ -34,7 +34,7 @@ resource "azurerm_windows_function_app" "this" {
   tags = var.common_tags
 
   site_config {
-    application_insights_connection_string = "InstrumentationKey=${azurerm_application_insights.appinsight.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
+    application_insights_connection_string = "InstrumentationKey=${module.application_insights.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
     application_stack {
       powershell_core_version = "7.2"
     }
@@ -72,7 +72,7 @@ resource "azurerm_linux_function_app" "this" {
   tags = var.common_tags
 
   site_config {
-    application_insights_connection_string = "InstrumentationKey=${azurerm_application_insights.appinsight.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
+    application_insights_connection_string = "InstrumentationKey=${module.application_insights.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
     application_stack {
       node_version = "18"
     }
@@ -103,10 +103,19 @@ resource "azurerm_storage_account" "this" {
   allow_nested_items_to_be_public = false
 }
 
-resource "azurerm_application_insights" "appinsight" {
-  application_type    = "web"
-  location            = var.location
-  name                = "${var.product}-${var.name}-${var.env}"
+module "application_insights" {
+  source = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
+
+  env     = var.env
+  product = var.product
+  name    = "${var.product}-${var.name}"
+
   resource_group_name = data.azurerm_resource_group.rg.name
-  tags                = var.common_tags
+
+  common_tags = var.common_tags
+}
+
+moved {
+  from = azurerm_application_insights.appinsight
+  to   = module.application_insights.azurerm_application_insights.this
 }
