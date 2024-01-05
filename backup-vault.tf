@@ -1,5 +1,5 @@
 module "backup_vault" {
-  count              = var.env == "prod" || var.env == "test" ? 1 : 0
+  count              = var.env == "prod" ? 1 : 0
   source             = "git@github.com:hmcts/pre-shared-infrastructure.git//modules/backup_vault?ref=remove_vaults"
   rg_name            = data.azurerm_resource_group.rg.name
   location           = var.location
