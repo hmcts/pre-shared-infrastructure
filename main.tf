@@ -17,21 +17,29 @@ resource "azurerm_role_assignment" "sp_contributor" {
   principal_id         = data.azuread_service_principal.pre_sp.object_id
 }
 
-resource "azurerm_application_insights" "this" {
-  count               = var.env == "prod" ? 1 : 0
-  name                = "pre-${var.env}-appinsights"
+module "application_insights" {
+  count         = var.env == "prod" ? 1 : 0
+  source        = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
+  env           = var.env
+  product       = var.product
+  override_name = "pre-${var.env}-appinsights"
+
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
   application_type    = "other"
+  common_tags         = var.common_tags
+}
+
+moved {
+  from = azurerm_application_insights.this[0]
+  to   = module.application_insights[0].azurerm_application_insights.this
 }
 
 resource "azurerm_key_vault_secret" "appinsights-key" {
   count        = var.env == "prod" ? 1 : 0
   name         = "AppInsightsInstrumentationKey"
-  value        = azurerm_application_insights.this[0].instrumentation_key
+  value        = module.application_insights[0].instrumentation_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
-
-  depends_on = [azurerm_application_insights.this]
 }
 
 resource "azurerm_key_vault_secret" "appinsights-non-prod-key" {
@@ -40,7 +48,7 @@ resource "azurerm_key_vault_secret" "appinsights-non-prod-key" {
   value        = "00000000-0000-0000-0000-000000000000"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 
-  depends_on = [azurerm_application_insights.this]
+  depends_on = [module.application_insights]
 }
 
 resource "azurerm_monitor_action_group" "pre-support" {
