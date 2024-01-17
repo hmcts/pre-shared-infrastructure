@@ -10,7 +10,12 @@ data "azurerm_log_analytics_workspace" "loganalytics" {
 }
 
 data "azurerm_key_vault" "keyvault" {
-  name                = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
+  name                = "${var.product}-hmctskv-${var.env}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
+
+data "azurerm_key_vault" "key_vault" {
+  name                = "${var.product}-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 
