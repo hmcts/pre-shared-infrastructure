@@ -32,13 +32,13 @@ module "ams_api" {
 }
 
 module "apim_subscription_smoketest" {
-  count               = local.env_to_deploy
-  display_name        = "pre-api smoke test subscription"
-  source              = "git@github.com:hmcts/cnp-module-api-mgmt-subscription?ref=master"
-  api_management_name = "sds-api-mgmt-${var.env}"
-  resource_group_name = "ss-${var.env}-network-rg"
-  state               = "active"
-  allowing_tracing    = var.env == "stg" || var.env == "demo" ? true : false
+  count            = local.env_to_deploy
+  sub_display_name = "pre-api smoke test subscription"
+  source           = "git@github.com:hmcts/cnp-module-api-mgmt-subscription?ref=master"
+  api_mgmt_name    = "sds-api-mgmt-${var.env}"
+  api_mgmt_rg      = "ss-${var.env}-network-rg"
+  state            = "active"
+  allowing_tracing = var.env == "stg" || var.env == "demo" ? true : false
 }
 resource "azurerm_key_vault_secret" "apim_subscription_smoketest_primary_key" {
   name         = "apim-sub-smoketest-primary-key"
@@ -52,13 +52,13 @@ resource "azurerm_key_vault_secret" "apim_subscription_smoketest_secondary_key" 
 }
 
 module "apim_subscription_powerplatform" {
-  count               = local.env_to_deploy
-  display_name        = "PRE Power Platform subscription"
-  source              = "git@github.com:hmcts/cnp-module-api-mgmt-subscription?ref=master"
-  api_management_name = "sds-api-mgmt-${var.env}"
-  resource_group_name = "ss-${var.env}-network-rg"
-  state               = "active"
-  allowing_tracing    = var.env == "stg" || var.env == "demo" ? true : false
+  count            = local.env_to_deploy
+  sub_display_name = "PRE Power Platform subscription"
+  source           = "git@github.com:hmcts/cnp-module-api-mgmt-subscription?ref=master"
+  api_mgmt_name    = "sds-api-mgmt-${var.env}"
+  api_mgmt_rg      = "ss-${var.env}-network-rg"
+  state            = "active"
+  allowing_tracing = var.env == "stg" || var.env == "demo" ? true : false
 }
 resource "azurerm_key_vault_secret" "apim_subscription_powerplatform_primary_key" {
   name         = "apim-sub-powerplatform-primary-key"
