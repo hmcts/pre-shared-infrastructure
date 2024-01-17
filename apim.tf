@@ -41,13 +41,15 @@ module "apim_subscription_smoketest" {
   allow_tracing    = var.env == "stg" || var.env == "demo" ? true : false
 }
 resource "azurerm_key_vault_secret" "apim_subscription_smoketest_primary_key" {
+  count        = local.env_to_deploy
   name         = "apim-sub-smoketest-primary-key"
-  value        = module.apim_subscription_smoketest.subscription_primary_key
+  value        = module.apim_subscription_smoketest[0].subscription_primary_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 resource "azurerm_key_vault_secret" "apim_subscription_smoketest_secondary_key" {
+  count        = local.env_to_deploy
   name         = "apim-sub-smoketest-secondary-key"
-  value        = module.apim_subscription_smoketest.subscription_secondary_key
+  value        = module.apim_subscription_smoketest[0].subscription_secondary_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
@@ -61,13 +63,15 @@ module "apim_subscription_powerplatform" {
   allow_tracing    = var.env == "stg" || var.env == "demo" ? true : false
 }
 resource "azurerm_key_vault_secret" "apim_subscription_powerplatform_primary_key" {
+  count        = local.env_to_deploy
   name         = "apim-sub-powerplatform-primary-key"
-  value        = module.apim_subscription_powerplatform.subscription_primary_key
+  value        = module.apim_subscription_powerplatform[0].subscription_primary_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 resource "azurerm_key_vault_secret" "apim_subscription_powerplatform_secondary_key" {
+  count        = local.env_to_deploy
   name         = "apim-sub-powerplatform-secondary-key"
-  value        = module.apim_subscription_powerplatform.subscription_secondary_key
+  value        = module.apim_subscription_powerplatform[0].subscription_secondary_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
