@@ -15,7 +15,7 @@ data "azurerm_key_vault" "keyvault" {
 }
 
 data "azurerm_key_vault" "key_vault" {
-  name                = "${var.product}-${var.env}"
+  name                = var.env == "prod" ? "${var.product}-hmctskeyvault-${var.env}" : "${var.product}-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 
