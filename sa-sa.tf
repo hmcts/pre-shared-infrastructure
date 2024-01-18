@@ -29,6 +29,13 @@ resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
+resource "azurerm_key_vault_secret" "sa_storage_account_connectionstring" {
+  name         = "sa-storage-account-connection-string"
+  value        = module.sa_storage_account.storageaccount_primary_connection_string
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
+
 resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
   name                       = module.sa_storage_account.storageaccount_name
   target_resource_id         = "${module.sa_storage_account.storageaccount_id}/blobServices/default"

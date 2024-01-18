@@ -22,10 +22,6 @@ module "edit_vm" {
   privateip_allocation           = "Static"
   systemassigned_identity        = true
 
-  #Disk Encryption
-  # kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  # kv_rg_name  = "pre-${var.env}"
-  # encrypt_ADE = true
   os_disk_size_gb = 127
 
   nic_name      = lower("edit${count.index + 1}-nic-${var.env}")
@@ -172,4 +168,19 @@ resource "azurerm_key_vault_secret" "edit_password" {
   name         = "videditvm${count.index + 1}-password"
   value        = random_password.vm_password[count.index].result
   key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+#@todo delete all secrets to data.azurerm_key_vault.key_vault.id
+resource "azurerm_key_vault_secret" "edit_vm_username" {
+  count        = var.num_vid_edit_vms
+  name         = "videditvm${count.index + 1}-username"
+  value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "edit_vm_password" {
+  count        = var.num_vid_edit_vms
+  name         = "videditvm${count.index + 1}-password"
+  value        = random_password.vm_password[count.index].result
+  key_vault_id = data.azurerm_key_vault.key_vault.id
 }
