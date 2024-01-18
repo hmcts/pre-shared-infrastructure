@@ -28,7 +28,7 @@ module "ams_api" {
   swagger_url           = "https://raw.githubusercontent.com/hmcts/cnp-api-docs/master/docs/specs/pre-api.json"
   content_format        = "openapi+json-link"
   protocols             = ["http", "https"]
-  subscription_required = false
+  subscription_required = true
 }
 
 module "apim_subscription_smoketest" {
