@@ -36,10 +36,6 @@ module "data_gateway_vm" {
   nessus_install    = false #var.nessus_install
   install_splunk_uf = false
 
-  #Disk Encryption
-  # kv_name     = var.env == "prod" ? "${var.product}-hmctskv-${var.env}" : "${var.product}-${var.env}"
-  # kv_rg_name  = "pre-${var.env}"
-  # encrypt_ADE = true
   os_disk_size_gb = 127
 
   dynatrace_hostgroup = var.hostgroup
@@ -144,4 +140,18 @@ resource "azurerm_key_vault_secret" "dg_password" {
   name         = "dg${count.index + 1}-password"
   value        = random_password.dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+resource "azurerm_key_vault_secret" "dg_vm_username" {
+  count        = var.num_datagateway
+  name         = "dg${count.index + 1}-username"
+  value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
+  key_vault_id = data.azurerm_key_vault.key_vault.id
+}
+
+resource "azurerm_key_vault_secret" "dg_vm_password" {
+  count        = var.num_datagateway
+  name         = "dg${count.index + 1}-password"
+  value        = random_password.dg_password[count.index].result
+  key_vault_id = data.azurerm_key_vault.key_vault.id
 }
