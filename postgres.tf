@@ -1,37 +1,37 @@
-# module "data_store_db_v14" {
-#   providers = {
-#     azurerm.postgres_network = azurerm.postgres_network
-#   }
+module "data_store_db_v14" {
+  providers = {
+    azurerm.postgres_network = azurerm.postgres_network
+  }
 
-#   source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
-#   env    = var.env
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
+  env    = var.env
 
-#   product       = var.product
-#   component     = var.product
-#   business_area = var.project
+  product       = var.product
+  component     = var.product
+  business_area = var.project
 
-#   common_tags = var.common_tags
-#   name        = var.database_name
-#   pgsql_databases = [
-#     {
-#       name : "pre-pdb-${var.env}"
-#     },
-#     {
-#       name : "api"
-#     }
-#   ]
+  common_tags = var.common_tags
+  name        = var.database_name
+  pgsql_databases = [
+    {
+      name : "pre-pdb-${var.env}"
+    },
+    {
+      name : "api"
+    }
+  ]
 
-#   pgsql_version         = "14"
-#   backup_retention_days = 35
+  pgsql_version         = "14"
+  backup_retention_days = 35
 
-#   location             = var.location
-#   resource_group_name  = data.azurerm_resource_group.rg.name
-#   pgsql_admin_username = var.pgsql_admin_username
-#   pgsql_storage_mb     = var.pgsql_storage_mb
+  location             = var.location
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  pgsql_admin_username = var.pgsql_admin_username
+  pgsql_storage_mb     = var.pgsql_storage_mb
 
-#   admin_user_object_id = var.jenkins_AAD_objectId
+  admin_user_object_id = var.jenkins_AAD_objectId
 
-# }
+}
 
 # @todo remove once we have switched PowerApps to use the API
 resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
@@ -191,61 +191,6 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
   action {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
   }
-}
-
-#postgres secrets
-resource "azurerm_key_vault_secret" "pg_password" {
-  name         = "postgresdb-password"
-  value        = module.data_store_db_v14.password
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-# Needed by the Common Pipeline db migration step
-resource "azurerm_key_vault_secret" "pg_host_name" {
-  name         = "api-POSTGRES-HOST"
-  value        = module.data_store_db_v14.fqdn
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-# Not returned by the module outputs but needed for the pipeline migration step so hardcoding
-resource "azurerm_key_vault_secret" "pg_port_number" {
-  name         = "api-POSTGRES-PORT"
-  value        = "5432"
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-# Not returned by the module outputs but needed for the pipeline migration step so hardcoding
-resource "azurerm_key_vault_secret" "pg_database" {
-  name         = "api-POSTGRES-DATABASE"
-  value        = "api"
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "pg_user" {
-  name         = "api-POSTGRES-USER"
-  value        = var.pgsql_admin_username
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
-resource "azurerm_key_vault_secret" "pg_pass" {
-  name         = "api-POSTGRES-PASS"
-  value        = module.data_store_db_v14.password
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-# @todo remove once we have switched PowerApps to use the API
-resource "azurerm_key_vault_secret" "postgres_host_name" {
-  name         = "postgresdb-host"
-  value        = module.data_store_db_v14.fqdn
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-# @todo remove once we have switched PowerApps to use the API
-resource "azurerm_key_vault_secret" "postgres_user" {
-  name         = "postgresdb-username"
-  value        = var.pgsql_admin_username
-  key_vault_id = data.azurerm_key_vault.key_vault.id
 }
 
 #https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
