@@ -64,27 +64,3 @@ resource "azurerm_monitor_action_group" "pre-support" {
     email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
   }
 }
-
-#@todo delete after migration to new key vaults
-# app insights secrets
-resource "azurerm_key_vault_secret" "appinsights_key" {
-  count        = var.env == "prod" ? 1 : 0
-  name         = "AppInsightsInstrumentationKey"
-  value        = module.application_insights[0].instrumentation_key
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "appinsights_nonprod_key" {
-  count        = var.env != "prod" ? 1 : 0
-  name         = "AppInsightsInstrumentationKey"
-  value        = "00000000-0000-0000-0000-000000000000"
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-
-  depends_on = [module.application_insights]
-}
-resource "azurerm_key_vault_secret" "app_insights_connection_string" {
-  count        = var.env == "prod" ? 1 : 0
-  name         = "app-insights-connection-string"
-  value        = module.application_insights[0].connection_string
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
