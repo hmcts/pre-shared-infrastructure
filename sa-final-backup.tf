@@ -1,5 +1,5 @@
 module "finalsa_storage_account_backup" {
-  count                           = var.env == "prod" || var.env == "stg" ? 1 : 0
+  count                           = var.env == "prod" ? 1 : 0
   source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
   env                             = var.env
   storage_account_name            = "${var.product}finalsabackup${var.env}"
@@ -35,7 +35,7 @@ resource "azurerm_role_assignment" "powerapp_appreg_final" {
 }
 
 resource "azurerm_role_assignment" "powerapp_appreg_finalbackup" {
-  count                = var.env == "prod" || var.env == "stg" ? 1 : 0
+  count                = var.env == "prod" ? 1 : 0
   scope                = module.finalsa_storage_account_backup[0].storageaccount_id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
