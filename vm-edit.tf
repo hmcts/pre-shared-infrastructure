@@ -169,18 +169,3 @@ resource "azurerm_key_vault_secret" "edit_password" {
   value        = random_password.vm_password[count.index].result
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
-
-#@todo delete all secrets to data.azurerm_key_vault.key_vault.id
-resource "azurerm_key_vault_secret" "edit_vm_username" {
-  count        = var.num_vid_edit_vms
-  name         = "videditvm${count.index + 1}-username"
-  value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "edit_vm_password" {
-  count        = var.num_vid_edit_vms
-  name         = "videditvm${count.index + 1}-password"
-  value        = random_password.vm_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
