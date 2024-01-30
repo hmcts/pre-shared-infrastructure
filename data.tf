@@ -14,11 +14,6 @@ data "azurerm_key_vault" "keyvault" {
   resource_group_name = data.azurerm_resource_group.rg.name
 }
 
-data "azurerm_key_vault" "key_vault" {
-  name                = var.env == "prod" ? "${var.product}-hmctskeyvault-${var.env}" : "${var.product}-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
-
 data "azurerm_user_assigned_identity" "managed_identity" {
   name                = "${var.product}-${var.env}-mi"
   resource_group_name = "managed-identities-${var.env}-rg"
