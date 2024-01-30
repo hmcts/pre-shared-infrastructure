@@ -141,17 +141,3 @@ resource "azurerm_key_vault_secret" "dg_password" {
   value        = random_password.dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
-
-resource "azurerm_key_vault_secret" "dg_vm_username" {
-  count        = var.num_datagateway
-  name         = "dg${count.index + 1}-username"
-  value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
-
-resource "azurerm_key_vault_secret" "dg_vm_password" {
-  count        = var.num_datagateway
-  name         = "dg${count.index + 1}-password"
-  value        = random_password.dg_password[count.index].result
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-}
