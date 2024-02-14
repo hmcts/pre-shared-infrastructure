@@ -25,13 +25,13 @@ module "sa_storage_account" {
 # Store the connection string for the SAs in KV
 resource "azurerm_key_vault_secret" "sa_storage_account_connection_string" {
   name         = "sa-storage-account-connection-string"
-  value        = module.sa_storage_account_storage_account.storageaccount_primary_connection_string
+  value        = module.sa_storage_account.storageaccount_primary_connection_string
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
-  name                       = module.sa_storage_account_storage_account.storageaccount_name
-  target_resource_id         = "${module.sa_storage_account_storage_account.storageaccount_id}/blobServices/default"
+  name                       = module.sa_storage_account.storageaccount_name
+  target_resource_id         = "${module.sa_storage_account.storageaccount_id}/blobServices/default"
   log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
   enabled_log {
     category = "StorageRead"
