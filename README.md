@@ -139,6 +139,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_role_assignment.sp_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.vm_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.vm_reader](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/role_assignment) | resource |
+| [azurerm_storage_blob.b2c_copyright_png](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_favicon](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_login_css](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_login_html](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_logo_gov](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_mfa_css](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_mfa_html](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/virtual_machine_extension) | resource |
 | [random_password.dg_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
