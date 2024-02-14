@@ -18,6 +18,9 @@ resource "azurerm_role_assignment" "sp_contributor" {
 }
 
 module "application_insights" {
+  providers = {
+    azurerm.oms = azurerm.oms
+  }
   count         = var.env == "prod" ? 1 : 0
   source        = "git@github.com:hmcts/terraform-module-application-insights?ref=main"
   env           = var.env

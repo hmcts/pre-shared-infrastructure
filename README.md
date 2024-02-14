@@ -211,6 +211,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_pgsql_storage_mb"></a> [pgsql\_storage\_mb](#input\_pgsql\_storage\_mb) | n/a | `string` | `"32768"` | no |
 | <a name="input_powerbi_dg_vm_data_disks"></a> [powerbi\_dg\_vm\_data\_disks](#input\_powerbi\_dg\_vm\_data\_disks) | n/a | `any` | n/a | yes |
 | <a name="input_powerbi_dg_vm_private_ip"></a> [powerbi\_dg\_vm\_private\_ip](#input\_powerbi\_dg\_vm\_private\_ip) | n/a | `any` | n/a | yes |
+| <a name="input_pre_container_name"></a> [pre\_container\_name](#input\_pre\_container\_name) | The container name for the B2C | `string` | `"pre-b2c-container"` | no |
 | <a name="input_pre_ent_appreg_app_id"></a> [pre\_ent\_appreg\_app\_id](#input\_pre\_ent\_appreg\_app\_id) | n/a | `any` | n/a | yes |
 | <a name="input_private_dns_zone"></a> [private\_dns\_zone](#input\_private\_dns\_zone) | n/a | `string` | `"private.postgres.database.azure.com"` | no |
 | <a name="input_privatendpt_snet_address"></a> [privatendpt\_snet\_address](#input\_privatendpt\_snet\_address) | n/a | `any` | n/a | yes |
