@@ -181,3 +181,8 @@ variable "cnp_vault_sub" {
 variable "apim_service_url" {
   description = "The URL of the pre-api for the APIm service"
 }
+
+variable "pre_container_name" {
+  default     = "pre-b2c-container"
+  description = "The container name for the B2C"
+}

@@ -139,6 +139,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_role_assignment.sp_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.vm_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.vm_reader](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/role_assignment) | resource |
+| [azurerm_storage_blob.b2c_copyright_png](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_favicon](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_login_css](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_login_html](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_logo_gov](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_mfa_css](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_mfa_html](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/storage_blob) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.75.0/docs/resources/virtual_machine_extension) | resource |
 | [random_password.dg_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
@@ -204,6 +211,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_pgsql_storage_mb"></a> [pgsql\_storage\_mb](#input\_pgsql\_storage\_mb) | n/a | `string` | `"32768"` | no |
 | <a name="input_powerbi_dg_vm_data_disks"></a> [powerbi\_dg\_vm\_data\_disks](#input\_powerbi\_dg\_vm\_data\_disks) | n/a | `any` | n/a | yes |
 | <a name="input_powerbi_dg_vm_private_ip"></a> [powerbi\_dg\_vm\_private\_ip](#input\_powerbi\_dg\_vm\_private\_ip) | n/a | `any` | n/a | yes |
+| <a name="input_pre_container_name"></a> [pre\_container\_name](#input\_pre\_container\_name) | The container name for the B2C | `string` | `"pre-b2c-container"` | no |
 | <a name="input_pre_ent_appreg_app_id"></a> [pre\_ent\_appreg\_app\_id](#input\_pre\_ent\_appreg\_app\_id) | n/a | `any` | n/a | yes |
 | <a name="input_private_dns_zone"></a> [private\_dns\_zone](#input\_private\_dns\_zone) | n/a | `string` | `"private.postgres.database.azure.com"` | no |
 | <a name="input_privatendpt_snet_address"></a> [privatendpt\_snet\_address](#input\_privatendpt\_snet\_address) | n/a | `any` | n/a | yes |
