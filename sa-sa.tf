@@ -62,6 +62,12 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
   }
 }
 
+resource "azurerm_storage_container" "pre_b2c_container" {
+  name                  = "${var.product}-b2c-container"
+  storage_account_name  = module.sa_storage_account.storageaccount_name
+  container_access_type = "private"
+}
+
 resource "azurerm_storage_blob" "b2c_login_html" {
   name                   = "login.html"
   content_type           = "text/html"
