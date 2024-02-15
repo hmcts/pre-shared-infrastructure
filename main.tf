@@ -32,7 +32,7 @@ module "application_insights" {
 resource "azurerm_key_vault_secret" "appinsights-key" {
   count        = var.env == "prod" ? 1 : 0
   name         = "AppInsightsInstrumentationKey"
-  value        = module.application_insights[0].instrumentation_key
+  value        = module.application_insights.instrumentation_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
@@ -48,7 +48,7 @@ resource "azurerm_key_vault_secret" "appinsights-non-prod-key" {
 resource "azurerm_key_vault_secret" "appinsights_connection_string" {
   count        = var.env == "prod" ? 1 : 0
   name         = "app-insights-connection-string"
-  value        = module.application_insights[0].connection_string
+  value        = module.application_insights.connection_string
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
