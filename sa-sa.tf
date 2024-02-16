@@ -7,14 +7,15 @@ module "sa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  allow_nested_items_to_be_public = false
-  default_action                  = "Deny"
+  allow_nested_items_to_be_public = true
+  default_action                  = "Allow"
   enable_data_protection          = true
   restore_policy_days             = var.restore_policy_days
   enable_change_feed              = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
+  containers                      = local.containers
   cors_rules = [{
     allowed_headers    = ["*"]
     allowed_methods    = ["GET", "OPTIONS"]
@@ -60,12 +61,6 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
     category = "Capacity"
     enabled  = false
   }
-}
-
-resource "azurerm_storage_container" "pre_b2c_container" {
-  name                  = "${var.product}-b2c-container"
-  storage_account_name  = module.sa_storage_account.storageaccount_name
-  container_access_type = "private"
 }
 
 resource "azurerm_storage_blob" "b2c_login_html" {

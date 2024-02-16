@@ -3,6 +3,11 @@ locals {
 
   mgmt_network_name    = var.mgmt_net_name
   mgmt_network_rg_name = var.mgmt_net_rg_name
+
+  containers = [{
+    name        = "${var.product}-b2c-container"
+    access_type = "container"
+  }]
 }
 
 module "log_analytics_workspace" {
