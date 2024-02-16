@@ -36,19 +36,9 @@ module "application_insights" {
 }
 
 resource "azurerm_key_vault_secret" "appinsights-key" {
-  count        = var.env == "prod" ? 1 : 0
   name         = "AppInsightsInstrumentationKey"
   value        = module.application_insights.instrumentation_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-resource "azurerm_key_vault_secret" "appinsights-non-prod-key" {
-  count        = var.env != "prod" ? 1 : 0
-  name         = "AppInsightsInstrumentationKey"
-  value        = "00000000-0000-0000-0000-000000000000"
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-
-  depends_on = [module.application_insights]
 }
 
 resource "azurerm_key_vault_secret" "appinsights_connection_string" {
