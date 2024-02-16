@@ -4,8 +4,9 @@ locals {
   mgmt_network_name    = var.mgmt_net_name
   mgmt_network_rg_name = var.mgmt_net_rg_name
 
+  b2c_container_name = "${var.product}-b2c-container"
   containers = [{
-    name        = "${var.product}-b2c-container"
+    name        = local.b2c_container_name
     access_type = "container"
   }]
 }
