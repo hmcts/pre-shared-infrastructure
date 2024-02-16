@@ -68,7 +68,7 @@ resource "azurerm_storage_blob" "b2c_login_html" {
   content_type           = "text/html"
   content_md5            = filemd5("./b2c/login.html")
   storage_account_name   = module.sa_storage_account.storageaccount_name
-  storage_container_name = var.pre_container_name
+  storage_container_name = local.b2c_container_name
   type                   = "Block"
   source                 = "./b2c/login.html"
 
@@ -80,7 +80,7 @@ resource "azurerm_storage_blob" "b2c_login_css" {
   content_type           = "text/css"
   content_md5            = filemd5("./b2c/login.css")
   storage_account_name   = module.sa_storage_account.storageaccount_name
-  storage_container_name = var.pre_container_name
+  storage_container_name = local.b2c_container_name
   type                   = "Block"
   source                 = "./b2c/login.css"
 
