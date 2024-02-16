@@ -7,8 +7,8 @@ module "sa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  allow_nested_items_to_be_public = false
-  default_action                  = "Deny"
+  allow_nested_items_to_be_public = true
+  default_action                  = "Allow"
   enable_data_protection          = true
   restore_policy_days             = var.restore_policy_days
   enable_change_feed              = true
