@@ -87,6 +87,11 @@ resource "azurerm_key_vault_secret" "API_POSTGRES_PASS" {
   name         = "api-POSTGRES-PASS"
   value        = module.data_store_db_v14.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
+  lifecycle {
+    ignore_changes = [
+      value,
+    ]
+  }
 }
 
 resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
