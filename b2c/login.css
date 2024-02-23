@@ -3942,7 +3942,7 @@ div .attrEntry div + .govuk-heading-s,
   display: inline-block;
   min-width: 125px;
   padding-top: 112px;
-  background-image: url("https://presssastg.blob.core.windows.net/pre-b2c-container/govuk-crest.png");
+  background-image: url("https://presssastg.blob.core.windows.net/pre-b2c-container/logo_gov.png");
   background-repeat: no-repeat;
   background-position: 50% 0%;
   background-size: 125px 102px;
@@ -3952,7 +3952,7 @@ div .attrEntry div + .govuk-heading-s,
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
   .govuk-footer__copyright-logo {
-    background-image: url("https://presastg.blob.core.windows.net/pre-b2c-container/govuk-crest-2x.png");
+    background-image: url("https://presastg.blob.core.windows.net/pre-b2c-container/logo_gov.png");
   }
 }
 
