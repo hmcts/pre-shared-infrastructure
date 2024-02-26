@@ -1,10 +1,8 @@
-on:
-  push:
-    branches:
-      - 'master'
+on: push
 
 env:
   tenant: hmctsdevextid.onmicrosoft.com
+  clientId: b67b538e-1ceb-4e5e-a0a9-8e8d16618e97
 
 jobs:
   build-and-deploy:
@@ -18,5 +16,5 @@ jobs:
           folder: './b2c/custom_policies'
           files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
           tenant: ${{ env.tenant }}
-          clientId: ${{ secrets.PRE_PORTAL_SSO_CLIENT_ID }}
+          clientId: ${{ env.clientId }}
           clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}
