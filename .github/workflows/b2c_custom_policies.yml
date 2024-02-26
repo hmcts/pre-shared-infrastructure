@@ -4,7 +4,7 @@ on:
       - 'master'
 
 env:
-  tenant: hmcts-dev-external-id.onmicrosoft.com
+  tenant: hmctsdevextid.onmicrosoft.com
 
 jobs:
   build-and-deploy:
