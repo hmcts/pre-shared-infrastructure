@@ -42,7 +42,6 @@ resource "azurerm_key_vault_secret" "appinsights-key" {
 }
 
 resource "azurerm_key_vault_secret" "appinsights_connection_string" {
-  count        = var.env == "prod" ? 1 : 0
   name         = "app-insights-connection-string"
   value        = module.application_insights.connection_string
   key_vault_id = data.azurerm_key_vault.keyvault.id
