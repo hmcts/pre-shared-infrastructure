@@ -18,5 +18,5 @@ jobs:
           folder: './b2c/custom_policies'
           files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
           tenant: ${{ env.tenant }}
-          clientId: ${{ secrets.PRE_PORTAL_SSO_CLIENT_ID }}
+          clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}
           clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}
