@@ -15,7 +15,7 @@ jobs:
       - name: 'Upload B2C Custom Policies'
         uses: azure-ad-b2c/deploy-trustframework-policy@v3
         with:
-          folder: './b2c/custom_policies/${{ matrix.environment }}/'
+          folder: './b2c/custom_policies/${{ matrix.environment }}'
           files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
           tenant: 'hmcts${{ matrix.environment }}extid.onmicrosoft.com'
           clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}
