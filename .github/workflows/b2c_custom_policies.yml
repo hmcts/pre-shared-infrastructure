@@ -1,22 +1,22 @@
-on:
-  push:
-    branches:
-      - 'master'
+name: Upload Azure B2C Custom Policies
 
-env:
-  tenant: hmctsdevextid.onmicrosoft.com
+on: push
 
 jobs:
-  build-and-deploy:
+  schema:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, test, demo, stg, prod]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: 'Upload B2C Custom Policies'
         uses: azure-ad-b2c/deploy-trustframework-policy@v3
         with:
-          folder: './b2c/custom_policies'
+          folder: './b2c/custom_policies/${{ matrix.environment }}/'
           files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
-          tenant: ${{ env.tenant }}
+          tenant: 'hmcts${{ matrix.environment }}extid.onmicrosoft.com'
           clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}
           clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}
