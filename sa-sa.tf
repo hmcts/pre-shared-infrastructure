@@ -75,14 +75,14 @@ resource "azurerm_storage_blob" "b2c_login_html" {
   depends_on = [module.sa_storage_account]
 }
 
-resource "azurerm_storage_blob" "b2c_login_css" {
-  name                   = "login.css"
+resource "azurerm_storage_blob" "b2c_main_css" {
+  name                   = "main.css"
   content_type           = "text/css"
-  content_md5            = filemd5("./b2c/login.css")
+  content_md5            = filemd5("./b2c/main.css")
   storage_account_name   = module.sa_storage_account.storageaccount_name
   storage_container_name = local.b2c_container_name
   type                   = "Block"
-  source                 = "./b2c/login.css"
+  source                 = "./b2c/main.css"
 
   depends_on = [module.sa_storage_account]
 }
@@ -143,6 +143,114 @@ resource "azurerm_storage_blob" "b2c_mfa_css" {
   storage_container_name = local.b2c_container_name
   type                   = "Block"
   source                 = "./b2c/mfa.css"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_font_bold_v2_woff" {
+  name                   = "bold-affa96571d-v2.woff"
+  content_type           = "application/octet-stream"
+  content_md5            = filemd5("./b2c/bold-affa96571d-v2.woff")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/bold-affa96571d-v2.woff"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_font_bold_v2_2_woff2" {
+  name                   = "bold-b542beb274-v2.woff2"
+  content_type           = "application/octet-stream"
+  content_md5            = filemd5("./b2c/bold-b542beb274-v2.woff2")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/bold-b542beb274-v2.woff2"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_font_light_v2_woff" {
+  name                   = "light-f591b13f7d-v2.woff"
+  content_type           = "application/octet-stream"
+  content_md5            = filemd5("./b2c/light-f591b13f7d-v2.woff")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/light-f591b13f7d-v2.woff"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_font_light_v2_2_woff2" {
+  name                   = "light-94a07e06a1-v2.woff2"
+  content_type           = "application/octet-stream"
+  content_md5            = filemd5("./b2c/light-94a07e06a1-v2.woff2")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/light-94a07e06a1-v2.woff2"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_govuk_crest_2x_png" {
+  name                   = "govuk-crest-2x.png"
+  content_type           = "image/x-png"
+  content_md5            = filemd5("./b2c/govuk-crest-2x.png")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/govuk-crest-2x.png"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_govuk_crest_png" {
+  name                   = "govuk-crest.png"
+  content_type           = "image/x-png"
+  content_md5            = filemd5("./b2c/govuk-crest.png")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/govuk-crest.png"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_govuk_icon_180_png" {
+  name                   = "govuk-icon-180.png"
+  content_type           = "image/x-png"
+  content_md5            = filemd5("./b2c/govuk-icon-180.png")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/govuk-icon-180.png"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_favicon_svg" {
+  name                   = "favicon.svg"
+  content_type           = "image/svg+xml"
+  content_md5            = filemd5("./b2c/favicon.svg")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/favicon.svg"
+
+  depends_on = [module.sa_storage_account]
+}
+
+resource "azurerm_storage_blob" "b2c_icon_mask_svg" {
+  name                   = "govuk-icon-mask.svg"
+  content_type           = "image/svg+xml"
+  content_md5            = filemd5("./b2c/govuk-icon-mask.svg")
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = local.b2c_container_name
+  type                   = "Block"
+  source                 = "./b2c/govuk-icon-mask.svg"
 
   depends_on = [module.sa_storage_account]
 }
