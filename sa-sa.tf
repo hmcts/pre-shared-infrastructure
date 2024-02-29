@@ -14,7 +14,6 @@ module "sa_storage_account" {
   enable_change_feed              = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
-  private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
   containers                      = local.containers
   cors_rules = [{
     allowed_headers    = ["*"]
