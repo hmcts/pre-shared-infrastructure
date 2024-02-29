@@ -15,7 +15,6 @@ locals {
     "bold-b542beb274-v2.woff2",
     "govuk-crest-2x.png",
     "govuk-crest.png",
-    "govuk-frontend.css",
     "govuk-icon-180.png",
     "govuk-icon-mask.svg",
     "logo_gov.png",
