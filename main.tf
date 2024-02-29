@@ -4,6 +4,25 @@ locals {
   mgmt_network_name    = var.mgmt_net_name
   mgmt_network_rg_name = var.mgmt_net_rg_name
 
+  b2c_files = [
+    "login.html",
+    "main.css",
+    "copyright.png",
+    "favicon.ico",
+    "logo_gov.png",
+    "favicon.svg",
+    "bold-affa96571d-v2.woff",
+    "bold-b542beb274-v2.woff2",
+    "govuk-crest-2x.png",
+    "govuk-crest.png",
+    "govuk-frontend.css",
+    "govuk-icon-180.png",
+    "govuk-icon-mask.svg",
+    "logo_gov.png",
+    "main.css",
+    "mfa.css",
+    "mfa.html",
+  ]
   b2c_container_name = "${var.product}-b2c-container"
   containers = [{
     name        = local.b2c_container_name
