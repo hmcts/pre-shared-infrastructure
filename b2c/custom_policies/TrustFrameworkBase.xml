@@ -384,14 +384,14 @@
         </OutputClaims>
       </ClaimsTransformation>
 
-      <ClaimsTransformation Id="CreateSubjectClaimFromAlternativeSecurityId" TransformationMethod="CreateStringClaim">
+      <!-- <ClaimsTransformation Id="CreateSubjectClaimFromAlternativeSecurityId" TransformationMethod="CreateStringClaim">
         <InputParameters>
           <InputParameter Id="value" DataType="string" Value="Not supported currently. Use oid claim." />
         </InputParameters>
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="sub" TransformationClaimType="createdClaim" />
         </OutputClaims>
-      </ClaimsTransformation>
+      </ClaimsTransformation> -->
 
       <ClaimsTransformation Id="AssertAccountEnabledIsTrue" TransformationMethod="AssertBooleanClaimIsEqualToValue">
         <InputClaims>
@@ -787,7 +787,7 @@
           </Metadata>
           <IncludeInSso>false</IncludeInSso>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="alternativeSecurityId" />
+            <!-- <InputClaim ClaimTypeReferenceId="alternativeSecurityId" /> -->
             <InputClaim ClaimTypeReferenceId="userPrincipalName" />
 
             <!-- Optional claims. These claims are collected from the user and can be modified. Any claim added here should be updated in the
@@ -953,7 +953,7 @@
         </TechnicalProfile>
 
         <!-- Profile name is being used to disambiguate AAD session between sign up and sign in -->
-        <TechnicalProfile Id="SM-SocialSignup">
+        <!-- <TechnicalProfile Id="SM-SocialSignup">
           <IncludeTechnicalProfile ReferenceId="SM-AAD" />
         </TechnicalProfile>
 
@@ -966,7 +966,7 @@
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="alternativeSecurityId" />
           </PersistedClaims>
-        </TechnicalProfile>
+        </TechnicalProfile> -->
 
         <TechnicalProfile Id="SM-MFA">
           <DisplayName>Session Mananagement Provider</DisplayName>
@@ -1150,7 +1150,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>authenticationSource</Value>
-              <Value>socialIdpAuthentication</Value>
+              <!-- <Value>socialIdpAuthentication</Value> -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
