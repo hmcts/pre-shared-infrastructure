@@ -3,15 +3,15 @@
     <ClaimsSchema>
       <!-- The ClaimsSchema is divided into three sections:
            1. Section I lists the minimum claims that are required for the user journeys to work properly.
-           2. Section II lists the claims required for query string parameters and other special parameters 
-              to be passed to other claims providers, esp. login.microsoftonline.com for authentication. 
+           2. Section II lists the claims required for query string parameters and other special parameters
+              to be passed to other claims providers, esp. login.microsoftonline.com for authentication.
               Please do not modify these claims.
-           3. Section III lists any additional (optional) claims that can be collected from the user, stored 
-              in the directory and sent in tokens during sign in. Add new claims to be collected from the user 
+           3. Section III lists any additional (optional) claims that can be collected from the user, stored
+              in the directory and sent in tokens during sign in. Add new claims to be collected from the user
               and/or sent in the token in Section III. -->
-      <!-- NOTE: The claims schema contains restrictions on certain claims such as passwords and usernames. 
-           The trust framework policy treats Azure AD as any other claims provider and all its restrictions 
-           are modelled in the policy. A policy could be modified to add more restrictions, or use another 
+      <!-- NOTE: The claims schema contains restrictions on certain claims such as passwords and usernames.
+           The trust framework policy treats Azure AD as any other claims provider and all its restrictions
+           are modelled in the policy. A policy could be modified to add more restrictions, or use another
            claims provider for credential storage which will have its own restrictions. -->
       <!-- SECTION I: Claims required for user journeys to work properly -->
       <ClaimType Id="socialIdpUserId">
@@ -68,8 +68,8 @@
         <UserHelpText>Enter password</UserHelpText>
         <UserInputType>Password</UserInputType>
       </ClaimType>
-      <!-- The claim types newPassword and reenterPassword are considered special, please do not change the names. 
-           The UI validates that the user correctly re-entered their password during account creation based on these 
+      <!-- The claim types newPassword and reenterPassword are considered special, please do not change the names.
+           The UI validates that the user correctly re-entered their password during account creation based on these
            claim types.	  -->
       <ClaimType Id="newPassword">
         <DisplayName>New Password</DisplayName>
@@ -235,6 +235,10 @@
         <DataType>boolean</DataType>
         <UserHelpText>Parameter provided by the MFA session management to indicate that the user has an active MFA session.</UserHelpText>
       </ClaimType>
+      <ClaimType Id="userIdForMFA">
+        <DisplayName>UserId for MFA</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
       <!-- SECTION III: Additional claims that can be collected from the users, stored in the directory, and sent in the token. Add additional claims here. -->
       <ClaimType Id="givenName">
         <DisplayName>Given Name</DisplayName>
@@ -267,6 +271,17 @@
         </InputClaims>
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="otherMails" TransformationClaimType="collection" />
+        </OutputClaims>
+      </ClaimsTransformation>
+      <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
+        <InputClaims>
+          <InputClaim ClaimTypeReferenceId="objectId" TransformationClaimType="inputClaim" />
+        </InputClaims>
+        <InputParameters>
+          <InputParameter Id="stringFormat" DataType="string" Value="{0}@{RelyingPartyTenantId}" />
+        </InputParameters>
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="userIdForMFA" TransformationClaimType="outputClaim" />
         </OutputClaims>
       </ClaimsTransformation>
       <ClaimsTransformation Id="AssertAccountEnabledIsTrue" TransformationMethod="AssertBooleanClaimIsEqualToValue">
@@ -374,7 +389,7 @@
     </ContentDefinitions>
   </BuildingBlocks>
   <!--
-        A list of all the claim providers that can be used in the technical policies. If a claims provider is not listed 
+        A list of all the claim providers that can be used in the technical policies. If a claims provider is not listed
         in this section, then it cannot be used in a technical policy.
     -->
   <ClaimsProviders>
@@ -413,6 +428,17 @@
             <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="localAccountAuthentication" />
           </OutputClaims>
         </TechnicalProfile>
+        <TechnicalProfile Id="SM-MFA">
+          <DisplayName>Session Mananagement Provider</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.SSO.DefaultSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <PersistedClaims>
+            <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
+          </PersistedClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
+          </OutputClaims>
+        </TechnicalProfile>
+
       </TechnicalProfiles>
     </ClaimsProvider>
     <ClaimsProvider>
@@ -424,6 +450,9 @@
           <CryptographicKeys>
             <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
           </CryptographicKeys>
+          <InputClaimsTransformations>
+            <InputClaimsTransformation ReferenceId="CreateUserIdForMFA" />
+          </InputClaimsTransformations>
           <!-- We need this here to suppress the SelfAsserted provider from invoking SSO on validation profiles. -->
           <IncludeInSso>false</IncludeInSso>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
@@ -749,7 +778,7 @@
             <!--Requirement: Claims that you return in the relying party technical profile output claims
             that are not stored in Azure AD B2C, must be added to the output claims collection here-->
             <!--
-          
+
           <OutputClaim ClaimTypeReferenceId="RESTAPIclaim1" />
           <OutputClaim ClaimTypeReferenceId="IDPclaim1" />
            -->
