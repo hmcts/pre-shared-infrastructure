@@ -1075,7 +1075,7 @@
         <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect
              from the user. So, in that case, create the user in the directory if one does not already exist
              (verified using objectId which would be set from the last step if account was created in the directory. -->
-        <OrchestrationStep Order="6" Type="ClaimsExchange">
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -1089,7 +1089,7 @@
 
         <!-- Phone verification: If MFA is not required, the next three steps (#5-#7) should be removed.
              This step checks whether there's a phone number on record,  for the user. If found, then the user is challenged to verify it. -->
-        <OrchestrationStep Order="7" Type="ClaimsExchange">
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>isActiveMFASession</Value>
@@ -1104,7 +1104,7 @@
         <!-- Save MFA phone number: The precondition verifies whether the user provided a new number in the
              previous step. If so, then the phone number is stored in the directory for future authentication
              requests. -->
-        <OrchestrationStep Order="8" Type="ClaimsExchange">
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
               <Value>newPhoneNumberEntered</Value>
@@ -1115,7 +1115,7 @@
             <ClaimsExchange Id="AADUserWriteWithObjectId" TechnicalProfileReferenceId="AAD-UserWritePhoneNumberUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
-        <OrchestrationStep Order="9" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
