@@ -65,7 +65,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 resource "azurerm_storage_blob" "b2c_config" {
   for_each               = { for idx, file_name in local.b2c_files : idx => file_name }
   name                   = each.value
-  content_type           = "text/html"
+  content_type           = contains(each.value, ".html") ? "text/html" : contains(each.value, ".css") ? "text/css" : contains(each.value, ".png") ? "image/x-png" : contains(each.value, ".ico") ? "image/x-ico" : contains(each.value, ".svg") ? "image/svg+xml" : "application/octet-stream"
   content_md5            = filemd5("./b2c/assets/${each.value}")
   storage_account_name   = module.sa_storage_account.storageaccount_name
   storage_container_name = local.b2c_container_name
