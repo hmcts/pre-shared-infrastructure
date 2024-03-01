@@ -1082,9 +1082,9 @@
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
-          <ClaimsExchanges>
-            <!-- <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" /> -->
-          </ClaimsExchanges>
+          <!-- <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
+          </ClaimsExchanges> -->
         </OrchestrationStep>
 
         <!-- Phone verification: If MFA is not required, the next three steps (#5-#7) should be removed.
