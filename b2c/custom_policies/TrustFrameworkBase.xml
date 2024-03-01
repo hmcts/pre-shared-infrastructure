@@ -573,7 +573,7 @@
             <Item Key="AccessTokenResponseFormat">json</Item>
           </Metadata>
           <CryptographicKeys>
-            <Key Id="client_secret" StorageReferenceId="B2C_1A_FacebookSecret" />
+            <!-- <Key Id="client_secret" StorageReferenceId="B2C_1A_FacebookSecret" /> -->
           </CryptographicKeys>
           <InputClaims />
           <OutputClaims>
