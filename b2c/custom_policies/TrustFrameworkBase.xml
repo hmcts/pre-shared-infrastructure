@@ -596,7 +596,7 @@
         <TechnicalProfile Id="PhoneFactor-InputOrVerify">
 
           <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
-            <Value>email</Value>
+            <Value>signInNames.emailAddress</Value>
             <Value>dts-pre-app-dev@hmcts.net</Value>
             <Action>SkipThisValidationTechnicalProfile</Action>
           </Precondition>
@@ -1187,7 +1187,7 @@
         <OrchestrationStep Order="5" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
-              <Value>email</Value>
+              <Value>signInNames.emailAddress</Value>
               <Value>dts-pre-app-dev@hmcts.net</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
@@ -1207,7 +1207,7 @@
         <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
-              <Value>email</Value>
+              <Value>signInNames.emailAddress</Value>
               <Value>dts-pre-app-dev@hmcts.net</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
