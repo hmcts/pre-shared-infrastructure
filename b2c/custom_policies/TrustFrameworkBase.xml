@@ -594,6 +594,13 @@
       <DisplayName>PhoneFactor</DisplayName>
       <TechnicalProfiles>
         <TechnicalProfile Id="PhoneFactor-InputOrVerify">
+
+          <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
+            <Value>email</Value>
+            <Value>dts-pre-app-dev@hmcts.net</Value>
+            <Action>SkipThisValidationTechnicalProfile</Action>
+          </Precondition>
+
           <DisplayName>PhoneFactor</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.PhoneFactorProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
           <Metadata>
@@ -1199,6 +1206,11 @@
              requests. -->
         <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
+              <Value>email</Value>
+              <Value>dts-pre-app-dev@hmcts.net</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
               <Value>newPhoneNumberEntered</Value>
               <Action>SkipThisOrchestrationStep</Action>
