@@ -594,13 +594,6 @@
       <DisplayName>PhoneFactor</DisplayName>
       <TechnicalProfiles>
         <TechnicalProfile Id="PhoneFactor-InputOrVerify">
-
-          <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
-            <Value>signInNames.emailAddress</Value>
-            <Value>dts-pre-app-dev@hmcts.net</Value>
-            <Action>SkipThisValidationTechnicalProfile</Action>
-          </Precondition>
-
           <DisplayName>PhoneFactor</DisplayName>
           <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.PhoneFactorProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
           <Metadata>
@@ -1186,9 +1179,9 @@
              This step checks whether there's a phone number on record,  for the user. If found, then the user is challenged to verify it. -->
         <OrchestrationStep Order="5" Type="ClaimsExchange">
           <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
-              <Value>signInNames.emailAddress</Value>
-              <Value>dts-pre-app-dev@hmcts.net</Value>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
@@ -1206,11 +1199,6 @@
              requests. -->
         <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
-              <Value>signInNames.emailAddress</Value>
-              <Value>dts-pre-app-dev@hmcts.net</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
               <Value>newPhoneNumberEntered</Value>
               <Action>SkipThisOrchestrationStep</Action>
