@@ -638,69 +638,7 @@
         </TechnicalProfile>
 
         <!-- Technical profiles for social logins -->
-        <TechnicalProfile Id="AAD-UserWriteUsingAlternativeSecurityId">
-          <Metadata>
-            <Item Key="Operation">Write</Item>
-            <Item Key="RaiseErrorIfClaimsPrincipalAlreadyExists">true</Item>
-          </Metadata>
-          <IncludeInSso>false</IncludeInSso>
-          <InputClaimsTransformations>
-            <InputClaimsTransformation ReferenceId="CreateOtherMailsFromEmail" />
-          </InputClaimsTransformations>
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="alternativeSecurityId" PartnerClaimType="alternativeSecurityId" Required="true" />
-          </InputClaims>
-          <PersistedClaims>
-            <!-- Required claims -->
-            <PersistedClaim ClaimTypeReferenceId="alternativeSecurityId" />
-            <PersistedClaim ClaimTypeReferenceId="userPrincipalName" />
-            <PersistedClaim ClaimTypeReferenceId="mailNickName" DefaultValue="unknown" />
-            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />
 
-            <!-- Optional claims -->
-            <PersistedClaim ClaimTypeReferenceId="otherMails" />
-            <PersistedClaim ClaimTypeReferenceId="givenName" />
-            <PersistedClaim ClaimTypeReferenceId="surname" />
-          </PersistedClaims>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="objectId" />
-            <OutputClaim ClaimTypeReferenceId="newUser" PartnerClaimType="newClaimsPrincipalCreated" />
-            <!-- The following other mails claim is needed for the case when a user is created, we get otherMails from directory. Self-asserted provider also has an
-                 OutputClaims, and if this is absent, Self-Asserted provider will prompt the user for otherMails. -->
-            <OutputClaim ClaimTypeReferenceId="otherMails" />
-          </OutputClaims>
-          <IncludeTechnicalProfile ReferenceId="AAD-Common" />
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
-        </TechnicalProfile>
-
-        <TechnicalProfile Id="AAD-UserReadUsingAlternativeSecurityId">
-          <Metadata>
-            <Item Key="Operation">Read</Item>
-            <Item Key="RaiseErrorIfClaimsPrincipalDoesNotExist">true</Item>
-          </Metadata>
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="alternativeSecurityId" PartnerClaimType="alternativeSecurityId" Required="true" />
-          </InputClaims>
-          <OutputClaims>
-            <!-- Required claims -->
-            <OutputClaim ClaimTypeReferenceId="objectId" />
-            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
-            <!-- Optional claims -->
-            <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
-            <OutputClaim ClaimTypeReferenceId="displayName" />
-            <OutputClaim ClaimTypeReferenceId="otherMails" />
-            <OutputClaim ClaimTypeReferenceId="givenName" />
-            <OutputClaim ClaimTypeReferenceId="surname" />
-          </OutputClaims>
-          <IncludeTechnicalProfile ReferenceId="AAD-Common" />
-        </TechnicalProfile>
-
-        <TechnicalProfile Id="AAD-UserReadUsingAlternativeSecurityId-NoError">
-          <Metadata>
-            <Item Key="RaiseErrorIfClaimsPrincipalDoesNotExist">false</Item>
-          </Metadata>
-          <IncludeTechnicalProfile ReferenceId="AAD-UserReadUsingAlternativeSecurityId" />
-        </TechnicalProfile>
 
         <!-- Technical profiles for local accounts -->
         <TechnicalProfile Id="AAD-UserWriteUsingLogonEmail">
@@ -894,9 +832,6 @@
             <OutputClaim ClaimTypeReferenceId="givenName" />
             <OutputClaim ClaimTypeReferenceId="surname" />
           </OutputClaims>
-          <ValidationTechnicalProfiles>
-            <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
-          </ValidationTechnicalProfiles>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialSignup" />
         </TechnicalProfile>
 
@@ -1215,9 +1150,6 @@
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserReadUsingAlternativeSecurityId" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId-NoError" />
-          </ClaimsExchanges>
         </OrchestrationStep>
 
         <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
@@ -1259,9 +1191,6 @@
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserWrite" TechnicalProfileReferenceId="AAD-UserWriteUsingAlternativeSecurityId" />
-          </ClaimsExchanges>
         </OrchestrationStep>
 
         <!-- Phone verification: If MFA is not required, the next three steps (#5-#7) should be removed.
