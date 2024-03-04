@@ -1186,7 +1186,6 @@
 
         <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
           <ClaimsProviderSelections>
-            <ClaimsProviderSelection TargetClaimsExchangeId="FacebookExchange" />
             <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
           </ClaimsProviderSelections>
           <ClaimsExchanges>
@@ -1304,7 +1303,6 @@
 
         <OrchestrationStep Order="1" Type="ClaimsProviderSelection" ContentDefinitionReferenceId="api.idpselections">
           <ClaimsProviderSelections>
-            <ClaimsProviderSelection TargetClaimsExchangeId="FacebookExchange" />
             <ClaimsProviderSelection TargetClaimsExchangeId="LocalAccountSigninEmailExchange" />
           </ClaimsProviderSelections>
         </OrchestrationStep>
