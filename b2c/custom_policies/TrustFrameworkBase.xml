@@ -1248,9 +1248,6 @@
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserRead" TechnicalProfileReferenceId="AAD-UserReadUsingAlternativeSecurityId" />
-          </ClaimsExchanges>
         </OrchestrationStep>
         <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
