@@ -6,7 +6,7 @@ locals {
 
   # asset files from https://github.com/alphagov/govuk-frontend/releases/latest
   # command to generate the list of files:
-  # cd b2c && find . -type f | sed 's/^.\///' | sed 's/.*/"&",/'
+  # cd b2c/views && find . -type f | sed 's/^.\///' | sed 's/.*/"&",/'
   # when updating the gds frontend version:
     # update release version in the template.html file
     # correct the `url()` paths in the minified css file
