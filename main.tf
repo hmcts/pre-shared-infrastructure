@@ -4,23 +4,34 @@ locals {
   mgmt_network_name    = var.mgmt_net_name
   mgmt_network_rg_name = var.mgmt_net_rg_name
 
+  # asset files from https://github.com/alphagov/govuk-frontend/releases/latest
+  # command to generate the list of files:
+  # cd b2c && find . -type f | sed 's/^.\///' | sed 's/.*/"&",/'
+  # when updating the gds frontend version:
+    # update release version in the template.html file
+    # correct the `url()` paths in the minified css file
+    # correct the `src` paths in the manifest.json file
   b2c_files = [
-    "login.html",
-    "main.css",
-    "copyright.png",
-    "favicon.ico",
-    "logo_gov.png",
-    "favicon.svg",
-    "bold-affa96571d-v2.woff",
-    "bold-b542beb274-v2.woff2",
-    "govuk-crest-2x.png",
-    "govuk-crest.png",
-    "govuk-icon-180.png",
-    "govuk-icon-mask.svg",
-    "logo_gov.png",
-    "main.css",
-    "mfa.css",
-    "mfa.html",
+    "css/main.css",
+    "css/govuk-frontend-5.2.0.min.css",
+    "css/govuk-frontend-5.2.0.min.css.map",
+    "js/govuk-frontend-5.2.0.min.js.map",
+    "js/govuk-frontend-5.2.0.min.js",
+    "template.html",
+    "assets/images/govuk-crest.png",
+    "assets/images/favicon.ico",
+    "assets/images/govuk-icon-180.png",
+    "assets/images/govuk-icon-192.png",
+    "assets/images/govuk-icon-mask.svg",
+    "assets/images/govuk-crest-2x.png",
+    "assets/images/govuk-opengraph-image.png",
+    "assets/images/govuk-icon-512.png",
+    "assets/images/favicon.svg",
+    "assets/manifest.json",
+    "assets/fonts/bold-b542beb274-v2.woff2",
+    "assets/fonts/light-f591b13f7d-v2.woff",
+    "assets/fonts/light-94a07e06a1-v2.woff2",
+    "assets/fonts/bold-affa96571d-v2.woff",
   ]
   b2c_container_name = "${var.product}-b2c-container"
   containers = [{
