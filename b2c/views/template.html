@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="manifest" href="https://presastg.blob.core.windows.net/pre-b2c-container/assets/manifest.json">
     <link rel="stylesheet" href="https://presastg.blob.core.windows.net/pre-b2c-container/css/main.css">
+
+    <script type="application/javascript">
+      function moveForgotPassword() {
+        const forgotPasswordId = 'forgotPassword'
+        const forgotPassword = document.getElementById(forgotPasswordId);
+
+        if (forgotPassword) {
+          const text = forgotPassword.innerHTML;
+          forgotPassword.remove();
+
+          const newForgotPassword = document.createElement('a');
+          newForgotPassword.id = forgotPasswordId;
+          newForgotPassword.innerHTML = text;
+          newForgotPassword.href = forgotPassword.href;
+
+          const div = document.createElement('div');
+          div.appendChild(newForgotPassword);
+
+          const passwordInput = document.getElementById('password');
+          passwordInput.parentNode.insertBefore(div, passwordInput.nextSibling);
+        }
+      }
+    </script>
   </head>
-  <body class="govuk-template__body">
+  <body class="govuk-template__body" onload="moveForgotPassword();">
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
