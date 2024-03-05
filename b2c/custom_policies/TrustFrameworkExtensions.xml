@@ -80,6 +80,14 @@
           <Item Key="DisplayName">Collect information from user page</Item>
         </Metadata>
       </ContentDefinition>
+      <ContentDefinition Id="api.phonefactor">
+        <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:multifactor:1.2.5</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Multi-factor authentication page</Item>
+        </Metadata>
+      </ContentDefinition>
     </ContentDefinitions>
   </BuildingBlocks>
   <ClaimsProviders>
