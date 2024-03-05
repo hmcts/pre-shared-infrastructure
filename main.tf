@@ -23,6 +23,7 @@ locals {
     "mfa.html",
   ]
   b2c_container_name = "${var.product}-b2c-container"
+  content_type       = strcontains(each.value, ".html") ? "text/html" : strcontains(each.value, ".css") ? "text/css" : strcontains(each.value, ".png") ? "image/x-png" : strcontains(each.value, ".ico") ? "image/x-ico" : strcontains(each.value, ".svg") ? "image/svg+xml" : "application/octet-stream"
   containers = [{
     name        = local.b2c_container_name
     access_type = "container"
