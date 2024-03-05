@@ -6,7 +6,7 @@
 
   <BasePolicy>
     <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
-    <PolicyId>TrustFrameworkExtensions_EmailMFA</PolicyId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions_EmailMFA</PolicyId>
   </BasePolicy>
 
   <RelyingParty>
