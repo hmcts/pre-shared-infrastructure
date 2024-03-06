@@ -7128,7 +7128,7 @@ div .attrEntry div.error {
 }
 
 .error {
-  color: #d4351c;
+  color: #d4351c !important;
 }
 
 .entry-item {
@@ -7188,4 +7188,23 @@ div .attrEntry div.error {
   color: #0b0c0c;
   display: block;
   margin-bottom: 5px;
+}
+
+.attr > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.attrEntry {
+  margin-bottom: 30px;
+}
+
+.helpLink {
+  margin-top: 10px;
+  display: block;
+}
+
+.buttons {
+  margin-top: 10px;
 }
