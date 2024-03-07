@@ -288,9 +288,8 @@
 
       <!-- Terms and Conditions -->
       <ClaimType Id="TnCs">
-        <DisplayName></DisplayName>
+        <DisplayName>Terms &amp; Conditions</DisplayName>
         <DataType>string</DataType>
-        <UserHelpText>I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal</UserHelpText>
         <UserInputType>CheckboxMultiSelect</UserInputType>
         <Restriction>
           <Enumeration Text="I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal." Value="7/03/2024" SelectByDefault="false" />
