@@ -286,6 +286,17 @@
         <UserHelpText>Used to determine if the user should be permitted to reauthenticate silently via their existing refresh token.</UserHelpText>
       </ClaimType>
 
+      <!-- Terms and Conditions -->
+      <ClaimType Id="TnCs">
+        <DisplayName>Terms &amp; Conditions Consent</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal</UserHelpText>
+        <UserInputType>CheckboxMultiSelect</UserInputType>
+        <Restriction>
+          <Enumeration Text="I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal." Value="7/03/2024" SelectByDefault="false" />
+        </Restriction>
+      </ClaimType>
+
       <!-- SECTION II: Claims required to pass on special parameters (including some query string parameters) to other claims providers -->
 
       <ClaimType Id="nca">
@@ -892,6 +903,7 @@
             <OutputClaim ClaimTypeReferenceId="executed-SelfAsserted-Input" DefaultValue="true" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
             <OutputClaim ClaimTypeReferenceId="newUser" />
+            <OutputClaim ClaimTypeReferenceId="TnCs" Required="true" />
 
             <!-- Optional claims, to be collected from the user -->
             <OutputClaim ClaimTypeReferenceId="displayName" />
