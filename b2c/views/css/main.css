@@ -2471,7 +2471,7 @@ x:-moz-any-link {
   outline: none;
 }
 .govuk-input,
-#api input {
+#api input:not([type='checkbox']) {
   font-family: "GDS Transport", arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -6970,12 +6970,12 @@ x:-moz-any-link {
 }
 
 .govuk-\!-width-three-quarters,
-#api input {
+#api input:not([type='checkbox'])  {
   width: 100% !important;
 }
 @media (min-width: 40.0625em) {
   .govuk-\!-width-three-quarters,
-  #api input {
+  #api input:not([type='checkbox']) {
     width: 75% !important;
   }
 }
@@ -7125,6 +7125,11 @@ div .attrEntry div + .govuk-heading-s,
 
 div .attrEntry div.error {
   color: #d4351c;
+  display: none;
+}
+
+div .attrEntry div.show {
+  display: block !important;
 }
 
 .error {
@@ -7207,4 +7212,23 @@ div .attrEntry div.error {
 
 .buttons {
   margin-top: 10px;
+}
+
+input[type="checkbox"] {
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  cursor: pointer;
+  outline: 2px solid #000000;
+  border: 0;
+  opacity: 1;
+  accent-color: #ffffff;
+}
+
+#api .helpLink {
+  display: none;
+}
+
+#api .verify {
+  margin-top: 20px;
 }
