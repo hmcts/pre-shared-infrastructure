@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
 
-    <link rel="stylesheet" href="https://presastg.blob.core.windows.net/pre-b2c-container/css/main.css">
+    <link rel="stylesheet" href="./css/main.css">
 
     <link rel="manifest" href="https://presastg.blob.core.windows.net/pre-b2c-container/assets/manifest.json">
     <link rel="icon" sizes="48x48" href="https://presastg.blob.core.windows.net/pre-b2c-container/assets/images/favicon.ico">
@@ -63,9 +63,42 @@
       <div class="govuk-width-container">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-              <div id="api">
-                <!--B2C form will be injected here-->
+
+              <div id="api" data-name="SelfAsserted">
+                <div class="buttons">
+                </div>
+                <div class="intro">
+                  <p>Please provide the following details.</p>
+                </div>
+                <form id="attributeVerification" action="JavaScript:void(0);">
+                  <div id="passwordEntryMismatch" class="error pageLevel" style="display: none;" aria-hidden="true">The password entry fields do not match. Please enter the same password in both fields and try again.</div>
+                  <div id="requiredFieldMissing" class="error pageLevel" style="display: none;" aria-hidden="true">A required field is missing. Please fill out all required fields and try again.</div>
+                  <div id="fieldIncorrect" class="error pageLevel" style="display: none;" aria-hidden="true">One or more fields are filled out incorrectly. Please check your entries and try again.</div>
+                  <div id="claimVerificationServerError" class="error pageLevel" style="display: none;" aria-hidden="true"></div>
+                  <div id="attributeList" class="attr">
+                    <ul>
+                      <li class="TextBox"><div class="attrEntry"><div><div class="verificationInfoText" id="email_intro" style="display: inline;" aria-hidden="false" role="alert" aria-live="polite">Verification is necessary. Please click Send button.</div><div class="verificationInfoText" id="email_info" style="display:none" aria-hidden="true" role="alert">Verification code has been sent to your inbox. Please copy it to the input box below.</div><div class="verificationSuccessText" id="email_success" style="display:none" aria-hidden="true" role="alert">E-mail address verified. You can now continue.</div><div class="verificationErrorText error" id="email_fail_retry" style="display:none" aria-hidden="true" role="alert">That code is incorrect. Please try again.</div><div class="verificationErrorText error" id="email_fail_no_retry" style="display:none" aria-hidden="true" role="alert">You've made too many incorrect attempts. Please try again later.</div><div class="verificationErrorText error" id="email_fail_throttled" style="display:none" aria-hidden="true" role="alert">There have been too many requests to verify this email address. Please wait a while, then try again.</div><div class="verificationErrorText error" id="email_fail_code_expired" style="display:none" aria-hidden="true" role="alert">That code is expired. Please request a new code.</div><div class="verificationErrorText error" id="email_fail_server" style="display:none" aria-hidden="true" role="alert">We are having trouble verifying your email address. Please enter a valid email address and try again.</div><div class="verificationErrorText error" id="email_incorrect_format" style="display:none" aria-hidden="true" role="alert">Incorrect format.</div></div><label id="email_label" for="email">Email Address</label><div class="error itemLevel" role="alert"></div><input id="email" class="textInput" type="text" placeholder="Email Address" aria-label="Email Address" pattern="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.\.cjsm\.net|cps\.gov\.uk)" title="Email address that can be used to contact you." aria-required="true" autofocus="autofocus"><a class="helpLink tiny" href="javascript:void(0)" data-help="Email address that can be used to contact you." style="
+    display: none;
+">What is this?</a><div class="buttons verify" data-claim_id="email"><div class="working" id="email_ver_wait" aria-label="Please wait" aria-hidden="true" style="display: none;"></div><label id="email_ver_input_label" for="email_ver_input" aria-hidden="true" style="display: none;">Verification code</label><input class="verifyInput" id="email_ver_input" type="text" autocomplete="off" placeholder="Verification code" style="display: none;" aria-hidden="true"><button class="sendButton" id="email_ver_but_send" type="button" aria-label="Send verification code" style="/* display: inline; */" aria-hidden="false">Send verification code</button><button class="verifyButton" id="email_ver_but_verify" type="button" aria-label="Verify code" style="display: none;" aria-hidden="true">Verify code</button><button class="sendButton" id="email_ver_but_resend" type="button" aria-label="Send new code" style="display: none;" aria-hidden="true">Send new code</button><button class="editButton" id="email_ver_but_edit" type="button" aria-label="Change e-mail" style="display: none;" aria-hidden="true">Change e-mail</button><button class="defaultButton" id="email_ver_but_default" type="button" aria-label="Default" style="display: none;">Default</button></div></div></li>
+                      <li class="Password"><div class="attrEntry"><label id="newPassword_label" for="newPassword">New Password</label><div class="error itemLevel" role="alert"></div><input id="newPassword" class="textInput" type="password" placeholder="New Password" aria-label="New Password" pattern="^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)|(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9])|(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]))([A-Za-z\d@#$%^&amp;*\-_+=[\]{}|\\:',?/`~&quot;();!]|\.(?!@)){8,16}$" title="Enter new password" autocomplete="new-password" aria-required="true"><a class="helpLink tiny" href="javascript:void(0)" data-help="Enter new password">What is this?</a></div></li>
+                      <li class="Password"><div class="attrEntry"><label id="reenterPassword_label" for="reenterPassword">Confirm New Password</label><div class="error itemLevel" role="alert"></div><input id="reenterPassword" class="textInput" type="password" placeholder="Confirm New Password" aria-label="Confirm New Password" pattern="^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)|(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])|(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9])|(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]))([A-Za-z\d@#$%^&amp;*\-_+=[\]{}|\\:',?/`~&quot;();!]|\.(?!@)){8,16}$" title="Confirm new password" autocomplete="new-password" aria-required="true"><a class="helpLink tiny" href="javascript:void(0)" data-help="Confirm new password">What is this?</a></div></li>
+                      <li class="TextBox"><div class="attrEntry"><label id="displayName_label" for="displayName">Display Name</label><div class="error itemLevel" role="alert"></div><input id="displayName" class="textInput" type="text" placeholder="Display Name" aria-label="Display Name" title="Your display name."><a class="helpLink tiny" href="javascript:void(0)" data-help="Your display name.">What is this?</a></div></li>
+                      <li class="TextBox"><div class="attrEntry"><label id="givenName_label" for="givenName">Given Name</label><div class="error itemLevel" role="alert"></div><input id="givenName" class="textInput" type="text" placeholder="Given Name" aria-label="Given Name" title="Your given name (also known as first name)."><a class="helpLink tiny" href="javascript:void(0)" data-help="Your given name (also known as first name).">What is this?</a></div></li>
+                      <li class="TextBox"><div class="attrEntry"><label id="surname_label" for="surname">Surname</label><div class="error itemLevel" role="alert"></div><input id="surname" class="textInput" type="text" placeholder="Surname" aria-label="Surname" title="Your surname (also known as family name or last name)."><a class="helpLink tiny" href="javascript:void(0)" data-help="Your surname (also known as family name or last name).">What is this?</a></div></li>
+                      <li class="CheckboxMultiSelect"><div class="attrEntry"><label id="TnCs_label" for="TnCs">Terms &amp; Conditions</label><div class="error itemLevel" role="alert"></div><input id="TnCs_7/03/2024" name="TnCs" type="checkbox" aria-labelledby="TnCs_label TnCs_7/03/2024_option" value="7/03/2024"><label id="7/03/2024_option" for="TnCs_7/03/2024">I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal.</label><a class="helpLink tiny" href="javascript:void(0)">What is this?</a></div></li>
+                    </ul>
+                  </div>
+                  <div class="buttons">
+                    <button id="continue" type="submit" form="attributeVerification" aria-disabled="false" aria-label="Create">Create</button><button id="cancel" aria-label="Cancel" formnovalidate="">Cancel</button>
+                  </div>
+
+                  <div class="verifying-modal">
+                    <div id="verifying_blurb"></div>
+                  </div>
+                </form>
+
               </div>
+
             </div>
           </div>
       </div>
