@@ -35,9 +35,19 @@
           passwordInput.parentNode.insertBefore(div, passwordInput.nextSibling);
         }
       }
+
+      function addTsAndCsLink() {
+        const tsAndCsBlock = document.getElementsByClassName('CheckboxMultiSelect')[0];
+        if (tsAndCsBlock) {
+          const tsAndCsLabel = tsAndCsBlock.getElementsByTagName('label')[1];
+          if (tsAndCsLabel) {
+            tsAndCsLabel.innerHTML = tsAndCsLabel.innerHTML = 'I agree to the <a href="https://pre-portal.staging.platform.hmcts.net/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
+          }
+        }
+      }
     </script>
   </head>
-  <body class="govuk-template__body" onload="moveForgotPassword();">
+  <body class="govuk-template__body" onload="moveForgotPassword();addTsAndCsLink();">
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
