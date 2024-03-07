@@ -288,7 +288,7 @@
 
       <!-- Terms and Conditions -->
       <ClaimType Id="TnCs">
-        <DisplayName>Terms &amp; Conditions Consent</DisplayName>
+        <DisplayName></DisplayName>
         <DataType>string</DataType>
         <UserHelpText>I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal</UserHelpText>
         <UserInputType>CheckboxMultiSelect</UserInputType>
@@ -903,12 +903,13 @@
             <OutputClaim ClaimTypeReferenceId="executed-SelfAsserted-Input" DefaultValue="true" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
             <OutputClaim ClaimTypeReferenceId="newUser" />
-            <OutputClaim ClaimTypeReferenceId="TnCs" Required="true" />
 
             <!-- Optional claims, to be collected from the user -->
             <OutputClaim ClaimTypeReferenceId="displayName" />
             <OutputClaim ClaimTypeReferenceId="givenName" />
             <OutputClaim ClaimTypeReferenceId="surName" />
+
+            <OutputClaim ClaimTypeReferenceId="TnCs" Required="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />
