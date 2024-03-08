@@ -5,7 +5,7 @@
   </BasePolicy>
   <BuildingBlocks>
     <ContentDefinitions>
-          <!-- This content definition is to render an error page that displays unhandled errors. -->
+      <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
         <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
