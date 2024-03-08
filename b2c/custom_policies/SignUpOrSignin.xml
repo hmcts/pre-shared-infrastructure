@@ -1,4 +1,13 @@
-<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0" TenantId="hmctsdevextid.onmicrosoft.com" PolicyId="B2C_1A_signup_signin" PublicPolicyUri="http://hmctsdevextid.onmicrosoft.com/B2C_1A_signup_signin" TenantObjectId="7b9fbead-db31-48dd-a052-161a278d333f">
+<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                      xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+                      PolicySchemaVersion="0.3.0.0"
+                      TenantId="hmctsdevextid.onmicrosoft.com"
+                      PolicyId="B2C_1A_signup_signin"
+                      PublicPolicyUri="http://hmctsdevextid.onmicrosoft.com/B2C_1A_signup_signin"
+                      TenantObjectId="7b9fbead-db31-48dd-a052-161a278d333f"
+                      DeploymentMode="Development"
+                      UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights">
   <BasePolicy>
     <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
@@ -25,6 +34,9 @@
 
   <RelyingParty>
     <DefaultUserJourney ReferenceId="SignUpOrSignIn" />
+    <UserJourneyBehaviors>
+      <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="77d9d14f-455b-4f3e-ab9e-f60c7bf85e6c" DeveloperMode="true" ClientEnabled="false" ServerEnabled="true" TelemetryVersion="1.0.0" />
+    </UserJourneyBehaviors>
     <Endpoints>
       <!--points to refresh token journey when app makes refresh token request-->
       <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
