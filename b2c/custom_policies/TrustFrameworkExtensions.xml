@@ -4,7 +4,7 @@
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
   <BuildingBlocks>
-    <ClaimSchema>
+    <ClaimsSchema>
 
       <ClaimType Id="isForgotPassword">
         <DisplayName>isForgotPassword</DisplayName>
@@ -12,7 +12,7 @@
         <AdminHelpText>Whether the user has selected Forgot your Password</AdminHelpText>
       </ClaimType>
 
-    </ClaimSchema>
+    </ClaimsSchema>
     <ContentDefinitions>
       <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
