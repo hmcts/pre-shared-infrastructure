@@ -21,8 +21,8 @@
         <OutputClaim ClaimTypeReferenceId="email" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+        <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
       </OutputClaims>
-      <SubjectNamingInfo ClaimType="sub" />
     </TechnicalProfile>
     <TechnicalProfile Id="login-NonInteractive">
       <Metadata>
