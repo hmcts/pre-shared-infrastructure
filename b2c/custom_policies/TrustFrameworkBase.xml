@@ -573,16 +573,6 @@
       <DisplayName>Local Account SignIn</DisplayName>
       <TechnicalProfiles>
 
-
-        <TechnicalProfile Id="ForgotPassword">
-          <DisplayName>Forgot your password?</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="true" AlwaysUseDefaultValue="true"/>
-          </OutputClaims>
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
-        </TechnicalProfile>
-
         <TechnicalProfile Id="login-NonInteractive">
           <DisplayName>Local Account SignIn</DisplayName>
           <Protocol Name="OpenIdConnect" />
@@ -944,6 +934,7 @@
             <Item Key="setting.operatingMode">Email</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
+            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
           </Metadata>
           <IncludeInSso>false</IncludeInSso>
           <InputClaims>
@@ -959,6 +950,16 @@
             <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
           </ValidationTechnicalProfiles>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
+        </TechnicalProfile>
+
+
+        <TechnicalProfile Id="ForgotPassword">
+          <DisplayName>Forgot your password?</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="true" AlwaysUseDefaultValue="true"/>
+          </OutputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
 
         <!-- This technical profile forces the user to verify the email address that they provide on the UI. Only after email is verified, the user account is
