@@ -28,13 +28,6 @@
 
       <!-- The claim socialIdpUserId has been renamed to issuerUserId -->
 
-
-      <ClaimType Id="isForgotPassword">
-        <DisplayName>isForgotPassword</DisplayName>
-        <DataType>boolean</DataType>
-        <AdminHelpText>Whether the user has selected Forgot your Password</AdminHelpText>
-      </ClaimType>
-
       <ClaimType Id="issuerUserId">
         <DisplayName>Username</DisplayName>
         <DataType>string</DataType>
@@ -934,7 +927,6 @@
             <Item Key="setting.operatingMode">Email</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
-            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
           </Metadata>
           <IncludeInSso>false</IncludeInSso>
           <InputClaims>
@@ -950,16 +942,6 @@
             <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
           </ValidationTechnicalProfiles>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
-        </TechnicalProfile>
-
-
-        <TechnicalProfile Id="ForgotPassword">
-          <DisplayName>Forgot your password??</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="true" AlwaysUseDefaultValue="true"/>
-          </OutputClaims>
-          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
 
         <!-- This technical profile forces the user to verify the email address that they provide on the UI. Only after email is verified, the user account is
@@ -1154,7 +1136,6 @@
         <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
           <ClaimsProviderSelections>
             <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
-            <ClaimsProviderSelection TargetClaimsExchangeId="ForgotPasswordExchange" />
           </ClaimsProviderSelections>
           <ClaimsExchanges>
             <ClaimsExchange Id="LocalAccountSigninEmailExchange" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
@@ -1171,27 +1152,14 @@
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="SignUpWithLogonEmailExchange" TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail" />
-            <ClaimsExchange Id="ForgotPasswordExchange" TechnicalProfileReferenceId="ForgotPassword" />
           </ClaimsExchanges>
-        </OrchestrationStep>
-
-        <OrchestrationStep Order="3" Type="InvokeSubJourney">
-          <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
-              <Value>isForgotPassword</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <JourneyList>
-            <Candidate SubJourneyReferenceId="PasswordReset" />
-          </JourneyList>
         </OrchestrationStep>
 
 
         <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
           This can only happen when authentication happened using a social IDP. If local account was created or authentication done
           using ESTS in step 2, then an user account must exist in the directory by this time. -->
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -1205,7 +1173,7 @@
 
         <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent
           in the token. -->
-        <OrchestrationStep Order="5" Type="ClaimsExchange">
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>authenticationSource</Value>
@@ -1223,7 +1191,7 @@
 
         <!-- Phone verification: If MFA is not required, the next three steps (#5-#7) should be removed.
              This step checks whether there's a phone number on record,  for the user. If found, then the user is challenged to verify it. -->
-        <OrchestrationStep Order="6" Type="ClaimsExchange">
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -1243,7 +1211,7 @@
         <!-- Save MFA phone number: The precondition verifies whether the user provided a new number in the
              previous step. If so, then the phone number is stored in the directory for future authentication
              requests. -->
-        <OrchestrationStep Order="7" Type="ClaimsExchange">
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
               <Value>newPhoneNumberEntered</Value>
@@ -1254,7 +1222,7 @@
             <ClaimsExchange Id="AADUserWriteWithObjectId" TechnicalProfileReferenceId="AAD-UserWritePhoneNumberUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
-        <OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
@@ -1329,23 +1297,5 @@
 
   </UserJourneys>
 
-  <SubJourneys>
-    <SubJourney Id="PasswordReset" Type="Call">
-      <OrchestrationSteps>
-        <!-- Validate user's email address. -->
-        <OrchestrationStep Order="1" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="PasswordResetUsingEmailAddressExchange" TechnicalProfileReferenceId="LocalAccountDiscoveryUsingEmailAddress" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
 
-        <!-- Collect and persist a new password. -->
-        <OrchestrationStep Order="2" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="NewCredentials" TechnicalProfileReferenceId="LocalAccountWritePasswordUsingObjectId" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-      </OrchestrationSteps>
-    </SubJourney>
-  </SubJourneys>
 </TrustFrameworkPolicy>
