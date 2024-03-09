@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0"
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
   TenantId="hmctsdevextid.onmicrosoft.com"
   PolicyId="B2C_1A_TrustFrameworkExtensions_EmailMFA"
-  PublicPolicyUri="hmctsdevextid.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions_EmailMFA">
+  PublicPolicyUri="http://hmctsdevextid.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions_EmailMFA"
+  TenantObjectId="7b9fbead-db31-48dd-a052-161a278d333f">
 
   <BasePolicy>
     <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
