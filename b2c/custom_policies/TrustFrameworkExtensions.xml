@@ -130,6 +130,9 @@
             <Metadata>
               <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
             </Metadata>
+            <OutputClaimsTransformations>
+              <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
+            </OutputClaimsTransformations>
           </TechnicalProfile>
           <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
             <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
@@ -204,11 +207,6 @@
             <PersistedClaims>
               <PersistedClaim ClaimTypeReferenceId="readOnlyEmail" />
             </PersistedClaims>
-          </TechnicalProfile>
-          <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
-            <OutputClaimsTransformations>
-              <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
-            </OutputClaimsTransformations>
           </TechnicalProfile>
           <TechnicalProfile Id="EmailVerifyOnSignIn">
             <DisplayName>EmailVerifyOnSignIn</DisplayName>
