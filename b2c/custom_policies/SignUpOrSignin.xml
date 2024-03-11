@@ -32,6 +32,9 @@
   </BuildingBlocks>
 
   <RelyingParty>
+    <UserJourneyBehaviors>
+      <ScriptExecution>Allow</ScriptExecution>
+    </UserJourneyBehaviors>
     <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
     <Endpoints>
       <!--points to refresh token journey when app makes refresh token request-->
