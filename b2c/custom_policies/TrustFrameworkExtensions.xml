@@ -22,8 +22,26 @@
           <DataType>boolean</DataType>
           <AdminHelpText>Whether the user has selected Forgot your Password</AdminHelpText>
         </ClaimType>
-
+        <ClaimType Id="readOnlyEmail">
+          <DisplayName>Email Address</DisplayName>
+          <DataType>string</DataType>
+          <UserHelpText />
+          <UserInputType>Readonly</UserInputType>
+        </ClaimType>
       </ClaimsSchema>
+      <ClaimsTransformations>
+        <ClaimsTransformation Id="CopySignInNameToReadOnly" TransformationMethod="FormatStringClaim">
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="inputClaim" />
+          </InputClaims>
+          <InputParameters>
+            <InputParameter Id="stringFormat" DataType="string" Value="{0}" />
+          </InputParameters>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="readOnlyEmail" TransformationClaimType="outputClaim" />
+          </OutputClaims>
+        </ClaimsTransformation>
+      </ClaimsTransformations>
       <ContentDefinitions>
         <!-- This content definition is to render an error page that displays unhandled errors. -->
         <ContentDefinition Id="api.error">
