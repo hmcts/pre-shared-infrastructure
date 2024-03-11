@@ -1791,20 +1791,24 @@
 }
 
 .govuk-button--secondary,
-#api button#cancel {
+#api button#cancel,
+#api .verify button.sendButton {
   background-color: #f3f2f1;
   box-shadow: 0 2px 0 #929191;
 }
 .govuk-button--secondary, .govuk-button--secondary:link, .govuk-button--secondary:visited, .govuk-button--secondary:active, .govuk-button--secondary:hover,
-#api button#cancel, #api button#cancel:link, #api button#cancel:visited, #api button#cancel:active, #api button#cancel:hover {
+#api button#cancel, #api button#cancel:link, #api button#cancel:visited, #api button#cancel:active, #api button#cancel:hover,
+#api .verify button.sendButton, #api .verify button.sendButton:link, #api .verify button.sendButton:visited, #api .verify button.sendButton:active, #api .verify button.sendButton:hover {
   color: #0b0c0c;
 }
 .govuk-button--secondary:hover,
-#api button#cancel:hover {
+#api button#cancel:hover,
+#api .verify button.sendButton:hover {
   background-color: #dbdad9;
 }
 .govuk-button--secondary:hover[disabled],
-#api button#cancel:hover[disabled] {
+#api button#cancel:hover[disabled],
+#api .verify button.sendButton:hover[disabled] {
   background-color: #f3f2f1;
 }
 
@@ -7231,4 +7235,29 @@ input[type="checkbox"] {
 
 #api .verify {
   margin-top: 20px;
+  margin-right: 0;
+}
+
+#api .verify label {
+  display: block;
+  width: 100%;
+}
+
+#api .verify input {
+  display: block;
+  margin-right: 25%;
+}
+
+#api .verify button {
+  display: block;
+  margin-top: 20px;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+#api .verify .verifyButton {
+  margin-right: 15px;
+}
+#attributeVerification #attributeList {
+  border-bottom: 1px solid #b1b4b6;
+  margin-bottom: 25px;
 }
