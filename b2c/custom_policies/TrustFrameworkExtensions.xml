@@ -49,7 +49,7 @@
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:globalexception:1.2.1</DataUri>
           <Metadata>
-            <Item Key="DisplayName">Error page</Item>
+            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.idpselections">
