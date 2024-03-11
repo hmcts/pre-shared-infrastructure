@@ -1258,17 +1258,17 @@
           their sign in email address or strong authentication email here. This guards against scenarios where a user's
           password is stolen, the attacker can change the email addresses leaving no way for the user to recover their account.
           By requiring 2FA, stolen passwords cannot be used to take over the account completely. -->
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
+        <!-- <OrchestrationStep Order="4" Type="ClaimsExchange"> -->
           <!-- <ClaimsExchanges>
             <ClaimsExchange Id="PhoneFactor" TechnicalProfileReferenceId="PhoneFactor-InputOrVerify" />
           </ClaimsExchanges> -->
         </OrchestrationStep>
-        <OrchestrationStep Order="5" Type="ClaimsExchange">
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
           <ClaimsExchanges>
             <ClaimsExchange Id="B2CUserProfileUpdateExchange" TechnicalProfileReferenceId="SelfAsserted-ProfileUpdate" />
           </ClaimsExchanges>
         </OrchestrationStep>
-        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
