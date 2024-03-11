@@ -14,40 +14,9 @@
     <link rel="mask-icon" href="https://presastg.blob.core.windows.net/pre-b2c-container/assets/images/govuk-icon-mask.svg" color="#0b0c0c">
     <link rel="apple-touch-icon" href="https://presastg.blob.core.windows.net/pre-b2c-container/assets/images/govuk-icon-180.png">
 
-    <script type="application/javascript">
-      function moveForgotPassword() {
-        const forgotPasswordId = 'forgotPassword'
-        const forgotPassword = document.getElementById(forgotPasswordId);
-
-        if (forgotPassword) {
-          const text = forgotPassword.innerHTML;
-          forgotPassword.remove();
-
-          const newForgotPassword = document.createElement('a');
-          newForgotPassword.id = forgotPasswordId;
-          newForgotPassword.innerHTML = text;
-          newForgotPassword.href = forgotPassword.href;
-
-          const div = document.createElement('div');
-          div.appendChild(newForgotPassword);
-
-          const passwordInput = document.getElementById('password');
-          passwordInput.parentNode.insertBefore(div, passwordInput.nextSibling);
-        }
-      }
-
-      function addTsAndCsLink() {
-        const tsAndCsBlock = document.getElementsByClassName('CheckboxMultiSelect')[0];
-        if (tsAndCsBlock) {
-          const tsAndCsLabel = tsAndCsBlock.getElementsByTagName('label')[1];
-          if (tsAndCsLabel) {
-            tsAndCsLabel.innerHTML = tsAndCsLabel.innerHTML = 'I agree to the <a href="https://pre-portal.staging.platform.hmcts.net/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
-          }
-        }
-      }
-    </script>
+    <script src="./js/b2c.js" defer></script>
   </head>
-  <body class="govuk-template__body" onload="moveForgotPassword();addTsAndCsLink();">
+  <body class="govuk-template__body">
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
@@ -74,7 +43,9 @@
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
 
-              <!-- B2C content goes here -->
+              <div id="api">
+                <!-- B2C content goes here -->
+              </div>
 
             </div>
           </div>
@@ -112,11 +83,5 @@
         </div>
       </div>
     </footer>
-
-    <script type="module" src="https://presastg.blob.core.windows.net/pre-b2c-container/js/govuk-frontend-5.2.0.min.js"></script>
-    <script type="module">
-      import { initAll } from 'https://presastg.blob.core.windows.net/pre-b2c-container/js/govuk-frontend-5.2.0.min.js'
-      initAll()
-    </script>
   </body>
 </html>
