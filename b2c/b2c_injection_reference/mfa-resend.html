@@ -1,0 +1,37 @@
+<div id="api" data-name="Phonefactor" role="form">
+  <span id="screen_reader_msg" role="alert" aria-label="" aria-hidden="true" style="display:none"></span>
+  <div class="buttons">
+  </div>
+  <div class="intro">
+    <p>We have the following number on record for you. We can send a code via SMS or phone to authenticate you.</p>
+  </div>
+  <div class="error pageLevel" id="errorMessage" style="display:none" aria-hidden="true">
+    <p role="alert">The verification code you have entered does not match our records. Please try again, or request a new code.</p>
+  </div>
+
+  <div class="phoneNumbers" id="phoneNumbers">
+    <div class="phoneNumber">
+      <div class="type">Phone Number</div>
+      <div class="number">XXX-XXX-46784</div>
+    </div>
+  </div>
+
+  <div id="codeVerification" style="display: block;" aria-hidden="false">
+    <div class="actionLabel" aria-hidden="false" style="display: block;">
+      <label for="verificationCode">Enter your verification code below, or </label>
+      <a id="retryCode" tabindex="1">send a new code</a>
+    </div>
+    <div class="error itemLevel" aria-hidden="true" style="display: none;">
+      <p role="alert"></p>
+    </div>
+    <input type="text" role="textbox" id="verificationCode" maxlength="6" autocomplete="false" pattern="\d{6}" title="Please enter the verification code you received" aria-required="true" aria-hidden="false" style="display: block;">
+  </div>
+
+  <div class="working" style="display: none;"></div>
+
+  <div class="buttons">
+    <button id="sendCode" autofocus="" class="disabled" aria-disabled="true" style="display: none;">Send Code</button><button id="verifyCode" class="disabled" aria-disabled="true" style="display: inline-block;">Verify Code</button><button id="verifyPhone" class="disabled" aria-disabled="true" style="display: none;">Call Me</button><button id="continuePhone" class="disabled" aria-disabled="true" style="display: none;">Continue</button>
+    <button id="cancel">Cancel</button>
+  </div>
+
+</div>
