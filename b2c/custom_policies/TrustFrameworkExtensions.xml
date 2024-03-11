@@ -244,12 +244,24 @@
             </JourneyList>
           </OrchestrationStep>
 
+        <!-- This step forces email verification on sign in only. -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>newUser</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
 
           <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
             This can only happen when authentication happened using a social IDP. If local account was created or authentication done
             using ESTS in step 2, then an user account must exist in the directory by this time. -->
-          <OrchestrationStep Order="4" Type="ClaimsExchange">
-            <Preconditions>
+          <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <Preconditions>
               <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
                 <Value>objectId</Value>
                 <Action>SkipThisOrchestrationStep</Action>
@@ -262,7 +274,7 @@
 
           <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent
             in the token. -->
-          <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <OrchestrationStep Order="6" Type="ClaimsExchange">
             <Preconditions>
               <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
                 <Value>authenticationSource</Value>
@@ -280,7 +292,7 @@
 
           <!-- Phone verification: If MFA is not required, the next three steps (#5-#7) should be removed.
                This step checks whether there's a phone number on record,  for the user. If found, then the user is challenged to verify it. -->
-          <OrchestrationStep Order="6" Type="ClaimsExchange">
+          <OrchestrationStep Order="7" Type="ClaimsExchange">
             <Preconditions>
               <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
                 <Value>objectId</Value>
@@ -300,7 +312,7 @@
           <!-- Save MFA phone number: The precondition verifies whether the user provided a new number in the
                previous step. If so, then the phone number is stored in the directory for future authentication
                requests. -->
-          <OrchestrationStep Order="7" Type="ClaimsExchange">
+          <OrchestrationStep Order="8" Type="ClaimsExchange">
             <Preconditions>
               <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
                 <Value>newPhoneNumberEntered</Value>
@@ -314,7 +326,7 @@
             />
             </ClaimsExchanges>
           </OrchestrationStep>
-          <OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+          <OrchestrationStep Order="9" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
         </OrchestrationSteps>
         <ClientDefinition ReferenceId="DefaultWeb" />
