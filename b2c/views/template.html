@@ -39,9 +39,12 @@
       function addTsAndCsLink() {
         const tsAndCsBlock = document.getElementsByClassName('CheckboxMultiSelect')[0];
         if (tsAndCsBlock) {
-          const tsAndCsLabel = tsAndCsBlock.getElementsByTagName('label')[1];
-          if (tsAndCsLabel) {
-            tsAndCsLabel.innerHTML = tsAndCsLabel.innerHTML = 'I agree to the <a href="https://pre-portal.staging.platform.hmcts.net/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
+          const tsAndCsLabel = tsAndCsBlock.getElementsByTagName('label')[0];
+          const tsAndCsText = tsAndCsBlock.getElementsByTagName('label')[1];
+          // fix the wrong for attribute supplied by B2C
+          tsAndCsLabel.setAttribute('for', tsAndCsText.getAttribute('for'));
+          if (tsAndCsText) {
+            tsAndCsText.innerHTML = tsAndCsText.innerHTML = 'I agree to the <a href="https://pre-portal.staging.platform.hmcts.net/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
           }
         }
       }
