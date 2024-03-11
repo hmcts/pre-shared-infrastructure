@@ -118,14 +118,14 @@
             <Item Key="DisplayName">Collect information from user page</Item>
           </Metadata>
         </ContentDefinition>
-        <ContentDefinition Id="api.phonefactor">
+        <!-- <ContentDefinition Id="api.phonefactor">
           <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:multifactor:1.2.5</DataUri>
           <Metadata>
             <Item Key="DisplayName">Multi-factor authentication page</Item>
           </Metadata>
-        </ContentDefinition>
+        </ContentDefinition> -->
       </ContentDefinitions>
     </BuildingBlocks>
     <ClaimsProviders>
@@ -349,15 +349,15 @@
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
             </Preconditions>
-            <ClaimsExchanges>
+            <!-- <ClaimsExchanges>
               <ClaimsExchange Id="PhoneFactor-Verify" TechnicalProfileReferenceId="PhoneFactor-InputOrVerify" />
-            </ClaimsExchanges>
+            </ClaimsExchanges> -->
           </OrchestrationStep>
 
           <!-- Save MFA phone number: The precondition verifies whether the user provided a new number in the
                previous step. If so, then the phone number is stored in the directory for future authentication
                requests. -->
-          <OrchestrationStep Order="8" Type="ClaimsExchange">
+          <!-- <OrchestrationStep Order="8" Type="ClaimsExchange">
             <Preconditions>
               <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
                 <Value>newPhoneNumberEntered</Value>
@@ -370,8 +370,8 @@
               TechnicalProfileReferenceId="AAD-UserWritePhoneNumberUsingObjectId"
             />
             </ClaimsExchanges>
-          </OrchestrationStep>
-          <OrchestrationStep Order="9" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+          </OrchestrationStep> -->
+          <OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
         </OrchestrationSteps>
         <ClientDefinition ReferenceId="DefaultWeb" />
