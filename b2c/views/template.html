@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
 
-    <link rel="stylesheet" href="https://presastg.blob.core.windows.net/pre-b2c-container/css/main.css">
+    <link rel="stylesheet" href="./css/main.css">
 
     <link rel="manifest" href="https://presastg.blob.core.windows.net/pre-b2c-container/assets/manifest.json">
     <link rel="icon" sizes="48x48" href="https://presastg.blob.core.windows.net/pre-b2c-container/assets/images/favicon.ico">
@@ -35,6 +35,24 @@
           passwordInput.parentNode.insertBefore(div, passwordInput.nextSibling);
         }
       }
+      function moveRetryCode() {
+        const retryCode = document.getElementById('retryCode');
+
+        if (retryCode) {
+          const text = retryCode.innerHTML;
+          retryCode.remove();
+
+          const newRetryCode = document.createElement('a');
+          newRetryCode.id = 'retryCode';
+          newRetryCode.innerHTML = text;
+
+          const div = document.createElement('div');
+          div.appendChild(newRetryCode);
+
+          const verificationCodeInput = document.getElementById('verificationCode');
+          verificationCodeInput.parentNode.insertBefore(div, verificationCodeInput.nextSibling);
+        }
+      }
 
       function addTsAndCsLink() {
         const tsAndCsBlock = document.getElementsByClassName('CheckboxMultiSelect')[0];
@@ -50,7 +68,7 @@
       }
     </script>
   </head>
-  <body class="govuk-template__body" onload="moveForgotPassword();addTsAndCsLink();">
+  <body class="govuk-template__body" onload="moveForgotPassword();moveRetryCode();addTsAndCsLink();">
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
     <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
