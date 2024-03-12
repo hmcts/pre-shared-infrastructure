@@ -49,8 +49,7 @@ function addTsAndCsLink() {
     }
   }
 }
-
-document.addEventListener("DOMContentLoaded", function(e) {
+$(function() {
   moveForgotPassword();
   moveRetryCode();
   addTsAndCsLink();
