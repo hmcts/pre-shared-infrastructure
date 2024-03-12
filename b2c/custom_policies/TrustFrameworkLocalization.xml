@@ -68,7 +68,7 @@
           <LocalizedString ElementType="UxElement" StringId="button_signin">Sign in</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="createaccount_intro">Don't have an account?</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="unknown_error">We are having trouble signing you in. Please try again later.</LocalizedString>
-          <!-- Uncomment the remember_me only if the keep me signed in is activated. 
+          <!-- Uncomment the remember_me only if the keep me signed in is activated.
           <LocalizedString ElementType="UxElement" StringId="remember_me">Keep me signed in</LocalizedString> -->
           <LocalizedString ElementType="ClaimsProvider" StringId="FacebookExchange">Facebook</LocalizedString>
           <LocalizedString ElementType="ErrorMessage" StringId="ResourceOwnerFlowInvalidCredentials">Your password is incorrect.</LocalizedString>
