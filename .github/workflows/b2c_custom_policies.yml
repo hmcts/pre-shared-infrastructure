@@ -1,19 +1,31 @@
+name: Upload Azure B2C Custom Policies
+
 on: push
 
-env:
-  tenant: hmctsdevextid.onmicrosoft.com
-
 jobs:
-  build-and-deploy:
+  schema:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [dev, test]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: 'Upload B2C Custom Policies'
+      - name: 'Upload B2C Custom Policies to Non-Prod'
         uses: azure-ad-b2c/deploy-trustframework-policy@v3
         with:
-          folder: './b2c/custom_policies'
-          files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml'
-          tenant: ${{ env.tenant }}
-          clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}
-          clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}
+          folder: './b2c/custom_policies/${{ matrix.environment }}'
+          files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
+          tenant: 'hmcts${{ matrix.environment }}extid.onmicrosoft.com'
+          clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}_${{ matrix.environment }}
+          clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}_${{ matrix.environment }}
+
+      # - name: 'Upload B2C Custom Policies to Prod'
+      #   uses: azure-ad-b2c/deploy-trustframework-policy@v3
+      #   with:
+      #     folder: './b2c/custom_policies/prod'
+      #     files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
+      #     tenant: 'hmctsprodextid.onmicrosoft.com'
+      #     clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}_prod
+      #     clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}_prod
