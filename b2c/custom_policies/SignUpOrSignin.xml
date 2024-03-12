@@ -38,6 +38,9 @@
       <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
       <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
     </Endpoints>
+    <UserJourneyBehaviors>
+      <ScriptExecution>Allow</ScriptExecution>
+    </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />

@@ -1,0 +1,26 @@
+<div id="api" data-name="SelfAsserted">
+  <div class="buttons">
+  </div>
+  <div class="intro">
+    <p>Please provide the following details.</p>
+  </div>
+  <form id="attributeVerification" action="JavaScript:void(0);">
+    <div id="passwordEntryMismatch" class="error pageLevel" style="display: none;" aria-hidden="true">The password entry fields do not match. Please enter the same password in both fields and try again.</div>
+    <div id="requiredFieldMissing" class="error pageLevel" style="display: none;" aria-hidden="true">A required field is missing. Please fill out all required fields and try again.</div>
+    <div id="fieldIncorrect" class="error pageLevel" style="display: none;" aria-hidden="true">One or more fields are filled out incorrectly. Please check your entries and try again.</div>
+    <div id="claimVerificationServerError" class="error pageLevel" style="display: none;" aria-hidden="true"></div>
+    <div id="attributeList" class="attr">
+      <ul>
+        <li class="Readonly"><div class="attrEntry"><div><div class="verificationInfoText" id="readOnlyEmail_intro" style="display: inline;" aria-hidden="false" role="alert" aria-live="polite">Verification is necessary. Please click Send button.</div><div class="verificationInfoText" id="readOnlyEmail_info" style="display:none" aria-hidden="true" role="alert">Verification code has been sent to your inbox. Please copy it to the input box below.</div><div class="verificationSuccessText" id="readOnlyEmail_success" style="display:none" aria-hidden="true" role="alert">E-mail address verified. You can now continue.</div><div class="verificationErrorText error" id="readOnlyEmail_fail_retry" style="display:none" aria-hidden="true" role="alert">That code is incorrect. Please try again.</div><div class="verificationErrorText error" id="readOnlyEmail_fail_no_retry" style="display:none" aria-hidden="true" role="alert">You've made too many incorrect attempts. Please try again later.</div><div class="verificationErrorText error" id="readOnlyEmail_fail_throttled" style="display:none" aria-hidden="true" role="alert">There have been too many requests to verify this email address. Please wait a while, then try again.</div><div class="verificationErrorText error" id="readOnlyEmail_fail_code_expired" style="display:none" aria-hidden="true" role="alert">That code is expired. Please request a new code.</div><div class="verificationErrorText error" id="readOnlyEmail_fail_server" style="display:none" aria-hidden="true" role="alert">We are having trouble verifying your email address. Please enter a valid email address and try again.</div><div class="verificationErrorText error" id="readOnlyEmail_incorrect_format" style="display:none" aria-hidden="true" role="alert">Incorrect format.</div></div><label id="readOnlyEmail_label" for="readOnlyEmail">Email Address</label><div class="error itemLevel" role="alert"></div><input id="readOnlyEmail" class="textInput" type="text" placeholder="Email Address" aria-label="Email Address" value="jason.paige@hmcts.net" aria-required="true" disabled="" readonly="readonly" autofocus="autofocus"><a class="helpLink tiny" href="javascript:void(0)" data-help="">What is this?</a><div class="buttons verify" data-claim_id="readOnlyEmail"><div class="working" id="readOnlyEmail_ver_wait" aria-label="Please wait" aria-hidden="true" style="display: none;"></div><label id="readOnlyEmail_ver_input_label" for="readOnlyEmail_ver_input" aria-hidden="true" style="display: none;">Verification code</label><input class="verifyInput" id="readOnlyEmail_ver_input" type="text" autocomplete="off" placeholder="Verification code" style="display: none;" aria-hidden="true"><button class="sendButton" id="readOnlyEmail_ver_but_send" type="button" aria-label="Send verification code" style="display: inline;" aria-hidden="false">Send verification code</button><button class="verifyButton" id="readOnlyEmail_ver_but_verify" type="button" aria-label="Verify code" style="display: none;" aria-hidden="true">Verify code</button><button class="sendButton" id="readOnlyEmail_ver_but_resend" type="button" aria-label="Send new code" style="display: none;" aria-hidden="true">Send new code</button><button class="defaultButton" id="readOnlyEmail_ver_but_default" type="button" aria-label="Default" style="display: none;">Default</button></div></div></li>
+      </ul>
+    </div>
+    <div class="buttons">
+      <button id="continue" type="submit" form="attributeVerification" aria-disabled="false" aria-label="Continue">Continue</button><button id="cancel" aria-label="Cancel" formnovalidate="">Cancel</button>
+    </div>
+
+    <div class="verifying-modal">
+      <div id="verifying_blurb"></div>
+    </div>
+  </form>
+
+</div>
