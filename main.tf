@@ -8,9 +8,9 @@ locals {
   # command to generate the list of files:
   # cd b2c/views && find . -type f | sed 's/^.\///' | sed 's/.*/"&",/'
   # when updating the gds frontend version:
-    # update release version in the template.html file
-    # correct the `url()` paths in the minified css file
-    # correct the `src` paths in the manifest.json file
+  # update release version in the template.html file
+  # correct the `url()` paths in the minified css file
+  # correct the `src` paths in the manifest.json file
   b2c_files = [
     "css/main.css",
     "css/govuk-frontend-5.2.0.min.css",
