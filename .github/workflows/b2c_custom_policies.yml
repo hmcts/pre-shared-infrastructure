@@ -10,16 +10,16 @@ jobs:
         environment: [dev, test]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 'Upload B2C Custom Policies to Non-Prod'
-        uses: azure-ad-b2c/deploy-trustframework-policy@v3
+        uses: azure-ad-b2c/deploy-trustframework-policy@v5
         with:
           folder: './b2c/custom_policies/${{ matrix.environment }}'
           files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
           tenant: 'hmcts${{ matrix.environment }}extid.onmicrosoft.com'
-          clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}_${{ matrix.environment }}
-          clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}_${{ matrix.environment }}
+          clientId: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_ID_{0}', matrix.environment)] }}
+          clientSecret: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_SECRET_{0}', matrix.environment)] }}
 
       # - name: 'Upload B2C Custom Policies to Prod'
       #   uses: azure-ad-b2c/deploy-trustframework-policy@v3
