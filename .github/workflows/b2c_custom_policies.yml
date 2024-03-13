@@ -4,8 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        type: environment
-        default: dev
+        description: 'The environment to deploy to'
+        required: true
+        type: choice
+        default: 'dev'
+        options:
+          - dev
+          - test
+          - demo
+          - stg
+          - prod
 
 jobs:
   schema:
