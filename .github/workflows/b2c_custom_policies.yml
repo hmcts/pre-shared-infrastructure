@@ -1,6 +1,11 @@
 name: Upload Azure B2C Custom Policies
 
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        default: dev
 
 jobs:
   schema:
@@ -15,11 +20,11 @@ jobs:
       - name: 'Upload B2C Custom Policies to Non-Prod'
         uses: azure-ad-b2c/deploy-trustframework-policy@v3
         with:
-          folder: './b2c/custom_policies/${{ matrix.environment }}'
+          folder: './b2c/custom_policies/${{ github.event.inputs.environment }}'
           files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
-          tenant: 'hmcts${{ matrix.environment }}extid.onmicrosoft.com'
-          clientId: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_ID_{0}', matrix.environment[0])] }}
-          clientSecret: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_SECRET_{0}', matrix.environment[0])] }}
+          tenant: 'hmcts${{ github.event.inputs.environment }}extid.onmicrosoft.com'
+          clientId: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_ID_{0}', github.event.inputs.environment)] }}
+          clientSecret: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_SECRET_{0}', github.event.inputs.environment)] }}
 
       # - name: 'Upload B2C Custom Policies to Prod'
       #   uses: azure-ad-b2c/deploy-trustframework-policy@v3
