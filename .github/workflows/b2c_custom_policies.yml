@@ -1,7 +1,6 @@
 name: Upload Azure B2C Custom Policies
 
 on:
-  pull_request:
   workflow_dispatch:
     inputs:
       environment:
