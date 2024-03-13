@@ -16,16 +16,13 @@ on:
           - prod
 
 jobs:
-  schema:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: [dev, test]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 'Upload B2C Custom Policies to Non-Prod'
+      - name: 'Upload B2C Custom Policies to ${{ github.event.inputs.environment }}'
         uses: azure-ad-b2c/deploy-trustframework-policy@v3
         with:
           folder: './b2c/custom_policies/${{ github.event.inputs.environment }}'
@@ -33,12 +30,3 @@ jobs:
           tenant: 'hmcts${{ github.event.inputs.environment }}extid.onmicrosoft.com'
           clientId: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_ID_{0}', github.event.inputs.environment)] }}
           clientSecret: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_SECRET_{0}', github.event.inputs.environment)] }}
-
-      # - name: 'Upload B2C Custom Policies to Prod'
-      #   uses: azure-ad-b2c/deploy-trustframework-policy@v3
-      #   with:
-      #     folder: './b2c/custom_policies/prod'
-      #     files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml,PasswordReset.xml'
-      #     tenant: 'hmctsprodextid.onmicrosoft.com'
-      #     clientId: ${{ secrets.PRE_MANAGEMENT_APP_CLIENT_ID }}_prod
-      #     clientSecret: ${{ secrets.PRE_MANAGEMENT_APP }}_prod
