@@ -4,14 +4,14 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="hmctsdemoextid.onmicrosoft.com"
+  TenantId="hmctsprodextid.onmicrosoft.com"
   PolicyId="B2C_1A_TrustFrameworkExtensions"
-  PublicPolicyUri="http://hmctsdemoextid.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions"
+  PublicPolicyUri="http://hmctsprodextid.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions"
   TenantObjectId="7b9fbead-db31-48dd-a052-161a278d333f"
 >
 
   <BasePolicy>
-      <TenantId>hmctsdemoextid.onmicrosoft.com</TenantId>
+      <TenantId>hmctsprodextid.onmicrosoft.com</TenantId>
       <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
     </BasePolicy>
     <BuildingBlocks>
@@ -176,7 +176,7 @@
             <Metadata>
               <!-- Update the Issuer and Audience below -->
               <!-- Audience is optional, Issuer is required-->
-              <Item Key="issuer">https://hmctsdemoextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/</Item>
+              <Item Key="issuer">https://hmctsprodextid.b2clogin.com/0f878b1e-f234-49e3-8be4-f8028cd364f2/v2.0/</Item>
               <Item
               Key="audience"
             >[ "22222222-2222-2222-2222-222222222222", "33333333-3333-3333-3333-333333333333" ]</Item>
@@ -289,7 +289,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>647ef962-b03f-40fa-b9a0-df5243bc8334</Value> <!-- assume automated test user has valid phone -->
+              <Value>ea7978c4-da9a-42ae-ad9e-c5a93e7fa46d</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
