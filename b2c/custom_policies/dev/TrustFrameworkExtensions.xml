@@ -131,6 +131,9 @@
             Name="Proprietary"
             Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           />
+            <Metadata>
+              <Item Key="setting.showCancelButton">false</Item>
+            </Metadata>
             <OutputClaims>
               <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="true" AlwaysUseDefaultValue="true" />
             </OutputClaims>
@@ -139,6 +142,7 @@
           <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
             <Metadata>
               <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
+              <Item Key="setting.showCancelButton">false</Item>
             </Metadata>
             <OutputClaimsTransformations>
               <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
@@ -225,6 +229,7 @@
             Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           />
             <Metadata>
+              <Item Key="setting.showCancelButton">false</Item>
               <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
             </Metadata>
             <InputClaims>
