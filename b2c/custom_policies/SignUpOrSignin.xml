@@ -24,7 +24,7 @@
     <Localization>
       <LocalizedResources Id="api.localaccountsignup.en">
         <LocalizedStrings>
-          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="PatternHelpText">Please enter a email address from one of the following domains: outlook.com, live.com, or gmail.com.</LocalizedString>
+          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="PatternHelpText">Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>
