@@ -18,8 +18,8 @@
       <ClaimType Id="email">
         <Restriction>
           <Pattern
-            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.\.cjsm\.net|cps\.gov\.uk)"
-            HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk."
+            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.\.cjsm\.net|cps\.gov\.uk|gmail\.com|solirius\.com)"
+            HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com."
           />
         </Restriction>
       </ClaimType>
@@ -32,7 +32,7 @@
             ElementType="ClaimType"
             ElementId="email"
             StringId="PatternHelpText"
-          >Please enter a email address from one of the following domains: outlook.com, live.com, or gmail.com.</LocalizedString>
+          >Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>
