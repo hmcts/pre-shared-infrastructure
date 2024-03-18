@@ -281,7 +281,6 @@
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
             </Preconditions>
-
             <JourneyList>
               <Candidate SubJourneyReferenceId="PasswordReset" />
             </JourneyList>
@@ -369,9 +368,9 @@
           <OrchestrationStep Order="1" Type="ClaimsExchange">
             <ClaimsExchanges>
               <ClaimsExchange
-                Id="PasswordResetUsingEmailAddressExchange"
-                TechnicalProfileReferenceId="LocalAccountDiscoveryUsingEmailAddress"
-              />
+              Id="PasswordResetUsingEmailAddressExchange"
+              TechnicalProfileReferenceId="LocalAccountDiscoveryUsingEmailAddress"
+            />
             </ClaimsExchanges>
           </OrchestrationStep>
 
@@ -379,9 +378,9 @@
           <OrchestrationStep Order="2" Type="ClaimsExchange">
             <ClaimsExchanges>
               <ClaimsExchange
-                Id="NewCredentials"
-                TechnicalProfileReferenceId="LocalAccountWritePasswordUsingObjectId"
-              />
+              Id="NewCredentials"
+              TechnicalProfileReferenceId="LocalAccountWritePasswordUsingObjectId"
+            />
             </ClaimsExchanges>
           </OrchestrationStep>
         </OrchestrationSteps>
