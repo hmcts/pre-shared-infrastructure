@@ -286,19 +286,23 @@
             </JourneyList>
           </OrchestrationStep>
 
-        <!-- This step forces email verification on sign in only. -->
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
-              <Value>objectId</Value>
-              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
+          <!-- This step forces email verification on sign in only. -->
+          <OrchestrationStep Order="4" Type="ClaimsExchange">
+            <Preconditions>
+              <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+                <Value>objectId</Value>
+                <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
+                <Action>SkipThisOrchestrationStep</Action>
+              </Precondition>
+              <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+                <Value>isForgotPassword</Value>
+                <Action>SkipThisOrchestrationStep</Action>
+              </Precondition>
+            </Preconditions>
+            <ClaimsExchanges>
+              <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn" />
+            </ClaimsExchanges>
+          </OrchestrationStep>
 
           <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
             This can only happen when authentication happened using a social IDP. If local account was created or authentication done
