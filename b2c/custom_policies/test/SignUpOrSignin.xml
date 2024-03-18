@@ -1,12 +1,14 @@
-<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                      xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
-                      PolicySchemaVersion="0.3.0.0"
-                      TenantId="hmctstestextid.onmicrosoft.com"
-                      PolicyId="B2C_1A_signup_signin"
-                      PublicPolicyUri="http://hmctstestextid.onmicrosoft.com/B2C_1A_signup_signin"
-                      TenantObjectId="44379efc-6244-4e94-ab4d-aad9b6778220"
-                      DeploymentMode="Development">
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="hmctstestextid.onmicrosoft.com"
+  PolicyId="B2C_1A_signup_signin"
+  PublicPolicyUri="http://hmctstestextid.onmicrosoft.com/B2C_1A_signup_signin"
+  TenantObjectId="44379efc-6244-4e94-ab4d-aad9b6778220"
+  DeploymentMode="Development"
+>
   <BasePolicy>
     <TenantId>hmctstestextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
@@ -16,7 +18,10 @@
     <ClaimsSchema>
       <ClaimType Id="email">
         <Restriction>
-          <Pattern RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.\.cjsm\.net|cps\.gov\.uk|gmail\.com|solirius\.com)" HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com." />
+          <Pattern
+            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.\.cjsm\.net|cps\.gov\.uk)"
+            HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk."
+          />
         </Restriction>
       </ClaimType>
     </ClaimsSchema>
@@ -24,7 +29,11 @@
     <Localization>
       <LocalizedResources Id="api.localaccountsignup.en">
         <LocalizedStrings>
-          <LocalizedString ElementType="ClaimType" ElementId="email" StringId="PatternHelpText">Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com.</LocalizedString>
+          <LocalizedString
+            ElementType="ClaimType"
+            ElementId="email"
+            StringId="PatternHelpText"
+          >Please enter a email address from one of the following domains: outlook.com, live.com, or gmail.com.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>
@@ -51,7 +60,11 @@
         <OutputClaim ClaimTypeReferenceId="email" />
         <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
-        <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+        <OutputClaim
+          ClaimTypeReferenceId="tenantId"
+          AlwaysUseDefaultValue="true"
+          DefaultValue="{Policy:TenantObjectId}"
+        />
         <OutputClaim ClaimTypeReferenceId="TnCs" />
         <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
       </OutputClaims>

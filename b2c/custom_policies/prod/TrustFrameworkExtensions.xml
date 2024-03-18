@@ -4,14 +4,14 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="hmctstestextid.onmicrosoft.com"
+  TenantId="hmctsprodextid.onmicrosoft.com"
   PolicyId="B2C_1A_TrustFrameworkExtensions"
-  PublicPolicyUri="http://hmctstestextid.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions"
-  TenantObjectId="44379efc-6244-4e94-ab4d-aad9b6778220"
+  PublicPolicyUri="http://hmctsprodextid.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions"
+  TenantObjectId="7b9fbead-db31-48dd-a052-161a278d333f"
 >
 
   <BasePolicy>
-      <TenantId>hmctstestextid.onmicrosoft.com</TenantId>
+      <TenantId>hmctsprodextid.onmicrosoft.com</TenantId>
       <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
     </BasePolicy>
     <BuildingBlocks>
@@ -45,7 +45,7 @@
       <ContentDefinitions>
         <!-- This content definition is to render an error page that displays unhandled errors. -->
         <ContentDefinition Id="api.error">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:globalexception:1.2.1</DataUri>
           <Metadata>
@@ -62,7 +62,7 @@
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.idpselections.signup">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:providerselection:1.2.1</DataUri>
           <Metadata>
@@ -71,7 +71,7 @@
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.signuporsignin">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.5</DataUri>
           <Metadata>
@@ -79,7 +79,7 @@
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.selfasserted">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
           <Metadata>
@@ -87,7 +87,7 @@
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.selfasserted.profileupdate">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
           <Metadata>
@@ -95,7 +95,7 @@
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.localaccountsignup">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
           <Metadata>
@@ -103,7 +103,7 @@
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.localaccountpasswordreset">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
           <Metadata>
@@ -111,7 +111,7 @@
           </Metadata>
         </ContentDefinition>
         <ContentDefinition Id="api.localaccountsignin">
-          <LoadUri>https://presatest.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+          <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
           <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
           <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
           <Metadata>
@@ -176,7 +176,7 @@
             <Metadata>
               <!-- Update the Issuer and Audience below -->
               <!-- Audience is optional, Issuer is required-->
-              <Item Key="issuer">https://hmctstestextid.b2clogin.com/44379efc-6244-4e94-ab4d-aad9b6778220/v2.0/</Item>
+              <Item Key="issuer">https://hmctsprodextid.b2clogin.com/0f878b1e-f234-49e3-8be4-f8028cd364f2/v2.0/</Item>
               <Item
               Key="audience"
             >[ "22222222-2222-2222-2222-222222222222", "33333333-3333-3333-3333-333333333333" ]</Item>
@@ -289,7 +289,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>3c04187a-0a25-4a60-8666-66d29d41ceb6</Value> <!-- assume automated test user has valid phone -->
+              <Value>ea7978c4-da9a-42ae-ad9e-c5a93e7fa46d</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
