@@ -7309,3 +7309,6 @@ input[type="checkbox"] {
 #api #retryCode {
   cursor: pointer;
 }
+.changeClaims {
+  visibility: hidden;
+}
