@@ -1,4 +1,4 @@
-name: Upload Azure B2C Custom Policies to ${{ github.event.inputs.environment }}
+name: 'Upload Azure B2C Custom Policies to ${{ github.event.inputs.environment }}'
 
 on:
   workflow_dispatch:
