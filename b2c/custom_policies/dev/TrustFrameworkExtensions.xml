@@ -295,6 +295,10 @@
                 <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
+              <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+                <Value>isForgotPassword</Value>
+                <Action>SkipThisOrchestrationStep</Action>
+              </Precondition>
             </Preconditions>
             <ClaimsExchanges>
               <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn" />
@@ -380,7 +384,6 @@
               />
             </ClaimsExchanges>
           </OrchestrationStep>
-          <OrchestrationStep Order="3" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="UserInfoIssuer" />
         </OrchestrationSteps>
       </SubJourney>
     </SubJourneys>
