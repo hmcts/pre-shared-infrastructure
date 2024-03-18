@@ -139,6 +139,7 @@
           <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
             <Metadata>
               <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
+              <Item Key="setting.showCancelButton">false</Item>
             </Metadata>
             <OutputClaimsTransformations>
               <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
@@ -226,6 +227,7 @@
           />
             <Metadata>
               <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
+              <Item Key="setting.showCancelButton">false</Item>
             </Metadata>
             <InputClaims>
               <InputClaim ClaimTypeReferenceId="readOnlyEmail" />
