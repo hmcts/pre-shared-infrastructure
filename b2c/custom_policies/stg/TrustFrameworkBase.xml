@@ -4,9 +4,9 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="hmctstestextid.onmicrosoft.com"
+  TenantId="hmctsstgextid.onmicrosoft.com"
   PolicyId="B2C_1A_TrustFrameworkBase"
-  PublicPolicyUri="http://hmctstestextid.onmicrosoft.com/B2C_1A_TrustFrameworkBase"
+  PublicPolicyUri="http://hmctsstgextid.onmicrosoft.com/B2C_1A_TrustFrameworkBase"
 >
 
   <BuildingBlocks>
@@ -1243,7 +1243,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>3c04187a-0a25-4a60-8666-66d29d41ceb6</Value> <!-- assume automated test user has valid phone -->
+              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">

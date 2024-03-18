@@ -3,13 +3,13 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="hmctsdevextid.onmicrosoft.com"
+  TenantId="hmctsprodextid.onmicrosoft.com"
   PolicyId="B2C_1A_ProfileEdit"
-  PublicPolicyUri="http://hmctsdevextid.onmicrosoft.com/B2C_1A_ProfileEdit"
-  TenantObjectId="7b9fbead-db31-48dd-a052-161a278d333f"
+  PublicPolicyUri="http://hmctsprodextid.onmicrosoft.com/B2C_1A_ProfileEdit"
+  TenantObjectId="0f878b1e-f234-49e3-8be4-f8028cd364f2"
 >
   <BasePolicy>
-    <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
+    <TenantId>hmctsprodextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
   </BasePolicy>
   <RelyingParty>
