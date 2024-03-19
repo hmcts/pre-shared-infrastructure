@@ -164,8 +164,8 @@
             <!-- The Below claims are what will be returned on the UserInfo Endpoint if in the Claims Bag-->
             <InputClaims>
               <InputClaim ClaimTypeReferenceId="objectId" />
-              <InputClaim ClaimTypeReferenceId="givenName" />
-              <InputClaim ClaimTypeReferenceId="surname" />
+<!--              <InputClaim ClaimTypeReferenceId="givenName" />-->
+<!--              <InputClaim ClaimTypeReferenceId="surname" />-->
               <InputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
             </InputClaims>
           </TechnicalProfile>
