@@ -75,7 +75,7 @@
           <LocalizedString
             ElementType="UxElement"
             StringId="local_intro_generic"
-          >Sign in with your {0}</LocalizedString>
+          >Sign in</LocalizedString>
           <LocalizedString
             ElementType="ClaimType"
             ElementId="password"
