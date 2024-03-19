@@ -49,8 +49,29 @@ function addTsAndCsLink() {
     }
   }
 }
+
+function addPasswordCriteria() {
+  const passwordAttrEntry = document.querySelector('#attributeList li.Password .attrEntry');
+  // passwordAttrEntry.setAttribute('style', 'margin-bottom: 2px;');
+  const passwordDetails = document.createElement('details');
+  passwordDetails.setAttribute('class', 'govuk-details');
+  passwordDetails.setAttribute('data-module', 'govuk-details');
+  passwordDetails.setAttribute('style', 'margin-top: 2px;');
+  passwordDetails.innerHTML = '<summary class="govuk-details__summary">\n' +
+    '                          <span class="govuk-details__summary-text">Password criteria</span>\n' +
+    '                        </summary>\n' +
+    '                        <div class="govuk-details__text">\n' +
+    '                          Passwords must have at least 8 characters. <br />\n' +
+    '                          Passwords must contain characters from at least three of the\n' +
+    '                          following four classes: uppercase, lowercase, digit, and\n' +
+    '                          non-alphanumeric (special).\n' +
+    '                        </div>';
+  passwordAttrEntry.appendChild(passwordDetails);
+}
+
 $(function() {
   moveForgotPassword();
   moveRetryCode();
   addTsAndCsLink();
+  addPasswordCriteria();
 });
