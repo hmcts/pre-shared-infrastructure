@@ -164,9 +164,8 @@
             <!-- The Below claims are what will be returned on the UserInfo Endpoint if in the Claims Bag-->
             <InputClaims>
               <InputClaim ClaimTypeReferenceId="objectId" />
-              <InputClaim ClaimTypeReferenceId="givenName" />
-              <InputClaim ClaimTypeReferenceId="surname" />
-              <InputClaim ClaimTypeReferenceId="displayName" />
+<!--              <InputClaim ClaimTypeReferenceId="givenName" />-->
+<!--              <InputClaim ClaimTypeReferenceId="surname" />-->
               <InputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
             </InputClaims>
           </TechnicalProfile>
@@ -191,8 +190,7 @@
               <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
               <!-- Optional claims to read from the access token. -->
               <!-- <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name"/>
-                <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="family_name"/>
-                <OutputClaim ClaimTypeReferenceId="displayName" PartnerClaimType="name"/> -->
+                <OutputClaim ClaimTypeReferenceId="surname" PartnerClaimType="family_name"/> -->
             </OutputClaims>
           </TechnicalProfile>
           <TechnicalProfile Id="login-NonInteractive">
