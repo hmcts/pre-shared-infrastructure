@@ -175,7 +175,7 @@
             ElementType="ClaimType"
             ElementId="newPassword"
             StringId="DisplayName"
-          >New Password</LocalizedString>
+          >Password</LocalizedString>
           <LocalizedString
             ElementType="ClaimType"
             ElementId="newPassword"
@@ -190,7 +190,7 @@
             ElementType="ClaimType"
             ElementId="reenterPassword"
             StringId="DisplayName"
-          >Confirm New Password</LocalizedString>
+          >Confirm Password</LocalizedString>
           <LocalizedString
             ElementType="ClaimType"
             ElementId="reenterPassword"
