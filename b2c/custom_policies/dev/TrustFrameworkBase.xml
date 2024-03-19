@@ -612,8 +612,8 @@
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="oid" />
             <OutputClaim ClaimTypeReferenceId="tenantId" PartnerClaimType="tid" />
-            <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name" />
-            <OutputClaim ClaimTypeReferenceId="surName" PartnerClaimType="family_name" />
+<!--            <OutputClaim ClaimTypeReferenceId="givenName" PartnerClaimType="given_name" />-->
+<!--            <OutputClaim ClaimTypeReferenceId="surName" PartnerClaimType="family_name" />-->
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" PartnerClaimType="upn" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="localAccountAuthentication" />
           </OutputClaims>
@@ -666,8 +666,8 @@
             />
 
             <!-- Optional claims. -->
-            <PersistedClaim ClaimTypeReferenceId="givenName" />
-            <PersistedClaim ClaimTypeReferenceId="surname" />
+<!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
           </PersistedClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="objectId" />
@@ -754,8 +754,8 @@
             />
 
             <!-- Optional claims -->
-            <PersistedClaim ClaimTypeReferenceId="givenName" />
-            <PersistedClaim ClaimTypeReferenceId="surname" />
+<!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
           </PersistedClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
         </TechnicalProfile>
@@ -778,8 +778,8 @@
             <!-- Optional claims -->
             <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
             <OutputClaim ClaimTypeReferenceId="otherMails" />
-            <OutputClaim ClaimTypeReferenceId="givenName" />
-            <OutputClaim ClaimTypeReferenceId="surname" />
+<!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <OutputClaim ClaimTypeReferenceId="surname" />-->
           </OutputClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
         </TechnicalProfile>
@@ -830,8 +830,8 @@
                  these values, or if the claim did not appear in the OutputClaims section of the IDP.
                  In addition, if a claim is not in the InputClaims section, but it is in the OutputClaims section, then its
                  value will not be prefilled, but the user will still be prompted for it (with an empty value). -->
-            <InputClaim ClaimTypeReferenceId="givenName" />
-            <InputClaim ClaimTypeReferenceId="surname" />
+<!--            <InputClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <InputClaim ClaimTypeReferenceId="surname" />-->
           </InputClaims>
           <OutputClaims>
             <!-- These claims are not shown to the user because their value is obtained through the "ValidationTechnicalProfiles"
@@ -844,8 +844,8 @@
             <!-- Optional claims. These claims are collected from the user and can be modified. If a claim is to be persisted in the directory after having been
                  collected from the user, it needs to be added as a PersistedClaim in the ValidationTechnicalProfile referenced below, i.e.
                  in AAD-UserWriteUsingAlternativeSecurityId. -->
-            <OutputClaim ClaimTypeReferenceId="givenName" />
-            <OutputClaim ClaimTypeReferenceId="surname" />
+<!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <OutputClaim ClaimTypeReferenceId="surname" />-->
           </OutputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-SocialSignup" />
         </TechnicalProfile>
@@ -867,8 +867,8 @@
 
             <!-- Optional claims. These claims are collected from the user and can be modified. Any claim added here should be updated in the
                  ValidationTechnicalProfile referenced below so it can be written to directory after being updated by the user, i.e. AAD-UserWriteProfileUsingObjectId. -->
-            <InputClaim ClaimTypeReferenceId="givenName" />
-            <InputClaim ClaimTypeReferenceId="surname" />
+<!--            <InputClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <InputClaim ClaimTypeReferenceId="surname" />-->
           </InputClaims>
           <OutputClaims>
             <!-- Required claims -->
@@ -876,8 +876,8 @@
 
             <!-- Optional claims. These claims are collected from the user and can be modified. Any claim added here should be updated in the
                  ValidationTechnicalProfile referenced below so it can be written to directory after being updated by the user, i.e. AAD-UserWriteProfileUsingObjectId. -->
-            <OutputClaim ClaimTypeReferenceId="givenName" />
-            <OutputClaim ClaimTypeReferenceId="surname" />
+<!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <OutputClaim ClaimTypeReferenceId="surname" />-->
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWriteProfileUsingObjectId" />
@@ -917,8 +917,8 @@
             <OutputClaim ClaimTypeReferenceId="newUser" />
 
             <!-- Optional claims, to be collected from the user -->
-            <OutputClaim ClaimTypeReferenceId="givenName" />
-            <OutputClaim ClaimTypeReferenceId="surName" />
+<!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
+<!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
 
             <OutputClaim ClaimTypeReferenceId="TnCs" Required="true" />
           </OutputClaims>
