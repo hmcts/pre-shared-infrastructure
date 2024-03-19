@@ -311,7 +311,7 @@
         <UserInputType>CheckboxMultiSelect</UserInputType>
         <Restriction>
           <Enumeration
-            Text="I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal."
+            Text="I agree to the Terms &amp; Conditions (including Acceptable Use) for the Pre-Recorded Evidence Service."
             Value="7/03/2024"
             SelectByDefault="false"
           />

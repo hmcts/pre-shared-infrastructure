@@ -54,7 +54,7 @@
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
       <OutputClaims>
-        <OutputClaim ClaimTypeReferenceId="displayName" />
+<!--        <OutputClaim ClaimTypeReferenceId="displayName" />-->
 <!--        <OutputClaim ClaimTypeReferenceId="givenName" />-->
 <!--        <OutputClaim ClaimTypeReferenceId="surname" />-->
         <OutputClaim ClaimTypeReferenceId="email" />
