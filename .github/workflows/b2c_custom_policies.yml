@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 'Upload B2C Custom Policies to ${{ github.event.inputs.environment }}'
-        uses: azure-ad-b2c/deploy-trustframework-policy@v3
+        uses: azure-ad-b2c/deploy-trustframework-policy@v5
         with:
           folder: './b2c/custom_policies/${{ github.event.inputs.environment }}'
           files: 'TrustFrameworkBase.xml,TrustFrameworkLocalization.xml,TrustFrameworkExtensions.xml,SignUpOrSignin.xml,ProfileEdit.xml'
