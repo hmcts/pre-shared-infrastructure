@@ -197,15 +197,15 @@
           </TechnicalProfile>
           <TechnicalProfile Id="login-NonInteractive">
             <Metadata>
-              <Item Key="client_id">c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2</Item>
-              <Item Key="IdTokenAudience">5ffc2691-a59d-4b1f-9370-7ccd380a1b65</Item>
+              <Item Key="client_id">bb433784-4d34-48b0-a3fe-986ac75e87f5</Item>
+              <Item Key="IdTokenAudience">60e0df0f-7ef1-40e6-8a0b-3b3f3c6be00f</Item>
             </Metadata>
             <InputClaims>
-              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2" />
+              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="bb433784-4d34-48b0-a3fe-986ac75e87f5" />
               <InputClaim
               ClaimTypeReferenceId="resource_id"
               PartnerClaimType="resource"
-              DefaultValue="5ffc2691-a59d-4b1f-9370-7ccd380a1b65"
+              DefaultValue="60e0df0f-7ef1-40e6-8a0b-3b3f3c6be00f"
             />
             </InputClaims>
           </TechnicalProfile>
