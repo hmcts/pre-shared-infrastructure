@@ -74,11 +74,10 @@ resource "azurerm_storage_blob" "b2c_config" {
     strcontains(each.value, ".js") ? "application/javascript" :
     "application/octet-stream"
   )
-  content_md5            = filemd5("./b2c/views/${each.value}")
   storage_account_name   = module.sa_storage_account.storageaccount_name
   storage_container_name = local.b2c_container_name
   type                   = "Block"
   source                 = "./b2c/views/${each.value}"
 
-  depends_on = [module.sa_storage_account]
+  depends_on = [module.sa_storage_account, local_file.govuk_frontend_css, local_file.main_css, local_file.template_html]
 }
