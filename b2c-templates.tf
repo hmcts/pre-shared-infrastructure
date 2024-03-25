@@ -21,3 +21,11 @@ resource "local_file" "govuk_frontend_css" {
     env_long_name = local.env_long_name
   })
 }
+
+resource "local_file" "b2c_js" {
+  filename = "b2c/views/js/b2c.js"
+  content = templatefile("b2c/views/js/b2c.js", {
+    env           = var.env
+    env_long_name = local.env_long_name
+  })
+}
