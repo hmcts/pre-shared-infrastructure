@@ -12,12 +12,12 @@ locals {
   # correct the `url()` paths in the minified css file
   # correct the `src` paths in the manifest.json file
   b2c_files = [
-    "css/main.css",
-    "css/govuk-frontend-5.2.0.min.css",
+    local_file.template_html,
+    local_file.main_css,
+    local_file.govuk_frontend_css,
     "css/govuk-frontend-5.2.0.min.css.map",
     "js/govuk-frontend-5.2.0.min.js.map",
     "js/govuk-frontend-5.2.0.min.js",
-    "template.html",
     "assets/images/govuk-crest.png",
     "assets/images/favicon.ico",
     "assets/images/govuk-icon-180.png",
