@@ -52,9 +52,6 @@
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
-      <InputClaims>
-        <InputClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword"/>
-      </InputClaims>
       <OutputClaims>
 <!--        <OutputClaim ClaimTypeReferenceId="displayName" />-->
 <!--        <OutputClaim ClaimTypeReferenceId="givenName" />-->
