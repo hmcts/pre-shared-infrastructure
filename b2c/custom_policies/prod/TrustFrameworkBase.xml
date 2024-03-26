@@ -659,9 +659,8 @@
             <!-- Required claims -->
             <PersistedClaim ClaimTypeReferenceId="email" PartnerClaimType="signInNames.emailAddress" />
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
-<!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration" />
-
+<!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
             <PersistedClaim
               ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
               PartnerClaimType="strongAuthenticationPhoneNumber"
@@ -723,6 +722,7 @@
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="objectId" />
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
+            <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
             <PersistedClaim
