@@ -659,14 +659,12 @@
             <!-- Required claims -->
             <PersistedClaim ClaimTypeReferenceId="email" PartnerClaimType="signInNames.emailAddress" />
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
-<!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
-
             <PersistedClaim
               ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
               PartnerClaimType="strongAuthenticationPhoneNumber"
             />
-
+<!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
             <!-- Optional claims. -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
