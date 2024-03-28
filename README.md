@@ -142,6 +142,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_storage_blob.b2c_config](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/storage_blob) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/virtual_machine_extension) | resource |
+| [local_file.b2c_js](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.govuk_frontend_css](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.main_css](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.template_html](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
