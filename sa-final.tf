@@ -82,3 +82,13 @@ resource "azurerm_monitor_metric_alert" "storage_final_alert_capacity" {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
   }
 }
+
+resource "azurerm_storage_blob" "vodafone_spike" {
+  for_each               = { for idx, file_name in local.spike_files : idx => file_name }
+  name                   = each.value
+  storage_account_name   = module.sa_storage_account.storageaccount_name
+  storage_container_name = "vodafone-spike"
+  type                   = "Block"
+
+  depends_on = [module.sa_storage_account]
+}
