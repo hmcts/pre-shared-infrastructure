@@ -4,12 +4,6 @@ resource "local_file" "template_html" {
     env           = var.env
     env_long_name = local.env_long_name
   })
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      content
-    ]
-  }
 }
 
 resource "local_file" "main_css" {
@@ -18,12 +12,6 @@ resource "local_file" "main_css" {
     env           = var.env
     env_long_name = local.env_long_name
   })
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      content
-    ]
-  }
 }
 
 resource "local_file" "govuk_frontend_css" {
@@ -32,12 +20,6 @@ resource "local_file" "govuk_frontend_css" {
     env           = var.env
     env_long_name = local.env_long_name
   })
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      content
-    ]
-  }
 }
 
 resource "local_file" "b2c_js" {
@@ -46,10 +28,4 @@ resource "local_file" "b2c_js" {
     env           = var.env
     env_long_name = local.env_long_name
   })
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      content
-    ]
-  }
 }

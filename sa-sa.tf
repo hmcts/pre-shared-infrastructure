@@ -79,5 +79,12 @@ resource "azurerm_storage_blob" "b2c_config" {
   type                   = "Block"
   source                 = "./b2c/views/${each.value}"
 
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      source
+    ]
+  }
+
   depends_on = [module.sa_storage_account]
 }
