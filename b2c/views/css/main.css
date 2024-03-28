@@ -7312,3 +7312,6 @@ input[type="checkbox"] {
 .changeClaims {
   visibility: hidden;
 }
+#email_ver_but_edit {
+  display: none;
+}
