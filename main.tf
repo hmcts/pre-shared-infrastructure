@@ -29,6 +29,9 @@ locals {
       env           = var.env
       env_long_name = local.env_long_name
     }),
+    "template.html",
+    "css/main.css",
+    "css/govuk-frontend-5.2.0.min.css",
     "css/govuk-frontend-5.2.0.min.css.map",
     "js/govuk-frontend-5.2.0.min.js.map",
     "js/govuk-frontend-5.2.0.min.js",
@@ -46,6 +49,7 @@ locals {
     "assets/fonts/light-f591b13f7d-v2.woff",
     "assets/fonts/light-94a07e06a1-v2.woff2",
     "assets/fonts/bold-affa96571d-v2.woff",
+    "js/b2c.js"
   ]
   b2c_container_name = "${var.product}-b2c-container"
   containers = [{
