@@ -13,22 +13,6 @@ locals {
   # correct the `src` paths in the manifest.json file
 
   b2c_files = [
-    templatefile("b2c/views/template.html", {
-      env           = var.env
-      env_long_name = local.env_long_name
-    }),
-    templatefile("b2c/views/css/main.css", {
-      env           = var.env
-      env_long_name = local.env_long_name
-    }),
-    templatefile("b2c/views/css/govuk-frontend-5.2.0.min.css", {
-      env           = var.env
-      env_long_name = local.env_long_name
-    }),
-    templatefile("b2c/views/js/b2c.js", {
-      env           = var.env
-      env_long_name = local.env_long_name
-    }),
     "template.html",
     "css/main.css",
     "css/govuk-frontend-5.2.0.min.css",
@@ -51,6 +35,7 @@ locals {
     "assets/fonts/bold-affa96571d-v2.woff",
     "js/b2c.js"
   ]
+
   b2c_container_name = "${var.product}-b2c-container"
   containers = [{
     name        = local.b2c_container_name
