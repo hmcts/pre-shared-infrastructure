@@ -6,7 +6,7 @@ resource "local_file" "template_html" {
   })
 }
 
-resource "local_file" "main_css" {
+data "local_file" "main_css" {
   filename = "b2c/views/css/main.css"
   content = templatefile("b2c/views/css/main.css", {
     env           = var.env

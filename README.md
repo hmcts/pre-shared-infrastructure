@@ -140,10 +140,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_role_assignment.vm_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.vm_reader](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/role_assignment) | resource |
 | [azurerm_storage_blob.b2c_config](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.vodafone_spike](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/storage_blob) | resource |
 | [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/virtual_machine_extension) | resource |
 | [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/resources/virtual_machine_extension) | resource |
+| [local_file.b2c_js](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.govuk_frontend_css](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [local_file.main_css](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [local_file.template_html](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [random_password.dg_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.vm_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
@@ -169,6 +170,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/data-sources/subscription) | data source |
 | [azurerm_user_assigned_identity.managed_identity](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/data-sources/user_assigned_identity) | data source |
 | [azurerm_virtual_network.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.94.0/docs/data-sources/virtual_network) | data source |
+| [local_file.main_css](https://registry.terraform.io/providers/hashicorp/local/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
