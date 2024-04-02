@@ -1234,6 +1234,8 @@
           </ClaimsExchanges>
 
         <ClientDefinition ReferenceId="DefaultWeb" />
+        </OrchestrationStep>
+      </OrchestrationSteps>
     </UserJourney>
         <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect
              from the user. So, in that case, create the user in the directory if one does not already exist
