@@ -1245,9 +1245,9 @@
 
         <!-- Phone verification: If MFA is not required, the next three steps (#5-#7) should be removed.
              This step checks whether there's a phone number on record,  for the user. If found, then the user is challenged to verify it. -->
-            </OrchestrationSteps>
-            <ClientDefinition ReferenceId="DefaultWeb" />
-          </UserJourney>
+      </OrchestrationSteps>
+      <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
     <UserJourney Id="ProfileEdit">
       <OrchestrationSteps>
         <OrchestrationStep Order="1" Type="ClaimsProviderSelection" ContentDefinitionReferenceId="api.idpselections">
