@@ -347,8 +347,8 @@
         <UserHelpText
         >Parameter provided by the default session management provider to indicate that the object id has been retrieved from an SSO session.</UserHelpText>
       </ClaimType>
-
-      <!-- <ClaimType Id="isActiveMFASession">
+<!--
+      <ClaimType Id="isActiveMFASession">
         <DisplayName>isActiveMFASession</DisplayName>
         <DataType>boolean</DataType>
         <UserHelpText
@@ -1093,9 +1093,9 @@
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
           </PersistedClaims>
-          <OutputClaims>
+          <!-- <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
-          </OutputClaims>
+          </OutputClaims> -->
         </TechnicalProfile>
 
         <!-- Session management technical profile for OIDC based tokens -->
