@@ -1245,6 +1245,9 @@
 
         <!-- Phone verification: If MFA is not required, the next three steps (#5-#7) should be removed.
              This step checks whether there's a phone number on record,  for the user. If found, then the user is challenged to verify it. -->
+            </OrchestrationSteps>
+            <ClientDefinition ReferenceId="DefaultWeb" />
+          </UserJourney>
     <UserJourney Id="ProfileEdit">
       <OrchestrationSteps>
         <OrchestrationStep Order="1" Type="ClaimsProviderSelection" ContentDefinitionReferenceId="api.idpselections">
@@ -1255,9 +1258,9 @@
         <OrchestrationStep Order="2" Type="ClaimsExchange">
           <ClaimsExchanges>
             <ClaimsExchange
-                  Id="LocalAccountSigninEmailExchange"
-                  TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
-                />
+              Id="LocalAccountSigninEmailExchange"
+              TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
+            />
           </ClaimsExchanges>
         </OrchestrationStep>
         <OrchestrationStep Order="3" Type="ClaimsExchange">
@@ -1272,8 +1275,6 @@
             <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
-      </OrchestrationSteps>
-    </UserJourney>
         <!-- If the user ever stepped up to use 2FA, profile update must verify this because the user will be able to change
           their sign in email address or strong authentication email here. This guards against scenarios where a user's
           password is stolen, the attacker can change the email addresses leaving no way for the user to recover their account.
