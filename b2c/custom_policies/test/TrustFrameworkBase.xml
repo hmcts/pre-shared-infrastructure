@@ -1253,7 +1253,7 @@
         <!-- Save MFA phone number: The precondition verifies whether the user provided a new number in the
              previous step. If so, then the phone number is stored in the directory for future authentication
              requests. -->
-
+        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
     </UserJourney>
