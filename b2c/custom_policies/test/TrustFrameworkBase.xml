@@ -222,10 +222,10 @@
         <DataType>boolean</DataType>
       </ClaimType>
 
-      <!-- <ClaimType Id="userIdForMFA">
+      <ClaimType Id="userIdForMFA">
         <DisplayName>UserId for MFA</DisplayName>
         <DataType>string</DataType>
-      </ClaimType> -->
+      </ClaimType>
 
       <ClaimType Id="email">
         <DisplayName>Email Address</DisplayName>
@@ -425,7 +425,7 @@
         </OutputClaims>
       </ClaimsTransformation>
 
-      <!-- <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
+      <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
         <InputClaims>
           <InputClaim ClaimTypeReferenceId="objectId" TransformationClaimType="inputClaim" />
         </InputClaims>
@@ -435,7 +435,7 @@
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="userIdForMFA" TransformationClaimType="outputClaim" />
         </OutputClaims>
-      </ClaimsTransformation> -->
+      </ClaimsTransformation>
 
       <ClaimsTransformation Id="CreateSubjectClaimFromAlternativeSecurityId" TransformationMethod="CreateStringClaim">
         <InputParameters>
