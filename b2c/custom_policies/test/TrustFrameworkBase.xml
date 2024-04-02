@@ -653,7 +653,10 @@
             <PersistedClaim ClaimTypeReferenceId="email" PartnerClaimType="signInNames.emailAddress" />
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
 <!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
-            <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
+            <PersistedClaim
+              ClaimTypeReferenceId="passwordPolicies"
+              DefaultValue="DisablePasswordExpiration, DisableStrongPassword"
+            />
 
             <PersistedClaim
               ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
@@ -716,7 +719,10 @@
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="objectId" />
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
-            <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
+            <PersistedClaim
+              ClaimTypeReferenceId="passwordPolicies"
+              DefaultValue="DisablePasswordExpiration, DisableStrongPassword"
+            />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
             <PersistedClaim
@@ -1249,9 +1255,9 @@
         <OrchestrationStep Order="2" Type="ClaimsExchange">
           <ClaimsExchanges>
             <ClaimsExchange
-              Id="LocalAccountSigninEmailExchange"
-              TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
-            />
+                  Id="LocalAccountSigninEmailExchange"
+                  TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
+                />
           </ClaimsExchanges>
         </OrchestrationStep>
         <OrchestrationStep Order="3" Type="ClaimsExchange">
@@ -1266,7 +1272,8 @@
             <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
-
+      </OrchestrationSteps>
+    </UserJourney>
         <!-- If the user ever stepped up to use 2FA, profile update must verify this because the user will be able to change
           their sign in email address or strong authentication email here. This guards against scenarios where a user's
           password is stolen, the attacker can change the email addresses leaving no way for the user to recover their account.
@@ -1312,7 +1319,6 @@
         <OrchestrationStep Order="3" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
       </OrchestrationSteps>
     </UserJourney>
-      </OrchestrationSteps>
 
   </UserJourneys>
 
