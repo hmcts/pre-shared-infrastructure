@@ -222,10 +222,10 @@
         <DataType>boolean</DataType>
       </ClaimType>
 
-      <ClaimType Id="userIdForMFA">
+      <!-- <ClaimType Id="userIdForMFA">
         <DisplayName>UserId for MFA</DisplayName>
         <DataType>string</DataType>
-      </ClaimType>
+      </ClaimType> -->
 
       <ClaimType Id="email">
         <DisplayName>Email Address</DisplayName>
@@ -348,12 +348,12 @@
         >Parameter provided by the default session management provider to indicate that the object id has been retrieved from an SSO session.</UserHelpText>
       </ClaimType>
 
-      <ClaimType Id="isActiveMFASession">
+      <!-- <ClaimType Id="isActiveMFASession">
         <DisplayName>isActiveMFASession</DisplayName>
         <DataType>boolean</DataType>
         <UserHelpText
         >Parameter provided by the MFA session management to indicate that the user has an active MFA session.</UserHelpText>
-      </ClaimType>
+      </ClaimType> -->
 
       <!-- SECTION III: Additional claims that can be collected from the users, stored in the directory, and sent in the token. Add additional claims here. -->
 
@@ -425,7 +425,7 @@
         </OutputClaims>
       </ClaimsTransformation>
 
-      <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
+      <!-- <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
         <InputClaims>
           <InputClaim ClaimTypeReferenceId="objectId" TransformationClaimType="inputClaim" />
         </InputClaims>
@@ -435,7 +435,7 @@
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="userIdForMFA" TransformationClaimType="outputClaim" />
         </OutputClaims>
-      </ClaimsTransformation>
+      </ClaimsTransformation> -->
 
       <ClaimsTransformation Id="CreateSubjectClaimFromAlternativeSecurityId" TransformationMethod="CreateStringClaim">
         <InputParameters>
@@ -1084,7 +1084,7 @@
           </PersistedClaims>
         </TechnicalProfile>
 
-        <TechnicalProfile Id="SM-MFA">
+        <!-- <TechnicalProfile Id="SM-MFA">
           <DisplayName>Session Mananagement Provider</DisplayName>
           <Protocol
             Name="Proprietary"
@@ -1096,7 +1096,7 @@
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
           </OutputClaims>
-        </TechnicalProfile>
+        </TechnicalProfile> -->
 
         <!-- Session management technical profile for OIDC based tokens -->
         <TechnicalProfile Id="SM-jwt-issuer">
@@ -1256,10 +1256,10 @@
               <Value>3c04187a-0a25-4a60-8666-66d29d41ceb6</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+            <!-- <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>isActiveMFASession</Value>
               <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
+            </Precondition> -->
           </Preconditions>
           <!-- <ClaimsExchanges>
             <ClaimsExchange Id="PhoneFactor-Verify" TechnicalProfileReferenceId="PhoneFactor-InputOrVerify" />
