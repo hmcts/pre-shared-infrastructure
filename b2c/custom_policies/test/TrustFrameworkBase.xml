@@ -1084,7 +1084,7 @@
           </PersistedClaims>
         </TechnicalProfile>
 
-        <!-- <TechnicalProfile Id="SM-MFA">
+        <TechnicalProfile Id="SM-MFA">
           <DisplayName>Session Mananagement Provider</DisplayName>
           <Protocol
             Name="Proprietary"
@@ -1096,7 +1096,7 @@
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
           </OutputClaims>
-        </TechnicalProfile> -->
+        </TechnicalProfile>
 
         <!-- Session management technical profile for OIDC based tokens -->
         <TechnicalProfile Id="SM-jwt-issuer">
