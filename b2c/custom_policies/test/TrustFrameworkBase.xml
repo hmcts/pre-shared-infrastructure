@@ -348,13 +348,6 @@
         >Parameter provided by the default session management provider to indicate that the object id has been retrieved from an SSO session.</UserHelpText>
       </ClaimType>
 
-      <!-- <ClaimType Id="isActiveMFASession">
-        <DisplayName>isActiveMFASession</DisplayName>
-        <DataType>boolean</DataType>
-        <UserHelpText
-        >Parameter provided by the MFA session management to indicate that the user has an active MFA session.</UserHelpText>
-      </ClaimType> -->
-
       <!-- SECTION III: Additional claims that can be collected from the users, stored in the directory, and sent in the token. Add additional claims here. -->
 
       <ClaimType Id="givenName">
@@ -1093,9 +1086,6 @@
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
           </PersistedClaims>
-          <!-- <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
-          </OutputClaims> -->
         </TechnicalProfile>
 
         <!-- Session management technical profile for OIDC based tokens -->
@@ -1183,8 +1173,8 @@
   <UserJourneys>
 
     <UserJourney Id="SignUpOrSignIn">
+      <OrchestrationSteps>
 
-          <OrchestrationSteps>
         <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
           <ClaimsProviderSelections>
             <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
@@ -1242,7 +1232,9 @@
           <ClaimsExchanges>
             <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
           </ClaimsExchanges>
-        </OrchestrationStep>
+
+        <ClientDefinition ReferenceId="DefaultWeb" />
+    </UserJourney>
         <!-- The previous step (SelfAsserted-Social) could have been skipped if there were no attributes to collect
              from the user. So, in that case, create the user in the directory if one does not already exist
              (verified using objectId which would be set from the last step if account was created in the directory. -->
@@ -1322,7 +1314,6 @@
         <OrchestrationStep Order="3" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
       </OrchestrationSteps>
     </UserJourney>
-
 
   </UserJourneys>
 
