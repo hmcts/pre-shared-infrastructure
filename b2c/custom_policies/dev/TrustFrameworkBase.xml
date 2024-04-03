@@ -1185,12 +1185,6 @@
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange
-              Id="AADUserWriteWithObjectId"
-              TechnicalProfileReferenceId="AAD-UserWritePhoneNumberUsingObjectId"
-            />
-          </ClaimsExchanges>
         </OrchestrationStep>
         <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
