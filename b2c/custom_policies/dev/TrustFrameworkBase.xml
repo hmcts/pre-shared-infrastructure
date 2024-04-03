@@ -621,11 +621,6 @@
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
 
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
-
             <!-- Optional claims. -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
@@ -655,8 +650,6 @@
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="localAccountAuthentication" />
 
-            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
-
             <!-- Optional claims -->
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
             <OutputClaim ClaimTypeReferenceId="accountEnabled" />
@@ -684,10 +677,6 @@
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
 
           </PersistedClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
@@ -710,10 +699,6 @@
             <PersistedClaim ClaimTypeReferenceId="objectId" />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
 
             <!-- Optional claims -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
@@ -735,8 +720,6 @@
           <OutputClaims>
 
             <!-- Required claims -->
-            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
-
             <!-- Optional claims -->
             <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
             <OutputClaim ClaimTypeReferenceId="otherMails" />
@@ -758,10 +741,6 @@
           </InputClaims>
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="objectId" />
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
           </PersistedClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
         </TechnicalProfile>
@@ -947,8 +926,6 @@
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
 
-            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
-
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserReadUsingEmailAddress" />
@@ -970,8 +947,6 @@
           </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="objectId" />
-
-            <InputClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
 
           </InputClaims>
           <OutputClaims>
@@ -1044,9 +1019,6 @@
             Name="Proprietary"
             Handler="Web.TPEngine.SSO.DefaultSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           />
-          <PersistedClaims>
-            <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
-          </PersistedClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
           </OutputClaims>
