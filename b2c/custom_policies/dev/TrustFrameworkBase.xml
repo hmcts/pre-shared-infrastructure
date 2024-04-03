@@ -1245,7 +1245,11 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>signInNames.emailAddress</Value>
-              <Value>[.]@hmcts.net</Value> <!-- assume automated test user has valid phone -->
+              <Value>
+                <Pattern
+                RegularExpression="[.]@hmcts.net"
+               />
+              </Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
