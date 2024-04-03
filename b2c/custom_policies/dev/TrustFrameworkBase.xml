@@ -321,13 +321,6 @@
         >Parameter provided by the default session management provider to indicate that the object id has been retrieved from an SSO session.</UserHelpText>
       </ClaimType>
 
-      <ClaimType Id="isActiveMFASession">
-        <DisplayName>isActiveMFASession</DisplayName>
-        <DataType>boolean</DataType>
-        <UserHelpText
-        >Parameter provided by the MFA session management to indicate that the user has an active MFA session.</UserHelpText>
-      </ClaimType>
-
       <!-- SECTION III: Additional claims that can be collected from the users, stored in the directory, and sent in the token. Add additional claims here. -->
 
       <ClaimType Id="givenName">
@@ -1019,9 +1012,6 @@
             Name="Proprietary"
             Handler="Web.TPEngine.SSO.DefaultSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           />
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
-          </OutputClaims>
         </TechnicalProfile>
 
         <!-- Session management technical profile for OIDC based tokens -->
@@ -1179,10 +1169,6 @@
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
               <Value>54aa864e-252a-4949-ba7f-eec331732b70</Value> <!-- assume automated test user has valid phone -->
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isActiveMFASession</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
