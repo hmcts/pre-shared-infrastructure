@@ -200,6 +200,33 @@
         <UserInputType>TextBox</UserInputType>
       </ClaimType>
 
+      <ClaimType Id="strongAuthenticationPhoneNumber">
+        <DisplayName>Phone Number</DisplayName>
+        <DataType>string</DataType>
+        <Mask Type="Simple">XXX-XXX-</Mask>
+        <UserHelpText>Your telephone number</UserHelpText>
+      </ClaimType>
+
+      <ClaimType Id="Verified.strongAuthenticationPhoneNumber">
+        <DisplayName>Verified Phone Number</DisplayName>
+        <DataType>string</DataType>
+        <DefaultPartnerClaimTypes>
+          <Protocol Name="OpenIdConnect" PartnerClaimType="phone_number" />
+        </DefaultPartnerClaimTypes>
+        <Mask Type="Simple">XXX-XXX-</Mask>
+        <UserHelpText>Your office phone number that has been verified</UserHelpText>
+      </ClaimType>
+
+      <ClaimType Id="newPhoneNumberEntered">
+        <DisplayName>New Phone Number Entered</DisplayName>
+        <DataType>boolean</DataType>
+      </ClaimType>
+
+      <ClaimType Id="userIdForMFA">
+        <DisplayName>UserId for MFA</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+
       <ClaimType Id="email">
         <DisplayName>Email Address</DisplayName>
         <DataType>string</DataType>
@@ -395,6 +422,18 @@
         </InputClaims>
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="alternativeSecurityId" TransformationClaimType="alternativeSecurityId" />
+        </OutputClaims>
+      </ClaimsTransformation>
+
+      <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
+        <InputClaims>
+          <InputClaim ClaimTypeReferenceId="objectId" TransformationClaimType="inputClaim" />
+        </InputClaims>
+        <InputParameters>
+          <InputParameter Id="stringFormat" DataType="string" Value="{0}@{RelyingPartyTenantId}" />
+        </InputParameters>
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="userIdForMFA" TransformationClaimType="outputClaim" />
         </OutputClaims>
       </ClaimsTransformation>
 
@@ -621,6 +660,11 @@
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
 
+            <PersistedClaim
+              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
+              PartnerClaimType="strongAuthenticationPhoneNumber"
+            />
+
             <!-- Optional claims. -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
@@ -650,6 +694,8 @@
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="localAccountAuthentication" />
 
+            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
+
             <!-- Optional claims -->
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
             <OutputClaim ClaimTypeReferenceId="accountEnabled" />
@@ -677,6 +723,10 @@
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
+            <PersistedClaim
+              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
+              PartnerClaimType="strongAuthenticationPhoneNumber"
+            />
 
           </PersistedClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
@@ -699,6 +749,10 @@
             <PersistedClaim ClaimTypeReferenceId="objectId" />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
+            <PersistedClaim
+              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
+              PartnerClaimType="strongAuthenticationPhoneNumber"
+            />
 
             <!-- Optional claims -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
@@ -720,6 +774,8 @@
           <OutputClaims>
 
             <!-- Required claims -->
+            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
+
             <!-- Optional claims -->
             <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
             <OutputClaim ClaimTypeReferenceId="otherMails" />
@@ -741,6 +797,10 @@
           </InputClaims>
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="objectId" />
+            <PersistedClaim
+              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
+              PartnerClaimType="strongAuthenticationPhoneNumber"
+            />
           </PersistedClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
         </TechnicalProfile>
@@ -926,6 +986,8 @@
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
 
+            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
+
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserReadUsingEmailAddress" />
@@ -947,6 +1009,8 @@
           </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="objectId" />
+
+            <InputClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
 
           </InputClaims>
           <OutputClaims>
@@ -1019,6 +1083,9 @@
             Name="Proprietary"
             Handler="Web.TPEngine.SSO.DefaultSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           />
+          <PersistedClaims>
+            <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
+          </PersistedClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
           </OutputClaims>
@@ -1178,7 +1245,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>54aa864e-252a-4949-ba7f-eec331732b70</Value> <!-- assume automated test user has valid phone -->
+              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
