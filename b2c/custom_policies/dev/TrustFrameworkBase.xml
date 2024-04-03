@@ -200,33 +200,6 @@
         <UserInputType>TextBox</UserInputType>
       </ClaimType>
 
-      <ClaimType Id="strongAuthenticationPhoneNumber">
-        <DisplayName>Phone Number</DisplayName>
-        <DataType>string</DataType>
-        <Mask Type="Simple">XXX-XXX-</Mask>
-        <UserHelpText>Your telephone number</UserHelpText>
-      </ClaimType>
-
-      <ClaimType Id="Verified.strongAuthenticationPhoneNumber">
-        <DisplayName>Verified Phone Number</DisplayName>
-        <DataType>string</DataType>
-        <DefaultPartnerClaimTypes>
-          <Protocol Name="OpenIdConnect" PartnerClaimType="phone_number" />
-        </DefaultPartnerClaimTypes>
-        <Mask Type="Simple">XXX-XXX-</Mask>
-        <UserHelpText>Your office phone number that has been verified</UserHelpText>
-      </ClaimType>
-
-      <ClaimType Id="newPhoneNumberEntered">
-        <DisplayName>New Phone Number Entered</DisplayName>
-        <DataType>boolean</DataType>
-      </ClaimType>
-
-      <ClaimType Id="userIdForMFA">
-        <DisplayName>UserId for MFA</DisplayName>
-        <DataType>string</DataType>
-      </ClaimType>
-
       <ClaimType Id="email">
         <DisplayName>Email Address</DisplayName>
         <DataType>string</DataType>
@@ -422,18 +395,6 @@
         </InputClaims>
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="alternativeSecurityId" TransformationClaimType="alternativeSecurityId" />
-        </OutputClaims>
-      </ClaimsTransformation>
-
-      <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
-        <InputClaims>
-          <InputClaim ClaimTypeReferenceId="objectId" TransformationClaimType="inputClaim" />
-        </InputClaims>
-        <InputParameters>
-          <InputParameter Id="stringFormat" DataType="string" Value="{0}@{RelyingPartyTenantId}" />
-        </InputParameters>
-        <OutputClaims>
-          <OutputClaim ClaimTypeReferenceId="userIdForMFA" TransformationClaimType="outputClaim" />
         </OutputClaims>
       </ClaimsTransformation>
 
