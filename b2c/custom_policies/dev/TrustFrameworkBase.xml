@@ -1245,7 +1245,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>signInNames.emailAddress</Value>
-              <Value>zoe.cope@hmcts.net"</Value> <!-- assume automated test user has valid phone -->
+              <Value>zoe.cope@hmcts.net</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
