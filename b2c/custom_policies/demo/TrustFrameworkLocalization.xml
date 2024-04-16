@@ -118,11 +118,11 @@
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="ResourceOwnerFlowInvalidCredentials"
-          >Your password is incorrect.</LocalizedString>
+          >Incorrect email or password.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfInvalidPassword"
-          >Your password is incorrect.</LocalizedString>
+          >Incorrect email or password.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfPasswordExpired"
@@ -130,7 +130,7 @@
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalDoesNotExist"
-          >We can't seem to find your account.</LocalizedString>
+          >Incorrect email or password.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfOldPasswordUsed"
@@ -493,11 +493,11 @@
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="ResourceOwnerFlowInvalidCredentials"
-          >Your password is incorrect.</LocalizedString>
+          >Incorrect email or password.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfInvalidPassword"
-          >Your password is incorrect.</LocalizedString>
+          >Incorrect email or password.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfPasswordExpired"
@@ -505,7 +505,7 @@
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalDoesNotExist"
-          >We can't seem to find your account.</LocalizedString>
+          >Incorrect email or password.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfOldPasswordUsed"
