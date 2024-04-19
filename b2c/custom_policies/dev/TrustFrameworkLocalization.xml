@@ -441,7 +441,7 @@
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimNotVerified"
-          >{0} has not been verified</LocalizedString>
+          >{0} has not been verified.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalAlreadyExists"
