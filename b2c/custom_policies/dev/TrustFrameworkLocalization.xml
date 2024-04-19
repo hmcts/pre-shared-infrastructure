@@ -151,6 +151,10 @@
             ElementType="ErrorMessage"
             StringId="AADRequestsThrottled"
           >There are too many requests at this moment. Please wait for some time and try again.</LocalizedString>
+          <LocalizedString
+          ElementType="ErrorMessage"
+          StringId="UserMessageIfClaimNotVerified"
+        >{0} has not been verified.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
       <!--Local account sign-up page English-->
@@ -467,6 +471,10 @@
             StringId="LocalAccountSigninEmailExchange"
           >Local Account Signin</LocalizedString>
           <LocalizedString ElementType="ClaimsProvider" StringId="FacebookExchange">Facebook</LocalizedString>
+          <LocalizedString
+          ElementType="ErrorMessage"
+          StringId="UserMessageIfClaimNotVerified"
+        >{0} has not been verified.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
       <!-- Edit profile sign-in with local account English-->
