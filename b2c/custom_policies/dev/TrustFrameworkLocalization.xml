@@ -292,10 +292,7 @@
             ElementType="ErrorMessage"
             StringId="ServiceThrottled"
           >There are too many requests at this moment. Please wait for some time and try again.</LocalizedString>
-          <LocalizedString
-            ElementType="ErrorMessage"
-            StringId="UserMessageIfClaimNotVerified"
-          >{0} has not been verified.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimNotVerified">{0} has not been verified.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalAlreadyExists"
@@ -438,10 +435,7 @@
             ElementType="ErrorMessage"
             StringId="ServiceThrottled"
           >There are too many requests at this moment. Please wait for some time and try again.</LocalizedString>
-          <LocalizedString
-            ElementType="ErrorMessage"
-            StringId="UserMessageIfClaimNotVerified"
-          >{0} has not been verified.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimNotVerified">{0} has not been verified.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalAlreadyExists"
