@@ -15,7 +15,7 @@
   <BuildingBlocks>
     <ContentDefinitions>
       <ContentDefinition Id="api.signuporsignin">
-        <LocalizedResourcesReferences MergeBehavior="Prepend">
+        <LocalizedResourcesReferences MergeBehavior="ReplaceAll">
           <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.signuporsignin.en" />
           <!-- Add more languages here -->
         </LocalizedResourcesReferences>
