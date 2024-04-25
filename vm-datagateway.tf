@@ -4,7 +4,7 @@ module "data_gateway_vm" {
     azurerm.cnp = azurerm.cnp
     azurerm.soc = azurerm.soc
   }
-  count                          = var.num_datagateway
+  count                          = var.env == "prod" || var.env == "stg" ? var.num_datagateway : 0
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   env                            = var.env
   vm_type                        = local.dg_vm_type
@@ -53,39 +53,6 @@ module "data_gateway_vm" {
 
   tags = var.common_tags
 }
-
-# resource "null_resource" "run_dg_script" {
-#   count = var.num_datagateway
-#   triggers = {
-#     vm_id = module.data_gateway_vm.*.vm_id[count.index]
-#   }
-
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       az vm run-command invoke \
-#         --ids "${module.data_gateway_vm.*.vm_id[count.index]}" \
-#         --command-id "RunPowerShellScript" \
-#         --scripts @scripts/datagateway-init.ps1
-#     EOT
-#   }
-# }
-
-# resource "azurerm_virtual_machine_extension" "data_gateway_init" {
-#   count                = var.num_datagateway
-#   name                 = "toolingScript"
-#   virtual_machine_id   = module.data_gateway_vm.*.vm_id[count.index]
-#   publisher            = "Microsoft.Compute"
-#   type                 = "CustomScriptExtension"
-#   type_handler_version = "1.9"
-
-#   protected_settings = <<SETTINGS
-#  {
-#     "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/datagateway-init.ps1; c:/azuredata/datagateway-init.ps1\""
-#  }
-# SETTINGS
-
-#   tags = var.common_tags
-# }
 
 locals {
   dg_vm_type = "windows"
