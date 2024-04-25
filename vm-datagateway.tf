@@ -80,13 +80,13 @@ locals {
 
 # Datagateway
 resource "random_string" "dg_username" {
-  count   = var.num_datagateway
+  count   = var.env == "prod" || var.env == "stg" ? var.num_datagateway : 0
   length  = 4
   special = false
 }
 
 resource "random_password" "dg_password" {
-  count            = var.num_datagateway
+  count            = var.env == "prod" || var.env == "stg" ? var.num_datagateway : 0
   length           = 16
   special          = true
   override_special = "$%&@()-_=+[]{}<>:?"
@@ -96,14 +96,14 @@ resource "random_password" "dg_password" {
 }
 
 resource "azurerm_key_vault_secret" "dg_username" {
-  count        = var.num_datagateway
+  count        = var.env == "prod" || var.env == "stg" ? var.num_datagateway : 0
   name         = "dg${count.index + 1}-username"
   value        = "dg${count.index + 1}_${random_string.dg_username[count.index].result}"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "dg_password" {
-  count        = var.num_datagateway
+  count        = var.env == "prod" || var.env == "stg" ? var.num_datagateway : 0
   name         = "dg${count.index + 1}-password"
   value        = random_password.dg_password[count.index].result
   key_vault_id = data.azurerm_key_vault.keyvault.id
