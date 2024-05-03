@@ -69,9 +69,22 @@ function addPasswordCriteria() {
   passwordAttrEntry.appendChild(passwordDetails);
 }
 
+function lowerCaseEmailAddresses() {
+  // for our TLD email validation policy to work, we need the tld to be in lowercase...
+  const emailInput = document.getElementById('email');
+  emailInput.onblur = function() {
+    emailInput.value = emailInput.value.toLowerCase();
+  }
+  const signInName = document.getElementById('signInName');
+  signInName.onblur = function() {
+    signInName.value = signInName.value.toLowerCase();
+  }
+}
+
 $(function() {
   moveForgotPassword();
   moveRetryCode();
   addTsAndCsLink();
   addPasswordCriteria();
+  lowerCaseEmailAddresses();
 });
