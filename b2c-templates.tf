@@ -8,8 +8,8 @@ locals {
       content_md5 = filemd5("${path.module}/${b2c_file_path}")
       path        = "${path.module}/${b2c_file_path}"
       content = replace(replace(filebase64("${path.module}/${b2c_file_path}"),
-        "${env}", var.env),
-      "${env_long_name}", local.env_long_name)
+        "{env}", var.env),
+      "{env_long_name}", local.env_long_name)
       content_type = (split(".", b2c_file_path) == "css" ? "text/css" :
         split(".", b2c_file_path) == "js" ? "application/javascript" :
         split(".", b2c_file_path) == "png" ? "image/png" :
