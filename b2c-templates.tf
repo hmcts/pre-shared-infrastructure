@@ -10,15 +10,14 @@ locals {
       content = replace(replace(filebase64("${path.module}/${b2c_file_path}"),
         "{env}", var.env),
       "{env_long_name}", local.env_long_name)
-      content_type = (split(".", b2c_file_path)[1] == "css" ? "text/css" :
-        split(".", b2c_file_path)[1] == "js" ? "application/javascript" :
-        split(".", b2c_file_path)[1] == "png" ? "image/png" :
-        split(".", b2c_file_path)[1] == "svg" ? "image/svg+xml" :
-        split(".", b2c_file_path)[1] == "ico" ? "image/vnd.microsoft.icon" :
-        split(".", b2c_file_path)[1] == "html" ? "text/html" :
-        split(".", b2c_file_path)[1] == "xml" ? "application/xml" :
-        split(".", b2c_file_path)[1] == "woff" ? "font/woff" :
-        split(".", b2c_file_path)[1] == "woff2" ? "font/woff2" :
+      content_type = (split(".", b2c_file_path) == "css" ? "text/css" :
+        split(".", b2c_file_path) == "js" ? "application/javascript" :
+        split(".", b2c_file_path) == "png" ? "image/png" :
+        split(".", b2c_file_path) == "svg" ? "image/svg+xml" :
+        split(".", b2c_file_path) == "ico" ? "image/vnd.microsoft.icon" :
+        split(".", b2c_file_path) == "html" ? "text/html" :
+        split(".", b2c_file_path) == "woff" ? "font/woff" :
+        split(".", b2c_file_path) == "woff2" ? "font/woff2" :
       "application/octet-stream")
     }
   }
