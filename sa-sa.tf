@@ -63,9 +63,9 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 }
 
 resource "azurerm_storage_blob" "b2c_config" {
-  for_each = local.b2c_files
-  name     = each.value.name
-  content_type = each.value.content_type
+  for_each               = local.b2c_files
+  name                   = each.value.name
+  content_type           = each.value.content_type
   storage_account_name   = module.sa_storage_account.storageaccount_name
   storage_container_name = local.b2c_container_name
   type                   = "Block"
