@@ -80,4 +80,10 @@ resource "azurerm_storage_blob" "b2c_config" {
   source                 = "./b2c/views/${each.value}"
 
   depends_on = [module.sa_storage_account]
+
+  lifecycle {
+    replace_triggered_by = [
+      local_file.b2c_js.content
+    ]
+  }
 }
