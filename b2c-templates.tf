@@ -8,10 +8,11 @@ locals {
       relative_path = replace(dirname(b2c_file_path), "b2c/views/", "")
       content_md5   = filemd5("${path.module}/${b2c_file_path}")
       path          = "${path.module}/${b2c_file_path}"
-      content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
+
+      content = contains(local.content_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
         "{env}", var.env),
       "{env_long_name}", local.env_long_name)
-      content_type = (split(".", b2c_file_path) == "css" ? "text/css" :
+      content_type = (split(".", b2c_file_path)[1] == "css" ? "text/css" :
         split(".", b2c_file_path)[1] == "js" ? "application/javascript" :
         split(".", b2c_file_path)[1] == "png" ? "image/png" :
         split(".", b2c_file_path)[1] == "svg" ? "image/svg+xml" :
@@ -20,6 +21,7 @@ locals {
         split(".", b2c_file_path)[1] == "woff" ? "font/woff" :
         split(".", b2c_file_path)[1] == "woff2" ? "font/woff2" :
       "application/octet-stream")
+
     }
   }
   asset_file   = ["png", "svg", "ico", "woff", "woff2"]
