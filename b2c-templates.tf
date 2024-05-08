@@ -9,7 +9,7 @@ locals {
       content_md5   = filemd5("${path.module}/${b2c_file_path}")
       path          = "${path.module}/${b2c_file_path}"
 
-      content = contains(local.content_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
+      content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
         "{env}", var.env),
       "{env_long_name}", local.env_long_name)
       content_type = (split(".", b2c_file_path)[1] == "css" ? "text/css" :
