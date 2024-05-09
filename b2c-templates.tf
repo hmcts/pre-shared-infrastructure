@@ -29,7 +29,7 @@ locals {
   b2c_files          = { for k, v in local.b2c_file_details : k => v }
   b2c_container_name = "${var.product}-b2c-container"
 
-  hostname = var.env == "prod" ? "portal.pre-recorded-evidence.justice.gov.uk" : "pre-portal.${env_long_name}.platform.hmcts.net"
+  hostname = var.env == "prod" ? "portal.pre-recorded-evidence.justice.gov.uk" : "pre-portal.${local.env_long_name}.platform.hmcts.net"
   containers = [{
     name        = local.b2c_container_name
     access_type = "container"
