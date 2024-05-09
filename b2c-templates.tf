@@ -5,14 +5,16 @@ locals {
 
   b2c_file_details = {
     for b2c_file_path in local.b2c_file_paths :
-    b2c_file_path => {
+    basename(b2c_file_path) => {
       name          = basename(b2c_file_path)
       file_name     = b2c_file_path
       relative_path = replace(dirname(b2c_file_path), "b2c/views/", "")
       content_md5   = filemd5("${path.module}/${b2c_file_path}")
       path          = "${path.module}/${b2c_file_path}"
 
-      content = contains(local.content_file, split(".", b2c_file_path)[0]) ? replace(replace(file("${path.module}/${b2c_file_path}"), "{env}", var.env), "{hostname}", local.hostname) : ""
+      content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
+        "{env}", var.env),
+      "{hostname}", local.hostname),
 
       content_type = (split(".", b2c_file_path)[1] == "css" ? "text/css" :
         split(".", b2c_file_path)[1] == "js" ? "application/javascript" :
