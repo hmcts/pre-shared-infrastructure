@@ -1,16 +1,17 @@
 locals {
   b2c_file_paths = fileset(path.module, "b2c/views/**")
-  asset_file   = ["png", "svg", "ico", "woff", "woff2"]
-  content_file = ["css", "html", "js"]
+  asset_file     = ["png", "svg", "ico", "woff", "woff2"]
+  content_file   = ["css", "html", "js"]
 
   b2c_file_details = {
     for b2c_file_path in local.b2c_file_paths :
     basename(b2c_file_path) => {
       name          = basename(b2c_file_path)
       file_name     = b2c_file_path
-      relative_path = replace(dirname(b2c_file_path), "b2c/views", "")
-      content_md5   = filemd5("${path.module}/${b2c_file_path}")
-      path          = "${path.module}/${b2c_file_path}"
+      relative_path = strcontains(dirname(b2c_file_path), "html") ? replace(dirname(b2c_file_path), "b2c/views/html", "") : replace(dirname(b2c_file_path), "b2c/views/", "")
+
+      content_md5 = filemd5("${path.module}/${b2c_file_path}")
+      path        = "${path.module}/${b2c_file_path}"
 
       content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
         "{env}", var.env),
