@@ -70,14 +70,13 @@ resource "azurerm_storage_blob" "b2c_config" {
   storage_container_name = local.b2c_container_name
   type                   = "Block"
   source_content         = each.value.content
-  content_md5            = each.value.content_type
 
   depends_on = [module.sa_storage_account]
 }
 
 resource "azurerm_storage_blob" "b2c_policy_assets" {
   for_each               = local.b2c_asset_files
-  name                   = each.value.name
+  name                   = "${each.value.relative_path}/${each.value.name}"
   storage_account_name   = module.sa_storage_account.storageaccount_name
   storage_container_name = local.b2c_container_name
   type                   = "Block"
