@@ -1,8 +1,5 @@
 locals {
-  b2c_file_paths = setunion(
-    fileset(path.module, "b2c/views/*"),
-    fileset(path.module, "b2c/views/**")
-  )
+  b2c_file_paths = fileset(path.module, "b2c/views/**")
   asset_file   = ["png", "svg", "ico", "woff", "woff2"]
   content_file = ["css", "html", "js"]
 
@@ -11,7 +8,7 @@ locals {
     basename(b2c_file_path) => {
       name          = basename(b2c_file_path)
       file_name     = b2c_file_path
-      relative_path = replace(dirname(b2c_file_path), "b2c/views/", "")
+      relative_path = replace(dirname(b2c_file_path), "b2c/views", "")
       content_md5   = filemd5("${path.module}/${b2c_file_path}")
       path          = "${path.module}/${b2c_file_path}"
 
