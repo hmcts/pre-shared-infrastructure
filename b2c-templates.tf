@@ -29,6 +29,8 @@ locals {
   }
 
   b2c_files          = { for k, v in local.b2c_file_details : k => v }
+  b2c_asset_files    = { for k, v in local.b2c_file_details : k => v if contains(local.asset_file, split(".", v.file_name)[1]) }
+  b2c_content_files  = { for k, v in local.b2c_file_details : k => v if contains(local.content_file, split(".", v.file_name)[1]) }
   b2c_container_name = "${var.product}-b2c-container"
 
   hostname = var.env == "prod" ? "portal.pre-recorded-evidence.justice.gov.uk" : "pre-portal.${local.env_long_name}.platform.hmcts.net"
@@ -38,6 +40,10 @@ locals {
   }]
 }
 
-output "b2c_files" {
-  value = local.b2c_files
+output "b2c_content_files" {
+  value = local.b2c_content_files
+}
+
+output "b2c_asset_files" {
+  value = local.b2c_asset_files
 }
