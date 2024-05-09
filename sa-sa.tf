@@ -63,7 +63,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobsa" {
 }
 
 resource "azurerm_storage_blob" "b2c_config" {
-  for_each               = local.b2c_files
+  for_each               = local.b2c_content_files
   name                   = "${each.value.relative_path}/${each.value.name}"
   content_type           = each.value.content_type
   storage_account_name   = module.sa_storage_account.storageaccount_name
@@ -74,7 +74,7 @@ resource "azurerm_storage_blob" "b2c_config" {
   depends_on = [module.sa_storage_account]
 }
 
-resource "azurerm_storage_blob" "b2c_policy_assets" {
+resource "azurerm_storage_blob" "b2c_config_assets" {
   for_each               = local.b2c_asset_files
   name                   = "${each.value.relative_path}/${each.value.name}"
   storage_account_name   = module.sa_storage_account.storageaccount_name
@@ -86,4 +86,3 @@ resource "azurerm_storage_blob" "b2c_policy_assets" {
 
   depends_on = [module.sa_storage_account]
 }
-
