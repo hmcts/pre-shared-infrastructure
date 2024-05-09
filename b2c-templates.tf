@@ -1,7 +1,10 @@
 locals {
-  b2c_file_paths = fileset(path.module, "b2c/views/**")
-  asset_file     = ["png", "svg", "ico", "woff", "woff2"]
-  content_file   = ["css", "html", "js"]
+  b2c_file_paths = setunion(
+    fileset(path.module, "b2c/views/*"),
+    fileset(path.module, "b2c/views/**")
+  )
+  asset_file   = ["png", "svg", "ico", "woff", "woff2"]
+  content_file = ["css", "html", "js"]
 
   b2c_file_details = {
     for b2c_file_path in local.b2c_file_paths :
