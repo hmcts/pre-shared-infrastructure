@@ -12,7 +12,7 @@ locals {
       content_md5   = filemd5("${path.module}/${b2c_file_path}")
       path          = "${path.module}/${b2c_file_path}"
 
-      content = contains(local.content_file, split(".", b2c_file_path)) ? replace(replace(file("${path.module}/${b2c_file_path}"), "{env}", var.env), "{env_long_name}", local.env_long_name) : ""
+      content = contains(local.content_file, split(".", b2c_file_path)) ? replace(replace(file("${path.module}/${b2c_file_path}"), "{env}", var.env), "{hostname}", local.hostname) : ""
 
       content_type = (split(".", b2c_file_path)[1] == "css" ? "text/css" :
         split(".", b2c_file_path)[1] == "js" ? "application/javascript" :
@@ -28,6 +28,8 @@ locals {
 
   b2c_files          = { for k, v in local.b2c_file_details : k => v }
   b2c_container_name = "${var.product}-b2c-container"
+
+  hostname = var.env == "prod" ? "portal.pre-recorded-evidence.justice.gov.uk" : "pre-portal.${env_long_name}.platform.hmcts.net"
   containers = [{
     name        = local.b2c_container_name
     access_type = "container"
