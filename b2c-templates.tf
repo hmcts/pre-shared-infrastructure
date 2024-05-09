@@ -12,19 +12,17 @@ locals {
       content_md5   = filemd5("${path.module}/${b2c_file_path}")
       path          = "${path.module}/${b2c_file_path}"
 
-      content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"), "{env}", var.env), "{env_long_name}", local.env_long_name)
+      content = contains(local.content_file, split(".", b2c_file_path)) ? replace(replace(file("${path.module}/${b2c_file_path}"), "{env}", var.env), "{env_long_name}", local.env_long_name) : ""
 
-      content_type = {
-        "css"   = "text/css"
-        "js"    = "application/javascript"
-        "png"   = "image/png"
-        "svg"   = "image/svg+xml"
-        "ico"   = "image/x-ico"
-        "html"  = "text/html"
-        "woff"  = "font/woff"
-        "woff2" = "font/woff2"
-        default = "application/octet-stream"
-      }[split(".", b2c_file_path)[1]]
+      content_type = (split(".", b2c_file_path)[1] == "css" ? "text/css" :
+        split(".", b2c_file_path)[1] == "js" ? "application/javascript" :
+        split(".", b2c_file_path)[1] == "png" ? "image/png" :
+        split(".", b2c_file_path)[1] == "svg" ? "image/svg+xml" :
+        split(".", b2c_file_path)[1] == "ico" ? "image/x-ico" :
+        split(".", b2c_file_path)[1] == "html" ? "text/html" :
+        split(".", b2c_file_path)[1] == "woff" ? "font/woff" :
+        split(".", b2c_file_path)[1] == "woff2" ? "font/woff2" :
+      "application/octet-stream")
     }
   }
 
