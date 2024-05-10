@@ -9,10 +9,8 @@ locals {
       name          = basename(b2c_file_path)
       file_name     = b2c_file_path
       relative_path = replace(dirname(b2c_file_path), "b2c/views/", "")
-
-      content_md5 = filemd5("${path.module}/${b2c_file_path}")
-      path        = "${path.module}/${b2c_file_path}"
-
+      path          = "${path.module}/${b2c_file_path}"
+      content_md5   = filemd5("${path.module}/${b2c_file_path}")
       content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
         "{env}", var.env),
       "{hostname}", local.hostname),
