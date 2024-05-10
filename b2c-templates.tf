@@ -12,7 +12,7 @@ locals {
       relative_path = replace(dirname(b2c_file_path), "b2c/views/", "")
       path          = "${path.module}/${b2c_file_path}"
       content_md5   = filemd5("${path.module}/${b2c_file_path}")
-      content = contains(local.asset_file, split(".", b2c_file_path)[1]) || contains(local.map_file, b2c_file_path) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
+      content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
         "{env}", var.env),
       "{hostname}", local.hostname),
 
@@ -28,18 +28,9 @@ locals {
     }
   }
 
-  b2c_asset_files = {
-    for k, v in local.b2c_file_details : k => v
-  if contains(local.asset_file, split(".", v.file_name)[1]) }
-
-  b2c_content_files = {
-    for k, v in local.b2c_file_details : k => v
-  if contains(local.content_file, split(".", v.file_name)[1]) }
-
-  b2c_map_files = {
-    for k, v in local.b2c_file_details : k => v
-    if[for ext in local.map_file : ext if endswith(v.file_name, ext)] != []
-  }
+  b2c_asset_files   = { for k, v in local.b2c_file_details : k => v if contains(local.asset_file, split(".", v.file_name)[1]) }
+  b2c_content_files = { for k, v in local.b2c_file_details : k => v if contains(local.content_file, split(".", v.file_name)[1]) }
+  b2c_map_files     = { for k, v in local.b2c_file_details : k => v if[for ext in local.map_file : ext if endswith(v.file_name, ext)] != [] }
 
   hostname = var.env == "prod" ? "portal.pre-recorded-evidence.justice.gov.uk" : "pre-portal.${local.env_long_name}.platform.hmcts.net"
 
