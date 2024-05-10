@@ -1,7 +1,8 @@
 locals {
   b2c_file_paths = fileset(path.module, "b2c/views/**")
-  asset_file     = ["png", "svg", "ico", "woff", "woff2"]
+  asset_file     = ["png", "svg", "ico", "woff", "woff2", "json"]
   content_file   = ["css", "html", "js"]
+  map_file       = ["css.map", "min.css", "min.js", "min.js.map"]
 
   b2c_file_details = {
     for b2c_file_path in local.b2c_file_paths :
@@ -29,6 +30,7 @@ locals {
 
   b2c_asset_files   = { for k, v in local.b2c_file_details : k => v if contains(local.asset_file, split(".", v.file_name)[1]) }
   b2c_content_files = { for k, v in local.b2c_file_details : k => v if contains(local.content_file, split(".", v.file_name)[1]) }
+  b2c_map_files     = { for k, v in local.b2c_file_details : k => v if[for ext in local.map_file : ext if endswith(v.file_name, ext)] != [] }
 
   hostname = var.env == "prod" ? "portal.pre-recorded-evidence.justice.gov.uk" : "pre-portal.${local.env_long_name}.platform.hmcts.net"
 
@@ -45,4 +47,8 @@ output "b2c_content_files" {
 
 output "b2c_asset_files" {
   value = local.b2c_asset_files
+}
+
+output "b2c_map_files" {
+  value = local.b2c_map_files
 }
