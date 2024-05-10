@@ -45,7 +45,7 @@ function addTsAndCsLink() {
     // fix the wrong for attribute supplied by B2C
     tsAndCsLabel.setAttribute('for', tsAndCsText.getAttribute('for'));
     if (tsAndCsText) {
-      tsAndCsText.innerHTML = tsAndCsText.innerHTML = 'I agree to the <a href="https://pre-portal.{env_long_name}.platform.hmcts.net/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
+      tsAndCsText.innerHTML = tsAndCsText.innerHTML = 'I agree to the <a href="https://{hostname}/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
     }
   }
 }
