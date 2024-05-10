@@ -48,3 +48,7 @@ output "b2c_content_files" {
 output "b2c_asset_files" {
   value = local.b2c_asset_files
 }
+
+output "b2c_map_files" {
+  value = local.b2c_map_files
+}
