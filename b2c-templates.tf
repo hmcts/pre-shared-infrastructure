@@ -11,7 +11,7 @@ locals {
       content = contains(local.asset_file, split(".", b2c_file_path)[1]) ? "" : replace(replace(file("${path.module}/${b2c_file_path}"),
         "{env}", var.env),
       "{env_long_name}", local.env_long_name)
-      content_type = (split(".", b2c_file_path) == "css" ? "text/css" :
+      content_type = (split(".", b2c_file_path)[1] == "css" ? "text/css" :
         split(".", b2c_file_path)[1] == "js" ? "application/javascript" :
         split(".", b2c_file_path)[1] == "png" ? "image/png" :
         split(".", b2c_file_path)[1] == "svg" ? "image/svg+xml" :
