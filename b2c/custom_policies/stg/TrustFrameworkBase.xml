@@ -1170,7 +1170,7 @@
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="userIdForMFA" PartnerClaimType="UserId" />
             <InputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
-            <InputClaim ClaimTypeReferenceId="secondaryStrongAuthenticationPhoneNumber" />
+            <!-- <InputClaim ClaimTypeReferenceId="secondaryStrongAuthenticationPhoneNumber" /> -->
           </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" PartnerClaimType="Verified.OfficePhone" />
