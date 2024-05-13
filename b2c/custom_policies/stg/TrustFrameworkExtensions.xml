@@ -176,10 +176,12 @@
             </CryptographicKeys>
             <InputClaimsTransformations>
               <InputClaimsTransformation ReferenceId="CreateUserIdForMFA" />
+
             </InputClaimsTransformations>
             <InputClaims>
               <InputClaim ClaimTypeReferenceId="userIdForMFA" PartnerClaimType="UserId" />
               <InputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
+              <InputClaim ClaimTypeReferenceId="secondaryStrongAuthenticationPhoneNumber" />
             </InputClaims>
             <OutputClaims>
               <OutputClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" PartnerClaimType="Verified.OfficePhone" />
