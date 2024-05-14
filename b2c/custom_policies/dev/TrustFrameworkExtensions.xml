@@ -16,7 +16,20 @@
     </BasePolicy>
     <BuildingBlocks>
       <ClaimsSchema>
-
+        <ClaimType Id="Otp">
+          <DisplayName>Secondary One-time password</DisplayName>
+          <DataType>string</DataType>
+        </ClaimType>
+        <ClaimType Id="emailRequestBody">
+          <DisplayName>SendGrid request body</DisplayName>
+          <DataType>string</DataType>
+        </ClaimType>
+        <ClaimType Id="VerificationCode">
+          <DisplayName>Secondary Verification Code</DisplayName>
+          <DataType>string</DataType>
+          <UserHelpText>Enter your email verification code</UserHelpText>
+          <UserInputType>TextBox</UserInputType>
+        </ClaimType>
         <ClaimType Id="isForgotPassword">
           <DisplayName>isForgotPassword</DisplayName>
           <DataType>boolean</DataType>
@@ -30,6 +43,22 @@
         </ClaimType>
       </ClaimsSchema>
       <ClaimsTransformations>
+        <ClaimsTransformation Id="GenerateEmailRequestBody" TransformationMethod="GenerateJson">
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" TransformationClaimType="personalizations.0.to.0.email" />
+            <InputClaim ClaimTypeReferenceId="otp" TransformationClaimType="personalizations.0.dynamic_template_data.otp" />
+            <InputClaim ClaimTypeReferenceId="email" TransformationClaimType="personalizations.0.dynamic_template_data.email" />
+          </InputClaims>
+          <InputParameters>
+            <InputParameter Id="template_id" DataType="string" Value="d-d1308d0157d84d86914ba178235aaa82"/>
+            <InputParameter Id="from.email" DataType="string" Value="msonlineservicesteam@microsoftonline.com"/>
+            <!-- Update with a subject line appropriate for your organization. -->
+            <InputParameter Id="personalizations.0.dynamic_template_data.subject" DataType="string" Value="hmcts-dev-external-id account email verification code"/>
+          </InputParameters>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="emailRequestBody" TransformationClaimType="outputClaim"/>
+          </OutputClaims>
+        </ClaimsTransformation>
         <ClaimsTransformation Id="CopySignInNameToReadOnly" TransformationMethod="FormatStringClaim">
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="inputClaim" />
@@ -42,7 +71,12 @@
           </OutputClaims>
         </ClaimsTransformation>
       </ClaimsTransformations>
-      <ContentDefinitions>
+      <ContentDefinition Id="api.localaccountsignup">
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.2</DataUri>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountpasswordreset">
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.2</DataUri>
+      </ContentDefinition>
         <!-- This content definition is to render an error page that displays unhandled errors. -->
         <ContentDefinition Id="api.error">
           <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
