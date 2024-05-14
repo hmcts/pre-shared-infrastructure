@@ -72,12 +72,6 @@
         </ClaimsTransformation>
       </ClaimsTransformations>
       <ContentDefinitions>
-      <ContentDefinition Id="api.localaccountsignup">
-        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.2</DataUri>
-      </ContentDefinition>
-      <ContentDefinition Id="api.localaccountpasswordreset">
-        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.2</DataUri>
-      </ContentDefinition>
         <!-- This content definition is to render an error page that displays unhandled errors. -->
         <ContentDefinition Id="api.error">
           <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
