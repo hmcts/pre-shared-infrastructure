@@ -7312,3 +7312,7 @@ input[type="checkbox"] {
 .changeClaims {
   visibility: hidden;
 }
+
+ul {
+  padding-inline-start: 0px;
+}
