@@ -51,7 +51,7 @@
           </InputClaims>
           <InputParameters>
             <InputParameter Id="template_id" DataType="string" Value="d-d1308d0157d84d86914ba178235aaa82"/>
-            <InputParameter Id="from.email" DataType="string" Value="preb2c@pre-recorded-evidence.justice.gov.uk"/>
+            <InputParameter Id="from.email" DataType="string" Value="preb2c@em8737.mail-pre-nonprod.platform.hmcts.net"/>
             <!-- Update with a subject line appropriate for your organization. -->
             <InputParameter Id="personalizations.0.dynamic_template_data.subject" DataType="string" Value="hmcts-dev-external-id account email verification code"/>
           </InputParameters>
