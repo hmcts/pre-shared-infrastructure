@@ -50,7 +50,7 @@
             <InputClaim ClaimTypeReferenceId="email" TransformationClaimType="personalizations.0.dynamic_template_data.email" />
           </InputClaims>
           <InputParameters>
-            <InputParameter Id="template_id" DataType="string" Value="d-d1308d0157d84d86914ba178235aaa82"/>
+            <InputParameter Id="template_id" DataType="string" Value="d-ad270e4d35ae4294a7576b07cc35d528"/>
             <InputParameter Id="from.email" DataType="string" Value="preb2c@em8737.mail-pre-nonprod.platform.hmcts.net"/>
             <!-- Update with a subject line appropriate for your organization. -->
             <InputParameter Id="personalizations.0.dynamic_template_data.subject" DataType="string" Value="hmcts-dev-external-id account email verification code"/>
