@@ -95,7 +95,6 @@ resource "azurerm_storage_blob" "b2c_config_maps" {
   storage_container_name = local.b2c_container_name
   type                   = "Block"
   source_content         = each.value.content
-  content_md5            = each.value.content_md5
 
   depends_on = [module.sa_storage_account]
 }
