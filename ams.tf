@@ -99,7 +99,7 @@ resource "azurerm_media_content_key_policy" "ams_default_policy" {
 
 resource "azurerm_media_content_key_policy" "ams_stg_policy" {
   count                       = var.env == "stg" ? 1 : 0
-  name                        = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
+  name                        = "StgPolicyWithClearKeyOptionAndJwtTokenRestriction"
   resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
   description                 = "PRE Content Key Policy"
