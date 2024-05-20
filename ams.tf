@@ -1,6 +1,6 @@
 locals {
   // if stg env, grant dev-mi access to AMS
-  managed_identities = var.env == "stg" ? [data.azurerm_user_assigned_identity.pre_dev_mi.principal_id, data.azurerm_user_assigned_identity.managed_identity.id] : [data.azurerm_user_assigned_identity.managed_identity.id]
+  managed_identities = var.env == "stg" ? [data.azurerm_user_assigned_identity.pre_dev_mi.id, data.azurerm_user_assigned_identity.managed_identity.id] : [data.azurerm_user_assigned_identity.managed_identity.id]
 }
 
 resource "azurerm_media_services_account" "ams" {
