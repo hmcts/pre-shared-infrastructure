@@ -10,7 +10,7 @@ resource "azurerm_media_services_account" "ams" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = locals.managed_identities
+    identity_ids = local.managed_identities
   }
 
   storage_account {
