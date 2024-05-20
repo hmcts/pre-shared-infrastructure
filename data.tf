@@ -95,3 +95,9 @@ data "azurerm_key_vault_secret" "symmetrickey" {
   name         = "symmetrickey"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
+
+data "azurerm_user_assigned_identity" "pre_dev_mi" {
+  provider            = azurerm.dev
+  name                = "${var.product}-dev-mi"
+  resource_group_name = "managed-identities-dev-rg"
+}

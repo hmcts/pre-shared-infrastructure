@@ -1,3 +1,8 @@
+locals {
+  // if stg env, grant dev-mi access to AMS
+  managed_identities = var.env == "stg" ? [data.azurerm_user_assigned_identity.pre_dev_mi.id, data.azurerm_user_assigned_identity.managed_identity.id] : [data.azurerm_user_assigned_identity.managed_identity.id]
+}
+
 resource "azurerm_media_services_account" "ams" {
   name                = "${var.product}ams${var.env}"
   location            = var.location
@@ -5,7 +10,7 @@ resource "azurerm_media_services_account" "ams" {
 
   identity {
     type         = "UserAssigned"
-    identity_ids = [data.azurerm_user_assigned_identity.managed_identity.id]
+    identity_ids = local.managed_identities
   }
 
   storage_account {
@@ -30,6 +35,22 @@ resource "azurerm_media_services_account" "ams" {
 
   tags = var.common_tags
 
+}
+
+// if stg env, grant dev-mi access to the SAs
+resource "azurerm_role_assignment" "pre_dev_mi_appreg_ingest_contrib" {
+  count                = var.env != "stg" ? 1 : 0
+  scope                = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = data.azurerm_user_assigned_identity.pre_dev_mi.principal_id
+}
+
+// if stg env, grant dev-mi access to the SAs
+resource "azurerm_role_assignment" "pre_dev_mi_appreg_final_contrib" {
+  count                = var.env != "stg" ? 1 : 0
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = data.azurerm_user_assigned_identity.pre_dev_mi.principal_id
 }
 
 resource "azurerm_media_transform" "analysevideo" {
