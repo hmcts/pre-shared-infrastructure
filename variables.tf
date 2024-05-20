@@ -181,3 +181,7 @@ variable "cnp_vault_sub" {
 variable "apim_service_url" {
   description = "The URL of the pre-api for the APIm service"
 }
+
+variable "dev_subscription_id" {
+  default = "867a878b-cb68-4de5-9741-361ac9e178b6"
+}
