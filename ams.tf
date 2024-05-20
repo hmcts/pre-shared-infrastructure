@@ -46,7 +46,7 @@ resource "azurerm_role_assignment" "pre_dev_mi_appreg_ingest_contrib" {
 }
 
 // if stg env, grant dev-mi access to the SAs
-resource "azurerm_role_assignment" "pre_dev_mi_appreg_ingest_contrib" {
+resource "azurerm_role_assignment" "pre_dev_mi_appreg_final_contrib" {
   count                = var.env != "stg" ? 1 : 0
   scope                = module.finalsa_storage_account.storageaccount_id
   role_definition_name = "Storage Account Contributor"
