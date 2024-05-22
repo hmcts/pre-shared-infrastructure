@@ -19,12 +19,13 @@
       <ClaimType Id="email">
         <Restriction>
           <Pattern
-            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.+\.cjsm\.net|cps\.gov\.uk)"
-            HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk."
+            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+(?&lt;!cjsm\.net)$"
+            HelpText="cjsm.net email addresses are not supported. Please enter a valid email address."
           />
         </Restriction>
       </ClaimType>
     </ClaimsSchema>
+
 
     <Localization>
       <LocalizedResources Id="api.localaccountsignup.en">
@@ -33,7 +34,7 @@
             ElementType="ClaimType"
             ElementId="email"
             StringId="PatternHelpText"
-          >Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk.</LocalizedString>
+          >cjsm.net email addresses are not supported. Please enter a valid email address.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>
