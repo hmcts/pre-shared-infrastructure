@@ -289,7 +289,12 @@
             <Preconditions>
               <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
                 <Value>objectId</Value>
-                <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
+                <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated stg test user has valid phone -->
+                <Action>SkipThisOrchestrationStep</Action>
+              </Precondition>
+              <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+                <Value>objectId</Value>
+                <Value>a207a1b2-f39b-4e70-a211-bd7e26d7504e</Value> <!-- assume automated dev test user has valid phone -->
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
               <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
