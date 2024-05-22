@@ -30,16 +30,10 @@ variable "privatendpt_snet_address" {}
 
 variable "bastion_snet_address" {}
 
-variable "data_gateway_snet_address" {}
-
 variable "mgmt_net_rg_name" {}
 
 variable "num_vid_edit_vms" {
   default = 1
-}
-
-variable "num_datagateway" {
-  default = 2
 }
 
 variable "mgmt_net_name" {}
@@ -142,15 +136,7 @@ variable "vm_type" {
   default = "windows"
 }
 
-variable "dg_vm_data_disks" {}
-
 variable "edit_vm_data_disks" {}
-
-variable "powerbi_dg_vm_data_disks" {}
-
-variable "dg_vm_private_ip" {}
-
-variable "powerbi_dg_vm_private_ip" {}
 
 variable "edit_vm_private_ip" {}
 
