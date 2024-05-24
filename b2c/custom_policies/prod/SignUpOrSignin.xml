@@ -18,7 +18,7 @@
       <ClaimType Id="email">
         <Restriction>
           <Pattern
-            RegularExpression="^([a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.+\.cjsm\.net|cps\.gov\.uk))|trevor\.parryjones@7hs\.co\.uk|philip\.stott@qebhw\.co\.uk|sean\.minihan@drystone\.com|rachel\.oakdene@7hs\.co\.uk|robert\.dudley@exchangechambers\.co\.uk|david\.watson@7hs\.co\.uk|sh@3tg\.co\.uk|robinson@psqb\.co\.uk|tp@stapleinn\.co\.uk|e\.mushtaq@doughtystreet\.co\.uk"
+            RegularExpression="^([a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.+\.cjsm\.net|cps\.gov\.uk))|trevor\.parryjones@7hs\.co\.uk|philip\.stott@qebhw\.co\.uk|sean\.minihan@drystone\.com|rachel\.oakdene@7hs\.co\.uk|robert\.dudley@exchangechambers\.co\.uk|david\.watson@7hs\.co\.uk|sh@3tg\.co\.uk|robinson@psqb\.co\.uk|tp@stapleinn\.co\.uk|e\.mushtaq@doughtystreet\.co\.uk|martin\.hooper@5kbw\.co\.uk"
             HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk."
           />
         </Restriction>
