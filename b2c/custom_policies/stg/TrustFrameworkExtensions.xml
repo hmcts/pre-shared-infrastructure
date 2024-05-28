@@ -197,15 +197,15 @@
           </TechnicalProfile>
           <TechnicalProfile Id="login-NonInteractive">
             <Metadata>
-              <Item Key="client_id">c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2</Item>
-              <Item Key="IdTokenAudience">5ffc2691-a59d-4b1f-9370-7ccd380a1b65</Item>
+              <Item Key="client_id">963b6999-fc75-485d-9ca6-d7053a3cc84a</Item>
+              <Item Key="IdTokenAudience">3e7d2ce2-1789-4734-994e-c77ea95c4d2c</Item>
             </Metadata>
             <InputClaims>
-              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2" />
+              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="963b6999-fc75-485d-9ca6-d7053a3cc84a" />
               <InputClaim
               ClaimTypeReferenceId="resource_id"
               PartnerClaimType="resource"
-              DefaultValue="5ffc2691-a59d-4b1f-9370-7ccd380a1b65"
+              DefaultValue="3e7d2ce2-1789-4734-994e-c77ea95c4d2c"
             />
             </InputClaims>
           </TechnicalProfile>
@@ -291,7 +291,12 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>a207a1b2-f39b-4e70-a211-bd7e26d7504e</Value> <!-- assume automated test user has valid phone -->
+              <Value>a207a1b2-f39b-4e70-a211-bd7e26d7504e</Value> <!-- assume automated stg test user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>c9f5a9d8-f2c8-44ac-a9d7-f71b4f173742</Value> <!-- assume automated dev test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
