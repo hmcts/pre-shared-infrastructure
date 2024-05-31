@@ -18,8 +18,8 @@
       <ClaimType Id="email">
         <Restriction>
           <Pattern
-            RegularExpression="^([a-zA-Z0-9.!#$%&amp;'^_`{}~\-]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.+\.cjsm\.net|cps\.gov\.uk))|trevor\.parryjones@7hs\.co\.uk|philip\.stott@qebhw\.co\.uk|sean\.minihan@drystone\.com|rachel\.oakdene@7hs\.co\.uk|dudley@exchangechambers\.co\.uk|david\.watson@7hs\.co\.uk|sh@3tg\.co\.uk|robinson@psqb\.co\.uk|tp@stapleinn\.co\.uk|e\.mushtaq@doughtystreet\.co\.uk|martin\.hooper@5kbw\.co\.uk|callum\.ross@chavassechambers\.co\.uk|steven\.ball@7hs\.co\.uk|alisdair\.smith@foundrychambers\.com|cmaddocks@25bedfordrow\.com|ajd@kbwchambers\.com|arthur\.gibson@7hs\.co\.uk|peter\.gilmour@stjohnsbuildings\.co\.uk|mcneill@exchangechambers\.co\.uk|gerald\.baxter@chavassechambers\.co\.uk|hayden@exchangechambers\.co\.uk|swift@exchangechambers\.co\.uk|phil\.astbury@7hs\.co\.uk|pfairley@2kbw\.com|d\.callan@trinitychambers\.co\.uk|greenhalgh@psqb\.co\.uk|aubrey\.sampson@cobden\.co\.uk|d\.cordey@derestreet\.co\.uk|sd@kbwchambers\.com|david\.povall@newparkcourt\.co\.uk|benjamin\.knight@centralchambers\.co\.uk|arthur\.gibson@7hs\.co\.uk|maria\.masselis@lhchambers\.co\.uk|bknight@libertaschambers\.com|lwilson@25bedfordrow\.com|kate\.morley@chavassechambers\.co\.uk|j\.waugh@derestreet\.co\.uk|scholes@exchangecahmbers\.co\.uk|myles\.wilson@stjohnsbuildings\.co\.uk|paul\.becker@chavassechambers\.co\.uk|simon\.christie@chavasschambers\.co\.uk|semple@psqb\.co\.uk"
-            HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk."
+            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+(?&lt;!cjsm\.net)$"
+            HelpText="cjsm.net email addresses are not supported. Please enter a valid email address."
           />
         </Restriction>
       </ClaimType>

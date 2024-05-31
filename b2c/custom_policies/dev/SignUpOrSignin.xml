@@ -19,8 +19,8 @@
       <ClaimType Id="email">
         <Restriction>
           <Pattern
-            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@(justice\.gov\.uk|hmcts\.net|ejudiciary\.net|.+\.cjsm\.net|cps\.gov\.uk|gmail\.com|solirius\.com)"
-            HelpText="Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com."
+            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+(?&lt;!cjsm\.net)$"
+            HelpText="cjsm.net email addresses are not supported. Please enter a valid email address."
           />
         </Restriction>
       </ClaimType>
