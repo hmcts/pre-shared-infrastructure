@@ -1,5 +1,4 @@
 module "data_store_db_v14" {
-  for_each = var.env != "dev"
   providers = {
     azurerm.postgres_network = azurerm.postgres_network
   }
