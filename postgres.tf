@@ -1,4 +1,5 @@
 module "data_store_db_v14" {
+  for_each = var.env != "dev"
   providers = {
     azurerm.postgres_network = azurerm.postgres_network
   }
@@ -31,28 +32,6 @@ module "data_store_db_v14" {
 
   admin_user_object_id = var.jenkins_AAD_objectId
 
-}
-
-# @todo remove once we have switched PowerApps to use the API
-resource "azurerm_key_vault_secret" "POSTGRES_HOST" {
-  name         = "postgresdb-host"
-  value        = module.data_store_db_v14.fqdn
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-# @todo remove once we have switched PowerApps to use the API
-resource "azurerm_key_vault_secret" "POSTGRES_USER" {
-  name         = "postgresdb-username"
-  value        = var.pgsql_admin_username
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-}
-
-#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
-# @todo remove once we have switched PowerApps to use the API
-resource "azurerm_key_vault_secret" "POSTGRES_PASS" {
-  name         = "postgresdb-password"
-  value        = module.data_store_db_v14.password
-  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 # Needed by the Common Pipeline db migration step
@@ -197,6 +176,3 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
   }
 }
-
-#https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
-# @todo remove once we have switched PowerApps to use the API
