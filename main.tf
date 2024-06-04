@@ -30,31 +30,29 @@ module "application_insights" {
 }
 
 resource "azurerm_key_vault_secret" "appinsights-key" {
-  name         = "AppInsightsInstrumentationKey"
-  value        = module.application_insights.instrumentation_key
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-
+  name            = "AppInsightsInstrumentationKey"
+  value           = module.application_insights.instrumentation_key
+  key_vault_id    = data.azurerm_key_vault.keyvault.id
   expiration_date = timeadd(timestamp(), "8760h")
 
-  lifecycle {
-    ignore_changes = [
-      expiration_date
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     expiration_date
+  #   ]
+  # }
 }
 
 resource "azurerm_key_vault_secret" "appinsights_connection_string" {
-  name         = "app-insights-connection-string"
-  value        = module.application_insights.connection_string
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-
+  name            = "app-insights-connection-string"
+  value           = module.application_insights.connection_string
+  key_vault_id    = data.azurerm_key_vault.keyvault.id
   expiration_date = timeadd(timestamp(), "8760h")
 
-  lifecycle {
-    ignore_changes = [
-      expiration_date
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     expiration_date
+  #   ]
+  # }
 }
 
 resource "azurerm_monitor_action_group" "pre-support" {
