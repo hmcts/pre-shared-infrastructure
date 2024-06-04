@@ -75,4 +75,11 @@ provider "azurerm" {
   features {}
 }
 
+provider "azurerm" {
+  alias                      = "stg"
+  subscription_id            = var.stg_subscription_id
+  skip_provider_registration = true
+  features {}
+}
+
 provider "azuread" {}
