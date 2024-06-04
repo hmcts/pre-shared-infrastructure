@@ -3,6 +3,8 @@ locals {
 
   mgmt_network_name    = var.mgmt_net_name
   mgmt_network_rg_name = var.mgmt_net_rg_name
+
+  secret_expiry = timeadd(timestamp(), "8760h")
 }
 
 module "log_analytics_workspace" {
@@ -30,15 +32,29 @@ module "application_insights" {
 }
 
 resource "azurerm_key_vault_secret" "appinsights-key" {
-  name         = "AppInsightsInstrumentationKey"
-  value        = module.application_insights.instrumentation_key
-  key_vault_id = data.azurerm_key_vault.keyvault.id
+  name            = "AppInsightsInstrumentationKey"
+  value           = module.application_insights.instrumentation_key
+  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  expiration_date = local.secret_expiry
+
+  lifecycle {
+    ignore_changes = [
+      expiration_date
+    ]
+  }
 }
 
 resource "azurerm_key_vault_secret" "appinsights_connection_string" {
-  name         = "app-insights-connection-string"
-  value        = module.application_insights.connection_string
-  key_vault_id = data.azurerm_key_vault.keyvault.id
+  name            = "app-insights-connection-string"
+  value           = module.application_insights.connection_string
+  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  expiration_date = local.secret_expiry
+
+  lifecycle {
+    ignore_changes = [
+      expiration_date
+    ]
+  }
 }
 
 resource "azurerm_monitor_action_group" "pre-support" {
