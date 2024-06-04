@@ -3,6 +3,8 @@ locals {
 
   mgmt_network_name    = var.mgmt_net_name
   mgmt_network_rg_name = var.mgmt_net_rg_name
+
+  secret_expiry = timeadd(timestamp(), "8760h")
 }
 
 module "log_analytics_workspace" {
@@ -33,7 +35,7 @@ resource "azurerm_key_vault_secret" "appinsights-key" {
   name            = "AppInsightsInstrumentationKey"
   value           = module.application_insights.instrumentation_key
   key_vault_id    = data.azurerm_key_vault.keyvault.id
-  expiration_date = timeadd(timestamp(), "8760h")
+  expiration_date = local.secret_expiry
 
   lifecycle {
     ignore_changes = [
@@ -46,7 +48,7 @@ resource "azurerm_key_vault_secret" "appinsights_connection_string" {
   name            = "app-insights-connection-string"
   value           = module.application_insights.connection_string
   key_vault_id    = data.azurerm_key_vault.keyvault.id
-  expiration_date = timeadd(timestamp(), "8760h")
+  expiration_date = local.secret_expiry
 
   lifecycle {
     ignore_changes = [
