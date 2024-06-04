@@ -37,20 +37,36 @@ resource "azurerm_media_services_account" "ams" {
 
 }
 
-// if stg env, grant dev-mi access to the SAs
+// if test env, grant dev-mi access to the SAs
 resource "azurerm_role_assignment" "pre_dev_mi_appreg_ingest_contrib" {
-  count                = var.env != "stg" ? 1 : 0
+  count                = var.env != "test" ? 1 : 0
   scope                = module.ingestsa_storage_account.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = data.azurerm_user_assigned_identity.pre_dev_mi.principal_id
 }
 
-// if stg env, grant dev-mi access to the SAs
+// if test env, grant dev-mi access to the SAs
 resource "azurerm_role_assignment" "pre_dev_mi_appreg_final_contrib" {
-  count                = var.env != "stg" ? 1 : 0
+  count                = var.env != "test" ? 1 : 0
   scope                = module.finalsa_storage_account.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = data.azurerm_user_assigned_identity.pre_dev_mi.principal_id
+}
+
+// if test env, grant stg-mi access to the SAs
+resource "azurerm_role_assignment" "pre_stg_mi_appreg_ingest_contrib" {
+  count                = var.env != "test" ? 1 : 0
+  scope                = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = data.azurerm_user_assigned_identity.pre_stg_mi.principal_id
+}
+
+// if test env, grant stg-mi access to the SAs
+resource "azurerm_role_assignment" "pre_stg_mi_appreg_final_contrib" {
+  count                = var.env != "test" ? 1 : 0
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = data.azurerm_user_assigned_identity.pre_stg_mi.principal_id
 }
 
 resource "azurerm_media_transform" "analysevideo" {
@@ -118,9 +134,9 @@ resource "azurerm_media_content_key_policy" "ams_default_policy" {
   }
 }
 
-resource "azurerm_media_content_key_policy" "ams_stg_policy" {
-  count                       = var.env == "stg" ? 1 : 0
-  name                        = "StgPolicyWithClearKeyOptionAndJwtTokenRestriction"
+resource "azurerm_media_content_key_policy" "ams_test_dev_policy" {
+  count                       = var.env == "test" ? 1 : 0
+  name                        = "TestDevPolicyWithClearKeyOptionAndJwtTokenRestriction"
   resource_group_name         = data.azurerm_resource_group.rg.name
   media_services_account_name = azurerm_media_services_account.ams.name
   description                 = "PRE Content Key Policy"
@@ -129,7 +145,25 @@ resource "azurerm_media_content_key_policy" "ams_stg_policy" {
     clear_key_configuration_enabled = true
     token_restriction {
       token_type                  = "Jwt"
-      audience                    = "api://7394ca1a-31de-4433-beca-2ca1a2043d5c"
+      audience                    = "api://7394ca1a-31de-4433-beca-2ca1a2043d5c" // dts_pre_dev Application (client) ID
+      issuer                      = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
+      primary_symmetric_token_key = data.azurerm_key_vault_secret.symmetrickey.value
+    }
+  }
+}
+
+resource "azurerm_media_content_key_policy" "ams_test_stg_policy" {
+  count                       = var.env == "test" ? 1 : 0
+  name                        = "TestStgPolicyWithClearKeyOptionAndJwtTokenRestriction"
+  resource_group_name         = data.azurerm_resource_group.rg.name
+  media_services_account_name = azurerm_media_services_account.ams.name
+  description                 = "PRE Content Key Policy"
+  policy_option {
+    name                            = "ClearKeyOption"
+    clear_key_configuration_enabled = true
+    token_restriction {
+      token_type                  = "Jwt"
+      audience                    = "api://2f4bf1fd-543c-4332-bc26-7a524f52d375" // dts_pre_stg Application (client) ID
       issuer                      = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
       primary_symmetric_token_key = data.azurerm_key_vault_secret.symmetrickey.value
     }
@@ -137,7 +171,7 @@ resource "azurerm_media_content_key_policy" "ams_stg_policy" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
-  count                 = var.env != "stg" ? 1 : 0
+  count                 = var.env != "test" ? 1 : 0
   provider              = azurerm.private_dns
   name                  = format("%s-%s-virtual-network-link", var.product, var.env)
   resource_group_name   = var.dns_resource_group

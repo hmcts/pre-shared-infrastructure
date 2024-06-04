@@ -95,3 +95,9 @@ data "azurerm_user_assigned_identity" "pre_dev_mi" {
   name                = "${var.product}-dev-mi"
   resource_group_name = "managed-identities-dev-rg"
 }
+
+data "azurerm_user_assigned_identity" "pre_stg_mi" {
+  provider            = azurerm.stg
+  name                = "${var.product}-stg-mi"
+  resource_group_name = "managed-identities-stg-rg"
+}
