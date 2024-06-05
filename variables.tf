@@ -171,3 +171,7 @@ variable "apim_service_url" {
 variable "dev_subscription_id" {
   default = "867a878b-cb68-4de5-9741-361ac9e178b6"
 }
+
+variable "stg_subscription_id" {
+  default = "74dacd4f-a248-45bb-a2f0-af700dc4cf68"
+}
