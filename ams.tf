@@ -47,7 +47,7 @@ resource "azurerm_role_assignment" "pre_dev_mi_appreg_ingest_contrib" {
 
 // if test env, grant dev-mi access to the SAs
 resource "azurerm_role_assignment" "pre_dev_mi_appreg_final_contrib" {
-  count                = var.env != "test" ? 1 : 0
+  count                = var.env == "test" ? 1 : 0
   scope                = module.finalsa_storage_account.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = data.azurerm_user_assigned_identity.pre_dev_mi.principal_id
