@@ -29,12 +29,6 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
   value           = module.finalsa_storage_account.storageaccount_primary_connection_string
   key_vault_id    = data.azurerm_key_vault.keyvault.id
   expiration_date = local.secret_expiry
-
-  lifecycle {
-    ignore_changes = [
-      expiration_date
-    ]
-  }
 }
 
 # For container cleanup operations
