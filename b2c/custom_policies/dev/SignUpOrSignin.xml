@@ -34,6 +34,10 @@
             ElementId="email"
             StringId="PatternHelpText"
           >Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com.</LocalizedString>
+          <LocalizedString
+          ElementType="ErrorMessage"
+          StringId="UserMessageIfClaimNotVerified"
+        >{0} has not been verified.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>

@@ -15,7 +15,7 @@
   <BuildingBlocks>
     <ContentDefinitions>
       <ContentDefinition Id="api.signuporsignin">
-        <LocalizedResourcesReferences MergeBehavior="Prepend">
+        <LocalizedResourcesReferences MergeBehavior="ReplaceAll">
           <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.signuporsignin.en" />
           <!-- Add more languages here -->
         </LocalizedResourcesReferences>
@@ -45,7 +45,7 @@
         </LocalizedResourcesReferences>
       </ContentDefinition>
       <ContentDefinition Id="api.localaccountsignin">
-        <LocalizedResourcesReferences MergeBehavior="Prepend">
+        <LocalizedResourcesReferences MergeBehavior="ReplaceAll">
           <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.localaccountsignin.en" />
           <!-- Add more languages here -->
         </LocalizedResourcesReferences>
@@ -151,6 +151,10 @@
             ElementType="ErrorMessage"
             StringId="AADRequestsThrottled"
           >There are too many requests at this moment. Please wait for some time and try again.</LocalizedString>
+          <LocalizedString
+          ElementType="ErrorMessage"
+          StringId="UserMessageIfClaimNotVerified"
+        >{0} has not been verified.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
       <!--Local account sign-up page English-->
@@ -292,10 +296,7 @@
             ElementType="ErrorMessage"
             StringId="ServiceThrottled"
           >There are too many requests at this moment. Please wait for some time and try again.</LocalizedString>
-          <LocalizedString
-            ElementType="ErrorMessage"
-            StringId="UserMessageIfClaimNotVerified"
-          >{0} has not been verified.</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimNotVerified">{0} has not been verified.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalAlreadyExists"
@@ -438,10 +439,7 @@
             ElementType="ErrorMessage"
             StringId="ServiceThrottled"
           >There are too many requests at this moment. Please wait for some time and try again.</LocalizedString>
-          <LocalizedString
-            ElementType="ErrorMessage"
-            StringId="UserMessageIfClaimNotVerified"
-          >{0} has not been verified</LocalizedString>
+          <LocalizedString ElementType="ErrorMessage" StringId="UserMessageIfClaimNotVerified">{0} has not been verified.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalAlreadyExists"
@@ -473,6 +471,10 @@
             StringId="LocalAccountSigninEmailExchange"
           >Local Account Signin</LocalizedString>
           <LocalizedString ElementType="ClaimsProvider" StringId="FacebookExchange">Facebook</LocalizedString>
+          <LocalizedString
+          ElementType="ErrorMessage"
+          StringId="UserMessageIfClaimNotVerified"
+        >{0} has not been verified.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
       <!-- Edit profile sign-in with local account English-->
@@ -526,6 +528,10 @@
             ElementType="ErrorMessage"
             StringId="AADRequestsThrottled"
           >There are too many requests at this moment. Please wait for some time and try again.</LocalizedString>
+          <LocalizedString
+          ElementType="ErrorMessage"
+          StringId="UserMessageIfClaimNotVerified"
+        >{0} has not been verified.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
       <!-- Edit profile page English-->
