@@ -299,7 +299,7 @@
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalAlreadyExists"
-          >A user with the specified ID already exists. Please choose a different one.</LocalizedString>
+          >There is an issue with your credentials, or you are already registered. Please check and retry.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfIncorrectPattern"
@@ -445,7 +445,7 @@
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfClaimsPrincipalAlreadyExists"
-          >A user with the specified ID already exists. Please choose a different one.</LocalizedString>
+          >There is an issue with your credentials, or you are already registered. Please check and retry.</LocalizedString>
           <LocalizedString
             ElementType="ErrorMessage"
             StringId="UserMessageIfIncorrectPattern"
