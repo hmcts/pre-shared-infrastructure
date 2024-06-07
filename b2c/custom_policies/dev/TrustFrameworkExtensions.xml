@@ -231,7 +231,7 @@
               <InputClaim ClaimTypeReferenceId="readOnlyEmail" />
             </InputClaims>
             <OutputClaims>
-              <OutputClaim ClaimTypeReferenceId="readOnlyEmail" PartnerClaimType="Verified.Email" Required="true" />
+              <OutputClaim ClaimTypeReferenceId="readOnlyEmail" Required="true" />
             </OutputClaims>
             <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
           </TechnicalProfile>

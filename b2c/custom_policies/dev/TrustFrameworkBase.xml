@@ -200,33 +200,6 @@
         <UserInputType>TextBox</UserInputType>
       </ClaimType>
 
-      <ClaimType Id="strongAuthenticationPhoneNumber">
-        <DisplayName>Phone Number</DisplayName>
-        <DataType>string</DataType>
-        <Mask Type="Simple">XXX-XXX-</Mask>
-        <UserHelpText>Your telephone number</UserHelpText>
-      </ClaimType>
-
-      <ClaimType Id="Verified.strongAuthenticationPhoneNumber">
-        <DisplayName>Verified Phone Number</DisplayName>
-        <DataType>string</DataType>
-        <DefaultPartnerClaimTypes>
-          <Protocol Name="OpenIdConnect" PartnerClaimType="phone_number" />
-        </DefaultPartnerClaimTypes>
-        <Mask Type="Simple">XXX-XXX-</Mask>
-        <UserHelpText>Your office phone number that has been verified</UserHelpText>
-      </ClaimType>
-
-      <ClaimType Id="newPhoneNumberEntered">
-        <DisplayName>New Phone Number Entered</DisplayName>
-        <DataType>boolean</DataType>
-      </ClaimType>
-
-      <ClaimType Id="userIdForMFA">
-        <DisplayName>UserId for MFA</DisplayName>
-        <DataType>string</DataType>
-      </ClaimType>
-
       <ClaimType Id="email">
         <DisplayName>Email Address</DisplayName>
         <DataType>string</DataType>
@@ -348,13 +321,6 @@
         >Parameter provided by the default session management provider to indicate that the object id has been retrieved from an SSO session.</UserHelpText>
       </ClaimType>
 
-      <ClaimType Id="isActiveMFASession">
-        <DisplayName>isActiveMFASession</DisplayName>
-        <DataType>boolean</DataType>
-        <UserHelpText
-        >Parameter provided by the MFA session management to indicate that the user has an active MFA session.</UserHelpText>
-      </ClaimType>
-
       <!-- SECTION III: Additional claims that can be collected from the users, stored in the directory, and sent in the token. Add additional claims here. -->
 
       <ClaimType Id="givenName">
@@ -422,18 +388,6 @@
         </InputClaims>
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="alternativeSecurityId" TransformationClaimType="alternativeSecurityId" />
-        </OutputClaims>
-      </ClaimsTransformation>
-
-      <ClaimsTransformation Id="CreateUserIdForMFA" TransformationMethod="FormatStringClaim">
-        <InputClaims>
-          <InputClaim ClaimTypeReferenceId="objectId" TransformationClaimType="inputClaim" />
-        </InputClaims>
-        <InputParameters>
-          <InputParameter Id="stringFormat" DataType="string" Value="{0}@{RelyingPartyTenantId}" />
-        </InputParameters>
-        <OutputClaims>
-          <OutputClaim ClaimTypeReferenceId="userIdForMFA" TransformationClaimType="outputClaim" />
         </OutputClaims>
       </ClaimsTransformation>
 
@@ -660,11 +614,6 @@
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
 
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
-
             <!-- Optional claims. -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
@@ -694,8 +643,6 @@
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" DefaultValue="localAccountAuthentication" />
 
-            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
-
             <!-- Optional claims -->
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
             <OutputClaim ClaimTypeReferenceId="accountEnabled" />
@@ -723,10 +670,6 @@
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
 
           </PersistedClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
@@ -749,10 +692,6 @@
             <PersistedClaim ClaimTypeReferenceId="objectId" />
 
             <!-- If the user stepped up during password reset, their phone number should be persisted for future authentication requests. -->
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
 
             <!-- Optional claims -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
@@ -774,34 +713,12 @@
           <OutputClaims>
 
             <!-- Required claims -->
-            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
-
             <!-- Optional claims -->
             <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
             <OutputClaim ClaimTypeReferenceId="otherMails" />
 <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <OutputClaim ClaimTypeReferenceId="surname" />-->
           </OutputClaims>
-          <IncludeTechnicalProfile ReferenceId="AAD-Common" />
-        </TechnicalProfile>
-
-        <TechnicalProfile Id="AAD-UserWritePhoneNumberUsingObjectId">
-          <Metadata>
-            <Item Key="Operation">Write</Item>
-            <Item Key="RaiseErrorIfClaimsPrincipalAlreadyExists">false</Item>
-            <Item Key="RaiseErrorIfClaimsPrincipalDoesNotExist">true</Item>
-          </Metadata>
-          <IncludeInSso>false</IncludeInSso>
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="objectId" Required="true" />
-          </InputClaims>
-          <PersistedClaims>
-            <PersistedClaim ClaimTypeReferenceId="objectId" />
-            <PersistedClaim
-              ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
-              PartnerClaimType="strongAuthenticationPhoneNumber"
-            />
-          </PersistedClaims>
           <IncludeTechnicalProfile ReferenceId="AAD-Common" />
         </TechnicalProfile>
 
@@ -910,7 +827,7 @@
           </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="objectId" />
-            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="email" Required="true" />
             <OutputClaim ClaimTypeReferenceId="newPassword" Required="true" />
             <OutputClaim ClaimTypeReferenceId="reenterPassword" Required="true" />
             <OutputClaim ClaimTypeReferenceId="executed-SelfAsserted-Input" DefaultValue="true" />
@@ -981,12 +898,10 @@
           </CryptographicKeys>
           <IncludeInSso>false</IncludeInSso>
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="email" Required="true" />
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="userPrincipalName" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
-
-            <OutputClaim ClaimTypeReferenceId="strongAuthenticationPhoneNumber" />
 
           </OutputClaims>
           <ValidationTechnicalProfiles>
@@ -1009,8 +924,6 @@
           </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="objectId" />
-
-            <InputClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
 
           </InputClaims>
           <OutputClaims>
@@ -1075,20 +988,6 @@
           <PersistedClaims>
             <PersistedClaim ClaimTypeReferenceId="alternativeSecurityId" />
           </PersistedClaims>
-        </TechnicalProfile>
-
-        <TechnicalProfile Id="SM-MFA">
-          <DisplayName>Session Mananagement Provider</DisplayName>
-          <Protocol
-            Name="Proprietary"
-            Handler="Web.TPEngine.SSO.DefaultSSOSessionProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
-          />
-          <PersistedClaims>
-            <PersistedClaim ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber" />
-          </PersistedClaims>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="isActiveMFASession" DefaultValue="true" />
-          </OutputClaims>
         </TechnicalProfile>
 
         <!-- Session management technical profile for OIDC based tokens -->
@@ -1245,11 +1144,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isActiveMFASession</Value>
+              <Value>54aa864e-252a-4949-ba7f-eec331732b70</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
@@ -1261,21 +1156,7 @@
         <!-- Save MFA phone number: The precondition verifies whether the user provided a new number in the
              previous step. If so, then the phone number is stored in the directory for future authentication
              requests. -->
-        <OrchestrationStep Order="6" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
-              <Value>newPhoneNumberEntered</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange
-              Id="AADUserWriteWithObjectId"
-              TechnicalProfileReferenceId="AAD-UserWritePhoneNumberUsingObjectId"
-            />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb" />
