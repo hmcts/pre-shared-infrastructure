@@ -21,7 +21,7 @@ module "edit_vm" {
   custom_data                    = var.env == "prod" || var.env == "stg" ? filebase64("./scripts/edit-init.ps1") : filebase64("./scripts/edit-init-nonprod.ps1")
   privateip_allocation           = "Static"
   systemassigned_identity        = true
-  patch_assessment_mode          = "ImageDefault"
+  vm_patch_assessment_mode       = "ImageDefault"
   provision_vm_agent             = false
   vm_patch_mode                  = "AutomaticByOS"
 
