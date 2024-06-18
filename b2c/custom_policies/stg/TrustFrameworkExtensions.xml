@@ -296,6 +296,11 @@
             </Precondition>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
+              <Value>dd72c13e-cfc0-49a8-8514-a426a8dc1e2b</Value> <!--need for automated stg e2e test  -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
               <Value>c9f5a9d8-f2c8-44ac-a9d7-f71b4f173742</Value> <!-- assume automated dev test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
