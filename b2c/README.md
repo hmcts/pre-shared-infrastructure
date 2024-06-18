@@ -13,5 +13,7 @@ The creation of the supporting app registrations which enable us to use custom p
 ## Custom Policies
 Uploading of custom policies is automated via a manually triggered GitHub Action. Each environment has its own set of policies to facilitate testing of changes, they can be found under the custom_policies directory.
 
+When updating custom policies, it can take a long time for the changes to be realised in the portal. This is expected behaviour due to caching, further information can be found in the [Microsoft docs](https://learn.microsoft.com/en-us/azure/active-directory-b2c/best-practices#operations%22https://learn.microsoft.com/en-us/azure/active-directory-b2c/best-practices#operations%22).
+
 ## Custom Template
 The static files for the B2C display template (html, css, etc) are hosted in the presa\<env> storage account. The files can be found under the views directory.
