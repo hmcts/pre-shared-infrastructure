@@ -7,7 +7,7 @@ module "finalsa_storage_account" {
   account_kind                    = "StorageV2"
   account_tier                    = var.sa_account_tier
   account_replication_type        = var.sa_replication_type
-  allow_nested_items_to_be_public = false
+  allow_nested_items_to_be_public = var.env == "dev" ? true : false
   default_action                  = "Allow"
   enable_data_protection          = true
   immutable_enabled               = var.env == "dev" ? true : false
