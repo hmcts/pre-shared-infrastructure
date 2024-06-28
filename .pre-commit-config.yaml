@@ -1,10 +1,10 @@
 repos:
-- repo: https://github.com/antonbabenko/pre-commit-terraform
-  rev: v1.92.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
-  hooks:
-    - id: terraform_fmt
-      args:
-      - --target=.
-    - id: terraform_docs
-      args:
-        - --hook-config=--path-to-file=README.md
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.92.0
+    hooks:
+      - id: terraform_fmt
+        verbose: true
+      - id: terraform_docs
+        args:
+          - --args=--config=infrastructure/.terraform-docs.yml
+          - --hook-config=--path-to-file=README.md
