@@ -6,5 +6,5 @@ repos:
         verbose: true
       - id: terraform_docs
         args:
-          - --args=--config=infrastructure/.terraform-docs.yml
+          - --args=--config=.terraform-docs.yml
           - --hook-config=--path-to-file=README.md
