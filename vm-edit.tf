@@ -4,27 +4,27 @@ module "edit_vm" {
     azurerm.cnp = azurerm.cnp
     azurerm.soc = azurerm.soc
   }
-  count                                                  = var.num_vid_edit_vms
-  source                                                 = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
-  env                                                    = var.env
-  vm_type                                                = local.edit_vm_type
-  vm_name                                                = "edit-vm${count.index + 1}-${var.env}"
-  computer_name                                          = "editvm${count.index + 1}${var.env}"
-  vm_resource_group                                      = data.azurerm_resource_group.rg.name
-  vm_location                                            = var.location
-  vm_size                                                = local.edit_vm_size
-  vm_admin_name                                          = azurerm_key_vault_secret.edit_username[count.index].value
-  vm_admin_password                                      = azurerm_key_vault_secret.edit_password[count.index].value
-  vm_availabilty_zones                                   = local.edit_vm_availability_zones[count.index]
-  managed_disks                                          = var.edit_vm_data_disks[count.index]
-  accelerated_networking_enabled                         = true
-  custom_data                                            = var.env == "prod" || var.env == "stg" ? filebase64("./scripts/edit-init.ps1") : filebase64("./scripts/edit-init-nonprod.ps1")
-  privateip_allocation                                   = "Static"
-  systemassigned_identity                                = true
-  vm_patch_assessment_mode                               = null
-  provision_vm_agent                                     = null
-  vm_patch_mode                                          = null
-  bypass_platform_safety_checks_on_user_schedule_enabled = false
+  count                          = var.num_vid_edit_vms
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  env                            = var.env
+  vm_type                        = local.edit_vm_type
+  vm_name                        = "edit-vm${count.index + 1}-${var.env}"
+  computer_name                  = "editvm${count.index + 1}${var.env}"
+  vm_resource_group              = data.azurerm_resource_group.rg.name
+  vm_location                    = var.location
+  vm_size                        = local.edit_vm_size
+  vm_admin_name                  = azurerm_key_vault_secret.edit_username[count.index].value
+  vm_admin_password              = azurerm_key_vault_secret.edit_password[count.index].value
+  vm_availabilty_zones           = local.edit_vm_availability_zones[count.index]
+  managed_disks                  = var.edit_vm_data_disks[count.index]
+  accelerated_networking_enabled = true
+  custom_data                    = var.env == "prod" || var.env == "stg" ? filebase64("./scripts/edit-init.ps1") : filebase64("./scripts/edit-init-nonprod.ps1")
+  privateip_allocation           = "Static"
+  systemassigned_identity        = true
+  vm_patch_assessment_mode       = null
+  provision_vm_agent             = null
+  vm_patch_mode                  = null
+  aum_schedule_enable            = false
 
   os_disk_size_gb = 127
 
