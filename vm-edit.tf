@@ -24,6 +24,7 @@ module "edit_vm" {
   vm_patch_assessment_mode       = null
   provision_vm_agent             = null
   vm_patch_mode                  = null
+  aum_schedule_enable            = false
 
   os_disk_size_gb = 127
 
