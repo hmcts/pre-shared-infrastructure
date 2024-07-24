@@ -69,6 +69,8 @@ resource "azurerm_monitor_metric_alert" "storage_ingest_alert_capacity" {
   frequency           = "PT1H"
   window_size         = "P1D"
 
+  tags = var.common_tags
+
   criteria {
     metric_namespace = "Microsoft.Storage/storageAccounts"
     metric_name      = "UsedCapacity"
