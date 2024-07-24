@@ -174,6 +174,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
   window_size         = "P1D"
 
   tags = var.common_tags
+
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
     metric_name      = "storage_percent"

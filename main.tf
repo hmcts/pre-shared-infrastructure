@@ -51,6 +51,8 @@ resource "azurerm_monitor_action_group" "pre-support" {
   resource_group_name = data.azurerm_resource_group.rg.name
   short_name          = "pre-support"
 
+  tags = var.common_tags
+
   email_receiver {
     name          = "PRE Support Mailing List"
     email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
