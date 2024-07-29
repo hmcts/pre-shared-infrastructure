@@ -51,7 +51,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.109.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.112.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 2.2.0 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.11 |
 
@@ -88,87 +88,87 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 | Name | Type |
 |------|------|
-| [azurerm_key_vault_secret.API_POSTGRES_DATABASE](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.API_POSTGRES_HOST](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.API_POSTGRES_PASS](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.API_POSTGRES_PORT](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.API_POSTGRES_USER](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.appinsights-key](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.appinsights_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.edit_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.edit_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.finalsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.ingestsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_key_vault_secret.sa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/key_vault_secret) | resource |
-| [azurerm_management_lock.storage-backup-final](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/management_lock) | resource |
-| [azurerm_management_lock.storage-backup-ingest](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/management_lock) | resource |
-| [azurerm_management_lock.storage-backup-sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/management_lock) | resource |
-| [azurerm_media_content_key_policy.ams_default_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_content_key_policy.ams_test_dev_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_content_key_policy.ams_test_stg_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_services_account.ams](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/media_services_account) | resource |
-| [azurerm_media_transform.EncodeToMP](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/media_transform) | resource |
-| [azurerm_media_transform.analysevideo](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/media_transform) | resource |
-| [azurerm_monitor_action_group.pre-support](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_action_group) | resource |
-| [azurerm_monitor_diagnostic_setting.ams_1](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_monitor_diagnostic_setting.storageblobfinalsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_monitor_diagnostic_setting.storageblobingestsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_diagnostic_setting) | resource |
-| [azurerm_monitor_metric_alert.postgres_alert_active_connections](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.postgres_alert_cpu](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.postgres_alert_failed_connections](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.postgres_alert_memory](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.postgres_alert_storage_utilization](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.storage_final_alert_capacity](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_monitor_metric_alert.storage_ingest_alert_capacity](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_private_dns_zone_virtual_network_link.ams_zone_link](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
-| [azurerm_private_endpoint.ams_streamingendpoint_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/private_endpoint) | resource |
-| [azurerm_role_assignment.powerapp_appreg_final](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_final_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_finalbackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_ingest](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_ingest_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_ingestfinal](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_sa2](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_sa_cont](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.powerapp_appreg_sabackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.pre_dev_mi_appreg_final_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.pre_dev_mi_appreg_ingest_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.pre_stg_mi_appreg_final_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.pre_stg_mi_appreg_ingest_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.sp_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.vm_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_role_assignment.vm_reader](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/role_assignment) | resource |
-| [azurerm_storage_blob.b2c_config](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/storage_blob) | resource |
-| [azurerm_storage_blob.b2c_config_assets](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/storage_blob) | resource |
-| [azurerm_storage_blob.b2c_config_maps](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/storage_blob) | resource |
-| [azurerm_storage_blob.b2c_html_file](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/storage_blob) | resource |
-| [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/virtual_machine_extension) | resource |
-| [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/resources/virtual_machine_extension) | resource |
+| [azurerm_key_vault_secret.API_POSTGRES_DATABASE](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.API_POSTGRES_HOST](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.API_POSTGRES_PASS](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.API_POSTGRES_PORT](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.API_POSTGRES_USER](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.appinsights-key](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.appinsights_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.edit_password](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.edit_username](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.finalsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.ingestsa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_key_vault_secret.sa_storage_account_connection_string](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/key_vault_secret) | resource |
+| [azurerm_management_lock.storage-backup-final](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/management_lock) | resource |
+| [azurerm_management_lock.storage-backup-ingest](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/management_lock) | resource |
+| [azurerm_management_lock.storage-backup-sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/management_lock) | resource |
+| [azurerm_media_content_key_policy.ams_default_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/media_content_key_policy) | resource |
+| [azurerm_media_content_key_policy.ams_test_dev_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/media_content_key_policy) | resource |
+| [azurerm_media_content_key_policy.ams_test_stg_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/media_content_key_policy) | resource |
+| [azurerm_media_services_account.ams](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/media_services_account) | resource |
+| [azurerm_media_transform.EncodeToMP](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/media_transform) | resource |
+| [azurerm_media_transform.analysevideo](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/media_transform) | resource |
+| [azurerm_monitor_action_group.pre-support](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_action_group) | resource |
+| [azurerm_monitor_diagnostic_setting.ams_1](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_monitor_diagnostic_setting.storageblobfinalsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_monitor_diagnostic_setting.storageblobingestsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_diagnostic_setting) | resource |
+| [azurerm_monitor_metric_alert.postgres_alert_active_connections](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.postgres_alert_cpu](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.postgres_alert_failed_connections](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.postgres_alert_memory](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.postgres_alert_storage_utilization](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.storage_final_alert_capacity](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_monitor_metric_alert.storage_ingest_alert_capacity](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/monitor_metric_alert) | resource |
+| [azurerm_private_dns_zone_virtual_network_link.ams_zone_link](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
+| [azurerm_private_endpoint.ams_streamingendpoint_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/private_endpoint) | resource |
+| [azurerm_role_assignment.powerapp_appreg_final](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_final_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_finalbackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_ingest](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_ingest_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_ingestfinal](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_sa2](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_sa_cont](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.powerapp_appreg_sabackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.pre_dev_mi_appreg_final_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.pre_dev_mi_appreg_ingest_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.pre_stg_mi_appreg_final_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.pre_stg_mi_appreg_ingest_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.sp_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.vm_contributor](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.vm_reader](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/role_assignment) | resource |
+| [azurerm_storage_blob.b2c_config](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_config_assets](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_config_maps](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/storage_blob) | resource |
+| [azurerm_storage_blob.b2c_html_file](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/storage_blob) | resource |
+| [azurerm_virtual_machine_extension.aad](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/virtual_machine_extension) | resource |
+| [azurerm_virtual_machine_extension.edit_init](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/resources/virtual_machine_extension) | resource |
 | [random_password.vm_password](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_string.vm_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [azuread_group.edit_group](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group) | data source |
 | [azuread_group.pre_group](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/group) | data source |
 | [azuread_service_principal.pre_sp](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
-| [azurerm_bastion_host.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/bastion_host) | data source |
-| [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/client_config) | data source |
-| [azurerm_key_vault.keyvault](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/key_vault) | data source |
-| [azurerm_key_vault_secret.dynatrace-tenant-id](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.dynatrace-token](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.slack_monitoring_address](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_key_vault_secret.symmetrickey](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/key_vault_secret) | data source |
-| [azurerm_log_analytics_workspace.loganalytics](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/log_analytics_workspace) | data source |
-| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/resource_group) | data source |
-| [azurerm_subnet.endpoint_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/subnet) | data source |
-| [azurerm_subnet.jenkins_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/subnet) | data source |
-| [azurerm_subnet.pipelineagent_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/subnet) | data source |
-| [azurerm_subnet.videoedit_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/subnet) | data source |
-| [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/subscription) | data source |
-| [azurerm_user_assigned_identity.managed_identity](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_user_assigned_identity.pre_dev_mi](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_user_assigned_identity.pre_stg_mi](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_virtual_network.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.109.0/docs/data-sources/virtual_network) | data source |
+| [azurerm_bastion_host.bastion](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/bastion_host) | data source |
+| [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/client_config) | data source |
+| [azurerm_key_vault.keyvault](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/key_vault) | data source |
+| [azurerm_key_vault_secret.dynatrace-tenant-id](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.dynatrace-token](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.slack_monitoring_address](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_key_vault_secret.symmetrickey](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/key_vault_secret) | data source |
+| [azurerm_log_analytics_workspace.loganalytics](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/log_analytics_workspace) | data source |
+| [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/resource_group) | data source |
+| [azurerm_subnet.endpoint_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/subnet) | data source |
+| [azurerm_subnet.jenkins_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/subnet) | data source |
+| [azurerm_subnet.pipelineagent_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/subnet) | data source |
+| [azurerm_subnet.videoedit_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/subnet) | data source |
+| [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/subscription) | data source |
+| [azurerm_user_assigned_identity.managed_identity](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/user_assigned_identity) | data source |
+| [azurerm_user_assigned_identity.pre_dev_mi](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/user_assigned_identity) | data source |
+| [azurerm_user_assigned_identity.pre_stg_mi](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/user_assigned_identity) | data source |
+| [azurerm_virtual_network.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/3.112.0/docs/data-sources/virtual_network) | data source |
 
 ## Inputs
 
