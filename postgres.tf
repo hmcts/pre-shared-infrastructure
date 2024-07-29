@@ -79,6 +79,8 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
   scopes              = [module.data_store_db_v14.instance_id]
   description         = "Whenever the maximum active connections is greater than 80%"
 
+  tags = var.common_tags
+
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
     metric_name      = "active_connections"
@@ -99,6 +101,8 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.data_store_db_v14.instance_id]
   description         = "Whenever the maximum failed connections is greater than 10"
+
+  tags = var.common_tags
 
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
@@ -123,6 +127,8 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
   frequency           = "PT1H"
   window_size         = "P1D"
 
+  tags = var.common_tags
+
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
     metric_name      = "cpu_percent"
@@ -144,6 +150,8 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
   frequency           = "PT1H"
   window_size         = "P1D"
 
+  tags = var.common_tags
+
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
     metric_name      = "memory_percent"
@@ -164,6 +172,9 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
   description         = "Whenever the storage utilization is greater than 90"
   frequency           = "PT1H"
   window_size         = "P1D"
+
+  tags = var.common_tags
+
   criteria {
     metric_namespace = "Microsoft.DBforPostgreSQL/flexibleServers"
     metric_name      = "storage_percent"
