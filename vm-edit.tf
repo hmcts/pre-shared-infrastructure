@@ -95,23 +95,6 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 }
 
-# resource "null_resource" "run_edit_script" {
-#   count = var.num_vid_edit_vms
-#   triggers = {
-#     vm_id = module.edit_vm.*.vm_id[count.index]
-#   }
-
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       az vm run-command invoke \
-#         --ids "${module.edit_vm.*.vm_id[count.index]}" \
-#         --command-id "RunPowerShellScript" \
-#         --scripts @scripts/edit-init.ps1
-#     EOT
-#   }
-# }
-
-
 resource "azurerm_virtual_machine_extension" "edit_init" {
   count                = var.num_vid_edit_vms
   name                 = "toolingScript"
@@ -122,7 +105,7 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
 
   protected_settings = <<SETTINGS
  {
-   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1\""
+   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1; [Environment]::SetEnvironmentVariable('SYSTEM_APIM_KEY', '${data.azurerm_key_vault_secret.apim-sub-editvm-primary-key.value}', 'Machine'); [Environment]::SetEnvironmentVariable('SYSTEM_ROBOT_USER_ID', '${data.azurerm_key_vault_secret.robot-x-user-id.value}', 'Machine')\""
  }
 SETTINGS
 
@@ -173,4 +156,14 @@ resource "azurerm_key_vault_secret" "edit_password" {
   value           = random_password.vm_password[count.index].result
   key_vault_id    = data.azurerm_key_vault.keyvault.id
   expiration_date = local.secret_expiry
+}
+
+data "azurerm_key_vault_secret" "robot-x-user-id" {
+  name         = "robot-x-user-id"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_key_vault_secret" "apim-sub-editvm-primary-key" {
+  name         = "apim-sub-editvm-primary-key"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
