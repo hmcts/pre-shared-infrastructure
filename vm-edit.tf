@@ -105,7 +105,7 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
 
   protected_settings = <<SETTINGS
  {
-   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1; [Environment]::SetEnvironmentVariable('SYSTEM_APIM_KEY', '${data.azurerm_key_vault_secret.apim-sub-editvm-primary-key}', 'Machine'); [Environment]::SetEnvironmentVariable('SYSTEM_RPBOT_USER_ID', '${data.azurerm_key_vault_secret.robot-x-user-id}', 'Machine')\""
+   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1; [Environment]::SetEnvironmentVariable('SYSTEM_APIM_KEY', '${data.azurerm_key_vault_secret.apim-sub-editvm-primary-key.value}', 'Machine'); [Environment]::SetEnvironmentVariable('SYSTEM_RPBOT_USER_ID', '${data.azurerm_key_vault_secret.robot-x-user-id.value}', 'Machine')\""
  }
 SETTINGS
 
