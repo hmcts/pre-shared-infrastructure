@@ -6,7 +6,7 @@ module "backup_vault" {
   env                = var.env
   product            = var.product
   retention_duration = var.retention_duration
-  common_tags               = var.common_tags
+  common_tags        = var.common_tags
   storageaccount_ids = [
     module.finalsa_storage_account.storageaccount_id,
     module.ingestsa_storage_account.storageaccount_id,
