@@ -114,14 +114,14 @@ data "azurerm_virtual_network" "aks_core_vnet" {
 }
 
 data "azurerm_subnet" "dev_aks_00" {
-  provider             = azurerm.aks-infra
+  provider             = azurerm.dev
   name                 = "aks-00"
   virtual_network_name = data.azurerm_virtual_network.aks_core_vnet.name
   resource_group_name  = data.azurerm_virtual_network.aks_core_vnet.resource_group_name
 }
 
 data "azurerm_subnet" "dev_aks_01" {
-  provider             = azurerm.aks-infra
+  provider             = azurerm.dev
   name                 = "aks-01"
   virtual_network_name = data.azurerm_virtual_network.aks_core_vnet.name
   resource_group_name  = data.azurerm_virtual_network.aks_core_vnet.resource_group_name
