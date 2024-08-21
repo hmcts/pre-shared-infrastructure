@@ -25,9 +25,9 @@ module "finalsa_storage_account" {
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   enable_change_feed              = true
   # TODO: Remove the test check here once test is used as a perftest env
-  private_endpoint_subnet_id      = var.env != "test" ? data.azurerm_subnet.endpoint_subnet.id : null
+  private_endpoint_subnet_id = var.env != "test" ? data.azurerm_subnet.endpoint_subnet.id : null
   # Allow dev aks clusters to talk to the STG SA
-  sa_subnets                      = var.env == "stg" ? local.valid_subnets : null
+  sa_subnets = var.env == "stg" ? local.valid_subnets : null
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
