@@ -1,3 +1,8 @@
+locals {
+  aks_core_vnet    = "ss-dev-vnet"
+  aks_core_vnet_rg = "ss-dev-network-rg"
+}
+
 data "azurerm_client_config" "current" {}
 
 data "azuread_service_principal" "pre_sp" {
@@ -100,4 +105,24 @@ data "azurerm_user_assigned_identity" "pre_stg_mi" {
   provider            = azurerm.stg
   name                = "${var.product}-stg-mi"
   resource_group_name = "managed-identities-stg-rg"
+}
+
+data "azurerm_virtual_network" "aks_core_vnet" {
+  provider            = azurerm.aks-infra
+  name                = local.aks_core_vnet
+  resource_group_name = local.aks_core_vnet_rg
+}
+
+data "azurerm_subnet" "dev_aks_00" {
+  provider             = azurerm.aks-infra
+  name                 = "aks-00"
+  virtual_network_name = data.azurerm_virtual_network.aks_core_vnet.name
+  resource_group_name  = data.azurerm_virtual_network.aks_core_vnet.resource_group_name
+}
+
+data "azurerm_subnet" "dev_aks_01" {
+  provider             = azurerm.aks-infra
+  name                 = "aks-01"
+  virtual_network_name = data.azurerm_virtual_network.aks_core_vnet.name
+  resource_group_name  = data.azurerm_virtual_network.aks_core_vnet.resource_group_name
 }
