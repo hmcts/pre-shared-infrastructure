@@ -1,5 +1,5 @@
 module "finalsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=adds-public-network-access-var"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                             = var.env
   storage_account_name            = "${var.product}finalsa${var.env}"
   resource_group_name             = data.azurerm_resource_group.rg.name
