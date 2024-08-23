@@ -1,5 +1,5 @@
 module "ingestsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
   env                             = var.env
   storage_account_name            = "${var.product}ingestsa${var.env}"
   resource_group_name             = data.azurerm_resource_group.rg.name
@@ -14,6 +14,7 @@ module "ingestsa_storage_account" {
   enable_change_feed              = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   private_endpoint_subnet_id      = var.env != "test" ? data.azurerm_subnet.endpoint_subnet.id : null
+  public_network_access_enabled   = var.env == "stg" ? false : null
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
