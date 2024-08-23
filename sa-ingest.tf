@@ -1,5 +1,5 @@
 module "ingestsa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=adds-public-network-access-var"
   env                             = var.env
   storage_account_name            = "${var.product}ingestsa${var.env}"
   resource_group_name             = data.azurerm_resource_group.rg.name
