@@ -17,7 +17,7 @@ module "finalsa_storage_account" {
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   enable_change_feed              = true
   private_endpoint_subnet_id      = var.env != "test" ? data.azurerm_subnet.endpoint_subnet.id : null
-  public_network_access_enabled   = var.env == "stg" : "demo" ? false : null
+  public_network_access_enabled   = var.env == "stg" || "demo" ? false : null
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
