@@ -101,7 +101,7 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
-  type_handler_version = "1.10"
+  type_handler_version = "1.10.17"
 
   protected_settings = <<SETTINGS
  {
