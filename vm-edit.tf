@@ -49,12 +49,8 @@ module "edit_vm" {
   dynatrace_tenant_id = var.tenant_id
   dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
 
-  #mount the disks
-  additional_script_uri  = local.edit_additional_script_uri
-  additional_script_name = local.edit_additional_script_name
-
   run_command                  = true
-  rc_script_file               = "scripts/windows_cis.ps1"
+  rc_script_file               = "scripts/windows_run_script.ps1"
   custom_script_extension_name = "HMCTSVMBootstrap"
   tags                         = var.common_tags
 
@@ -78,9 +74,6 @@ locals {
   # boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
 
   edit_dynatrace_env = var.tenant_id == "yrk32651" ? "nonprod" : var.tenant_id == "ebe20728" ? "prod" : null
-
-  edit_additional_script_uri  = "https://raw.githubusercontent.com/hmcts/CIS-harderning/master/windows-install.ps1"
-  edit_additional_script_name = "windows-install.ps1"
 }
 
 resource "azurerm_virtual_machine_extension" "aad" {
