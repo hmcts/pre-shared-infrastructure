@@ -94,23 +94,23 @@ resource "azurerm_virtual_machine_extension" "aad" {
   tags                       = var.common_tags
 
 }
+//
+//resource "azurerm_virtual_machine_extension" "edit_init" {
+//  count                = var.num_vid_edit_vms
+//  name                 = "toolingScript"
+//  virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
+//  publisher            = "Microsoft.Compute"
+//  type                 = "CustomScriptExtension"
+//  type_handler_version = "1.9"
 
-resource "azurerm_virtual_machine_extension" "edit_init" {
-  count                = var.num_vid_edit_vms
-  name                 = "toolingScript"
-  virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
-  publisher            = "Microsoft.Compute"
-  type                 = "CustomScriptExtension"
-  type_handler_version = "1.9"
+//  protected_settings = <<SETTINGS
+// {
+//   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1; [Environment]::SetEnvironmentVariable('SYSTEM_APIM_KEY', '${data.azurerm_key_vault_secret.apim-sub-editvm-primary-key.value}', 'Machine'); [Environment]::SetEnvironmentVariable('SYSTEM_ROBOT_USER_ID', '${data.azurerm_key_vault_secret.robot-x-user-id.value}', 'Machine')\""
+// }
+//SETTINGS
 
-  protected_settings = <<SETTINGS
- {
-   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1; [Environment]::SetEnvironmentVariable('SYSTEM_APIM_KEY', '${data.azurerm_key_vault_secret.apim-sub-editvm-primary-key.value}', 'Machine'); [Environment]::SetEnvironmentVariable('SYSTEM_ROBOT_USER_ID', '${data.azurerm_key_vault_secret.robot-x-user-id.value}', 'Machine')\""
- }
-SETTINGS
-
-  tags = var.common_tags
-}
+//  tags = var.common_tags
+//}
 
 # DTS-PRE-VideoEditing-SecurityGroup-
 resource "azurerm_role_assignment" "vm_contributor" {
