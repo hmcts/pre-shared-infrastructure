@@ -49,8 +49,8 @@ module "edit_vm" {
   dynatrace_tenant_id = var.tenant_id
   dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
 
-  run_command                  = false
-  tags                         = var.common_tags
+  run_command = false
+  tags        = var.common_tags
 }
 
 locals {
