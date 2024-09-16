@@ -49,9 +49,9 @@ module "edit_vm" {
   dynatrace_tenant_id = var.tenant_id
   dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
 
-  run_command                  = true
-  rc_script_file               = "scripts/windows_run_script.ps1"
-  custom_script_extension_name = "HMCTSVMBootstrap"
+#   run_command                  = false
+#   rc_script_file               = "scripts/windows_run_script.ps1"
+#   custom_script_extension_name = "HMCTSVMBootstrap"
   tags                         = var.common_tags
 
 }
