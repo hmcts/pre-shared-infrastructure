@@ -41,8 +41,8 @@ module "edit_vm" {
 
   boot_diagnostics_enabled = local.edit_boot_diagnostics_enabled
 
-  nessus_install    = false #var.nessus_install
-  install_splunk_uf = false
+  nessus_install             = false #var.nessus_install
+  install_splunk_uf          = false
   install_dynatrace_oneagent = var.install_dynatrace_oa
 
   dynatrace_hostgroup = var.hostgroup
