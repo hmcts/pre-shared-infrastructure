@@ -141,7 +141,7 @@ variable "edit_vm_data_disks" {}
 variable "edit_vm_private_ip" {}
 
 variable "install_dynatrace_oa" {
-  default = true
+  default = false
 }
 
 variable "pre_ent_appreg_app_id" {}
