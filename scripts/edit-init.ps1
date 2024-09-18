@@ -6,6 +6,7 @@ $currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
 
 Start-Sleep -Seconds 5
 
+# Install PRE specific requirements
 choco feature enable -n allowGlobalConfirmation;
 choco install ffmpeg;
 choco install microsoftazurestorageexplorer;

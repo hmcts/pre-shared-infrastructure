@@ -41,23 +41,17 @@ module "edit_vm" {
 
   boot_diagnostics_enabled = local.edit_boot_diagnostics_enabled
 
-  nessus_install    = false #var.nessus_install
-  install_splunk_uf = false
+  nessus_install             = false #var.nessus_install
+  install_splunk_uf          = false
+  install_dynatrace_oneagent = var.install_dynatrace_oa
 
   dynatrace_hostgroup = var.hostgroup
   dynatrace_server    = var.server
   dynatrace_tenant_id = var.tenant_id
   dynatrace_token     = try(data.azurerm_key_vault_secret.dynatrace-token.value, null)
 
-  #mount the disks
-  additional_script_uri  = local.edit_additional_script_uri
-  additional_script_name = local.edit_additional_script_name
-
-  run_command                  = true
-  rc_script_file               = "scripts/windows_cis.ps1"
-  custom_script_extension_name = "HMCTSVMBootstrap"
-  tags                         = var.common_tags
-
+  run_command = true
+  tags        = var.common_tags
 }
 
 locals {
@@ -78,9 +72,6 @@ locals {
   # boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
 
   edit_dynatrace_env = var.tenant_id == "yrk32651" ? "nonprod" : var.tenant_id == "ebe20728" ? "prod" : null
-
-  edit_additional_script_uri  = "https://raw.githubusercontent.com/hmcts/CIS-harderning/master/windows-install.ps1"
-  edit_additional_script_name = "windows-install.ps1"
 }
 
 resource "azurerm_virtual_machine_extension" "aad" {
@@ -101,7 +92,7 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   virtual_machine_id   = module.edit_vm.*.vm_id[count.index]
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
-  type_handler_version = "1.10"
+  type_handler_version = "1.9"
 
   protected_settings = <<SETTINGS
  {
