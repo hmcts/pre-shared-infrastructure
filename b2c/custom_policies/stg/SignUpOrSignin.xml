@@ -64,7 +64,6 @@
           AlwaysUseDefaultValue="true"
           DefaultValue="{Policy:TenantObjectId}"
         />
-        <OutputClaim ClaimTypeReferenceId="TnCs" />
         <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />

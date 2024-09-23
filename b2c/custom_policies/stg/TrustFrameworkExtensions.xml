@@ -304,7 +304,7 @@
               <Value>c9f5a9d8-f2c8-44ac-a9d7-f71b4f173742</Value> <!-- assume automated dev test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
-            
+
             <!-- BEGIN: Performance test users -->
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -460,10 +460,6 @@
 
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>isForgotPassword</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>TnCs</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
           </Preconditions>
