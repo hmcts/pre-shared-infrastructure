@@ -304,6 +304,12 @@
         >Used to determine if the user should be permitted to reauthenticate silently via their existing refresh token.</UserHelpText>
       </ClaimType>
 
+      <ClaimType Id="isSignUp">
+        <DisplayName>isSignUp</DisplayName>
+        <DataType>boolean</DataType>
+        <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
+      </ClaimType>
+
       <!-- SECTION II: Claims required to pass on special parameters (including some query string parameters) to other claims providers -->
 
       <ClaimType Id="nca">
