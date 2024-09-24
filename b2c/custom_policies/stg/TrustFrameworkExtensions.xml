@@ -22,6 +22,11 @@
           <DataType>boolean</DataType>
           <AdminHelpText>Whether the user has selected Forgot your Password</AdminHelpText>
         </ClaimType>
+        <ClaimType Id="isSignUp">
+          <DisplayName>isSignUp</DisplayName>
+          <DataType>boolean</DataType>
+          <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
+        </ClaimType>
         <ClaimType Id="readOnlyEmail">
           <DisplayName>Email Address</DisplayName>
           <DataType>string</DataType>
@@ -462,10 +467,11 @@
               <Value>isForgotPassword</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
-              <Value>newUser</Value>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn" />
