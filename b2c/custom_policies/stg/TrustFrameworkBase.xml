@@ -918,7 +918,7 @@
 <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
 
-            <OutputClaim ClaimTypeReferenceId="isSignUp" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="isSignUp" DefaultValue="true" />
 
           </OutputClaims>
           <ValidationTechnicalProfiles>
