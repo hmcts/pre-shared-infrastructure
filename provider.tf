@@ -83,3 +83,10 @@ provider "azurerm" {
 }
 
 provider "azuread" {}
+
+provider "azurerm" {
+  alias                      = "dcr"
+  skip_provider_registration = "true"
+  features {}
+  subscription_id = var.env == "prod" ? "8999dec3-0104-4a27-94ee-6588559729d1" : var.env == "sbox" ? "bf308a5c-0624-4334-8ff8-8dca9fd43783" : "1c4f0704-a29e-403d-b719-b90c34ef14c9"
+}
