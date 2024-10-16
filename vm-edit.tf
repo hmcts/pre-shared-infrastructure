@@ -3,6 +3,7 @@ module "edit_vm" {
     azurerm     = azurerm
     azurerm.cnp = azurerm.cnp
     azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
   }
   count                          = var.num_vid_edit_vms
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
