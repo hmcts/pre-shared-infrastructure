@@ -103,14 +103,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_management_lock.storage-backup-final](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/management_lock) | resource |
 | [azurerm_management_lock.storage-backup-ingest](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/management_lock) | resource |
 | [azurerm_management_lock.storage-backup-sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/management_lock) | resource |
-| [azurerm_media_content_key_policy.ams_default_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_content_key_policy.ams_test_dev_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_content_key_policy.ams_test_stg_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_services_account.ams](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_services_account) | resource |
 | [azurerm_media_transform.EncodeToMP](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_transform) | resource |
 | [azurerm_media_transform.analysevideo](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_transform) | resource |
 | [azurerm_monitor_action_group.pre-support](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_action_group) | resource |
-| [azurerm_monitor_diagnostic_setting.ams_1](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobfinalsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobingestsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
@@ -121,8 +116,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_monitor_metric_alert.postgres_alert_storage_utilization](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_monitor_metric_alert.storage_final_alert_capacity](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_monitor_metric_alert.storage_ingest_alert_capacity](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_metric_alert) | resource |
-| [azurerm_private_dns_zone_virtual_network_link.ams_zone_link](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/private_dns_zone_virtual_network_link) | resource |
-| [azurerm_private_endpoint.ams_streamingendpoint_private_endpoint](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/private_endpoint) | resource |
 | [azurerm_role_assignment.powerapp_appreg_final](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.powerapp_appreg_final_contrib](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.powerapp_appreg_finalbackup](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/role_assignment) | resource |
