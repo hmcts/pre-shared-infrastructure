@@ -1,6 +1,6 @@
 module "sa_storage_account_backup" {
   count                           = var.env == "prod" ? 1 : 0
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
+  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=fix/defender-azapi"
   env                             = var.env
   storage_account_name            = "${var.product}sabackup${var.env}"
   resource_group_name             = module.backup_vault[0].resource_group_name
