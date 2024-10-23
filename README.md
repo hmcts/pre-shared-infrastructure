@@ -106,7 +106,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_media_transform.EncodeToMP](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_transform) | resource |
 | [azurerm_media_transform.analysevideo](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_transform) | resource |
 | [azurerm_monitor_action_group.pre-support](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_action_group) | resource |
-| [azurerm_monitor_diagnostic_setting.ams_1](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobfinalsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobingestsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
 | [azurerm_monitor_diagnostic_setting.storageblobsa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_diagnostic_setting) | resource |
