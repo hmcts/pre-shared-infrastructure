@@ -103,10 +103,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_management_lock.storage-backup-final](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/management_lock) | resource |
 | [azurerm_management_lock.storage-backup-ingest](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/management_lock) | resource |
 | [azurerm_management_lock.storage-backup-sa](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/management_lock) | resource |
-| [azurerm_media_content_key_policy.ams_default_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_content_key_policy.ams_test_dev_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_content_key_policy.ams_test_stg_policy](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_content_key_policy) | resource |
-| [azurerm_media_services_account.ams](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_services_account) | resource |
 | [azurerm_media_transform.EncodeToMP](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_transform) | resource |
 | [azurerm_media_transform.analysevideo](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/media_transform) | resource |
 | [azurerm_monitor_action_group.pre-support](https://registry.terraform.io/providers/hashicorp/azurerm/3.115.0/docs/resources/monitor_action_group) | resource |
