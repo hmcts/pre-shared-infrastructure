@@ -11,6 +11,7 @@ module "ingestsa_storage_account" {
   default_action                  = "Allow"
   enable_data_protection          = true
   restore_policy_days             = var.restore_policy_days
+  retention_period                = 190
   enable_change_feed              = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
