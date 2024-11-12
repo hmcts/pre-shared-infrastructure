@@ -59,11 +59,11 @@ resource "azurerm_monitor_action_group" "pre-support" {
   }
 }
 
-resource "azurerm_monitor_action_group" "pre-teams-webhook" {
+resource "azurerm_monitor_action_group" "pre-teams-wh" {
   count               = var.env == "prod" || var.env == "stg" ? 1 : 0
   name                = "TeamsAlertAction"
   resource_group_name = data.azurerm_resource_group.rg.name
-  short_name          = "pre-teams-webhook"
+  short_name          = "pre-teams-wh"
 
   tags = var.common_tags
 
