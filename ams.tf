@@ -117,6 +117,15 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   }
 }
 
+import {
+  # Run this import only in prod
+  for_each = var.env == "stg" ? toset(["import"]) : toset([])
+  # Specify the resource address to import to
+  to       =  azurerm_media_content_key_policy.ams_default_policy
+  # Specify the resource ID to import from
+  id       = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/pre-stg/providers/Microsoft.Media/mediaServices/preamsstg/contentKeyPolicies/PolicyWithClearKeyOptionAndJwtTokenRestriction"
+}
+
 resource "azurerm_media_content_key_policy" "ams_default_policy" {
   name                        = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
   resource_group_name         = data.azurerm_resource_group.rg.name
