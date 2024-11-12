@@ -68,8 +68,8 @@ resource "azurerm_monitor_action_group" "pre-teams-webhook" {
   tags = var.common_tags
 
   webhook_receiver {
-    name        = "PRE Support Teams Webhook"
-    service_uri = data.azurerm_key_vault_secret.teams-monitoring-webhook.value
+    name                    = "PRE Support Teams Webhook"
+    service_uri             = data.azurerm_key_vault_secret.teams-monitoring-webhook.value
     use_common_alert_schema = true
   }
 }
