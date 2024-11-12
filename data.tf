@@ -83,6 +83,11 @@ data "azurerm_key_vault_secret" "slack_monitoring_address" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
+data "azurerm_key_vault_secret" "teams-monitoring-webhook" {
+  name          = "teams-monitoring-webhook"
+  key_vault_id  = data.azurerm_key_vault.keyvault.id
+}
+
 data "azurerm_subscription" "current" {}
 
 data "azurerm_key_vault_secret" "symmetrickey" {
