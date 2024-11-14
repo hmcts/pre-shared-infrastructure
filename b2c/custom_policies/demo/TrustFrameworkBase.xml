@@ -920,7 +920,7 @@
 <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
 
-            <OutputClaim ClaimTypeReferenceId="TnCs" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="isSignUp" Required="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />
