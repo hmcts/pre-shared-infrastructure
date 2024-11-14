@@ -26,7 +26,6 @@
       </ClaimType>
     </ClaimsSchema>
 
-
     <Localization>
       <LocalizedResources Id="api.localaccountsignup.en">
         <LocalizedStrings>
