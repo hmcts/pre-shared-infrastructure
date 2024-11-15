@@ -26,7 +26,6 @@
       </ClaimType>
     </ClaimsSchema>
 
-
     <Localization>
       <LocalizedResources Id="api.localaccountsignup.en">
         <LocalizedStrings>
@@ -66,7 +65,7 @@
           AlwaysUseDefaultValue="true"
           DefaultValue="{Policy:TenantObjectId}"
         />
-        <OutputClaim ClaimTypeReferenceId="TnCs" />
+        <OutputClaim ClaimTypeReferenceId="isSignUp" />
         <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />
