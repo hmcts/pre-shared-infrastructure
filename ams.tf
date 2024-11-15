@@ -117,42 +117,6 @@ resource "azurerm_monitor_diagnostic_setting" "ams_1" {
   }
 }
 
-resource "azurerm_media_content_key_policy" "ams_test_dev_policy" {
-  count                       = var.env == "test" ? 1 : 0
-  name                        = "TestDevPolicyWithClearKeyOptionAndJwtTokenRestriction"
-  resource_group_name         = data.azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
-  description                 = "PRE Content Key Policy"
-  policy_option {
-    name                            = "ClearKeyOption"
-    clear_key_configuration_enabled = true
-    token_restriction {
-      token_type                  = "Jwt"
-      audience                    = "api://7394ca1a-31de-4433-beca-2ca1a2043d5c" // dts_pre_dev Application (client) ID
-      issuer                      = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-      primary_symmetric_token_key = data.azurerm_key_vault_secret.symmetrickey.value
-    }
-  }
-}
-
-resource "azurerm_media_content_key_policy" "ams_test_stg_policy" {
-  count                       = var.env == "test" ? 1 : 0
-  name                        = "TestStgPolicyWithClearKeyOptionAndJwtTokenRestriction"
-  resource_group_name         = data.azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
-  description                 = "PRE Content Key Policy"
-  policy_option {
-    name                            = "ClearKeyOption"
-    clear_key_configuration_enabled = true
-    token_restriction {
-      token_type                  = "Jwt"
-      audience                    = "api://2f4bf1fd-543c-4332-bc26-7a524f52d375" // dts_pre_stg Application (client) ID
-      issuer                      = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-      primary_symmetric_token_key = data.azurerm_key_vault_secret.symmetrickey.value
-    }
-  }
-}
-
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   count                 = var.env != "test" ? 1 : 0
   provider              = azurerm.private_dns
