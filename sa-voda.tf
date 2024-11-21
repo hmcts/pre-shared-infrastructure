@@ -32,12 +32,6 @@ resource "azurerm_key_vault_secret" "vodasa_storage_account_connection_string" {
   expiration_date = local.secret_expiry
 }
 
-# For container cleanup operations
-resource "azurerm_role_assignment" "powerapp_appreg_voda_contrib" {
-  scope                = module.vodasa_storage_account.storageaccount_id
-  role_definition_name = "Storage Account Contributor"
-  principal_id         = var.dts_pre_backup_appreg_oid
-}
 resource "azurerm_monitor_diagnostic_setting" "storageblobvodasa" {
   name                       = module.vodasa_storage_account.storageaccount_name
   target_resource_id         = "${module.vodasa_storage_account.storageaccount_id}/blobServices/default"
