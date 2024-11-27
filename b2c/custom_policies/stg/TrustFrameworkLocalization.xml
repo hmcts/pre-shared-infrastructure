@@ -86,9 +86,9 @@
             StringId="requiredField_password"
           >Please enter your password</LocalizedString>
           <LocalizedString
-            ElementType="UxElement"
-            StringId="requiredField_generic"
-          >Please enter your {0}</LocalizedString>
+          ElementType="UxElement"
+          StringId="requiredField_password"
+          >Please enter your password</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="invalid_generic">Please enter a valid {0}</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="createaccount_one_link">Sign up now</LocalizedString>
           <LocalizedString
@@ -247,9 +247,9 @@
           >Please provide the following details.</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="preloader_alt">Please wait</LocalizedString>
           <LocalizedString
-            ElementType="UxElement"
-            StringId="requiredField_generic"
-          >Please enter your</LocalizedString>
+          ElementType="UxElement"
+          StringId="requiredField_password"
+          >Please enter your password</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="button_cancel">Cancel</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_edit">Change e-mail</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_resend">Send new code</LocalizedString>
