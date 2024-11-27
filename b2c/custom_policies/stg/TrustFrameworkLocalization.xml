@@ -86,9 +86,9 @@
             StringId="requiredField_password"
           >Please enter your password</LocalizedString>
           <LocalizedString
-            ElementType="UxElement"
-            StringId="requiredField_generic"
-          >Please enter your {0}</LocalizedString>
+          ElementType="UxElement"
+          StringId="requiredField_password"
+          >Please enter your password</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="invalid_generic">Please enter a valid {0}</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="createaccount_one_link">Sign up now</LocalizedString>
           <LocalizedString
@@ -395,8 +395,8 @@
           >Your account has been locked. Contact your support person to unlock it, then try again.</LocalizedString>
           <LocalizedString
             ElementType="UxElement"
-            StringId="requiredField_password"
-          >Please enter your password</LocalizedString>
+            StringId="requiredField_generic"
+          >Please enter your</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_edit">Change e-mail</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_resend">Send new code</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_send">Send verification code</LocalizedString>
