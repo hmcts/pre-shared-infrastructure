@@ -102,4 +102,5 @@ $(function() {
   addPasswordCriteria();
   lowerCaseEmailAddresses();
   removeAutofocus();
+  $(window).on('pageshow', removeAutofocus);
 });
