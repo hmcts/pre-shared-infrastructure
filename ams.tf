@@ -101,22 +101,6 @@ resource "azurerm_media_transform" "EncodeToMP" {
   }
 }
 
-resource "azurerm_monitor_diagnostic_setting" "ams_1" {
-  name                       = azurerm_media_services_account.ams.name
-  target_resource_id         = azurerm_media_services_account.ams.id
-  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
-
-  enabled_log {
-    category = "MediaAccount"
-  }
-  enabled_log {
-    category = "KeyDeliveryRequests"
-  }
-  metric {
-    category = "AllMetrics"
-  }
-}
-
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   count                 = var.env != "test" ? 1 : 0
   provider              = azurerm.private_dns
