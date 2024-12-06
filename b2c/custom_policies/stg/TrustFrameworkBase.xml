@@ -1246,6 +1246,11 @@
               <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>3668f36b-75fd-455a-9aed-b73a12accc5a</Value> <!-- assume automated test user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>isActiveMFASession</Value>
               <Action>SkipThisOrchestrationStep</Action>
