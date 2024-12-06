@@ -101,22 +101,6 @@ resource "azurerm_media_transform" "EncodeToMP" {
   }
 }
 
-resource "azurerm_monitor_diagnostic_setting" "ams_1" {
-  name                       = azurerm_media_services_account.ams.name
-  target_resource_id         = azurerm_media_services_account.ams.id
-  log_analytics_workspace_id = module.log_analytics_workspace.workspace_id
-
-  enabled_log {
-    category = "MediaAccount"
-  }
-  enabled_log {
-    category = "KeyDeliveryRequests"
-  }
-  metric {
-    category = "AllMetrics"
-  }
-}
-
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   count                 = var.env != "test" ? 1 : 0
   provider              = azurerm.private_dns
@@ -124,22 +108,4 @@ resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   resource_group_name   = var.dns_resource_group
   private_dns_zone_name = "privatelink.media.azure.net"
   virtual_network_id    = data.azurerm_virtual_network.vnet.id
-}
-
-resource "azurerm_private_endpoint" "ams_streamingendpoint_private_endpoint" {
-  name                = "ams-streamingendpoint-pe-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = var.location
-  subnet_id           = data.azurerm_subnet.endpoint_subnet.id
-  private_service_connection {
-    name                           = "ams-private-link-connection"
-    private_connection_resource_id = azurerm_media_services_account.ams.id
-    is_manual_connection           = false
-    subresource_names              = ["streamingendpoint"]
-  }
-  private_dns_zone_group {
-    name                 = "ams-endpoint-dnszonegroup"
-    private_dns_zone_ids = ["/subscriptions/1baf5470-1c3e-40d3-a6f7-74bfbce4b348/resourceGroups/core-infra-intsvc-rg/providers/Microsoft.Network/privateDnsZones/privatelink.media.azure.net"]
-  }
-  tags = var.common_tags
 }

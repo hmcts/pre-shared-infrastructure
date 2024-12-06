@@ -42,6 +42,29 @@ $ pre-commit install
 7. It will automatically be deployed to AAT and Prod environments
 8. Once successful in AAT and Prod then merge your change to demo, ithc, and perftest branches.
 
+## B2C
+
+### Bypassing 2FA
+Sometimes it's useful to allow a set user to skip email verification (2FA). E.G. when testing.
+This can be done by editing the `./b2c/custom_policies/<env>/TrustFrameworkExtensions.xml` file.
+You will need to add a snippet like the following:
+```xml
+<Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+  <Value>objectId</Value>
+  <Value>a207a1b2-f39b-4e70-a211-bd7e26d7504e</Value>
+  <Action>SkipThisOrchestrationStep</Action>
+</Precondition>
+```
+
+to the
+```xml
+<OrchestrationStep Order="4" Type="ClaimsExchange">
+  <Preconditions>
+...
+```
+block.
+The object Id can be obtained from that environments Azure AD properties for the user.
+
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

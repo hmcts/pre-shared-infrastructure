@@ -87,10 +87,20 @@ function lowerCaseEmailAddresses() {
   }
 }
 
+function removeAutofocus(){
+  const inputFields = document.getElementsByTagName('input');
+  for(let i=0; i<inputFields.length; i++){
+    inputFields[i].removeAttribute('autofocus');
+    inputFields[i].blur();
+   }
+}
+
 $(function() {
   moveForgotPassword();
   moveRetryCode();
   addTsAndCsLink();
   addPasswordCriteria();
   lowerCaseEmailAddresses();
+  removeAutofocus();
+  $(window).on('pageshow', removeAutofocus);
 });
