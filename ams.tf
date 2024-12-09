@@ -37,8 +37,6 @@ resource "azurerm_role_assignment" "pre_stg_mi_appreg_final_contrib" {
   principal_id         = data.azurerm_user_assigned_identity.pre_stg_mi.principal_id
 }
 
-
-
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   count                 = var.env != "test" ? 1 : 0
   provider              = azurerm.private_dns
