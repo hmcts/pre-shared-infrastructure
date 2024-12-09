@@ -95,39 +95,39 @@ function removeAutofocus(){
    }
 }
 
-function addDescriptiveErrors(){
-  const verifyButton = document.getElementById('email_ver_but_send');
-  const continueButton = document.getElementById('continue');
-  const emailButton = document.getElementById('email');
+function addDescriptiveErrors() {
+    const verifyButton = document.getElementById('email_ver_but_send');
+    const continueButton = document.getElementById('continue');
+    const emailButton = document.getElementById('email');
 
-  if (continueButton) {
-      continueButton.addEventListener('click', validateErrors);
+    if (continueButton) {
+        continueButton.addEventListener('click', validateErrors);
     }
 
-  if (verifyButton) {
-      verifyButton.addEventListener('click', validateErrors);
+    if (verifyButton) {
+        verifyButton.addEventListener('click', validateErrors);
     }
 
-  if (emailButton){
-      emailButton.addEventListener('click', validateErrors);
+    if (emailButton) {
+        emailButton.addEventListener('click', validateErrors);
     }
 
-  function validateErrors() {
-    const errorDivs = document.getElementsByClassName('error itemLevel');
+    function validateErrors() {
+        const errorDivs = document.getElementsByClassName('error itemLevel');
 
-      if(errorDivs){
-        for(let i=0; i<errorDivs.length; i++){
-          const input = errorDivs[i].nextElementSibling;
+        if (errorDivs) {
+            for (let i = 0; i < errorDivs.length; i++) {
+                const input = errorDivs[i].nextElementSibling;
 
-          if (input && input.tagName.toLowerCase() === 'input' && input.value.trim() === '') {
-            const placeholderText = input.getAttribute('placeholder')
-            errorDivs[i].textContent = `This field is required: ${placeholderText.toLowerCase()}`;
-          } else{
-          errorDivs[i].textContent = ''
-          }
+                if (input && input.tagName.toLowerCase() === 'input' && input.value.trim() === '') {
+                    const placeholderText = input.getAttribute('placeholder')
+                    errorDivs[i].textContent = `This field is required: ${placeholderText.toLowerCase()}`;
+                } else {
+                    errorDivs[i].textContent = ''
+                }
+            }
         }
-     }
-  };
+    };
 }
 
 
