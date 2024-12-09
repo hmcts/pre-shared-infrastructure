@@ -3,39 +3,7 @@ locals {
   managed_identities = var.env == "stg" ? [data.azurerm_user_assigned_identity.pre_dev_mi.id, data.azurerm_user_assigned_identity.managed_identity.id] : [data.azurerm_user_assigned_identity.managed_identity.id]
 }
 
-resource "azurerm_media_services_account" "ams" {
-  name                = "${var.product}ams${var.env}"
-  location            = var.location
-  resource_group_name = data.azurerm_resource_group.rg.name
 
-  identity {
-    type         = "UserAssigned"
-    identity_ids = local.managed_identities
-  }
-
-  storage_account {
-    id         = module.ingestsa_storage_account.storageaccount_id
-    is_primary = true
-
-    managed_identity {
-      use_system_assigned_identity = false
-      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
-    }
-  }
-
-  storage_account {
-    id         = module.finalsa_storage_account.storageaccount_id
-    is_primary = false
-
-    managed_identity {
-      use_system_assigned_identity = false
-      user_assigned_identity_id    = data.azurerm_user_assigned_identity.managed_identity.id
-    }
-  }
-
-  tags = var.common_tags
-
-}
 
 // if test env, grant dev-mi access to the SAs
 resource "azurerm_role_assignment" "pre_dev_mi_appreg_ingest_contrib" {
