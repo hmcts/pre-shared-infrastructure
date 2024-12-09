@@ -248,8 +248,8 @@
           <LocalizedString ElementType="UxElement" StringId="preloader_alt">Please wait</LocalizedString>
           <LocalizedString
             ElementType="UxElement"
-            StringId="requiredField_generic"
-          >Please enter your {0}</LocalizedString>
+            StringId="required_field"
+          >This information is required.</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="button_cancel">Cancel</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_edit">Change e-mail</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_resend">Send new code</LocalizedString>
@@ -395,8 +395,8 @@
           >Your account has been locked. Contact your support person to unlock it, then try again.</LocalizedString>
           <LocalizedString
             ElementType="UxElement"
-            StringId="requiredField_generic"
-          >Please enter your {0}</LocalizedString>
+            StringId="required_field"
+          >This information is required.</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_edit">Change e-mail</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_resend">Send new code</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="ver_but_send">Send verification code</LocalizedString>
