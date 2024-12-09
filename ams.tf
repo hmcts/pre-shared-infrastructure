@@ -69,38 +69,6 @@ resource "azurerm_role_assignment" "pre_stg_mi_appreg_final_contrib" {
   principal_id         = data.azurerm_user_assigned_identity.pre_stg_mi.principal_id
 }
 
-resource "azurerm_media_transform" "analysevideo" {
-  name                        = "AnalyseVideo"
-  resource_group_name         = data.azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
-
-  description = "Analyse Video"
-
-  output {
-    relative_priority = "Normal"
-    on_error_action   = "ContinueJob"
-    builtin_preset {
-      preset_name = "H264SingleBitrate720p"
-    }
-  }
-}
-
-resource "azurerm_media_transform" "EncodeToMP" {
-  name                        = "EncodeToMP4"
-  resource_group_name         = data.azurerm_resource_group.rg.name
-  media_services_account_name = azurerm_media_services_account.ams.name
-
-  description = "Encode To MP4"
-
-  output {
-    relative_priority = "Normal"
-    on_error_action   = "ContinueJob"
-    builtin_preset {
-      preset_name = "H264SingleBitrate720p"
-    }
-  }
-}
-
 resource "azurerm_private_dns_zone_virtual_network_link" "ams_zone_link" {
   count                 = var.env != "test" ? 1 : 0
   provider              = azurerm.private_dns
