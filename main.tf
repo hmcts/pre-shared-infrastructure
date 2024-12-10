@@ -58,3 +58,18 @@ resource "azurerm_monitor_action_group" "pre-support" {
     email_address = data.azurerm_key_vault_secret.slack_monitoring_address.value
   }
 }
+
+resource "azurerm_monitor_action_group" "pre-teams-wh" {
+  count               = var.env == "prod" || var.env == "stg" ? 1 : 0
+  name                = "TeamsAlertAction"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  short_name          = "pre-teams-wh"
+
+  tags = var.common_tags
+
+  webhook_receiver {
+    name                    = "PRE Support Teams Webhook"
+    service_uri             = data.azurerm_key_vault_secret.teams-monitoring-webhook.value
+    use_common_alert_schema = true
+  }
+}
