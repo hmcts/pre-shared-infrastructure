@@ -18,6 +18,7 @@ function moveForgotPassword() {
     passwordInput.parentNode.insertBefore(div, passwordInput.nextSibling);
   }
 }
+
 function moveRetryCode() {
   const retryCode = document.getElementById('retryCode');
 
@@ -87,97 +88,78 @@ function lowerCaseEmailAddresses() {
   }
 }
 
-function removeAutofocus(){
+function removeAutofocus() {
   const inputFields = document.getElementsByTagName('input');
-  for(let i=0; i<inputFields.length; i++){
+  for (let i = 0; i < inputFields.length; i++) {
     inputFields[i].removeAttribute('autofocus');
     inputFields[i].blur();
-   }
+  }
 }
 
 function addDescriptiveErrors() {
-    const verifyButton = document.getElementById('email_ver_but_send');
-    const continueButton = document.getElementById('continue');
-    const emailButton = document.getElementById('email');
+  const verifyButton = document.getElementById('email_ver_but_send');
+  const continueButton = document.getElementById('continue');
+  const emailButton = document.getElementById('email');
 
-    if (continueButton) {
-        continueButton.addEventListener('click', validateErrors);
-    }
+  if (continueButton) {
+    continueButton.addEventListener('click', validateErrors);
+  }
 
-    if (verifyButton) {
-        verifyButton.addEventListener('click', validateErrors);
-    }
+  if (verifyButton) {
+    verifyButton.addEventListener('click', validateErrors);
+  }
 
-    if (emailButton) {
-        emailButton.addEventListener('click', validateErrors);
-    }
-
-
-function addDescriptiveErrors() {
-    const verifyButton = document.getElementById('email_ver_but_send');
-    const continueButton = document.getElementById('continue');
-    const emailButton = document.getElementById('email');
-
-    if (continueButton) {
-        continueButton.addEventListener('click', validateErrors);
-    }
-
-    if (verifyButton) {
-        verifyButton.addEventListener('click', validateErrors);
-    }
-
-    if (emailButton) {
-        emailButton.addEventListener('click', validateErrors);
-    }
-
-    function validateErrors() {
-        const errorDivs = document.getElementsByClassName('error itemLevel');
-        const pageLevelErrorDiv = document.getElementById('requiredFieldMissing');
-        const errorFields = []
-
-        if (errorDivs) {
-            for (let i = 0; i < errorDivs.length; i++) {
-                const input = errorDivs[i].nextElementSibling;
-
-                if (input && input.tagName.toLowerCase() === 'input' && input.value.trim() === '') {
-                    const placeholderText = input.getAttribute('placeholder');
-                    const inputId = input.getAttribute('id');
-
-                    errorFields.push({
-                        placeholderText: placeholderText,
-                        inputId: inputId
-                    });
-                    errorDivs[i].textContent = `This field is required: ${placeholderText.toLowerCase()}`;
-
-                    pageLevelErrorDiv.className = "govuk-error-summary";
-
-                } else {
-                    errorDivs[i].textContent = ''
-                }
-
-            }
-
-        }
-
-        if (errorFields) {
-            pageLevelErrorDiv.innerHTML = `
-                <p class="govuk-error-summary__title">The following required field(s) are missing:</p>
-                <div class="govuk-error-summary__body">
-                <ul class="govuk-list govuk-error-summary__list">
-                     ${errorFields
-                        .map(field => `<li><a href="#${field.inputId}" style="color:rgb(212,53,19);">${field.placeholderText}</a></li>`)
-                        .join("")}
-                </ul>
-                </div>
-				`;
-        } else {
-            pageLevelErrorDiv.textContent = "";
-        }
-    };
+  if (emailButton) {
+    emailButton.addEventListener('click', validateErrors);
+  }
 }
 
+function validateErrors() {
+  const errorDivs = document.getElementsByClassName('error itemLevel');
+  const pageLevelErrorDiv = document.getElementById('requiredFieldMissing');
+  const errorFields = []
 
-$(function() {
+  if (errorDivs) {
+    for (let i = 0; i < errorDivs.length; i++) {
+      const input = errorDivs[i].nextElementSibling;
+
+      if (input && input.tagName.toLowerCase() === 'input' && input.value.trim() === '') {
+        const placeholderText = input.getAttribute('placeholder');
+        const inputId = input.getAttribute('id');
+
+        errorFields.push({
+          placeholderText: placeholderText,
+          inputId: inputId
+        });
+        errorDivs[i].textContent = `This field is required: ${placeholderText.toLowerCase()}`;
+
+        pageLevelErrorDiv.className = "govuk-error-summary";
+
+      } else {
+        errorDivs[i].textContent = ''
+      }
+
+    }
+
+  }
+
+  if (errorFields) {
+    pageLevelErrorDiv.innerHTML = `
+            <p class="govuk-error-summary__title">The following required field(s) are missing:</p>
+            <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                 ${errorFields
+      .map(field => `<li><a href="#${field.inputId}" style="color:rgb(212,53,19);">${field.placeholderText}</a></li>`)
+      .join("")}
+            </ul>
+            </div>
+    `;
+  } else {
+    pageLevelErrorDiv.textContent = "";
+  }
+}
+
+$(function () {
   moveForgotPassword();
   moveRetryCode();
   addTsAndCsLink();
