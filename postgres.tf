@@ -29,6 +29,17 @@ module "data_store_db_v14" {
   pgsql_admin_username = var.pgsql_admin_username
   pgsql_storage_mb     = var.pgsql_storage_mb
 
+  pgsql_server_configuration = [
+    {
+      name  = "azure.extensions"
+      value = "pgcrypto"
+    },
+    {
+      "name" : "backslash_quote",
+      "value" : "on"
+    }
+  ]
+
   admin_user_object_id = var.jenkins_AAD_objectId
 
 }
