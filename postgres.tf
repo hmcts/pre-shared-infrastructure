@@ -35,8 +35,8 @@ module "data_store_db_v14" {
       value = "pgcrypto"
     },
     {
-    "name": "backslash_quote",
-    "value": "on"
+      "name" : "backslash_quote",
+      "value" : "on"
     }
   ]
 
