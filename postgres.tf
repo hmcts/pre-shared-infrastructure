@@ -34,6 +34,10 @@ module "data_store_db_v14" {
       name  = "azure.extensions"
       value = "pgcrypto"
     }
+    {
+    "name": "backslash_quote",
+    "value": "on"
+    }
   ]
 
   admin_user_object_id = var.jenkins_AAD_objectId
