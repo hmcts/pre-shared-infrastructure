@@ -33,7 +33,7 @@ module "data_store_db_v14" {
     {
       name  = "azure.extensions"
       value = "pgcrypto"
-    }
+    },
     {
     "name": "backslash_quote",
     "value": "on"
