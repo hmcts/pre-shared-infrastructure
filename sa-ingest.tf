@@ -15,7 +15,8 @@ module "ingestsa_storage_account" {
   enable_change_feed              = true
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
-  public_network_access_enabled   = false
+  public_network_access_enabled   = var.policy = 7
+  storage-account-policy          = true
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
