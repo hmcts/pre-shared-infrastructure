@@ -130,6 +130,11 @@ variable "cors_rules" {
 
 variable "retention_duration" {}
 
+variable "storage-account-policy" {
+         rule.name       = delete-policy
+         rule.value.actions.version_delete_after_days_since_creation = 90
+}
+
 variable "tenant_id" {}
 
 variable "vm_type" {
