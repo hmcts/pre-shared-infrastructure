@@ -38,7 +38,7 @@ resource "azurerm_storage_management_policy" "example" {
         operation = "=="
         value     = "true"
       }
-      prefix_match = "[a-f0-9]" # only process blobs with a name starting with a hex character
+      prefix_match = '[a-f0-9]' # only process blobs with a name starting with a hex character
     }
     actions {
       base_blob {
