@@ -38,7 +38,7 @@ resource "azurerm_storage_management_policy" "example" {
         operation = "=="
         value     = "true"
       }
-      prefix_match = ["0"] # only process blobs with a name starting with 0
+      prefix_match = ["0-9"] #
     }
     actions {
       base_blob {
