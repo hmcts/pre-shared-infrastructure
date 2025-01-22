@@ -16,12 +16,36 @@ module "ingestsa_storage_account" {
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
   public_network_access_enabled   = false
-  storage-account-policy          = true
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
 
   common_tags = var.common_tags
+}
+
+# policy created outside of the SA module as the module does not allow for index tags filter
+# TODO: add functionallity to module
+resource "azurerm_storage_management_policy" "example" {
+  storage_account_id = module.ingestsa_storage_account.storageaccount_id
+
+  rule {
+    name    = "PRE_Ingest"
+    enabled = var.storage_policy_enabled
+    filters {
+      blob_types = ["blockBlob"]
+      match_blob_index_tag {
+        name      = "processed"
+        operation = "=="
+        value     = "true"
+      }
+      prefix_match = "*"  # match all blobs
+    }
+    actions {
+      base_blob {
+        delete_after_days_since_creation_greater_than = var.delete_after_days_since_creation_greater_than
+      }
+    }
+  }
 }
 
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {

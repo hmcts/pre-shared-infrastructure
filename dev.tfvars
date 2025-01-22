@@ -17,6 +17,17 @@ retention_duration         = "P1D"
 immutability_period_backup = "1"
 restore_policy_days        = "1"
 
+#  storage lifecycle management enabled
+delete_after_days_since_creation_greater_than = 10
+storage_policy_enabled                        = true
+
+#storage lifecycle management
+variable "delete_after_days_since_creation_greater_than" {
+  type        = number
+  default     = 90
+  description = "Number of days to keep an ingest file for before deleting it. Default 90 days"
+}
+
 #vms
 tenant_id          = "yrk32651"
 edit_vm_private_ip = ["10.40.12.6", "10.40.12.7"]
