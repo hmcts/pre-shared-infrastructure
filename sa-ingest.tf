@@ -38,7 +38,7 @@ resource "azurerm_storage_management_policy" "example" {
         operation = "=="
         value     = "true"
       }
-      prefix_match = "*"  # match all blobs
+      prefix_match = "*" # match all blobs
     }
     actions {
       base_blob {
