@@ -24,7 +24,7 @@ module "ingestsa_storage_account" {
 }
 
 # policy created outside of the SA module as the module does not allow for index tags filter
-# TODO: add functionallity to module
+
 resource "azurerm_storage_management_policy" "example" {
   storage_account_id = module.ingestsa_storage_account.storageaccount_id
 
@@ -38,7 +38,7 @@ resource "azurerm_storage_management_policy" "example" {
         operation = "=="
         value     = "true"
       }
-      prefix_match = ["0-9"] #
+      prefix_match = ["0-9"]
     }
     actions {
       base_blob {
