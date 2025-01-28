@@ -38,7 +38,7 @@ resource "azurerm_storage_management_policy" "example" {
         operation = "=="
         value     = "true"
       }
-      prefix_match = ["0-9"]
+      prefix_match = ["0-9a-f"]
     }
     actions {
       base_blob {
