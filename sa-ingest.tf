@@ -23,6 +23,31 @@ module "ingestsa_storage_account" {
   common_tags = var.common_tags
 }
 
+# policy created outside of the SA module as the module does not allow for index tags filter
+
+resource "azurerm_storage_management_policy" "example" {
+  storage_account_id = module.ingestsa_storage_account.storageaccount_id
+
+  rule {
+    name    = "PRE_Ingest"
+    enabled = var.storage_policy_enabled
+    filters {
+      blob_types = ["blockBlob"]
+      match_blob_index_tag {
+        name      = "processed"
+        operation = "=="
+        value     = "true"
+      }
+      prefix_match = ["0-9a-f"]
+    }
+    actions {
+      base_blob {
+        delete_after_days_since_creation_greater_than = var.delete_after_days_since_creation_greater_than
+      }
+    }
+  }
+}
+
 resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string" {
   name            = "ingestsa-storage-account-connection-string"
   value           = module.ingestsa_storage_account.storageaccount_primary_connection_string
