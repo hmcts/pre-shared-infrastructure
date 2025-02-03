@@ -36,7 +36,7 @@ resource "azurerm_storage_management_policy" "example" {
       match_blob_index_tag {
         name      = "processed"
         operation = "=="
-        value     = "true"
+        value     = "safe_to_delete"
       }
       prefix_match = ["0-9a-f"]
     }
