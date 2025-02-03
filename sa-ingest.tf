@@ -34,7 +34,7 @@ resource "azurerm_storage_management_policy" "delete_processed_blobs" {
     filters {
       blob_types = ["blockBlob"]
       match_blob_index_tag {
-        name      = "processed"
+        name      = "status"
         operation = "=="
         value     = "safe_to_delete"
       }
