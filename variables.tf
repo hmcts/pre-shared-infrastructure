@@ -130,6 +130,20 @@ variable "cors_rules" {
 
 variable "retention_duration" {}
 
+#storage lifecycle management
+variable "delete_after_days_since_creation_greater_than" {
+  type        = number
+  default     = 90
+  description = "Number of days to keep an ingest file for before deleting it. Default 90 days"
+}
+
+#  storage lifecycle management enabled
+variable "storage_policy_enabled" {
+  type        = bool
+  default     = false
+  description = "Status of the storage account lifecycle policy. Default 'false'"
+}
+
 variable "tenant_id" {}
 
 variable "vm_type" {
