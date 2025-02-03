@@ -25,7 +25,7 @@ module "ingestsa_storage_account" {
 
 # policy created outside of the SA module as the module does not allow for index tags filter
 
-resource "azurerm_storage_management_policy" "example" {
+resource "azurerm_storage_management_policy" "delete_processed_blobs" {
   storage_account_id = module.ingestsa_storage_account.storageaccount_id
 
   rule {
