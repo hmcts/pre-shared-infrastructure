@@ -17,6 +17,10 @@ retention_duration         = "P7D"
 immutability_period_backup = "7"
 restore_policy_days        = "1"
 
+#  storage lifecycle management enabled
+delete_after_days_since_creation_greater_than = 90
+storage_policy_enabled                        = true
+
 #vms
 tenant_id          = "yrk32651"
 edit_vm_private_ip = ["10.70.21.6", "10.70.21.7"]
