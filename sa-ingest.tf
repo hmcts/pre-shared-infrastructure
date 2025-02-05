@@ -32,7 +32,7 @@ resource "azurerm_storage_management_policy" "delete_processed_blobs" {
     name    = "PRE_Ingest"
     enabled = var.storage_policy_enabled
     filters {
-      blob_types = ["blockBlob, appendBlob"]
+      blob_types = ["blockBlob" "appendBlob"]
       match_blob_index_tag {
         name      = "status"
         operation = "=="
