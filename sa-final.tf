@@ -90,5 +90,5 @@ resource "azurerm_monitor_metric_alert" "storage_final_alert_capacity" {
 # Will be removed in subsequent PR after Apply operation has been run
 import {
   id = "/subscriptions/****/resourceGroups/pre-dev/providers/Microsoft.Network/privateEndpoints/prefinalsadev"
-  to = module.finalsa_storage_account.azurerm_private_endpoint
+  to = module.finalsa_storage_account.azurerm_private_endpoint["prefinalsadev"]
 }
