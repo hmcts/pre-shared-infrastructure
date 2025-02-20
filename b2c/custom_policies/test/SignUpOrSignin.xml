@@ -33,7 +33,7 @@
             ElementType="ClaimType"
             ElementId="email"
             StringId="PatternHelpText"
-          >Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com.</LocalizedString>
+          >cjsm.net email addresses are not supported. Please enter a valid email address.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>
@@ -65,7 +65,7 @@
           AlwaysUseDefaultValue="true"
           DefaultValue="{Policy:TenantObjectId}"
         />
-        <OutputClaim ClaimTypeReferenceId="TnCs" />
+        <OutputClaim ClaimTypeReferenceId="isSignUp" />
         <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />
