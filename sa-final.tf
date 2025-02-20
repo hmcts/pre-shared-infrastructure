@@ -89,7 +89,11 @@ resource "azurerm_monitor_metric_alert" "storage_final_alert_capacity" {
 # Temporary just to allow Terraform to manage this resource and resolve conflict
 # Will be removed in subsequent PR after Apply operation has been run
 import {
+  id = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/pre-dev/providers/Microsoft.Network/privateEndpoints/preingestsa"
+  to = module.ingestsa_storage_account.azurerm_private_endpoint["preingestsa"]
+}
+
+import {
   id = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/pre-dev/providers/Microsoft.Network/privateEndpoints/prefinalsadev"
   to = module.finalsa_storage_account.azurerm_private_endpoint["prefinalsadev"]
-  depends_on = ["azurerm_finalsa_storage_account.finalsa_storage_account"]
 }
