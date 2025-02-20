@@ -91,4 +91,5 @@ resource "azurerm_monitor_metric_alert" "storage_final_alert_capacity" {
 import {
   id = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/pre-dev/providers/Microsoft.Network/privateEndpoints/prefinalsadev"
   to = module.finalsa_storage_account.azurerm_private_endpoint["prefinalsadev"]
+  depends_on = ["azurerm_finalsa_storage_account.finalsa_storage_account"]
 }
