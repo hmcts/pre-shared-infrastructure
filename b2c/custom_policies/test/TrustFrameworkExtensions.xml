@@ -291,7 +291,7 @@
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>3c04187a-0a25-4a60-8666-66d29d41ceb6</Value> <!-- assume automated test user has valid phone
+              <Value>3c04187a-0a25-4a60-8666-66d29d41ceb6</Value> 
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
