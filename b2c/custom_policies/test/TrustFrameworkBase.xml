@@ -652,12 +652,11 @@
             <PersistedClaim ClaimTypeReferenceId="email" PartnerClaimType="signInNames.emailAddress" />
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
             <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
-
             <PersistedClaim
               ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
               PartnerClaimType="strongAuthenticationPhoneNumber"
             />
-
+<!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
             <!-- Optional claims. -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
@@ -919,7 +918,7 @@
 <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
 
-            <OutputClaim ClaimTypeReferenceId="isSignUp" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="isSignUp" DefaultValue="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />
