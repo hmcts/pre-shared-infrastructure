@@ -177,7 +177,7 @@
             <Metadata>
               <!-- Update the Issuer and Audience below -->
               <!-- Audience is optional, Issuer is required-->
-              <Item Key="issuer">https://hmctstestextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/</Item>
+              <Item Key="issuer">https://hmctstestextid.b2clogin.com/44379efc-6244-4e94-ab4d-aad9b6778220/v2.0/</Item>
               <Item
               Key="audience"
             >[ "22222222-2222-2222-2222-222222222222", "33333333-3333-3333-3333-333333333333" ]</Item>
@@ -197,15 +197,15 @@
           </TechnicalProfile>
           <TechnicalProfile Id="login-NonInteractive">
             <Metadata>
-              <Item Key="client_id">c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2</Item>
-              <Item Key="IdTokenAudience">5ffc2691-a59d-4b1f-9370-7ccd380a1b65</Item>
+              <Item Key="client_id">e650a938-6663-4171-b52f-63cb80d44f49</Item>
+              <Item Key="IdTokenAudience">8c742a22-9190-4f68-a23a-71ccf89b6e98</Item>
             </Metadata>
             <InputClaims>
-              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2" />
+              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="e650a938-6663-4171-b52f-63cb80d44f49" />
               <InputClaim
               ClaimTypeReferenceId="resource_id"
               PartnerClaimType="resource"
-              DefaultValue="5ffc2691-a59d-4b1f-9370-7ccd380a1b65"
+              DefaultValue="8c742a22-9190-4f68-a23a-71ccf89b6e98"
             />
             </InputClaims>
           </TechnicalProfile>
