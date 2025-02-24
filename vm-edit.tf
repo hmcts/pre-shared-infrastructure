@@ -26,6 +26,8 @@ module "edit_vm" {
   provision_vm_agent             = null
   vm_patch_mode                  = null
   aum_schedule_enable            = false
+  #do not build in preview environment as its not required
+  build_vm                      = var.env == "preview" ? false : true
 
   os_disk_size_gb = 127
 
