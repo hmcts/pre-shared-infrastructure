@@ -18,6 +18,7 @@ immutability_period_backup = "1"
 restore_policy_days        = "1"
 
 #vms
+num_vid_edit_vms   = 0
 tenant_id          = "yrk32651"
 edit_vm_private_ip = ["10.40.12.6", "10.40.12.7"]
 
