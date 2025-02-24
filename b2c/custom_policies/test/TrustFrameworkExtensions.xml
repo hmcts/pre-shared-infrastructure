@@ -197,15 +197,15 @@
           </TechnicalProfile>
           <TechnicalProfile Id="login-NonInteractive">
             <Metadata>
-              <Item Key="client_id">c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2</Item>
-              <Item Key="IdTokenAudience">5ffc2691-a59d-4b1f-9370-7ccd380a1b65</Item>
+              <Item Key="client_id">e650a938-6663-4171-b52f-63cb80d44f49</Item>
+              <Item Key="IdTokenAudience">8c742a22-9190-4f68-a23a-71ccf89b6e98</Item>
             </Metadata>
             <InputClaims>
-              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2" />
+              <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="e650a938-6663-4171-b52f-63cb80d44f49" />
               <InputClaim
               ClaimTypeReferenceId="resource_id"
               PartnerClaimType="resource"
-              DefaultValue="5ffc2691-a59d-4b1f-9370-7ccd380a1b65"
+              DefaultValue="8c742a22-9190-4f68-a23a-71ccf89b6e98"
             />
             </InputClaims>
           </TechnicalProfile>
@@ -289,19 +289,21 @@
         <!-- This step forces email verification on sign in only. -->
         <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
-            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
               <Value>objectId</Value>
-              <Value>3c04187a-0a25-4a60-8666-66d29d41ceb6</Value> <!-- assume automated test user has valid phone -->
+              <Value>foo</Value> <!-- let everyone skip 2fa -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>isForgotPassword</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>TnCs</Value>
+              <Value>isSignUp</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn" />
