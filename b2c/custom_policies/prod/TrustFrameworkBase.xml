@@ -304,18 +304,10 @@
         >Used to determine if the user should be permitted to reauthenticate silently via their existing refresh token.</UserHelpText>
       </ClaimType>
 
-      <!-- Terms and Conditions -->
-      <ClaimType Id="TnCs">
-        <DisplayName>Terms &amp; Conditions</DisplayName>
-        <DataType>string</DataType>
-        <UserInputType>CheckboxMultiSelect</UserInputType>
-        <Restriction>
-          <Enumeration
-            Text="I agree to the Terms &amp; Conditions (including Acceptable Use) for the Section 28 Video on Demand Portal."
-            Value="7/03/2024"
-            SelectByDefault="false"
-          />
-        </Restriction>
+      <ClaimType Id="isSignUp">
+        <DisplayName>isSignUp</DisplayName>
+        <DataType>boolean</DataType>
+        <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
       </ClaimType>
 
       <!-- SECTION II: Claims required to pass on special parameters (including some query string parameters) to other claims providers -->
@@ -659,13 +651,12 @@
             <!-- Required claims -->
             <PersistedClaim ClaimTypeReferenceId="email" PartnerClaimType="signInNames.emailAddress" />
             <PersistedClaim ClaimTypeReferenceId="newPassword" PartnerClaimType="password" />
-            <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration" />
-<!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
+            <PersistedClaim ClaimTypeReferenceId="passwordPolicies" DefaultValue="DisablePasswordExpiration, DisableStrongPassword" />
             <PersistedClaim
               ClaimTypeReferenceId="Verified.strongAuthenticationPhoneNumber"
               PartnerClaimType="strongAuthenticationPhoneNumber"
             />
-
+<!--            <PersistedClaim ClaimTypeReferenceId="displayName" DefaultValue="unknown" />-->
             <!-- Optional claims. -->
 <!--            <PersistedClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <PersistedClaim ClaimTypeReferenceId="surname" />-->
@@ -927,7 +918,7 @@
 <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
 
-            <OutputClaim ClaimTypeReferenceId="TnCs" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="isSignUp" DefaultValue="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />
