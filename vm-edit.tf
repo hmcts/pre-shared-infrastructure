@@ -5,7 +5,7 @@ module "edit_vm" {
     azurerm.soc = azurerm.soc
     azurerm.dcr = azurerm.dcr
   }
-  count                          = var.num_vid_edit_vms
+  count                          = var.env == “preview” ? 0 : var.num_vid_edit_vms
   source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   env                            = var.env
   vm_type                        = local.edit_vm_type
@@ -26,8 +26,6 @@ module "edit_vm" {
   provision_vm_agent             = null
   vm_patch_mode                  = null
   aum_schedule_enable            = false
-  #do not build in preview environment as its not required
-  build_vm = var.env == "preview" ? false : true
 
   os_disk_size_gb = 127
 
