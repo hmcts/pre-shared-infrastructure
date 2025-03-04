@@ -81,8 +81,3 @@ resource "azurerm_monitor_metric_alert" "storage_voda_alert_capacity" {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
   }
 }
-FooterHM Courts and Tribunal Services
-HM Courts and Tribunal Services avatar
-HM Courts and Tribunal Services
-The HMCTS Way
-The HMCTS Way
