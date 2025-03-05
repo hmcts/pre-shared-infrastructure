@@ -6,7 +6,7 @@ module "edit_vm" {
     azurerm.dcr = azurerm.dcr
   }
   count                          = var.num_vid_edit_vms
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=output-vm-mi-oid"
   env                            = var.env
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
@@ -149,6 +149,12 @@ resource "azurerm_key_vault_secret" "edit_password" {
   value           = random_password.vm_password[count.index].result
   key_vault_id    = data.azurerm_key_vault.keyvault.id
   expiration_date = local.secret_expiry
+}
+
+resource "azurerm_role_assignment" "editvm_final_contrib" {
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = module.edit_vm[0].system_assigned_identity_oid
 }
 
 data "azurerm_key_vault_secret" "robot-x-user-id" {
