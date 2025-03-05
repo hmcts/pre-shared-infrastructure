@@ -61,10 +61,10 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobvodasa" {
 
 resource "azurerm_monitor_metric_alert" "storage_voda_alert_capacity" {
   count               = var.env == "prod" ? 1 : 0
-  name                = "used_capacity"
+  name                = "used_capacity_voda"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.vodasa_storage_account.storageaccount_id]
-  description         = "When the used storage capacity is over 4TiB"
+  description         = "When the used storage capacity is over 10TiB"
   frequency           = "PT1H"
   window_size         = "P1D"
 
@@ -75,7 +75,7 @@ resource "azurerm_monitor_metric_alert" "storage_voda_alert_capacity" {
     metric_name      = "UsedCapacity"
     aggregation      = "Average"
     operator         = "GreaterThan"
-    threshold        = 4398046511104 # 4 TiB in bytes (1 TiB = 2^40 bytes)
+    threshold        = 10995116277760 # 10 TiB in bytes (1 TiB = 2^40 bytes)
   }
   action {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
