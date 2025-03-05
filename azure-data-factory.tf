@@ -1,6 +1,6 @@
 module "datafactory" {
   count  = var.num_adf # We only need it in prod
-  source = "git@github.com:hmcts/terraform-module-azure-datafactory?ref=main"
+  source = "git@github.com:hmcts/terraform-module-azure-datafactory.git?ref=main"
 
   env         = var.env
   product     = "pre"
