@@ -71,3 +71,5 @@ edit_vm_data_disks = [{
 cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
 
 apim_service_url = "https://pre-api.platform.hmcts.net"
+
+num_adf = 1
