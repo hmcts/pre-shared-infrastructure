@@ -10,8 +10,8 @@ module "datafactory" {
 
   existing_resource_group_name = data.azurerm_resource_group.rg.name
 
-  linked_blob_storage = [{
-    connection_string    = module.vodasa_storage_account.storageaccount_primary_connection_string
-    use_managed_identity = false
-  }]
+  linked_blob_storage = map({
+    connection_string        = module.vodasa_storage_account.storageaccount_primary_connection_string
+    use_managed_identity     = false
+  })
 }
