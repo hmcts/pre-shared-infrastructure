@@ -9,7 +9,7 @@ module "datafactory" {
   common_tags = var.common_tags
 
   user_assigned_identity_ids = [
-    "${var.product}-${var.env}-mi"
+    data.azurerm_user_assigned_identity.managed_identity.id
   ]
 
   existing_resource_group_name = data.azurerm_resource_group.rg.name
