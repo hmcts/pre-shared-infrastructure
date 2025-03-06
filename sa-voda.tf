@@ -81,3 +81,10 @@ resource "azurerm_monitor_metric_alert" "storage_voda_alert_capacity" {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
   }
 }
+
+# For SC team members
+resource "azurerm_role_assignment" "sc_team_members_voda_contrib" {
+  scope                = module.vodasa_storage_account.storageaccount_id
+  role_definition_name = "Storage Account Contributor"
+  principal_id         = data.azuread_group.edit_group.object_id
+}
