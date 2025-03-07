@@ -41,9 +41,10 @@ resource "azurerm_role_assignment" "powerapp_appreg_final_contrib" {
 
 # For SC team members
 resource "azurerm_role_assignment" "sc_team_members_final_readers" {
+  count                = var.env == "prod" ? 1 : 0
   scope                = module.finalsa_storage_account.storageaccount_id
   role_definition_name = "Storage Blob Data Reader"
-  principal_id         = data.azuread_group.edit_group.object_id
+  principal_id         = data.azuread_group.reader_group.object_id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
