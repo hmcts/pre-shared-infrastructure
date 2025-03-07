@@ -151,12 +151,6 @@ resource "azurerm_key_vault_secret" "edit_password" {
   expiration_date = local.secret_expiry
 }
 
-resource "azurerm_role_assignment" "editvm_final_contrib" {
-  scope                = module.finalsa_storage_account.storageaccount_id
-  role_definition_name = "Storage Account Contributor"
-  principal_id         = module.edit_vm[0].system_assigned_identity_oid
-}
-
 data "azurerm_key_vault_secret" "robot-x-user-id" {
   name         = "robot-x-user-id"
   key_vault_id = data.azurerm_key_vault.keyvault.id

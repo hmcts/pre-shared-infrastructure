@@ -40,9 +40,9 @@ resource "azurerm_role_assignment" "powerapp_appreg_final_contrib" {
 }
 
 # For SC team members
-resource "azurerm_role_assignment" "sc_team_members_final_contrib" {
+resource "azurerm_role_assignment" "sc_team_members_final_read" {
   scope                = module.finalsa_storage_account.storageaccount_id
-  role_definition_name = "Storage Account Contributor"
+  role_definition_name = "Storage Blob Data Reader"
   principal_id         = data.azuread_group.edit_group.object_id
 }
 
