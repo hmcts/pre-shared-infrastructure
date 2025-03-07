@@ -23,8 +23,8 @@ data "azuread_group" "edit_group" {
   display_name = "DTS PRE Contributor (env:${var.env})"
 }
 
-data "azuread_group" "reader_group" {
-  display_name = "DTS PRE Storage Blob Data Reader (env:${var.env})"
+data "azuread_group" "prod_reader_group" {
+  display_name = "DTS PRE Storage Blob Data Reader (env:prod)"
 }
 
 data "azuread_group" "pre_group" {
