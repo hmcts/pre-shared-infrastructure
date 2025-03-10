@@ -1,4 +1,11 @@
 #!groovy
+
+properties([
+  // Run on random minute of 8th hour every Monday and Tuesday
+  // (after we cycle SA keys for non-prod and prod respectively)
+  pipelineTriggers([cron('H 08 * * 1,2')])
+])
+
 @Library("Infrastructure") _
 
 def product = "pre"
