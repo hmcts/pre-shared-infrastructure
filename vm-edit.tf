@@ -99,8 +99,9 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
-  triggers = {
-    run_id = var.edit_vm_force_run_id
+
+  lifecycle {
+    replace_triggered_by = [terraform_data.force_init_run]
   }
 
   lifecycle {
