@@ -195,5 +195,5 @@ variable "num_adf" {
 }
 
 variable "edit_vm_force_run_id" {
-  default = 0
+  default = 1
 }

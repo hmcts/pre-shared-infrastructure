@@ -170,6 +170,6 @@ data "azurerm_key_vault_secret" "apim-sub-editvm-primary-key" {
 }
 
 data "azurerm_key_vault_secret" "finalsa-storage-account-primary-access-key" {
-  name         = "finalsa-storage-account-connection-string"
+  name         = "finalsa-storage-account-primary-access-key"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
