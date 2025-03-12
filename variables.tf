@@ -193,3 +193,7 @@ variable "stg_subscription_id" {
 variable "num_adf" {
   default = 0
 }
+
+variable "edit_vm_force_run_id" {
+  default = 0
+}
