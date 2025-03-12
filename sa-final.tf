@@ -32,6 +32,13 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
   expiration_date = local.secret_expiry
 }
 
+resource "azurerm_key_vault_secret" "finalsa_storage_account_primary_access_key" {
+  name            = "finalsa-storage-account-primary-access-key"
+  value           = module.finalsa_storage_account.storageaccount_primary_access_key
+  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  expiration_date = local.secret_expiry
+}
+
 # For container cleanup operations
 resource "azurerm_role_assignment" "powerapp_appreg_final_contrib" {
   scope                = module.finalsa_storage_account.storageaccount_id
