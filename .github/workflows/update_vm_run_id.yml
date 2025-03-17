@@ -12,11 +12,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generate timestamp
-        run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
       - name: Update variables.tf
         run: |
-          sed -i 's/\(variable "edit_vm_force_run_id" {\n  default = "\)[0-9]\{14\}\("\)/\1'"$date"'\2/' variables.tf
+          sed -i 's/\(variable "edit_vm_force_run_id" {\n  default = "\)[0-9]\{1\}\("\)/\1'"$date"'\2/' variables.tf
 
       - name: Check for changes
         run: |
