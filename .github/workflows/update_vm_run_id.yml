@@ -36,13 +36,26 @@ jobs:
             echo "changed=true" >> $GITHUB_ENV
           fi
 
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - name: Commit and push changes
-        if: env.changed == 'true'
+      - name: Use the token
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          echo "Committing and pushing changes..."
-          git config --global user.name 'PRE DevOps'
-          git config --global user.email '138598290+pre-devops@users.noreply.github.com'
-          git add variables.tf
-          git commit -m "Update edit_vm_force_run_id to $date"
-          git push origin master
+          gh api octocat
+
+
+#      - name: Commit and push changes
+#        if: env.changed == 'true'
+#        run: |
+#          echo "Committing and pushing changes..."
+#          git config --global user.name 'PRE DevOps'
+#          git config --global user.email '138598290+pre-devops@users.noreply.github.com'
+#          git add variables.tf
+#          git commit -m "Update edit_vm_force_run_id to $date"
+#          git push origin master
