@@ -16,7 +16,15 @@ jobs:
 
       - name: Update variables.tf
         run: |
-          sed -i 's/\(variable "edit_vm_force_run_id" {[^}]*default = "\)[0-9]\{8\}\("\)/\1'"$DATE"'\2/' variables.tf
+          awk -i inplace -v new_date="$date" '
+            /variable "edit_vm_force_run_id" {/ {
+            found=1
+          }
+            found && /default = "/ {
+            sub(/[0-9]{8}/, new_date)
+          }
+            { print }
+            ' variables.tf
 
       - name: Check for changes
         run: |
