@@ -81,3 +81,11 @@ resource "azurerm_monitor_metric_alert" "storage_voda_alert_capacity" {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
   }
 }
+
+# For SC team members
+resource "azurerm_role_assignment" "sc_team_members_voda_readers" {
+  count                = var.env == "prod" ? 1 : 0
+  scope                = module.vodasa_storage_account.storageaccount_id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = data.azuread_group.prod_reader_group.object_id
+}

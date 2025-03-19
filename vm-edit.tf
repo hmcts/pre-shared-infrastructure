@@ -88,6 +88,10 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 }
 
+resource "terraform_data" "force_init_run" {
+  input = var.edit_vm_force_run_id
+}
+
 resource "azurerm_virtual_machine_extension" "edit_init" {
   count                = var.num_vid_edit_vms
   name                 = "toolingScript"
@@ -96,9 +100,13 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
 
+  lifecycle {
+    replace_triggered_by = [terraform_data.force_init_run]
+  }
+
   protected_settings = <<SETTINGS
  {
-   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1; [Environment]::SetEnvironmentVariable('SYSTEM_APIM_KEY', '${data.azurerm_key_vault_secret.apim-sub-editvm-primary-key.value}', 'Machine'); [Environment]::SetEnvironmentVariable('SYSTEM_ROBOT_USER_ID', '${data.azurerm_key_vault_secret.robot-x-user-id.value}', 'Machine')\""
+   "commandToExecute": "powershell -ExecutionPolicy unrestricted -NoProfile -NonInteractive -command \"cp c:/azuredata/customdata.bin c:/azuredata/edit-init.ps1; c:/azuredata/edit-init.ps1; [Environment]::SetEnvironmentVariable('SYSTEM_APIM_KEY', '${data.azurerm_key_vault_secret.apim-sub-editvm-primary-key.value}', 'Machine'); [Environment]::SetEnvironmentVariable('SYSTEM_ROBOT_USER_ID', '${data.azurerm_key_vault_secret.robot-x-user-id.value}', 'Machine'); [Environment]::SetEnvironmentVariable('PRE_FINAL_SA_ACCESS_KEY', '${data.azurerm_key_vault_secret.finalsa-storage-account-primary-access-key.value}', 'Machine')\""
  }
 SETTINGS
 
@@ -158,5 +166,10 @@ data "azurerm_key_vault_secret" "robot-x-user-id" {
 
 data "azurerm_key_vault_secret" "apim-sub-editvm-primary-key" {
   name         = "apim-sub-editvm-primary-key"
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
+data "azurerm_key_vault_secret" "finalsa-storage-account-primary-access-key" {
+  name         = "finalsa-storage-account-primary-access-key"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }

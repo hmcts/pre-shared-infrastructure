@@ -32,12 +32,28 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
   expiration_date = local.secret_expiry
 }
 
+resource "azurerm_key_vault_secret" "finalsa_storage_account_primary_access_key" {
+  name            = "finalsa-storage-account-primary-access-key"
+  value           = module.finalsa_storage_account.storageaccount_primary_access_key
+  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  expiration_date = local.secret_expiry
+}
+
 # For container cleanup operations
 resource "azurerm_role_assignment" "powerapp_appreg_final_contrib" {
   scope                = module.finalsa_storage_account.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = var.dts_pre_backup_appreg_oid
 }
+
+# For SC team members
+resource "azurerm_role_assignment" "sc_team_members_final_readers" {
+  count                = var.env == "prod" ? 1 : 0
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = data.azuread_group.prod_reader_group.object_id
+}
+
 resource "azurerm_monitor_diagnostic_setting" "storageblobfinalsa" {
   name                       = module.finalsa_storage_account.storageaccount_name
   target_resource_id         = "${module.finalsa_storage_account.storageaccount_id}/blobServices/default"

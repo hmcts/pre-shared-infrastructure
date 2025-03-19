@@ -1,0 +1,48 @@
+name: Update Edit VM Run ID
+on:
+  schedule:
+    - cron: "0 9 * * 1 " # Every Monday at 9:00 AM
+  workflow_dispatch:
+
+jobs:
+  non_prod_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate timestamp
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Update variables.tf
+        run: |
+          awk -i inplace -v new_date="$date" '
+            /variable "edit_vm_force_run_id" {/ {
+            found=1
+          }
+            found && /default = "/ {
+            sub(/[0-9]{8}/, new_date)
+          }
+            { print }
+            ' variables.tf
+
+      - name: Check for changes
+        run: |
+          if git diff --quiet variables.tf; then
+            echo "No changes detected. Exiting..."
+            echo "changed=false" >> $GITHUB_ENV
+          else
+            echo "Changes detected. Proceeding with commit."
+            echo "changed=true" >> $GITHUB_ENV
+          fi
+
+
+      - name: Commit and push changes
+        if: env.changed == 'true'
+        run: |
+          echo "Committing and pushing changes..."
+          git config --global user.name 'PRE DevOps'
+          git config --global user.email '138598290+pre-devops@users.noreply.github.com'
+          git add variables.tf
+          git commit -m "Update edit_vm_force_run_id to $date"
+          git push origin master
