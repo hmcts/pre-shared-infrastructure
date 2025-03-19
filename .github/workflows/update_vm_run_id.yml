@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  non_prod_update:
+  update_vm_run_id:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,7 +18,11 @@ jobs:
       - name: Generate timestamp
         run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
 
+      - name: Generate day of the week
+        run: echo "dow=$(date +'%u')" >> $GITHUB_ENV
+
       - name: Update variables.tf
+        if: env.dow == 1 # Mondays only
         run: |
           awk -i inplace -v new_date="$date" '
             /variable "edit_vm_force_run_id" {/ {
@@ -30,9 +34,19 @@ jobs:
             { print }
             ' variables.tf
 
+      - name: Update variables.tf
+        if: env.dow == 2 # Tuesdays only
+        run: |
+          awk -i inplace -v new_date="$date" '
+            /edit_vm_force_run_id *= *"/ {
+              sub(/[0-9]{8}/, new_date)
+            }
+            { print }
+          ' prod.tfvars
+
       - name: Check for changes
         run: |
-          if git diff --quiet variables.tf; then
+          if git diff --quiet variables.tf prod.tfvars; then
             echo "No changes detected. Exiting..."
             echo "changed=false" >> $GITHUB_ENV
           else
@@ -55,7 +69,7 @@ jobs:
           echo "Committing and pushing changes..."
           git config --global user.name 'PRE DevOps'
           git config --global user.email '138598290+pre-devops@users.noreply.github.com'
-          git add variables.tf
+          git add variables.tf prod.tfvars
           git commit -m "Update edit_vm_force_run_id to $date"
           git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/hmcts/pre-shared-infrastructure.git
           git push origin master
