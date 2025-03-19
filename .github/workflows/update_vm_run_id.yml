@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Generate timestamp
         run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
@@ -43,19 +46,15 @@ jobs:
           app-id: ${{ secrets.PRE_APP_ID }}
           private-key: ${{ secrets.PRE_APP_PRIVATE_KEY }}
 
-      - name: Use the token
+      - name: Commit and push changes
+        if: env.changed == 'true'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          gh api octocat
-
-
-#      - name: Commit and push changes
-#        if: env.changed == 'true'
-#        run: |
-#          echo "Committing and pushing changes..."
-#          git config --global user.name 'PRE DevOps'
-#          git config --global user.email '138598290+pre-devops@users.noreply.github.com'
-#          git add variables.tf
-#          git commit -m "Update edit_vm_force_run_id to $date"
-#          git push origin master
+          echo "Committing and pushing changes..."
+          git config --global user.name 'PRE DevOps'
+          git config --global user.email '138598290+pre-devops@users.noreply.github.com'
+          git add variables.tf
+          git commit -m "Update edit_vm_force_run_id to $date"
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/hmcts/pre-shared-infrastructure.git
+          git push origin master
