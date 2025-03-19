@@ -55,6 +55,7 @@ jobs:
           fi
 
       - name: Generate a token
+        if: env.changed == 'true'
         id: generate-token
         uses: actions/create-github-app-token@v1
         with:
