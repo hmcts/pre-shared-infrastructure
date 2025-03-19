@@ -13,6 +13,7 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+          ref: master
 
       - name: Generate timestamp
         run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_ENV
