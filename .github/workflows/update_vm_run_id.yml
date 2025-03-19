@@ -2,6 +2,7 @@ name: Update Edit VM Run ID
 on:
   schedule:
     - cron: "0 9 * * 1 " # Every Monday at 9:00 AM
+    - cron: "0 8 * * 2 " # Every Tuesday at 8:00 AM
   workflow_dispatch:
 
 jobs:
