@@ -42,17 +42,17 @@
 
   <RelyingParty>
     <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
+    <Endpoints>
+      <!--points to refresh token journey when app makes refresh token request-->
+      <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
+      <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
+    </Endpoints>
     <UserJourneyBehaviors>
       <SingleSignOn Scope="Application" KeepAliveInDays="1" />
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
-    <Endpoints>
-      <!--points to refresh token journey when app makes refresh token request-->
-      <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
-      <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
-    </Endpoints>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
