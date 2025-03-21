@@ -53,12 +53,6 @@
       <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
       <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
     </Endpoints>
-    <UserJourneyBehaviors>
-      <ScriptExecution>Allow</ScriptExecution>
-      <SingleSignOn Scope="Application" KeepAliveInDays="1" />
-      <SessionExpiryType>Absolute</SessionExpiryType>
-      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
-    </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
