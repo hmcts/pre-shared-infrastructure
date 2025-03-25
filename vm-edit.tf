@@ -100,6 +100,10 @@ resource "azurerm_virtual_machine_extension" "edit_init" {
   type                 = "CustomScriptExtension"
   type_handler_version = "1.9"
 
+  depends_on = [
+    azurerm_key_vault_secret.finalsa_storage_account_primary_access_key
+  ]
+
   lifecycle {
     replace_triggered_by = [terraform_data.force_init_run]
   }
