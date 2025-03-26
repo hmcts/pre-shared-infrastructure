@@ -1,5 +1,5 @@
 module "virtual_machine" {
-  source               = "git::https://github.com/hmcts/terraform-module-virtual-machine.git?ref=master"
+  source               = "git@github.com/hmcts/terraform-module-virtual-machine.git?ref=master"
 
   vm_type              = "linux"
   vm_name              = "voda-vm"
