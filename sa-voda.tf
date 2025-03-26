@@ -33,6 +33,13 @@ resource "azurerm_key_vault_secret" "vodasa_storage_account_connection_string" {
   expiration_date = local.secret_expiry
 }
 
+resource "azurerm_key_vault_secret" "vodasa_storage_account_primary_access_key" {
+  name            = "vodasa-storage-account-primary-access-key"
+  value           = module.vodasa_storage_account.storageaccount_primary_access_key
+  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  expiration_date = local.secret_expiry
+}
+
 resource "azurerm_monitor_diagnostic_setting" "storageblobvodasa" {
   name                       = module.vodasa_storage_account.storageaccount_name
   target_resource_id         = "${module.vodasa_storage_account.storageaccount_id}/blobServices/default"
