@@ -27,7 +27,7 @@ module "edit_vm" {
   vm_patch_mode                  = null
   aum_schedule_enable            = false
 
-  os_disk_size_gb = 127
+  os_disk_size_gb = 256
 
   nic_name      = lower("edit${count.index + 1}-nic-${var.env}")
   ipconfig_name = local.edit_ipconfig_name
