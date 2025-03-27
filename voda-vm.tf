@@ -5,9 +5,9 @@ module "virtual_machine" {
     azurerm.soc = azurerm.soc
     azurerm.dcr = azurerm.dcr
   }
-  count                          = var.num_voda_vms
-  source               = "git@github.com/hmcts/terraform-module-virtual-machine.git?ref=master"
-  env                            = var.env 
+  count                = var.num_voda_vms
+  source               = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
+  env                  = var.env 
   vm_type              = "linux"
   vm_name              = "voda-vm"
   vm_resource_group    = data.azurerm_resource_group.rg.name
