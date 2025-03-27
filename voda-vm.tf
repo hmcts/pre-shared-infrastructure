@@ -1,10 +1,17 @@
 module "virtual_machine" {
+  providers = {
+    azurerm     = azurerm
+    azurerm.cnp = azurerm.cnp
+    azurerm.soc = azurerm.soc
+    azurerm.dcr = azurerm.dcr
+  }
+  count                          = var.num_voda_vms
   source               = "git@github.com/hmcts/terraform-module-virtual-machine.git?ref=master"
-
+  env                            = var.env 
   vm_type              = "linux"
   vm_name              = "voda-vm"
   vm_resource_group    = data.azurerm_resource_group.rg.name
-  vm_admin_name        = azurerm_key_vault_secret.edit_username[count.index].value
+  vm_admin_name        = azurerm_key_vault_secret.voda_username[count.index].value
   vm_admin_password    = azurerm_key_vault_secret.voda_password[count.index].value
   vm_subnet_id         = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/xxxx/providers/Microsoft.Network/virtualNetworks/xxxx/subnets/xxx"
   vm_publisher_name    = "canonical"
