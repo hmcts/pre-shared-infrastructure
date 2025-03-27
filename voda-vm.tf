@@ -32,14 +32,9 @@ resource "azurerm_key_vault_secret" "voda_username" {
 
 
 resource "azurerm_key_vault_secret" "voda_password" {
-  count           = var.num_vid_edit_vms
+  count           = var.num_voda_vms
   name            = "vodavm${count.index + 1}-password"
   value           = random_password.vm_password[count.index].result
   key_vault_id    = data.azurerm_key_vault.keyvault.id
   expiration_date = local.secret_expiry
-}
-
-data "azurerm_key_vault_secret" "vodasa-storage-account-primary-access-key" {
-  name         = "vodasa-storage-account-primary-access-key"
-  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
