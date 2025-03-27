@@ -23,7 +23,7 @@ module "virtual_machine" {
   tags                 = var.common_tags
 }
 
-resource "azurerm_key_vault_secret" "edit_username" {
+resource "azurerm_key_vault_secret" "voda_username" {
   count        = var.num_vid_edit_vms
   name         = "videditvm${count.index + 1}-username"
   value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
