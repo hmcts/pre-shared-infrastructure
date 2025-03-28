@@ -40,7 +40,9 @@ variable "num_voda_vms" {
   default = 0
 }
 
-variable "voda_vm_private_ip" {}
+variable "voda_vm_private_ip" {
+  default = []
+}
 
 variable "mgmt_net_name" {}
 
