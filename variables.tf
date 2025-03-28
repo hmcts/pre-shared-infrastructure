@@ -40,6 +40,10 @@ variable "num_voda_vms" {
   default = 0
 }
 
+variable "voda_vm_private_ip" {
+  default = []
+}
+
 variable "mgmt_net_name" {}
 
 variable "mgmt_subscription_id" {} // set by jenkins library
