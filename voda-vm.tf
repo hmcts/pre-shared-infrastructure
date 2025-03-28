@@ -25,7 +25,7 @@ module "virtual_machine" {
 
 locals {
   edit_vm_subnet_id = data.azurerm_subnet.videoedit_subnet.id
-
+}
 resource "azurerm_key_vault_secret" "voda_username" {
   count        = var.num_vid_edit_vms
   name         = "videditvm${count.index + 1}-username"
