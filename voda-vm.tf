@@ -34,9 +34,9 @@ module "virtual_machine" {
 }
 
 resource "azurerm_key_vault_secret" "voda_username" {
-  count        = var.num_vid_edit_vms
-  name         = "videditvm${count.index + 1}-username"
-  value        = "videdit${count.index}_${random_string.vm_username[count.index].result}"
+  count        = var.num_voda_vms
+  name         = "vodavm${count.index + 1}-username"
+  value        = "voda${count.index}_${random_string.vm_username[count.index].result}"
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
