@@ -22,7 +22,7 @@ tenant_id          = "ebe20728"
 edit_vm_private_ip = ["10.101.3.6", "10.101.3.7"]
 
 #vodavm
-num_voda_vms = "1"
+num_voda_vms         = "1"
 voda_vm_snet_address = "10.101.3.0/26"
 
 
