@@ -1,3 +1,12 @@
+resource "azurerm_public_ip" "voda-vm-pip" {
+  count               = var.num_voda_vms
+  name                = "pre-voda-vm-pip-${count.index + 1}"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  allocation_method   = "Dynamic"
+  tags                = var.common_tags
+}
+
 module "virtual_machine" {
   providers = {
     azurerm     = azurerm
@@ -13,19 +22,17 @@ module "virtual_machine" {
   vm_resource_group    = data.azurerm_resource_group.rg.name
   vm_admin_name        = azurerm_key_vault_secret.voda_username[count.index].value
   vm_admin_password    = azurerm_key_vault_secret.voda_password[count.index].value
-  vm_subnet_id         = local.voda_vm_subnet_id
+  vm_subnet_id         = local.edit_vm_subnet_id
   vm_publisher_name    = "canonical"
   vm_offer             = "0001-com-ubuntu-server-jammy"
   vm_sku               = "22_04-lts-gen2"
   vm_size              = "Standard_D2ds_v5"
   vm_version           = "latest"
   vm_availabilty_zones = "1"
+  vm_public_ip_address = azurerm_public_ip.voda-vm-pip[count.index].ip_address
   tags                 = var.common_tags
 }
 
-locals {
-  voda_vm_subnet_id = data.azurerm_subnet.voda_subnet.id
-}
 resource "azurerm_key_vault_secret" "voda_username" {
   count        = var.num_vid_edit_vms
   name         = "videditvm${count.index + 1}-username"
