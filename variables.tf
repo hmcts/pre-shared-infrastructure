@@ -37,7 +37,7 @@ variable "num_vid_edit_vms" {
 }
 
 variable "num_voda_vms" {
-  default = 1
+  default = 0
 }
 
 variable "mgmt_net_name" {}
