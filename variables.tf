@@ -36,6 +36,10 @@ variable "num_vid_edit_vms" {
   default = 1
 }
 
+variable "num_voda_vms" {
+  default = 0
+}
+
 variable "mgmt_net_name" {}
 
 variable "mgmt_subscription_id" {} // set by jenkins library
