@@ -1,12 +1,3 @@
-resource "azurerm_public_ip" "voda-vm-pip" {
-  count               = var.num_voda_vms
-  name                = "pre-voda-vm-pip-${count.index + 1}"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  allocation_method   = "Dynamic"
-  tags                = var.common_tags
-}
-
 module "virtual_machine" {
   providers = {
     azurerm     = azurerm
@@ -29,7 +20,6 @@ module "virtual_machine" {
   vm_size              = "Standard_D2ds_v5"
   vm_version           = "latest"
   vm_availabilty_zones = "1"
-  vm_public_ip_address = azurerm_public_ip.voda-vm-pip[count.index].ip_address
   tags                 = var.common_tags
 }
 
