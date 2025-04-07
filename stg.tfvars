@@ -70,3 +70,8 @@ edit_vm_data_disks = [{
 cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 
 apim_service_url = "https://pre-api.staging.platform.hmcts.net"
+
+import {
+  id = "/subscriptions/867a878b-cb68-4de5-9741-361ac9e178b6/resourceGroups/pre-stg/providers/Microsoft.Compute/virtualMachines/edit-vm1-stg/extensions/toolingScript"
+  to = module.azurerm_virtual_machine_extension.edit_init[toolingScript]
+}
