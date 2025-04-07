@@ -1,5 +1,5 @@
 # pre product infrastructure
-Pre-Recorded Evidence Project - Core infrastructure
+Pre-Recorded Evidence Project - Core infrastructure.
 
 The infrastructure for PRE is brought up in 4 stages:
 1. https://github.com/hmcts/pre-network
