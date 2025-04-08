@@ -113,6 +113,11 @@ SETTINGS
   tags = var.common_tags
 }
 
+import {
+  id = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/PRE-STG/providers/Microsoft.Compute/virtualMachines/edit-vm1-stg/extensions/toolingScript"
+  to = module.azurerm_virtual_machine_extension.edit_init["toolingScript"]
+}
+
 # DTS-PRE-VideoEditing-SecurityGroup-
 resource "azurerm_role_assignment" "vm_contributor" {
   count                = var.num_vid_edit_vms
