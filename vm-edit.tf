@@ -114,8 +114,8 @@ SETTINGS
 }
 
 import {
-  id = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/PRE-STG/providers/Microsoft.Compute/virtualMachines/edit-vm1-stg/extensions/toolingScript"
-  to = module.azurerm_virtual_machine_extension.edit_init["toolingScript"]
+  id    = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/pre-stg/providers/Microsoft.Compute/virtualMachines/edit-vm1-stg/extensions/toolingScript"
+  to    = module.edit_vm[var.num_vid_edit_vms].azurerm_windows_virtual_machine.winvm.id
 }
 
 # DTS-PRE-VideoEditing-SecurityGroup-
