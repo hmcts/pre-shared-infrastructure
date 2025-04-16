@@ -74,8 +74,6 @@ locals {
   # boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
 
   edit_dynatrace_env = var.tenant_id == "yrk32651" ? "nonprod" : var.tenant_id == "ebe20728" ? "prod" : null
-
-  vm_ext_import = var.env != "stg" ? [] : [1]
 }
 
 resource "azurerm_virtual_machine_extension" "aad" {
@@ -92,12 +90,6 @@ resource "azurerm_virtual_machine_extension" "aad" {
 
 resource "terraform_data" "force_init_run" {
   input = var.edit_vm_force_run_id
-}
-
-import {
-  for_each = local.vm_ext_import
-  id       = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/pre-stg/providers/Microsoft.Compute/virtualMachines/edit-vm1-stg/extensions/toolingScript"
-  to       = azurerm_virtual_machine_extension.edit_init[0]
 }
 
 resource "azurerm_virtual_machine_extension" "edit_init" {
