@@ -98,6 +98,7 @@ resource "azurerm_role_assignment" "sc_team_members_voda_readers" {
 }
 
 resource "azurerm_role_assignment" "sc_team_members_voda_contrib" {
+  count                = var.env == "prod" ? 1 : 0
   scope                = module.vodasa_storage_account.storageaccount_id
   role_definition_name = "Storage Account Contributor"
   principal_id         = data.azuread_group.prod_reader_group.object_id
