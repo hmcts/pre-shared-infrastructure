@@ -47,7 +47,7 @@
       <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
     </Endpoints>
     <UserJourneyBehaviors>
-      <SingleSignOn Scope="Application" KeepAliveInDays="1" />
+      <SingleSignOn Scope="Application" />
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <ScriptExecution>Allow</ScriptExecution>

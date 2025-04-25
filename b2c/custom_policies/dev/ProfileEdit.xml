@@ -16,7 +16,7 @@
     <DefaultUserJourney ReferenceId="ProfileEdit" />
     <UserJourneyBehaviors>
       <ScriptExecution>Allow</ScriptExecution>
-      <SingleSignOn Scope="Application" KeepAliveInDays="1" />
+      <SingleSignOn Scope="Application" />
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
     </UserJourneyBehaviors>
