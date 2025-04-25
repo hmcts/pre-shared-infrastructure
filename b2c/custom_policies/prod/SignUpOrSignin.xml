@@ -47,8 +47,8 @@
       <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
     </Endpoints>
     <UserJourneyBehaviors>
-      <SingleSignOn Scope="Application" />
-      <SessionExpiryType>Absolute</SessionExpiryType>
+      <SingleSignOn Scope="Application" KeepAliveInDays="1" />
+      <SessionExpiryType>Rolling</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
