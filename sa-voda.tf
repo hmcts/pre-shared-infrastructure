@@ -16,8 +16,8 @@ module "vodasa_storage_account" {
   cors_rules                      = var.cors_rules
   managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
   enable_change_feed              = true
-  private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
-  public_network_access_enabled   = false
+  # private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
+  public_network_access_enabled = false
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
