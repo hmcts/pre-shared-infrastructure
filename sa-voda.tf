@@ -1,21 +1,21 @@
 module "vodasa_storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
-  env                             = var.env
-  storage_account_name            = "${var.product}vodasa${var.env}"
-  resource_group_name             = data.azurerm_resource_group.rg.name
-  location                        = var.location
-  account_kind                    = "StorageV2"
-  account_tier                    = var.sa_account_tier
-  account_replication_type        = var.sa_replication_type
+  source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=4.x"
+  env                      = var.env
+  storage_account_name     = "${var.product}vodasa${var.env}"
+  resource_group_name      = data.azurerm_resource_group.rg.name
+  location                 = var.location
+  account_kind             = "StorageV2"
+  account_tier             = var.sa_account_tier
+  account_replication_type = var.sa_replication_type
   # allow_nested_items_to_be_public = false
   # default_action                  = "Allow"
-  enable_data_protection          = true
-  immutable_enabled               = var.env == "dev" ? true : false
-  immutability_period             = 100
-  restore_policy_days             = var.env == "dev" ? null : var.restore_policy_days
-  cors_rules                      = var.cors_rules
-  managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
-  enable_change_feed              = true
+  enable_data_protection     = true
+  immutable_enabled          = var.env == "dev" ? true : false
+  immutability_period        = 100
+  restore_policy_days        = var.env == "dev" ? null : var.restore_policy_days
+  cors_rules                 = var.cors_rules
+  managed_identity_object_id = data.azurerm_user_assigned_identity.managed_identity.principal_id
+  enable_change_feed         = true
   # private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
   # public_network_access_enabled = true
   role_assignments = [
