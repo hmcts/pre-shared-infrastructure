@@ -15,8 +15,8 @@
   <RelyingParty>
     <DefaultUserJourney ReferenceId="ProfileEdit" />
     <UserJourneyBehaviors>
-      <SingleSignOn Scope="Application" KeepAliveInDays="1" />
-      <SessionExpiryType>Rolling</SessionExpiryType>
+      <SingleSignOn Scope="Application" />
+      <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
