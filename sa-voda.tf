@@ -16,19 +16,14 @@ module "vodasa_storage_account" {
   cors_rules                 = var.cors_rules
   managed_identity_object_id = data.azurerm_user_assigned_identity.managed_identity.principal_id
   enable_change_feed         = true
-  # private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
+  private_endpoint_subnet_id = data.azurerm_subnet.endpoint_subnet.id
   # public_network_access_enabled = true
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
 
   ip_rules = [
-    "193.186.4.65",
     "213.216.136.30",
-  ]
-
-  sa_subnets = [
-    "/subscriptions/${var.aks_subscription_id}/resourcegroups/pre-${var.env}/providers/microsoft.network/virtualnetworks/${data.azurerm_virtual_network.vnet.name}/subnets/${data.azurerm_subnet.endpoint_subnet.name}",
   ]
 
   common_tags = var.common_tags
