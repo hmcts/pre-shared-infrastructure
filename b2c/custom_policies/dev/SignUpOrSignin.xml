@@ -44,7 +44,6 @@
     <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
     <UserJourneyBehaviors>
       <ScriptExecution>Allow</ScriptExecution>
-      <SingleSignOn Scope="Application" KeepAliveInDays="0" />
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
     </UserJourneyBehaviors>
