@@ -23,7 +23,8 @@ module "vodasa_storage_account" {
   ]
 
   ip_rules = [
-    "213.216.136.30",
+    "213.216.136.30", # FTP
+    "212.46.141.148"  # Lab
   ]
 
   common_tags = var.common_tags
