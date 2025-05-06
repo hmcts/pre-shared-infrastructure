@@ -6,7 +6,7 @@ module "edit_vm" {
     azurerm.dcr = azurerm.dcr
   }
   count                          = var.num_vid_edit_vms
-  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=pre"
+  source                         = "git@github.com:hmcts/terraform-module-virtual-machine.git?ref=master"
   env                            = var.env
   vm_type                        = local.edit_vm_type
   vm_name                        = "edit-vm${count.index + 1}-${var.env}"
