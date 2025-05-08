@@ -44,6 +44,7 @@ module "edit_vm" {
 
   nessus_install             = false #var.nessus_install
   install_splunk_uf          = false
+  remove_splunk_uf           = var.remove_splunk_uf
   install_dynatrace_oneagent = var.install_dynatrace_oa
   install_azure_monitor      = true
 
