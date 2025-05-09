@@ -48,6 +48,8 @@
       <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
     </Endpoints>
     <UserJourneyBehaviors>
+      <SessionExpiryType>Absolute</SessionExpiryType>
+      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
