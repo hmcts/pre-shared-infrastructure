@@ -29,14 +29,12 @@ resource "azurerm_key_vault_secret" "finalsa_storage_account_connection_string" 
   name            = "finalsa-storage-account-connection-string"
   value           = module.finalsa_storage_account.storageaccount_primary_connection_string
   key_vault_id    = data.azurerm_key_vault.keyvault.id
-  expiration_date = local.secret_expiry
 }
 
 resource "azurerm_key_vault_secret" "finalsa_storage_account_primary_access_key" {
   name            = "finalsa-storage-account-primary-access-key"
   value           = module.finalsa_storage_account.storageaccount_primary_access_key
   key_vault_id    = data.azurerm_key_vault.keyvault.id
-  expiration_date = local.secret_expiry
 }
 
 # For container cleanup operations

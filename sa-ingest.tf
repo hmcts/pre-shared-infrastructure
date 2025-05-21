@@ -52,7 +52,6 @@ resource "azurerm_key_vault_secret" "ingestsa_storage_account_connection_string"
   name            = "ingestsa-storage-account-connection-string"
   value           = module.ingestsa_storage_account.storageaccount_primary_connection_string
   key_vault_id    = data.azurerm_key_vault.keyvault.id
-  expiration_date = local.secret_expiry
 }
 
 resource "azurerm_role_assignment" "powerapp_appreg_ingest_contrib" {

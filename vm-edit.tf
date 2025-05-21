@@ -157,7 +157,6 @@ resource "azurerm_key_vault_secret" "edit_password" {
   name            = "videditvm${count.index + 1}-password"
   value           = random_password.vm_password[count.index].result
   key_vault_id    = data.azurerm_key_vault.keyvault.id
-  expiration_date = local.secret_expiry
 }
 
 data "azurerm_key_vault_secret" "robot-x-user-id" {
