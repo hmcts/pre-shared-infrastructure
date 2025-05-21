@@ -32,15 +32,15 @@ module "vodasa_storage_account" {
 
 
 resource "azurerm_key_vault_secret" "vodasa_storage_account_connection_string" {
-  name            = "vodasa-storage-account-connection-string"
-  value           = module.vodasa_storage_account.storageaccount_primary_connection_string
-  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  name         = "vodasa-storage-account-connection-string"
+  value        = module.vodasa_storage_account.storageaccount_primary_connection_string
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_key_vault_secret" "vodasa_storage_account_primary_access_key" {
-  name            = "vodasa-storage-account-primary-access-key"
-  value           = module.vodasa_storage_account.storageaccount_primary_access_key
-  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  name         = "vodasa-storage-account-primary-access-key"
+  value        = module.vodasa_storage_account.storageaccount_primary_access_key
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
 resource "azurerm_monitor_diagnostic_setting" "storageblobvodasa" {

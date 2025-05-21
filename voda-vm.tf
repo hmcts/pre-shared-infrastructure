@@ -33,8 +33,8 @@ resource "azurerm_key_vault_secret" "voda_username" {
 
 
 resource "azurerm_key_vault_secret" "voda_password" {
-  count           = var.num_voda_vms
-  name            = "vodavm${count.index + 1}-password"
-  value           = random_password.vm_password[count.index].result
-  key_vault_id    = data.azurerm_key_vault.keyvault.id
+  count        = var.num_voda_vms
+  name         = "vodavm${count.index + 1}-password"
+  value        = random_password.vm_password[count.index].result
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
