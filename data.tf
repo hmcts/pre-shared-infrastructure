@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 data "azuread_service_principal" "pre_sp" {
-  display_name = "dts_pre_${var.env}"
+  display_name = "DTS Bootstrap (sub:dts-sharedservices-${var.env})"
 }
 data "azurerm_log_analytics_workspace" "loganalytics" {
   provider            = azurerm.oms
