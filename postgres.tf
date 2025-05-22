@@ -12,6 +12,9 @@ module "data_store_db_v14" {
 
   common_tags = var.common_tags
   name        = var.database_name
+
+  enable_read_only_group_access = true
+
   pgsql_databases = [
     {
       name : "pre-pdb-${var.env}"
