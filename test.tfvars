@@ -22,6 +22,7 @@ delete_after_days_since_creation_greater_than = 90
 storage_policy_enabled                        = true
 
 #vms
+num_vid_edit_vms   = 0
 tenant_id          = "yrk32651"
 edit_vm_private_ip = ["10.70.21.6", "10.70.21.7"]
 
