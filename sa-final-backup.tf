@@ -15,7 +15,7 @@ module "finalsa_storage_account_backup" {
   immutable_enabled               = true
   immutability_period             = var.immutability_period_backup
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
-  common_tags = var.common_tags
+  common_tags                     = var.common_tags
 }
 
 resource "azurerm_management_lock" "storage-backup-final" {
