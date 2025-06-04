@@ -26,6 +26,15 @@ resource "azurerm_management_lock" "storage-backup-final" {
   notes      = "prevent users from deleting storage accounts"
 }
 
+# For SC team members
+resource "azurerm_role_assignment" "sc_team_members_final_readers" {
+  count                = var.env == "prod" ? 1 : 0
+  scope                = module.finalsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = data.azuread_group.prod_reader_group.object_id
+}
+
+
 # Give the appreg (managed application in local directory) OID Storage Blob Data Contributor role on both the storage account and backup storage account
 resource "azurerm_role_assignment" "powerapp_appreg_final" {
   scope                = module.finalsa_storage_account.storageaccount_id
