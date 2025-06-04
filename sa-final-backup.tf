@@ -27,9 +27,9 @@ resource "azurerm_management_lock" "storage-backup-final" {
 }
 
 # For SC team members
-resource "azurerm_role_assignment" "sc_team_members_final_readers" {
+resource "azurerm_role_assignment" "sc_team_members_backup_readers" {
   count                = var.env == "prod" ? 1 : 0
-  scope                = module.finalsa_storage_account.storageaccount_id
+  scope                = module.finalsa_storage_account_backup.storageaccount_id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = data.azuread_group.prod_reader_group.object_id
 }
