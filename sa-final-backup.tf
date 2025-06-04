@@ -14,8 +14,8 @@ module "finalsa_storage_account_backup" {
   enable_data_protection          = false #cannot be true as restore policy conflicts with immutability
   immutable_enabled               = true
   immutability_period             = var.immutability_period_backup
-
-  common_tags = var.common_tags
+  private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
+  common_tags                     = var.common_tags
 }
 
 resource "azurerm_management_lock" "storage-backup-final" {
