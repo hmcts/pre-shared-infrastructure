@@ -50,8 +50,8 @@ resource "azurerm_role_assignment" "powerapp_appreg_finalbackup" {
 }
 
 resource "azurerm_key_vault_secret" "bkup-finalsa_storage_account_primary_access_key" {
-  count                = var.env == "prod" ? 1 : 0
-  name                 = "bkup-finalsa-storage-account-primary-access-key"
-  scope                = module.finalsa_storage_account_backup[0].storageaccount_primary_access_key
-  key_vault_id         = data.azurerm_key_vault.keyvault.id
+  count        = var.env == "prod" ? 1 : 0
+  name         = "bkup-finalsa-storage-account-primary-access-key"
+  scope        = module.finalsa_storage_account_backup[0].storageaccount_primary_access_key
+  key_vault_id = data.azurerm_key_vault.keyvault.id
 }
