@@ -51,6 +51,6 @@ resource "azurerm_role_assignment" "powerapp_appreg_finalbackup" {
 
 resource "azurerm_key_vault_secret" "bkup-finalsa_storage_account_primary_access_key" {
   name         = "bkup-finalsa-storage-account-primary-access-key"
-  value        = module.finalsa_storage_account_backup[0].storageaccount_primary_access_key
+  value        = module.finalsa_storage_account_backup.storageaccount_primary_access_key
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
