@@ -42,7 +42,7 @@ resource "azurerm_key_vault_secret" "appinsights_connection_string" {
 }
 
 resource "azurerm_monitor_action_group" "pre-support" {
-  count               = var.env == "prod" || var.env == "stg" ? 1 : 0
+  count               = var.env == "prod" || var.env == "stg" || var.env == "demo" ? 1 : 0
   name                = "CriticalAlertsAction"
   resource_group_name = data.azurerm_resource_group.rg.name
   short_name          = "pre-support"
