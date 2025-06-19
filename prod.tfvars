@@ -21,10 +21,6 @@ restore_policy_days        = "100"
 tenant_id          = "ebe20728"
 edit_vm_private_ip = ["10.101.3.6", "10.101.3.7"]
 
-#vodavm
-num_voda_vms       = "1"
-voda_vm_private_ip = ["10.101.3.16", "10.101.3.17"]
-
 edit_vm_data_disks = [{
   datadisk1 = {
     name                 = "edit-vm01-data-prod"
