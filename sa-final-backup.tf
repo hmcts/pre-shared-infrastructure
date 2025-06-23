@@ -18,14 +18,6 @@ module "finalsa_storage_account_backup" {
   common_tags = var.common_tags
 }
 
-resource "azurerm_management_lock" "storage-backup-final" {
-  count      = var.env == "prod" ? 1 : 0
-  name       = "storage-backup"
-  scope      = module.finalsa_storage_account_backup[0].storageaccount_id
-  lock_level = "CanNotDelete"
-  notes      = "prevent users from deleting storage accounts"
-}
-
 # For SC team members
 resource "azurerm_role_assignment" "sc_team_members_backup_readers" {
   count                = var.env == "prod" ? 1 : 0
