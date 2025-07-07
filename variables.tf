@@ -195,7 +195,7 @@ variable "num_adf" {
 }
 
 variable "edit_vm_force_run_id" {
-  default = "20250630"
+  default = "20250707"
 }
 
 variable "remove_splunk_uf" {
