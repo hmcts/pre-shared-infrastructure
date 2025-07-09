@@ -2,7 +2,7 @@ locals {
   db_base_config = [
     {
       name  = "azure.extensions"
-      value = "pgcrypto"
+      value = "pgcrypto,pg_trgm"
     },
     {
       "name" : "backslash_quote",
