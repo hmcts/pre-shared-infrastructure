@@ -1,3 +1,35 @@
+locals {
+  db_base_config = [
+    {
+      name  = "azure.extensions"
+      value = "pgcrypto"
+    },
+    {
+      "name" : "backslash_quote",
+      "value" : "on"
+    }
+  ]
+
+  db_config = var.env != "stg" ? local.db_base_config : concat(
+    local.db_base_config,
+    [
+      {
+        "name" : "pg_stat_statements.track",
+        "value" : "ALL"
+      },
+      {
+        "name" : "pg_stat_statements.max",
+        "value" : "1000"
+      },
+      {
+        "name" : "pg_stat_statements.track_utility",
+        "value" : "off"
+      }
+    ]
+  )
+
+}
+
 module "data_store_db_v14" {
   providers = {
     azurerm.postgres_network = azurerm.postgres_network
@@ -32,16 +64,7 @@ module "data_store_db_v14" {
   pgsql_admin_username = var.pgsql_admin_username
   pgsql_storage_mb     = var.pgsql_storage_mb
 
-  pgsql_server_configuration = [
-    {
-      name  = "azure.extensions"
-      value = "pgcrypto"
-    },
-    {
-      "name" : "backslash_quote",
-      "value" : "on"
-    }
-  ]
+  pgsql_server_configuration = local.db_config
 
   admin_user_object_id = var.jenkins_AAD_objectId
 
