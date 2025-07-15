@@ -38,7 +38,6 @@ resource "azurerm_storage_management_policy" "delete_processed_blobs" {
         operation = "=="
         value     = "safe_to_delete"
       }
-      prefix_match = ["0-9a-f"]
     }
     actions {
       base_blob {
