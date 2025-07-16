@@ -1351,7 +1351,7 @@
   }
 }
 
-.govuk-template__body {
+.govuk-template__body, body {
   margin: 0;
   background-color: #ffffff;
 }
