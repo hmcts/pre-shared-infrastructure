@@ -17,3 +17,8 @@ When updating custom policies, it can take a long time for the changes to be rea
 
 ## Custom Template
 The static files for the B2C display template (html, css, etc) are hosted in the presa\<env> storage account. The files can be found under the views directory.
+
+## B2C HTML injection
+The main content of the B2C screens is injected by Microsoft. We don't own or maintain or edit the HTML content of these files. The best we can do is edit and style them via JavaScript and CSS.
+
+The files under b2c_injection_reference are to assist with local development work e.g. styling, but they are not used for 'real' B2C.
