@@ -292,6 +292,11 @@
                 <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
+              <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+                <Value>objectId</Value>
+                <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
+                <Action>SkipThisOrchestrationStep</Action>
+              </Precondition>
               <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
                 <Value>isForgotPassword</Value>
                 <Action>SkipThisOrchestrationStep</Action>
