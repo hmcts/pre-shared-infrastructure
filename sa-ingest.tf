@@ -17,7 +17,7 @@ module "ingestsa_storage_account" {
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
   public_network_access_enabled   = false
   role_assignments = [
-    "Storage Blob Data Contributor"
+    "Storage Blob Data Owner"
   ]
 
   common_tags = var.common_tags
