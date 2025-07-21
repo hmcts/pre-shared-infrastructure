@@ -15,9 +15,9 @@
   <RelyingParty>
     <DefaultUserJourney ReferenceId="ProfileEdit" />
     <UserJourneyBehaviors>
-      <ScriptExecution>Allow</ScriptExecution>
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
+      <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
