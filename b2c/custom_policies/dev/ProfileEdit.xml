@@ -16,8 +16,8 @@
     <DefaultUserJourney ReferenceId="ProfileEdit" />
     <UserJourneyBehaviors>
       <SessionExpiryType>Absolute</SessionExpiryType>
-      <ScriptExecution>Allow</ScriptExecution>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
+      <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
