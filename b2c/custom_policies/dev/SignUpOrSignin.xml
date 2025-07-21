@@ -33,7 +33,7 @@
             ElementType="ClaimType"
             ElementId="email"
             StringId="PatternHelpText"
-          >Please enter a email address from one of the following domains: justice.gov.uk, hmcts.net, ejudiciary.net, .cjsm.net, cps.gov.uk, gmail.com, solirius.com.</LocalizedString>
+          >cjsm.net email addresses are not supported. Please enter a valid email address.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>
@@ -42,16 +42,16 @@
 
   <RelyingParty>
     <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
-    <UserJourneyBehaviors>
-      <SessionExpiryType>Absolute</SessionExpiryType>
-      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
-      <ScriptExecution>Allow</ScriptExecution>
-    </UserJourneyBehaviors>
     <Endpoints>
       <!--points to refresh token journey when app makes refresh token request-->
       <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
       <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
     </Endpoints>
+    <UserJourneyBehaviors>
+      <SessionExpiryType>Absolute</SessionExpiryType>
+      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
+      <ScriptExecution>Allow</ScriptExecution>
+    </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
@@ -67,7 +67,7 @@
           AlwaysUseDefaultValue="true"
           DefaultValue="{Policy:TenantObjectId}"
         />
-        <OutputClaim ClaimTypeReferenceId="TnCs" />
+        <OutputClaim ClaimTypeReferenceId="isSignUp" />
         <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />
