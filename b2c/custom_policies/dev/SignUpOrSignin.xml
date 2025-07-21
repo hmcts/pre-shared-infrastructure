@@ -43,9 +43,9 @@
   <RelyingParty>
     <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
     <UserJourneyBehaviors>
-      <ScriptExecution>Allow</ScriptExecution>
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
+      <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
     <Endpoints>
       <!--points to refresh token journey when app makes refresh token request-->
