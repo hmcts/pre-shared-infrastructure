@@ -304,18 +304,10 @@
         >Used to determine if the user should be permitted to reauthenticate silently via their existing refresh token.</UserHelpText>
       </ClaimType>
 
-      <!-- Terms and Conditions -->
-      <ClaimType Id="TnCs">
-        <DisplayName>Terms &amp; Conditions</DisplayName>
-        <DataType>string</DataType>
-        <UserInputType>CheckboxMultiSelect</UserInputType>
-        <Restriction>
-          <Enumeration
-            Text="I agree to the Terms &amp; Conditions (including Acceptable Use) for the Pre-Recorded Evidence Service."
-            Value="7/03/2024"
-            SelectByDefault="false"
-          />
-        </Restriction>
+      <ClaimType Id="isSignUp">
+        <DisplayName>isSignUp</DisplayName>
+        <DataType>boolean</DataType>
+        <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
       </ClaimType>
 
       <!-- SECTION II: Claims required to pass on special parameters (including some query string parameters) to other claims providers -->
@@ -921,7 +913,7 @@
 <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
 <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
 
-            <OutputClaim ClaimTypeReferenceId="TnCs" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="isSignUp" Required="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />

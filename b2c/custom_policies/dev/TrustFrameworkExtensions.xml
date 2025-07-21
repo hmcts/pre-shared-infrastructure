@@ -297,14 +297,16 @@
                 <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
+
               <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
                 <Value>isForgotPassword</Value>
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
               <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-                <Value>TnCs</Value>
+                <Value>isSignUp</Value>
                 <Action>SkipThisOrchestrationStep</Action>
               </Precondition>
+
             </Preconditions>
             <ClaimsExchanges>
               <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn" />
