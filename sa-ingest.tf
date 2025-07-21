@@ -17,8 +17,7 @@ module "ingestsa_storage_account" {
   private_endpoint_subnet_id      = data.azurerm_subnet.endpoint_subnet.id
   public_network_access_enabled   = false
   role_assignments = [
-    "Storage Blob Data Contributor",
-    "Storage Blob Data Owner"
+    "Storage Blob Data Contributor"
   ]
 
   common_tags = var.common_tags
@@ -115,4 +114,11 @@ resource "azurerm_role_assignment" "sc_team_members_ingest_readers" {
   scope                = module.ingestsa_storage_account.storageaccount_id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = data.azuread_group.prod_reader_group.object_id
+}
+
+# Grant Owner to MI for tagging Blobs
+resource "azurerm_role_assignment" "mi_blob_tag_ingest_owner" {
+  scope                = module.ingestsa_storage_account.storageaccount_id
+  role_definition_name = "Storage Blob Data Owner"
+  principal_id         = data.azurerm_user_assigned_identity.managed_identity.principal_id
 }
