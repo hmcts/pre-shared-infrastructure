@@ -22,10 +22,7 @@ module "vodasa_storage_account" {
     "Storage Blob Data Contributor"
   ]
 
-  ip_rules = [
-    "213.216.136.30", # FTP
-    "212.46.141.148"  # Lab
-  ]
+  ip_rules = []
 
   common_tags = var.common_tags
 }
