@@ -12,6 +12,12 @@
     <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
+
+  <BuildingBlocks>
+    <ClaimsSchema>
+    <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
+  </BasePolicy>
   <BuildingBlocks>
     <ClaimsSchema>
 
@@ -25,6 +31,10 @@
         <DataType>string</DataType>
         <UserHelpText/>
         <UserInputType>Readonly</UserInputType>
+      </ClaimType>
+      <ClaimType Id="verificationCode">
+        <DisplayName>Verification Code</DisplayName>
+        <DataType>string</DataType>
       </ClaimType>
     </ClaimsSchema>
     <ClaimsTransformations>
@@ -234,8 +244,65 @@
           </OutputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD"/>
         </TechnicalProfile>
+
       </TechnicalProfiles>
     </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Send Email Verification</DisplayName>
+      <TechnicalProfiles>
+
+        <TechnicalProfile Id="GenerateCode">
+          <DisplayName>Generate Code</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.OneTimePasswordProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <Metadata>
+            <Item Key="Operation">GenerateCode</Item>
+            <Item Key="CodeExpirationInSeconds">600</Item>
+            <Item Key="CodeLength">6</Item>
+            <Item Key="CharacterSet">0-9</Item>
+            <Item Key="NumRetryAttempts">5</Item>
+            <Item Key="NumCodeGenerationAttempts">10</Item>
+            <Item Key="ReuseSameCode">false</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="SendEmailVerificationAPI">
+          <DisplayName>Send Email Verification Code</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider"/>
+          <Metadata>
+            <Item Key="ServiceUrl">https://sds-api-mgmt.staging.platform.hmcts.net/pre-api/b2c/email-verification</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="AuthenticationType">None</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
+            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verificationCode" Required="true"/>
+          </InputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="VerifyCode">
+          <DisplayName>Verify Code</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.OneTimePasswordProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <Metadata>
+            <Item Key="Operation">VerifyCode</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpToVerify"/>
+          </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
   </ClaimsProviders>
   <UserJourneys>
     <UserJourney Id="CustomSignUpSignIn">
@@ -283,8 +350,26 @@
           </JourneyList>
         </OrchestrationStep>
 
-        <!-- This step forces email verification on sign in only. -->
         <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <Preconditions>
+
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="GenerateOtp" TechnicalProfileReferenceId="GenerateCode"/>
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- This step forces email verification on sign in only. -->
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -310,13 +395,14 @@
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn"/>
+            <!--            <ClaimsExchange Id="SendEmailVerificationAPIExchange" TechnicalProfileReferenceId="SendEmailVerificationAPI" />-->
           </ClaimsExchanges>
         </OrchestrationStep>
 
         <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
           This can only happen when authentication happened using a social IDP. If local account was created or authentication done
           using ESTS in step 2, then an user account must exist in the directory by this time. -->
-        <OrchestrationStep Order="5" Type="ClaimsExchange">
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -330,7 +416,7 @@
 
         <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent
           in the token. -->
-        <OrchestrationStep Order="6" Type="ClaimsExchange">
+        <OrchestrationStep Order="7" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>authenticationSource</Value>
@@ -343,7 +429,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
+        <OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb"/>
