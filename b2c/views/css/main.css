@@ -8567,3 +8567,19 @@ input[type="checkbox"] {
 .changeClaims {
   visibility: hidden;
 }
+
+/* ======================= */
+/* B2C Hide Modal */
+/* ======================= */
+
+#simplemodal-overlay {
+  display:none !important;
+}
+
+#simplemodal-container {
+  display:none;
+}
+
+#verifying_blurb {
+  display: none;
+}
