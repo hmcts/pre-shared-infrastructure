@@ -75,7 +75,7 @@ locals {
   # boot_storage_uri         = data.azurerm_storage_account.db_boot_diagnostics_storage.primary_blob_endpoint
 
   edit_dynatrace_env = var.tenant_id == "yrk32651" ? "nonprod" : var.tenant_id == "ebe20728" ? "prod" : null
-  vm_ext_import = var.env != "demo" ? [] : [1]
+  vm_ext_import      = var.env != "demo" ? [] : [1]
 }
 
 resource "azurerm_virtual_machine_extension" "aad" {
