@@ -159,44 +159,6 @@ function validateErrors() {
   }
 }
 
-function moveVerifyingModal() {
-
-  const observer = new MutationObserver(() => {
-
-    const modalOverlay = document.querySelector("#simplemodal-overlay")
-    const modalBlurb = document.querySelector('#verifying_blurb')
-    
-    if (modalBlurb) {
-      modalBlurb.style.display = modalBlurb.classList.contains("govuk-notification-banner__heading") ? "block" : "none";
-    }
-
-    if (modalOverlay && modalOverlay.checkVisibility()) {
-      const modalContainer = document.querySelector('#simplemodal-container')
-      const modalData = document.querySelector('#simplemodal-data')
-      const newLocation = document.querySelector('.govuk-notification-banner__content')
-
-      observer.disconnect();
-
-      modalOverlay.remove()
-
-      modalContainer.style.all = "unset";
-      modalData.style.all = "unset"
-      modalBlurb.classList.add("govuk-notification-banner__heading")
-      modalBlurb.style.display = "block"
-
-      newLocation.appendChild(modalContainer)
-
-      observer.observe(document.body, { childList: true, subtree: true });
-    }
-
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
-  console.log("Observer started on document body.");
-
-}
-
-
 $(function () {
   moveForgotPassword();
   moveRetryCode();
@@ -206,5 +168,4 @@ $(function () {
   removeAutofocus();
   $(window).on('pageshow', removeAutofocus);
   addDescriptiveErrors();
-  moveVerifyingModal();
 });

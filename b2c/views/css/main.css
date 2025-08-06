@@ -8568,9 +8568,9 @@ input[type="checkbox"] {
   visibility: hidden;
 }
 
-/* ======================= */
-/* B2C Hide Modal */
-/* ======================= */
+/* ================================ */
+/* B2C Hide Modal - S28-4038 */
+/* ================================ */
 
 #simplemodal-overlay {
   display:none !important;
