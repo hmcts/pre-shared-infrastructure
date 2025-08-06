@@ -46,7 +46,7 @@ function addTsAndCsLink() {
     // fix the wrong for attribute supplied by B2C
     tsAndCsLabel.setAttribute('for', tsAndCsText.getAttribute('for'));
     if (tsAndCsText) {
-      tsAndCsText.innerHTML = tsAndCsText.innerHTML = 'I agree to the <a href="https://pre-portal.staging.platform.hmcts.net/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
+      tsAndCsText.innerHTML = tsAndCsText.innerHTML = 'I agree to the <a href="https://{hostname}/terms-and-conditions" target="_blank">Terms &amp; Conditions</a> (including Acceptable Use) for the Section 28 Video on Demand Portal.'
     }
   }
 }
@@ -149,8 +149,8 @@ function validateErrors() {
             <div class="govuk-error-summary__body">
             <ul class="govuk-list govuk-error-summary__list">
                  ${errorFields
-        .map(field => `<li><a href="#${field.inputId}" style="color:rgb(212,53,19);">${field.placeholderText}</a></li>`)
-        .join("")}
+      .map(field => `<li><a href="#${field.inputId}" style="color:rgb(212,53,19);">${field.placeholderText}</a></li>`)
+      .join("")}
             </ul>
             </div>
     `;
@@ -159,27 +159,20 @@ function validateErrors() {
   }
 }
 
-function moveVerifyingMessage() {
-
-}
-
-
 function moveVerifyingModal() {
 
   const observer = new MutationObserver(() => {
+    console.log("MutationObserver triggered.");
 
     const modalOverlay = document.querySelector("#simplemodal-overlay")
+    const modalContainer = document.querySelector('#simplemodal-container')
+    const modalData = document.querySelector('#simplemodal-data')
     const modalBlurb = document.querySelector('#verifying_blurb')
-    
-    if (modalBlurb) {
-      modalBlurb.style.display = modalBlurb.classList.contains("govuk-notification-banner__heading") ? "block" : "none";
-    }
+    const newLocation = document.querySelector('.govuk-notification-banner__content')
+
+    modalBlurb.classList.contains('govuk-notification-banner__heading') ? modalBlurb.style.display = "block" : modalBlurb.style.display = "none"
 
     if (modalOverlay && modalOverlay.checkVisibility()) {
-      const modalContainer = document.querySelector('#simplemodal-container')
-      const modalData = document.querySelector('#simplemodal-data')
-      const newLocation = document.querySelector('.govuk-notification-banner__content')
-
       observer.disconnect();
 
       modalOverlay.remove()
@@ -187,12 +180,16 @@ function moveVerifyingModal() {
       modalContainer.style.all = "unset";
       modalData.style.all = "unset"
       modalBlurb.classList.add("govuk-notification-banner__heading")
-      modalBlurb.style.display = "block"
 
       newLocation.appendChild(modalContainer)
 
+      //debugger;
+
       observer.observe(document.body, { childList: true, subtree: true });
+
     }
+
+    modalBlurb.classList.contains('govuk-notification-banner__heading') ? modalBlurb.style.display = "block" : modalBlurb.style.display = "none"
 
   });
 
@@ -200,7 +197,6 @@ function moveVerifyingModal() {
   console.log("Observer started on document body.");
 
 }
-
 
 $(function () {
   moveForgotPassword();
