@@ -354,8 +354,7 @@
             </Precondition>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>b330372a-de31-4927-8953-52597715b5e8
-              </Value> <!-- assume automated test super user has valid phone -->
+              <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
 
@@ -383,8 +382,7 @@
             </Precondition>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>b330372a-de31-4927-8953-52597715b5e8
-              </Value> <!-- assume automated test super user has valid phone -->
+              <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
 
@@ -403,7 +401,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="6" Type="SelfAsserted">
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -412,8 +410,7 @@
             </Precondition>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>b330372a-de31-4927-8953-52597715b5e8
-              </Value> <!-- assume automated test super user has valid phone -->
+              <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
 
