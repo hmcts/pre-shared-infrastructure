@@ -345,26 +345,26 @@
           </JourneyList>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
-          <Preconditions>
+<!--        <OrchestrationStep Order="4" Type="ClaimsExchange">-->
+<!--          <Preconditions>-->
 
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isForgotPassword</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isSignUp</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
+<!--            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">-->
+<!--              <Value>isForgotPassword</Value>-->
+<!--              <Action>SkipThisOrchestrationStep</Action>-->
+<!--            </Precondition>-->
+<!--            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">-->
+<!--              <Value>isSignUp</Value>-->
+<!--              <Action>SkipThisOrchestrationStep</Action>-->
+<!--            </Precondition>-->
 
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="GenerateOtp" TechnicalProfileReferenceId="GenerateCode"/>
-          </ClaimsExchanges>
-        </OrchestrationStep>
+<!--          </Preconditions>-->
+<!--          <ClaimsExchanges>-->
+<!--            <ClaimsExchange Id="GenerateOtp" TechnicalProfileReferenceId="GenerateCode"/>-->
+<!--          </ClaimsExchanges>-->
+<!--        </OrchestrationStep>-->
 
         <!-- This step forces email verification on sign in only. -->
-        <OrchestrationStep Order="5" Type="ClaimsExchange">
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -397,7 +397,7 @@
         <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
           This can only happen when authentication happened using a social IDP. If local account was created or authentication done
           using ESTS in step 2, then an user account must exist in the directory by this time. -->
-        <OrchestrationStep Order="6" Type="ClaimsExchange">
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -411,7 +411,7 @@
 
         <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent
           in the token. -->
-        <OrchestrationStep Order="7" Type="ClaimsExchange">
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>authenticationSource</Value>
@@ -424,7 +424,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb"/>
