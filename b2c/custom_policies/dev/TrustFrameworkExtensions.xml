@@ -316,24 +316,24 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-<!--        &lt;!&ndash; Check if the user has selected to sign in using one of the social providers &ndash;&gt;-->
-<!--        <OrchestrationStep Order="2" Type="ClaimsExchange">-->
-<!--          <Preconditions>-->
-<!--            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">-->
-<!--              <Value>objectId</Value>-->
-<!--              <Action>SkipThisOrchestrationStep</Action>-->
-<!--            </Precondition>-->
-<!--          </Preconditions>-->
-<!--          <ClaimsExchanges>-->
-<!--            <ClaimsExchange-->
-<!--              Id="SignUpWithLogonEmailExchange"-->
-<!--              TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail"-->
-<!--            />-->
-<!--            <ClaimsExchange Id="ForgotPasswordExchange" TechnicalProfileReferenceId="ForgotPassword"/>-->
-<!--          </ClaimsExchanges>-->
-<!--        </OrchestrationStep>-->
+        <!-- Check if the user has selected to sign in using one of the social providers -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange
+              Id="SignUpWithLogonEmailExchange"
+              TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail"
+            />
+            <ClaimsExchange Id="ForgotPasswordExchange" TechnicalProfileReferenceId="ForgotPassword"/>
+          </ClaimsExchanges>
+        </OrchestrationStep>
 
-        <OrchestrationStep Order="2" Type="InvokeSubJourney">
+        <OrchestrationStep Order="3" Type="InvokeSubJourney">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
               <Value>isForgotPassword</Value>
@@ -364,7 +364,7 @@
 <!--        </OrchestrationStep>-->
 
         <!-- This step forces email verification on sign in only. -->
-        <OrchestrationStep Order="3" Type="ClaimsExchange">
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
@@ -394,7 +394,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="4" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
+        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb"/>
