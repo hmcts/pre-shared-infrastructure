@@ -8567,3 +8567,19 @@ input[type="checkbox"] {
 .changeClaims {
   visibility: hidden;
 }
+
+/* ================================ */
+/* B2C Hide Modal - S28-4038 */
+/* ================================ */
+
+#simplemodal-overlay {
+  display:none !important;
+}
+
+#simplemodal-container {
+  display:none;
+}
+
+#verifying_blurb {
+  display: none;
+}
