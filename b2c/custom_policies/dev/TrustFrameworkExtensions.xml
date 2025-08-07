@@ -15,11 +15,6 @@
 
   <BuildingBlocks>
     <ClaimsSchema>
-    <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
-    <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
-  </BasePolicy>
-  <BuildingBlocks>
-    <ClaimsSchema>
 
       <ClaimType Id="isForgotPassword">
         <DisplayName>isForgotPassword</DisplayName>
