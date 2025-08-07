@@ -345,25 +345,6 @@
           </JourneyList>
         </OrchestrationStep>
 
-<!--        <OrchestrationStep Order="4" Type="ClaimsExchange">-->
-<!--          <Preconditions>-->
-
-<!--            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">-->
-<!--              <Value>isForgotPassword</Value>-->
-<!--              <Action>SkipThisOrchestrationStep</Action>-->
-<!--            </Precondition>-->
-<!--            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">-->
-<!--              <Value>isSignUp</Value>-->
-<!--              <Action>SkipThisOrchestrationStep</Action>-->
-<!--            </Precondition>-->
-
-<!--          </Preconditions>-->
-<!--          <ClaimsExchanges>-->
-<!--            <ClaimsExchange Id="GenerateOtp" TechnicalProfileReferenceId="GenerateCode"/>-->
-<!--          </ClaimsExchanges>-->
-<!--        </OrchestrationStep>-->
-
-        <!-- This step forces email verification on sign in only. -->
         <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
@@ -389,12 +370,69 @@
 
           </Preconditions>
           <ClaimsExchanges>
-            <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn"/>
-            <!--            <ClaimsExchange Id="SendEmailVerificationAPIExchange" TechnicalProfileReferenceId="SendEmailVerificationAPI" />-->
+            <ClaimsExchange Id="GenerateCodeExchange" TechnicalProfileReferenceId="GenerateCode" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <OrchestrationStep Order="5" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>b330372a-de31-4927-8953-52597715b5e8
+              </Value> <!-- assume automated test super user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SendEmailVerificationAPIExchange" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="6" Type="SelfAsserted">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>b330372a-de31-4927-8953-52597715b5e8
+              </Value> <!-- assume automated test super user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="VerifyCodeExchange" TechnicalProfileReferenceId="VerifyCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer"/>
 
       </OrchestrationSteps>
       <ClientDefinition ReferenceId="DefaultWeb"/>
