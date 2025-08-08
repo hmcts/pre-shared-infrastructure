@@ -275,8 +275,16 @@
         </AuthorizationTechnicalProfiles>
       </Authorization>
       <OrchestrationSteps>
+
         <!-- Step 1: Load user from AAD using objectId from token -->
         <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="GetObjectIdFromToken" TechnicalProfileReferenceId="UserInfoAuthorization" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 2: Read user from AAD -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
               <Value>objectId</Value>
@@ -288,8 +296,8 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Step 2: Return claims as JSON -->
-        <OrchestrationStep Order="2" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="UserInfoIssuer" />
+        <!-- Step 3: Return claims as JSON -->
+        <OrchestrationStep Order="3" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="UserInfoIssuer" />
       </OrchestrationSteps>
     </UserJourney>
 
