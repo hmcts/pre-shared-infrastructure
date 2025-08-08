@@ -23,14 +23,6 @@
       </ClaimType>
     </ClaimsSchema>
 
-    <Predicates>
-      <!-- Optional: Add predicates here if using conditional preconditions -->
-    </Predicates>
-
-    <ClaimsTransformations>
-      <!-- Optional: Add claims transformations here if needed -->
-    </ClaimsTransformations>
-
     <ContentDefinitions>
       <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
@@ -83,10 +75,6 @@
       </ContentDefinition>
     </ContentDefinitions>
   </BuildingBlocks>
-
-  <ClaimsTransformations>
-    <!-- Add custom claim transformations here if needed -->
-  </ClaimsTransformations>
 
   <ClaimsProviders>
 
