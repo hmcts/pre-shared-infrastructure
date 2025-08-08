@@ -214,14 +214,9 @@
           <Protocol Name="None" />
           <InputTokenFormat>JWT</InputTokenFormat>
           <Metadata>
-            <Item Key="issuer">
-              https://hmctsdevextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/
-            </Item>
-            <!-- Optional: restrict audiences -->
-            <!-- <Item Key="audience">[ "client-id-1", "client-id-2" ]</Item> -->
-            <Item Key="client_assertion_type">
-              urn:ietf:params:oauth:client-assertion-type:jwt-bearer
-            </Item>
+            <Item Key="issuer">https://hmctsdevextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/</Item>
+            <Item Key="audience">[ "22222222-2222-2222-2222-222222222222", "33333333-3333-3333-3333-333333333333" ]</Item>
+            <Item Key="client_assertion_type">urn:ietf:params:oauth:client-assertion-type:jwt-bearer</Item>
           </Metadata>
           <CryptographicKeys>
             <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
