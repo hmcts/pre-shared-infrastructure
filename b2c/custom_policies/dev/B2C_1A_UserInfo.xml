@@ -16,6 +16,8 @@
   </BasePolicy>
 
   <!-- This RP will only run the UserInfoJourney -->
-  <DefaultUserJourney ReferenceId="UserInfoJourney" />
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="UserInfoJourney" />
+  </RelyingParty>
 
 </TrustFrameworkPolicy>
