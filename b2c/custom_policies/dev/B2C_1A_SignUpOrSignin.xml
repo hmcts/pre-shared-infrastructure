@@ -18,13 +18,18 @@
     <UserJourney Id="CustomSignUpSignIn">
       <OrchestrationSteps>
 
-        <!-- Step 1: Collect email & password -->
-        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+        <!-- Step 1: Sign-in (email) on the unified page -->
+        <OrchestrationStep Order="1"
+                           Type="CombinedSignInAndSignUp"
+                           ContentDefinitionReferenceId="api.signuporsignin">
           <ClaimsProviderSelections>
-            <ClaimsProviderSelection TargetClaimsExchangeId="LocalAccountSignIn" />
+            <!-- MUST match the ClaimsExchange Id below -->
+            <ClaimsProviderSelection TargetClaimsExchangeId="LocalEmailSignin" />
           </ClaimsProviderSelections>
           <ClaimsExchanges>
-            <ClaimsExchange Id="LocalAccountSignIn" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+            <!-- MUST match the TargetClaimsExchangeId above -->
+            <ClaimsExchange Id="LocalEmailSignin"
+                            TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
