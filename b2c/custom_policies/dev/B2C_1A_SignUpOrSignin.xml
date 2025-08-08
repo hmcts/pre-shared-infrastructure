@@ -20,13 +20,11 @@
 
         <!-- Step 1: Collect email & password -->
         <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
-          <ClaimsProviderSelections>
-            <ClaimsProviderSelection TargetClaimsExchangeId="LocalAccountSignIn" />
-          </ClaimsProviderSelections>
           <ClaimsExchanges>
             <ClaimsExchange Id="LocalAccountSignIn" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
           </ClaimsExchanges>
         </OrchestrationStep>
+
 
         <!-- Step 2: If the user clicked Forgot password -->
         <OrchestrationStep Order="2" Type="ClaimsExchange">
@@ -71,7 +69,7 @@
         </OrchestrationStep>
 
         <!-- Step 7: Issue token -->
-        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="PolicyProfile" />
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
     </UserJourney>
