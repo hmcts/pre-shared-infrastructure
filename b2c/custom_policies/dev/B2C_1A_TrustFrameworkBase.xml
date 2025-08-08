@@ -1183,27 +1183,27 @@
 
   <UserJourneys>
 
-    <UserJourney Id="PasswordReset">
-      <OrchestrationSteps>
-        <OrchestrationStep Order="1" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="PasswordResetUsingEmailAddressExchange" TechnicalProfileReferenceId="LocalAccountDiscoveryUsingEmailAddress" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        <OrchestrationStep Order="2" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="PhoneFactor-Verify" TechnicalProfileReferenceId="PhoneFactor-InputOrVerify" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        <OrchestrationStep Order="3" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="NewCredentials" TechnicalProfileReferenceId="LocalAccountWritePasswordUsingObjectId" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-        <OrchestrationStep Order="4" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
-      </OrchestrationSteps>
-      <ClientDefinition ReferenceId="DefaultWeb" />
-    </UserJourney>
+<!--    <UserJourney Id="PasswordReset">-->
+<!--      <OrchestrationSteps>-->
+<!--        <OrchestrationStep Order="1" Type="ClaimsExchange">-->
+<!--          <ClaimsExchanges>-->
+<!--            <ClaimsExchange Id="PasswordResetUsingEmailAddressExchange" TechnicalProfileReferenceId="LocalAccountDiscoveryUsingEmailAddress" />-->
+<!--          </ClaimsExchanges>-->
+<!--        </OrchestrationStep>-->
+<!--        <OrchestrationStep Order="2" Type="ClaimsExchange">-->
+<!--          <ClaimsExchanges>-->
+<!--            <ClaimsExchange Id="PhoneFactor-Verify" TechnicalProfileReferenceId="PhoneFactor-InputOrVerify" />-->
+<!--          </ClaimsExchanges>-->
+<!--        </OrchestrationStep>-->
+<!--        <OrchestrationStep Order="3" Type="ClaimsExchange">-->
+<!--          <ClaimsExchanges>-->
+<!--            <ClaimsExchange Id="NewCredentials" TechnicalProfileReferenceId="LocalAccountWritePasswordUsingObjectId" />-->
+<!--          </ClaimsExchanges>-->
+<!--        </OrchestrationStep>-->
+<!--        <OrchestrationStep Order="4" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />-->
+<!--      </OrchestrationSteps>-->
+<!--      <ClientDefinition ReferenceId="DefaultWeb" />-->
+<!--    </UserJourney>-->
 
     <UserJourney Id="RedeemRefreshToken">
       <PreserveOriginalAssertion>false</PreserveOriginalAssertion>
