@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="hmctsdevextid.onmicrosoft.com"
+  PolicyId="B2C_1A_TrustFrameworkExtensions"
+  DeploymentMode="Development"
+>
+
+  <BasePolicy>
+    <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
+  </BasePolicy>
+
+  <BuildingBlocks>
+    <ClaimsSchema>
+      <ClaimType Id="verificationCode">
+        <DisplayName>Verification Code</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+    </ClaimsSchema>
+
+    <Predicates>
+      <!-- Optional: Add predicates here if using conditional preconditions -->
+    </Predicates>
+
+    <ClaimsTransformations>
+      <!-- Optional: Add claims transformations here if needed -->
+    </ClaimsTransformations>
+
+    <ContentDefinitions>
+      <!-- This content definition is to render an error page that displays unhandled errors. -->
+      <ContentDefinition Id="api.error">
+        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:globalexception:1.2.1</DataUri>
+        <Metadata>
+          <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.signuporsignin">
+        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.5</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Signin and Signup</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.selfasserted">
+        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Collect information from user page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountsignup">
+        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account sign up page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountpasswordreset">
+        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountsignin">
+        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Collect information from user page</Item>
+        </Metadata>
+      </ContentDefinition>
+    </ContentDefinitions>
+  </BuildingBlocks>
+
+  <ClaimsTransformations>
+    <!-- Add custom claim transformations here if needed -->
+  </ClaimsTransformations>
+
+  <ClaimsProviders>
+
+    <!-- Local account & self-asserted UI steps -->
+    <ClaimsProvider>
+      <DisplayName>Local Account</DisplayName>
+      <TechnicalProfiles>
+
+        <!-- Sign in with email -->
+        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
+          <DisplayName>Local Account Sign-in</DisplayName>
+          <Metadata>
+            <Item Key="setting.showCancelButton">false</Item>
+            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
+
+          </Metadata>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="signInName" Required="true" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="ForgotPassword-Redirect">
+          <DisplayName>Redirect to Password Reset</DisplayName>
+          <Protocol Name="None" />
+          <Metadata>
+            <Item Key="HttpBinding">Redirect</Item>
+            <Item Key="RedirectUrl">https://hmctsdevextid.b2clogin.com/hmctsdevextid.onmicrosoft.com/B2C_1A_PasswordReset</Item>
+          </Metadata>
+        </TechnicalProfile>
+
+
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <!-- Email verification -->
+    <ClaimsProvider>
+      <DisplayName>Email Verification</DisplayName>
+      <TechnicalProfiles>
+
+        <TechnicalProfile Id="GenerateCode">
+          <DisplayName>Generate Code</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.OneTimePasswordProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <Metadata>
+            <Item Key="Operation">GenerateCode</Item>
+            <Item Key="CodeExpirationInSeconds">600</Item>
+            <Item Key="CodeLength">6</Item>
+            <Item Key="CharacterSet">0-9</Item>
+            <Item Key="NumRetryAttempts">5</Item>
+            <Item Key="NumCodeGenerationAttempts">10</Item>
+            <Item Key="ReuseSameCode">true</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="SendEmailVerificationAPI">
+          <DisplayName>Send Email Verification Code</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider"/>
+          <Metadata>
+            <Item Key="ServiceUrl">https://sds-api-mgmt.staging.platform.hmcts.net/pre-api/b2c/email-verification</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="AuthenticationType">None</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
+            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verificationCode" Required="true"/>
+          </InputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="SelfAsserted-VerifyEmailCode">
+          <DisplayName>Enter Verification Code</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Metadata>
+            <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
+            <Item Key="setting.showCancelButton">false</Item>
+            <Item Key="setting.retryLimit">5</Item>
+            <Item Key="setting.showRetryButton">true</Item>
+            <Item Key="setting.errorMessage">The verification code you entered is incorrect or expired. Please try again.</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="verificationCode" Required="true" />
+          </OutputClaims>
+          <ValidationTechnicalProfiles>
+            <ValidationTechnicalProfile ReferenceId="VerifyCode" />
+          </ValidationTechnicalProfiles>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="VerifyCode">
+          <DisplayName>Verify Code</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.OneTimePasswordProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <Metadata>
+            <Item Key="Operation">VerifyCode</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpToVerify"/>
+          </InputClaims>
+        </TechnicalProfile>
+
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Token Issuer</DisplayName>
+      <TechnicalProfiles>
+
+        <!-- Issues JSON for the /userinfo endpoint -->
+        <TechnicalProfile Id="UserInfoIssuer">
+          <DisplayName>JSON Issuer</DisplayName>
+          <Protocol Name="None" />
+          <OutputTokenFormat>JSON</OutputTokenFormat>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <!-- Claims returned in the /userinfo response -->
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="objectId" />
+            <InputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+          </InputClaims>
+        </TechnicalProfile>
+
+        <!-- Validates the incoming access token -->
+        <TechnicalProfile Id="UserInfoAuthorization">
+          <DisplayName>UserInfo Authorization</DisplayName>
+          <Protocol Name="None" />
+          <InputTokenFormat>JWT</InputTokenFormat>
+          <Metadata>
+            <Item Key="issuer">
+              https://hmctsdevextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/
+            </Item>
+            <!-- Optional: restrict audiences -->
+            <!-- <Item Key="audience">[ "client-id-1", "client-id-2" ]</Item> -->
+            <Item Key="client_assertion_type">
+              urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+            </Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
+            <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Password Reset</DisplayName>
+      <TechnicalProfiles>
+
+        <TechnicalProfile Id="SelfAsserted-PasswordReset-Email">
+          <DisplayName>Enter Email for Password Reset</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider" />
+          <Metadata>
+            <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
+          </Metadata>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="email" Required="true" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+
+
+  </ClaimsProviders>
+
+  <UserJourneys>
+    <UserJourney Id="UserInfoJourney" DefaultCpimIssuerTechnicalProfileReferenceId="UserInfoIssuer">
+      <Authorization>
+        <AuthorizationTechnicalProfiles>
+          <AuthorizationTechnicalProfile ReferenceId="UserInfoAuthorization" />
+        </AuthorizationTechnicalProfiles>
+      </Authorization>
+      <OrchestrationSteps>
+        <!-- Step 1: Load user from AAD using objectId from token -->
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges UserIdentity="false">
+            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 2: Return claims as JSON -->
+        <OrchestrationStep Order="2" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="UserInfoIssuer" />
+      </OrchestrationSteps>
+    </UserJourney>
+
+  </UserJourneys>
+
+</TrustFrameworkPolicy>

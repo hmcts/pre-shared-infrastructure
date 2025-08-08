@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="hmctsdevextid.onmicrosoft.com"
+  PolicyId="B2C_1A_SignUpOrSignin"
+  DeploymentMode="Development"
+>
+  <BasePolicy>
+    <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+  </BasePolicy>
+
+  <UserJourneys>
+    <UserJourney Id="CustomSignUpSignIn">
+      <OrchestrationSteps>
+
+        <!-- Step 1: Collect email & password -->
+        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+          <ClaimsProviderSelections>
+            <ClaimsProviderSelection TargetClaimsExchangeId="LocalAccountSignIn" />
+          </ClaimsProviderSelections>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="LocalAccountSignIn" TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- This step is triggered only if user clicks "Forgot password?" -->
+        <OrchestrationStep Order="1.5" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="ForgotPasswordExchange" TechnicalProfileReferenceId="ForgotPassword-Redirect" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 2: Generate OTP -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="GenerateEmailCode" TechnicalProfileReferenceId="GenerateCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 3: Send OTP via your API -->
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SendEmailCodeAPI" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 4: Ask user to enter OTP -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="EnterEmailCode" TechnicalProfileReferenceId="SelfAsserted-VerifyEmailCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 5: Create or read account from AAD B2C -->
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadOrCreate" TechnicalProfileReferenceId="AAD-UserReadUsingEmailAddress" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 6: Issue token -->
+        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="PolicyProfile" />
+
+      </OrchestrationSteps>
+    </UserJourney>
+
+  </UserJourneys>
+
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
+    <Endpoints>
+      <!--points to refresh token journey when app makes refresh token request-->
+      <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
+      <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
+    </Endpoints>
+    <UserJourneyBehaviors>
+      <SessionExpiryType>Absolute</SessionExpiryType>
+      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
+      <ScriptExecution>Allow</ScriptExecution>
+    </UserJourneyBehaviors>
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="OpenIdConnect" />
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="email" />
+        <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
+        <OutputClaim
+          ClaimTypeReferenceId="tenantId"
+          AlwaysUseDefaultValue="true"
+          DefaultValue="{Policy:TenantObjectId}"
+        />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="sub" />
+    </TechnicalProfile>
+  </RelyingParty>
+</TrustFrameworkPolicy>
