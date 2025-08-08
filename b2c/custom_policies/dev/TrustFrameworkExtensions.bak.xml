@@ -15,7 +15,6 @@
 
   <BuildingBlocks>
     <ClaimsSchema>
-
       <ClaimType Id="isForgotPassword">
         <DisplayName>isForgotPassword</DisplayName>
         <DataType>boolean</DataType>
@@ -128,7 +127,7 @@
     <ClaimsProvider>
       <DisplayName>Local Account</DisplayName>
       <TechnicalProfiles>
-        <TechnicalProfile Id="ForgotPassword">
+        <TechnicalProfile Id="ForgotPassword"> <!-- removing for now to put in a separat RP xml -->
           <DisplayName>Forgot your password?</DisplayName>
           <Protocol
             Name="Proprietary"
@@ -213,6 +212,7 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
+
     <ClaimsProvider>
       <DisplayName>Validate Email on Sign In</DisplayName>
       <TechnicalProfiles>
@@ -297,6 +297,53 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Token Issuer</DisplayName>
+      <TechnicalProfiles>
+
+        <!-- Issues JSON for the /userinfo endpoint -->
+        <TechnicalProfile Id="UserInfoIssuer">
+          <DisplayName>JSON Issuer</DisplayName>
+          <Protocol Name="None" />
+          <OutputTokenFormat>JSON</OutputTokenFormat>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <!-- Claims returned in the /userinfo response -->
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="objectId" />
+            <InputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+          </InputClaims>
+        </TechnicalProfile>
+
+        <!-- Validates the incoming access token -->
+        <TechnicalProfile Id="UserInfoAuthorization">
+          <DisplayName>UserInfo Authorization</DisplayName>
+          <Protocol Name="None" />
+          <InputTokenFormat>JWT</InputTokenFormat>
+          <Metadata>
+            <Item Key="issuer">
+              https://hmctsdevextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/
+            </Item>
+            <!-- Optional: restrict audiences -->
+            <!-- <Item Key="audience">[ "client-id-1", "client-id-2" ]</Item> -->
+            <Item Key="client_assertion_type">
+              urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+            </Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
+            <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
 
   </ClaimsProviders>
   <UserJourneys>
