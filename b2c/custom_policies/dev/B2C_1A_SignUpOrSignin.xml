@@ -19,17 +19,15 @@
       <OrchestrationSteps>
 
         <!-- Step 1: Sign-in (email) on the unified page -->
-        <OrchestrationStep Order="1"
-                           Type="CombinedSignInAndSignUp"
-                           ContentDefinitionReferenceId="api.signuporsignin">
+        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
           <ClaimsProviderSelections>
-            <!-- MUST match the ClaimsExchange Id below -->
-            <ClaimsProviderSelection TargetClaimsExchangeId="LocalEmailSignin" />
+            <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
           </ClaimsProviderSelections>
           <ClaimsExchanges>
-            <!-- MUST match the TargetClaimsExchangeId above -->
-            <ClaimsExchange Id="LocalEmailSignin"
-                            TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email" />
+            <ClaimsExchange
+                    Id="LocalAccountSigninEmailExchange"
+                    TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
+            />
           </ClaimsExchanges>
         </OrchestrationStep>
 
