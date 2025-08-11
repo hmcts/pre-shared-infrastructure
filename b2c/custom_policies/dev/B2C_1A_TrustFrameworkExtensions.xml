@@ -21,13 +21,13 @@
         <DisplayName>Verification Code</DisplayName>
         <DataType>string</DataType>
       </ClaimType>
+      <ClaimType Id="triggeredBy">
+        <DisplayName>Triggered By</DisplayName>
+        <DataType>string</DataType>
+        <AdminHelpText>Stores what action triggered the journey (e.g., ForgotPassword)</AdminHelpText>
+      </ClaimType>
     </ClaimsSchema>
 
-    <ClaimType Id="triggeredBy">
-      <DisplayName>Triggered By</DisplayName>
-      <DataType>string</DataType>
-      <AdminHelpText>Stores what action triggered the journey (e.g., ForgotPassword)</AdminHelpText>
-    </ClaimType>
 
     <ContentDefinitions>
       <!-- This content definition is to render an error page that displays unhandled errors. -->
