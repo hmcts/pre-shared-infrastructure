@@ -120,6 +120,7 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
+
         <!-- Step 2: Generate OTP -->
         <OrchestrationStep Order="2" Type="ClaimsExchange">
           <ClaimsExchanges>
