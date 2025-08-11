@@ -140,6 +140,7 @@
             <Metadata>
               <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
               <Item Key="setting.showCancelButton">false</Item>
+              <Item Key="setting.showHeading">false</Item>
             </Metadata>
             <OutputClaimsTransformations>
               <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
