@@ -84,22 +84,27 @@
       <TechnicalProfiles>
 
         <!-- Sign in with email -->
-<!--        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">-->
-<!--          <Metadata>-->
-<!--            <Item Key="setting.showCancelButton">false</Item>-->
-<!--            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>-->
-<!--          </Metadata>-->
-<!--          <OutputClaims>-->
-<!--            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="signInName" Required="true" />-->
-<!--          </OutputClaims>-->
-<!--        </TechnicalProfile>-->
-
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
-          <Metadata>
-            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
-            <Item Key="setting.showCancelButton">false</Item>
-          </Metadata>
+          <DisplayName>Local Account Sign-in</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider">
+            <Metadata>
+              <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
+              <Item Key="language.button_continue">Sign in</Item>
+            </Metadata>
+            <IncludeInSso>false</IncludeInSso>
+            <InputClaims>
+              <InputClaim ClaimTypeReferenceId="signInName" />
+            </InputClaims>
+            <OutputClaims>
+              <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
+              <OutputClaim ClaimTypeReferenceId="password" Required="true" />
+            </OutputClaims>
+            <ValidationTechnicalProfiles>
+              <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
+            </ValidationTechnicalProfiles>
+          </Protocol>
         </TechnicalProfile>
+
 
         <TechnicalProfile Id="ForgotPassword-Redirect">
           <DisplayName>Redirect to Password Reset</DisplayName>
