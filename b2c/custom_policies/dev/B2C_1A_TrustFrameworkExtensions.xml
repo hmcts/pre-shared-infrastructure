@@ -99,9 +99,6 @@
             <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
             <Item Key="setting.showCancelButton">false</Item>
           </Metadata>
-          <OutputClaimsTransformations>
-            <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
-          </OutputClaimsTransformations>
         </TechnicalProfile>
 
         <TechnicalProfile Id="ForgotPassword-Redirect">
