@@ -84,15 +84,24 @@
       <TechnicalProfiles>
 
         <!-- Sign in with email -->
+<!--        <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">-->
+<!--          <Metadata>-->
+<!--            <Item Key="setting.showCancelButton">false</Item>-->
+<!--            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>-->
+<!--          </Metadata>-->
+<!--          <OutputClaims>-->
+<!--            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="signInName" Required="true" />-->
+<!--          </OutputClaims>-->
+<!--        </TechnicalProfile>-->
+
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
           <Metadata>
-            <Item Key="setting.showCancelButton">false</Item>
             <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
-
+            <Item Key="setting.showCancelButton">false</Item>
           </Metadata>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="signInName" Required="true" />
-          </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
+          </OutputClaimsTransformations>
         </TechnicalProfile>
 
         <TechnicalProfile Id="ForgotPassword-Redirect">
