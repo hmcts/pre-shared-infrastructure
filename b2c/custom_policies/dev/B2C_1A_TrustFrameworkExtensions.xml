@@ -86,7 +86,6 @@
         <!-- Sign in with email -->
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
           <DisplayName>Local Account Sign-in</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider" />
           <Metadata>
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
             <Item Key="language.button_continue">Sign in</Item>
