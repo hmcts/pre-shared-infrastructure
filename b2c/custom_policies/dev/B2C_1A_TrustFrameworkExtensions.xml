@@ -85,7 +85,6 @@
 
         <!-- Sign in with email -->
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
-          <DisplayName>Local Account Sign-in</DisplayName>
           <Metadata>
             <Item Key="setting.showCancelButton">false</Item>
             <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
