@@ -213,9 +213,6 @@
             <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
             <Item Key="setting.showContinueButton">true</Item>
           </Metadata>
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="verificationCode" />
-          </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="verificationCode" />
           </OutputClaims>
