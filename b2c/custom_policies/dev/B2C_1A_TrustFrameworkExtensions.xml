@@ -98,7 +98,7 @@
             <InputClaim ClaimTypeReferenceId="signInName" />
           </InputClaims>
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="signInName" Required="true" />
             <OutputClaim ClaimTypeReferenceId="password" Required="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
