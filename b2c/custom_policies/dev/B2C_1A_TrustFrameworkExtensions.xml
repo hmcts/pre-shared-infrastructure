@@ -294,27 +294,6 @@
       </TechnicalProfiles>
     </ClaimsProvider>
 
-    <ClaimsProvider>
-      <DisplayName>Password Reset</DisplayName>
-      <TechnicalProfiles>
-
-        <TechnicalProfile Id="SelfAsserted-PasswordReset-Email">
-          <DisplayName>Enter Email for Password Reset</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider" />
-          <Metadata>
-<!--            <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>-->
-            <Item Key="ContentDefinitionReferenceId">api.localaccountpasswordreset</Item>
-            <Item Key="setting.showCancelButton">false</Item>
-          </Metadata>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="email" Required="true" />
-          </OutputClaims>
-        </TechnicalProfile>
-
-
-      </TechnicalProfiles>
-    </ClaimsProvider>
-
   </ClaimsProviders>
 
   <UserJourneys>
