@@ -157,7 +157,7 @@
 
         <TechnicalProfile Id="LocalAccountDiscoveryUsingEmailAddress-NoMsEmail">
           <DisplayName>Reset password using email address (no Microsoft email)</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider" />
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
           <Metadata>
             <Item Key="IpAddressClaimReferenceId">IpAddress</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountpasswordreset</Item>
