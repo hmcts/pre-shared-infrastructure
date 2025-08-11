@@ -21,10 +21,17 @@
         <DisplayName>Verification Code</DisplayName>
         <DataType>string</DataType>
       </ClaimType>
-      <ClaimType Id="triggeredBy">
-        <DisplayName>Triggered By</DisplayName>
-        <DataType>string</DataType>
-        <AdminHelpText>Stores what action triggered the journey (e.g., ForgotPassword)</AdminHelpText>
+
+      <ClaimType Id="isForgotPassword">
+        <DisplayName>isForgotPassword</DisplayName>
+        <DataType>boolean</DataType>
+        <AdminHelpText>Whether the user clicked Forgot your password</AdminHelpText>
+      </ClaimType>
+
+      <ClaimType Id="isSignUp">
+        <DisplayName>isSignUp</DisplayName>
+        <DataType>boolean</DataType>
+        <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
       </ClaimType>
     </ClaimsSchema>
 
@@ -120,24 +127,28 @@
                   Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           />
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="triggeredBy" DefaultValue="ForgotPassword" AlwaysUseDefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="true" AlwaysUseDefaultValue="true" />
           </OutputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
 
-        <TechnicalProfile Id="login-NonInteractive">
-          <Metadata>
-            <Item Key="client_id">c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2</Item>
-            <Item Key="IdTokenAudience">5ffc2691-a59d-4b1f-9370-7ccd380a1b65</Item>
-          </Metadata>
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2"/>
-            <InputClaim
-              ClaimTypeReferenceId="resource_id"
-              PartnerClaimType="resource"
-              DefaultValue="5ffc2691-a59d-4b1f-9370-7ccd380a1b65"
-            />
-          </InputClaims>
+        <TechnicalProfile Id="LocalAccountSignUpWithLogonEmail">
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="objectId" />
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="newPassword" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="reenterPassword" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="executed-SelfAsserted-Input" DefaultValue="true" />
+            <OutputClaim ClaimTypeReferenceId="authenticationSource" />
+            <OutputClaim ClaimTypeReferenceId="newUser" />
+
+            <!-- Optional claims, to be collected from the user -->
+            <OutputClaim ClaimTypeReferenceId="displayName" />
+            <OutputClaim ClaimTypeReferenceId="givenName" />
+            <OutputClaim ClaimTypeReferenceId="surName" />
+            <OutputClaim ClaimTypeReferenceId="isSignUp" DefaultValue="true" />
+
+          </OutputClaims>
         </TechnicalProfile>
 
       </TechnicalProfiles>
@@ -259,6 +270,21 @@
             <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
             <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
           </OutputClaims>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="login-NonInteractive">
+          <Metadata>
+            <Item Key="client_id">c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2</Item>
+            <Item Key="IdTokenAudience">5ffc2691-a59d-4b1f-9370-7ccd380a1b65</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2"/>
+            <InputClaim
+                    ClaimTypeReferenceId="resource_id"
+                    PartnerClaimType="resource"
+                    DefaultValue="5ffc2691-a59d-4b1f-9370-7ccd380a1b65"
+            />
+          </InputClaims>
         </TechnicalProfile>
 
       </TechnicalProfiles>

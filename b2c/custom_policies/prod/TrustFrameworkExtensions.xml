@@ -148,6 +148,7 @@
           <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
             <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
           </TechnicalProfile>
+
         </TechnicalProfiles>
       </ClaimsProvider>
 
