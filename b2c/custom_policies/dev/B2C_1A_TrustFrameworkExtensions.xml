@@ -23,6 +23,12 @@
       </ClaimType>
     </ClaimsSchema>
 
+    <ClaimType Id="triggeredBy">
+      <DisplayName>Triggered By</DisplayName>
+      <DataType>string</DataType>
+      <AdminHelpText>Stores what action triggered the journey (e.g., ForgotPassword)</AdminHelpText>
+    </ClaimType>
+
     <ContentDefinitions>
       <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
@@ -107,14 +113,16 @@
           </ValidationTechnicalProfiles>
         </TechnicalProfile>
 
-
-        <TechnicalProfile Id="ForgotPassword-Redirect">
-          <DisplayName>Redirect to Password Reset</DisplayName>
-          <Protocol Name="None" />
-          <Metadata>
-            <Item Key="HttpBinding">Redirect</Item>
-            <Item Key="RedirectUrl">https://hmctsdevextid.b2clogin.com/hmctsdevextid.onmicrosoft.com/B2C_1A_PasswordReset</Item>
-          </Metadata>
+        <TechnicalProfile Id="ForgotPassword">
+          <DisplayName>Forgot your password?</DisplayName>
+          <Protocol
+                  Name="Proprietary"
+                  Handler="Web.TPEngine.Providers.ClaimsTransformationProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+          />
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="triggeredBy" DefaultValue="ForgotPassword" AlwaysUseDefaultValue="true" />
+          </OutputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
         </TechnicalProfile>
 
         <TechnicalProfile Id="login-NonInteractive">
