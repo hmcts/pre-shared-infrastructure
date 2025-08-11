@@ -102,7 +102,7 @@
         <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
-        <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
+        <OutputClaim ClaimTypeReferenceId="triggeredBy" DefaultValue="" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />
     </TechnicalProfile>
