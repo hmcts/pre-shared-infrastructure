@@ -86,23 +86,24 @@
         <!-- Sign in with email -->
         <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
           <DisplayName>Local Account Sign-in</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider">
-            <Metadata>
-              <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
-              <Item Key="language.button_continue">Sign in</Item>
-            </Metadata>
-            <IncludeInSso>false</IncludeInSso>
-            <InputClaims>
-              <InputClaim ClaimTypeReferenceId="signInName" />
-            </InputClaims>
-            <OutputClaims>
-              <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
-              <OutputClaim ClaimTypeReferenceId="password" Required="true" />
-            </OutputClaims>
-            <ValidationTechnicalProfiles>
-              <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
-            </ValidationTechnicalProfiles>
-          </Protocol>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider" />
+          <Metadata>
+            <Item Key="ContentDefinitionReferenceId">api.localaccountsignin</Item>
+            <Item Key="language.button_continue">Sign in</Item>
+            <Item Key="setting.showCancelButton">false</Item>
+            <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
+          </Metadata>
+          <IncludeInSso>false</IncludeInSso>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="signInName" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="password" Required="true" />
+          </OutputClaims>
+          <ValidationTechnicalProfiles>
+            <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
+          </ValidationTechnicalProfiles>
         </TechnicalProfile>
 
 
