@@ -22,7 +22,7 @@ jobs:
         uses: azure-ad-b2c/deploy-trustframework-policy@v5
         with:
           folder: './b2c/custom_policies/${{ github.event.inputs.environment }}'
-          files: 'B2C_1A_TrustFrameworkBase.xml,B2C_1A_TrustFrameworkLocalization.xml,B2C_1A_TrustFrameworkExtensions.xml,B2C_1A_SignUpOrSignin.xml,B2C_1A_PasswordReset.xml,B2C_1A_UserInfo.xml'
+          files: 'B2C_1A_TrustFrameworkBase.xml,B2C_1A_TrustFrameworkLocalization.xml,B2C_1A_TrustFrameworkExtensions.xml,B2C_1A_SignUpOrSignin.xml,B2C_1A_UserInfo.xml'
           tenant: 'hmcts${{ github.event.inputs.environment }}extid.onmicrosoft.com'
           clientId: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_ID_{0}', github.event.inputs.environment)] }}
           clientSecret: ${{ secrets[format('PRE_MANAGEMENT_APP_CLIENT_SECRET_{0}', github.event.inputs.environment)] }}

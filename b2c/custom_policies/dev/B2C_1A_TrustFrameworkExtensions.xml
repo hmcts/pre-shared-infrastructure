@@ -176,8 +176,6 @@
           </ValidationTechnicalProfiles>
         </TechnicalProfile>
 
-
-
       </TechnicalProfiles>
     </ClaimsProvider>
 
@@ -204,6 +202,22 @@
           </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="SelfAsserted-DebugOTP">
+          <DisplayName>Debug: Show OTP</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider" />
+          <Metadata>
+            <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
+            <Item Key="setting.showContinueButton">true</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="verificationCode" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="verificationCode" />
           </OutputClaims>
         </TechnicalProfile>
 

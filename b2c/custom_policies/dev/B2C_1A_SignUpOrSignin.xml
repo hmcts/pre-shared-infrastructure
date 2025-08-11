@@ -129,11 +129,17 @@
         </OrchestrationStep>
 
         <!-- Step 3: Send OTP -->
+        <!-- Debug Step: Show OTP on screen -->
         <OrchestrationStep Order="3" Type="ClaimsExchange">
           <ClaimsExchanges>
-            <ClaimsExchange Id="SendEmailCodeAPI" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+            <ClaimsExchange Id="DebugOTP" TechnicalProfileReferenceId="SelfAsserted-DebugOTP" />
           </ClaimsExchanges>
         </OrchestrationStep>
+<!--        <OrchestrationStep Order="3" Type="ClaimsExchange">-->
+<!--          <ClaimsExchanges>-->
+<!--            <ClaimsExchange Id="SendEmailCodeAPI" TechnicalProfileReferenceId="SendEmailVerificationAPI" />-->
+<!--          </ClaimsExchanges>-->
+<!--        </OrchestrationStep>-->
 
         <!-- Step 4: Enter OTP -->
         <OrchestrationStep Order="4" Type="ClaimsExchange">
