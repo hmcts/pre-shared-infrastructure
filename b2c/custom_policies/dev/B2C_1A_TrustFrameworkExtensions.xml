@@ -18,6 +18,11 @@
 
   <BuildingBlocks>
     <ClaimsSchema>
+      <ClaimType Id="email">
+        <DisplayName>Email Address</DisplayName>
+        <DataType>string</DataType>
+      </ClaimType>
+
       <ClaimType Id="verificationCode">
         <DisplayName>Verification Code</DisplayName>
         <DataType>string</DataType>

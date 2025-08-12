@@ -181,7 +181,7 @@
               TelemetryEngine="ApplicationInsights"
               InstrumentationKey="2398f937-825e-4455-9201-bda9ca7bff23"
               DeveloperMode="true"
-              ClientEnabled="false"
+              ClientEnabled="true"
               ServerEnabled="true" />
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
