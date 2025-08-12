@@ -65,6 +65,31 @@ to the
 block.
 The object Id can be obtained from that environments Azure AD properties for the user.
 
+## Key Rotation Pipelines failing
+These run on Mondays for Non-prod and Tuesdays for Prod.
+
+When they fail it means that the edit VM can not read/write from the Storage Account.
+
+This error has become a permanent issue since we enabled the resource locks in staging and production.
+
+To fix this you need to:
+- Disable the resource lock on the appropriate resource group using this pipeline: https://dev.azure.com/hmcts/PlatformOperations/_build?definitionId=535
+  - Click on 'Run Pipeline'
+  - Select the subscription DTS-SHAREDSERVICES-{ENV}
+  - Select the resource group pre-{ENV}
+  - Click on 'Run'
+- Once the resource lock is removed, ensure the VM is running on the appropriate environment
+  - Go to https://dev.azure.com/hmcts/Pre-Recorded%20Evidence/_build?definitionId=1090 (non-prod) or https://dev.azure.com/hmcts/Pre-Recorded%20Evidence/_build?definitionId=1092 (prod)
+  - Click on 'Run Pipeline'
+  - Click on 'Run'
+- Once the VM is up then you just need to run the pre-shared-infrastructure pipeline: https://sds-build.hmcts.net/job/HMCTS/job/pre-shared-infrastructure/job/master/
+  - Click on 'Build Now'
+- Once green you should then shut down the VMs to ensure they load their new environment variables on the next boot.
+  - https://dev.azure.com/hmcts/Pre-Recorded%20Evidence/_build?definitionId=1091 (non-prod) or https://dev.azure.com/hmcts/Pre-Recorded%20Evidence/_build?definitionId=1093 (prod)
+  - Click on 'Run Pipeline'
+  - Click on 'Run'
+- The resource locks will re-enable themselves within 3 hours.
+
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
