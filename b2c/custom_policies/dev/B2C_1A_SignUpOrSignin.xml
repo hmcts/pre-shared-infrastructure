@@ -175,14 +175,14 @@
       <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
     </Endpoints>
     <UserJourneyBehaviors>
+      <SessionExpiryType>Absolute</SessionExpiryType>
+      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <JourneyInsights
               TelemetryEngine="ApplicationInsights"
               InstrumentationKey="2398f937-825e-4455-9201-bda9ca7bff23"
               DeveloperMode="true"
               ClientEnabled="false"
               ServerEnabled="true" />
-      <SessionExpiryType>Absolute</SessionExpiryType>
-      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
