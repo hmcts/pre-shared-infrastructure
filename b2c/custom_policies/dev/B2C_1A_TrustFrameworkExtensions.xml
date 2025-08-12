@@ -8,6 +8,7 @@
   PolicyId="B2C_1A_TrustFrameworkExtensions"
   DeploymentMode="Development"
   PublicPolicyUri="http://hmcts.b2c/policies/B2C_1A_X"
+  UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights"
 >
 
   <BasePolicy>

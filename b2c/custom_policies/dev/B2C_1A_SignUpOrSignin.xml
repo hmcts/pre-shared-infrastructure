@@ -8,6 +8,7 @@
   PolicyId="B2C_1A_SignUpOrSignin"
   DeploymentMode="Development"
   PublicPolicyUri="http://hmcts.b2c/policies/B2C_1A_X"
+  UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights"
 >
   <BasePolicy>
     <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
@@ -177,6 +178,7 @@
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <ScriptExecution>Allow</ScriptExecution>
+      <JourneyInsights TelemetryEngine="ApplicationInsights" ConnectionString="InstrumentationKey=2398f937-825e-4455-9201-bda9ca7bff23;IngestionEndpoint=https://uksouth-1.in.applicationinsights.azure.com/;LiveEndpoint=https://uksouth.livediagnostics.monitor.azure.com/;ApplicationId=5d94c50e-3e57-4a93-ac87-738bb219ff53" DeveloperMode="true" ClientEnabled="false" ServerEnabled="true" TelemetryVersion="1.0.0" />
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
