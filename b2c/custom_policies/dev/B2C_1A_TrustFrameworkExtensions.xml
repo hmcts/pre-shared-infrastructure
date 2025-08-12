@@ -226,11 +226,13 @@
 
         <TechnicalProfile Id="SendEmailVerificationAPI">
           <DisplayName>Send Email Verification Code</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider"/>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
           <Metadata>
             <Item Key="ServiceUrl">https://postman-echo.com/post</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
+            <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
