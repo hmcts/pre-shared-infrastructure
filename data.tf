@@ -105,3 +105,12 @@ data "azurerm_user_assigned_identity" "pre_stg_mi" {
   name                = "${var.product}-stg-mi"
   resource_group_name = "managed-identities-stg-rg"
 }
+
+data "azurerm_resource_group" "rg" {
+  name = "pre-cache-prod"
+}
+
+data "azurerm_redis_cache" "pre_portal_prod" {
+  name                = "pre-portal-prod"
+  resource_group_name = data.azurerm_resource_group.rg.name
+}
