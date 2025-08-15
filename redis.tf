@@ -9,8 +9,8 @@ resource "azurerm_monitor_metric_alert" "redis_alert_errors" {
 
   description = <<EOT
     Redis error reported. Actions:
-    (1) Check that the portal is still up: portal.pre-recorded-evidence.justice.gov.uk
-    (2) Check redis health on Azure > Metrics > DTS-SHAREDSERVICES-PROD > pre-cache-prod > pre-portal-prod (Azure Cache for Redis).
+    (1) Check that the portal is still up
+    (2) Check health of the Azure Redis Cache
     EOT
 
   tags = var.common_tags
