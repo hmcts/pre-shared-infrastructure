@@ -56,7 +56,7 @@ data "azurerm_resource_group" "rg-cache" {
 
 data "azurerm_redis_cache" "portal_redis_cache" {
   name                = "pre-portal-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.name
+  resource_group_name = data.azurerm_resource_group.rg-cache.name
 }
 
 data "azurerm_virtual_network" "vnet" {

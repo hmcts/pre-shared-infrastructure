@@ -4,6 +4,8 @@ resource "azurerm_monitor_metric_alert" "redis_alert_errors" {
   resource_group_name = data.azurerm_resource_group.rg-cache.name
   scopes              = [data.azurerm_redis_cache.portal_redis_cache.id]
   severity            = 1
+  frequency           = "PT5M"
+  window_size         = "PT5M"
 
   description = <<EOT
     Redis error reported. Actions:
@@ -20,8 +22,6 @@ resource "azurerm_monitor_metric_alert" "redis_alert_errors" {
     operator         = "GreaterThanOrEqual"
     threshold        = 1
   }
-  window_size = "PT5M"
-  frequency   = "PT5M"
   action {
     action_group_id = azurerm_monitor_action_group.pre-support[count.index].id
   }
