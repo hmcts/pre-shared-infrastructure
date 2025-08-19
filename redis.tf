@@ -1,8 +1,8 @@
 resource "azurerm_monitor_metric_alert" "redis_alert_errors" {
   count               = var.env == "stg" ? 1 : 0
   name                = "redis_errors"
-  resource_group_name = data.azurerm_resource_group.rg-cache[0].name
-  scopes              = [data.azurerm_redis_cache.portal_redis_cache.id]
+  resource_group_name = data.azurerm_resource_group.rg-cache[count.index].name
+  scopes              = [data.azurerm_redis_cache.portal_redis_cache[count.index].id]
   severity            = 1
   frequency           = "PT5M"
   window_size         = "PT5M"
