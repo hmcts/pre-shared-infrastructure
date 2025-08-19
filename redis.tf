@@ -1,5 +1,5 @@
 resource "azurerm_monitor_metric_alert" "redis_alert_errors" {
-  count               = var.env == "stg" ? 1 : 0
+  count               = var.env == "prod" ? 1 : 0
   name                = "redis_errors"
   resource_group_name = data.azurerm_resource_group.rg-cache[0].name
   scopes              = [data.azurerm_redis_cache.portal_redis_cache[0].id]
