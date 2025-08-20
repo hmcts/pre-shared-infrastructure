@@ -88,7 +88,7 @@ resource "azurerm_monitor_diagnostic_setting" "storageblobingestsa" {
 
 resource "azurerm_monitor_metric_alert" "storage_ingest_alert_capacity" {
   count               = var.env == "prod" ? 1 : 0
-  name                = "used_capacity"
+  name                = "used_capacity_ingest"
   resource_group_name = data.azurerm_resource_group.rg.name
   scopes              = [module.ingestsa_storage_account.storageaccount_id]
   description         = "When the used storage capacity is over 4TiB"
