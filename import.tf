@@ -1,9 +1,4 @@
 import {
-  to = module.data_store_db_v14.azurerm_postgresql_flexible_server_database.pg_databases["pre-pdb-stg"]
-  id = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/pre-stg/providers/Microsoft.DBforPostgreSQL/flexibleServers/pre-db-stg/databases/pre-pdb-stg"
-}
-
-import {
   to = module.data_store_db_v14.azurerm_postgresql_flexible_server_database.pg_databases["api"]
   id = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/pre-stg/providers/Microsoft.DBforPostgreSQL/flexibleServers/pre-db-stg/databases/api"
 }
