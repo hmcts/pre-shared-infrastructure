@@ -19,7 +19,7 @@
       <ClaimType Id="email">
         <Restriction>
           <Pattern
-            RegularExpression="^(?!(admin|info|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+)[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+(?&lt;!cjsm\.net)$"
+            RegularExpression="^(?!(admin|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+)[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+(?&lt;!cjsm\.net)$"
             HelpText="cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, info, support etc.), are not supported. Please enter a valid email address."
           />
         </Restriction>
