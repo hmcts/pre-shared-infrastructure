@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 'Upload B2C Custom Policies to ${{ github.event.inputs.environment }}'
         uses: azure-ad-b2c/deploy-trustframework-policy@v5
