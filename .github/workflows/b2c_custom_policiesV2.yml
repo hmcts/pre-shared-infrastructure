@@ -1,4 +1,4 @@
-name: Upload Azure B2C Custom Policies
+name: Upload Azure B2C Custom Policies V2
 
 on:
   workflow_dispatch:
