@@ -118,7 +118,7 @@
             <InputClaim ClaimTypeReferenceId="signInName" />
           </InputClaims>
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
             <OutputClaim ClaimTypeReferenceId="password" Required="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
@@ -204,7 +204,7 @@
             <Item Key="ReuseSameCode">true</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="identifier"/>
           </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
