@@ -235,7 +235,7 @@
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
+            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email" Required="true"/>
             <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verification_code" Required="true"/>
           </InputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
