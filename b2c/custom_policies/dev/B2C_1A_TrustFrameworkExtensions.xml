@@ -40,6 +40,11 @@
         <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
       </ClaimType>
 
+      <ClaimType Id="otpVerified">
+        <DisplayName>OTP Verified</DisplayName>
+        <DataType>boolean</DataType>
+      </ClaimType>
+
     </ClaimsSchema>
 
     <ClaimsTransformations>
@@ -272,9 +277,13 @@
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" />
           </InputClaims>
+          <DisplayClaims>
+            <DisplayClaim ClaimTypeReferenceId="verificationCode" UserInputType="TextBox" Required="true" />
+          </DisplayClaims>
           <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="verificationCode" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="otpVerified" DefaultValue="true" />
           </OutputClaims>
+
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="VerifyCode" />
           </ValidationTechnicalProfiles>

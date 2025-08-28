@@ -97,6 +97,13 @@
 
         <!-- Step 7: Create or read account from AAD B2C -->
         <OrchestrationStep Order="7" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
+              <Value>otpVerified</Value>
+              <Value>true</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="AADUserReadOrCreate" TechnicalProfileReferenceId="AAD-UserReadUsingEmailAddress" />
           </ClaimsExchanges>
