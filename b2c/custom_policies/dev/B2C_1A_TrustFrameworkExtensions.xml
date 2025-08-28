@@ -40,18 +40,18 @@
         <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
       </ClaimType>
 
-      <ClaimsTransformations>
-        <ClaimsTransformation Id="CopySignInNameToEmail" TransformationMethod="CopyClaim">
-          <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="sourceClaim" />
-          </InputClaims>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="destinationClaim" />
-          </OutputClaims>
-        </ClaimsTransformation>
-      </ClaimsTransformations>
-
     </ClaimsSchema>
+
+    <ClaimsTransformations>
+      <ClaimsTransformation Id="CopySignInNameToEmail" TransformationMethod="CopyClaim">
+        <InputClaims>
+          <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="sourceClaim" />
+        </InputClaims>
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="destinationClaim" />
+        </OutputClaims>
+      </ClaimsTransformation>
+    </ClaimsTransformations>
 
 
     <ContentDefinitions>
