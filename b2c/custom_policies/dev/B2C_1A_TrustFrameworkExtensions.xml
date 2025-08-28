@@ -229,7 +229,7 @@
           <Protocol Name="Proprietary"
                     Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
           <Metadata>
-            <Item Key="ServiceUrl">https://webhook.site/4ec87422-25b5-488e-9bce-befc1e9d6b62</Item>
+            <Item Key="ServiceUrl">https://sds-api-mgmt.staging.platform.hmcts.net/pre-api-b2c/b2c/email-verification</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">None</Item>
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
