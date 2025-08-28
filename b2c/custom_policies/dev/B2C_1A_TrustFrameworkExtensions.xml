@@ -39,6 +39,18 @@
         <DataType>boolean</DataType>
         <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
       </ClaimType>
+
+      <ClaimsTransformations>
+        <ClaimsTransformation Id="CopySignInNameToEmail" TransformationMethod="CopyClaim">
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="sourceClaim" />
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="destinationClaim" />
+          </OutputClaims>
+        </ClaimsTransformation>
+      </ClaimsTransformations>
+
     </ClaimsSchema>
 
 
@@ -120,7 +132,11 @@
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="signInName" Required="true" />
             <OutputClaim ClaimTypeReferenceId="password" Required="true" />
+            <OutputClaim ClaimTypeReferenceId="email" />
           </OutputClaims>
+          <OutputClaimsTransformations>
+            <OutputClaimsTransformation ReferenceId="CopySignInNameToEmail" />
+          </OutputClaimsTransformations>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="login-NonInteractive" />
           </ValidationTechnicalProfiles>
@@ -204,7 +220,7 @@
             <Item Key="ReuseSameCode">true</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="identifier"/>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
           </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
@@ -235,7 +251,7 @@
             <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="email" Required="true"/>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
             <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verification_code" Required="true"/>
           </InputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
