@@ -236,7 +236,7 @@
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
-            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verificationCode" Required="false"/>
+            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verification_code" Required="true"/>
           </InputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
         </TechnicalProfile>
