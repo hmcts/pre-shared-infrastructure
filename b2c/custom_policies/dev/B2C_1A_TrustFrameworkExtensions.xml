@@ -45,13 +45,14 @@
     <ClaimsTransformations>
       <ClaimsTransformation Id="CopySignInNameToEmail" TransformationMethod="CopyClaim">
         <InputClaims>
-          <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="sourceClaim" />
+          <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="inputClaim" />
         </InputClaims>
         <OutputClaims>
-          <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="destinationClaim" />
+          <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="outputClaim" />
         </OutputClaims>
       </ClaimsTransformation>
     </ClaimsTransformations>
+
 
 
     <ContentDefinitions>
