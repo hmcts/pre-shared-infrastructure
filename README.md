@@ -90,6 +90,12 @@ To fix this you need to:
   - Click on 'Run'
 - The resource locks will re-enable themselves within 3 hours.
 
+## tooling script import for Demo remains in code
+The code in [PR 1049](https://github.com/hmcts/pre-shared-infrastructure/pull/1049) was merged to prevent a repeating issue with demo needing a Terraform import of the tooling script into the Edit VM.
+https://github.com/hmcts/pre-shared-infrastructure/pull/1049
+Leaving that in place should simply import in demo each time its needed. 
+Once the Edit VM is removed from Demo that code can be reverted.
+
 ## LICENSE
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
