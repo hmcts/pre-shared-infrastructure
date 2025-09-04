@@ -234,9 +234,6 @@
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
           </InputClaims>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
-          </OutputClaims>
         </TechnicalProfile>
 
         <TechnicalProfile Id="SendEmailVerificationAPI">
@@ -271,7 +268,7 @@
             <InputClaim ClaimTypeReferenceId="email" />
           </InputClaims>
           <DisplayClaims>
-            <DisplayClaim ClaimTypeReferenceId="verificationCode" UserInputType="TextBox" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="verificationCode" Required="true" />
           </DisplayClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="otpVerified" DefaultValue="true" />
