@@ -170,6 +170,11 @@
           <Metadata>
             <Item Key="setting.showCancelButton">false</Item>
           </Metadata>
+          <DisplayClaims>
+            <DisplayClaim ClaimTypeReferenceId="email" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="newPassword" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="reenterPassword" Required="true" />
+          </DisplayClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />
