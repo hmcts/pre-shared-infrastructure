@@ -79,10 +79,11 @@
       <ContentDefinition Id="api.signuporsignin">
         <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
-        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.5</DataUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.9</DataUri>
         <Metadata>
           <Item Key="DisplayName">Signin and Signup</Item>
           <Item Key="language.intro">Sign up</Item>
+          <Item Key="setting.showCancelButton">false</Item>
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.selfasserted">
@@ -118,6 +119,31 @@
         </Metadata>
       </ContentDefinition>
     </ContentDefinitions>
+
+    <DisplayControls>
+      <DisplayControl Id="EmailVerification" UserInterfaceControlType="VerificationControl">
+        <DisplayClaims>
+          <DisplayClaim ClaimTypeReferenceId="email" Required="true" />
+          <DisplayClaim ClaimTypeReferenceId="verificationCode" ControlClaimType="VerificationCode" Required="true" />
+        </DisplayClaims>
+        <Actions>
+          <Action Id="SendCode">
+            <ValidationClaimsExchange>
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="GenerateCode" />
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+            </ValidationClaimsExchange>
+          </Action>
+          <Action Id="VerifyCode">
+            <ValidationClaimsExchange>
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="VerifyCode" />
+            </ValidationClaimsExchange>
+          </Action>
+        </Actions>
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="email" />
+        </OutputClaims>
+      </DisplayControl>
+    </DisplayControls>
   </BuildingBlocks>
 
   <ClaimsProviders>
@@ -172,6 +198,13 @@
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignup</Item>
             <Item Key="setting.showCancelButton">false</Item>
           </Metadata>
+
+          <DisplayClaims>
+            <DisplayClaim DisplayControlReferenceId="EmailVerification" />
+            <DisplayClaim ClaimTypeReferenceId="newPassword" Required="true" />
+            <DisplayClaim ClaimTypeReferenceId="reenterPassword" Required="true" />
+          </DisplayClaims>
+
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />

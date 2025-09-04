@@ -964,6 +964,7 @@
             <OutputClaim ClaimTypeReferenceId="newUser" />
 
             <!-- Optional claims, to be collected from the user -->
+            <!-- had to comment them out here as wasn't working when trying to override in the Extensions.xml -->
             <!--            <OutputClaim ClaimTypeReferenceId="displayName" />-->
             <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
             <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
