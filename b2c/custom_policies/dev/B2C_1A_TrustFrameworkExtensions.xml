@@ -167,13 +167,22 @@
         </TechnicalProfile>
 
         <TechnicalProfile Id="LocalAccountSignUpWithLogonEmail">
+          <DisplayName>Email signup</DisplayName>
+          <Protocol
+            Name="Proprietary"
+            Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+          />
           <Metadata>
+            <Item Key="IpAddressClaimReferenceId">IpAddress</Item>
+            <Item Key="ContentDefinitionReferenceId">api.localaccountsignup</Item>
             <Item Key="setting.showCancelButton">false</Item>
           </Metadata>
-          <DisplayClaims>
-            <DisplayClaim ClaimTypeReferenceId="newPassword" Required="true" />
-            <DisplayClaim ClaimTypeReferenceId="reenterPassword" Required="true" />
-          </DisplayClaims>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" />
+          </InputClaims>
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="objectId" />
             <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="Verified.Email" Required="true" />
@@ -182,8 +191,18 @@
             <OutputClaim ClaimTypeReferenceId="executed-SelfAsserted-Input" DefaultValue="true" />
             <OutputClaim ClaimTypeReferenceId="authenticationSource" />
             <OutputClaim ClaimTypeReferenceId="newUser" />
+
+            <!-- Optional claims, to be collected from the user -->
+            <!--            <OutputClaim ClaimTypeReferenceId="displayName" />-->
+            <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
+            <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
+
             <OutputClaim ClaimTypeReferenceId="isSignUp" DefaultValue="true" />
           </OutputClaims>
+          <ValidationTechnicalProfiles>
+            <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />
+          </ValidationTechnicalProfiles>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
         </TechnicalProfile>
 
         <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
