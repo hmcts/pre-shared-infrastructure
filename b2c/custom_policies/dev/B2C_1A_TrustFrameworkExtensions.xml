@@ -198,6 +198,7 @@
           <Metadata>
             <Item Key="IpAddressClaimReferenceId">IpAddress</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountpasswordreset</Item>
+            <Item Key="setting.showCancelButton">false</Item>
           </Metadata>
           <IncludeInSso>false</IncludeInSso>
           <OutputClaims>
