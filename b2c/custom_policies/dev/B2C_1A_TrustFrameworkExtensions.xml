@@ -234,6 +234,9 @@
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
           </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
+          </OutputClaims>
         </TechnicalProfile>
 
         <TechnicalProfile Id="SendEmailVerificationAPI">
