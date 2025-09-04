@@ -186,6 +186,9 @@
         </TechnicalProfile>
 
         <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
+          <Metadata>
+            <Item Key="setting.showCancelButton">false</Item>
+          </Metadata>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
         </TechnicalProfile>
 
