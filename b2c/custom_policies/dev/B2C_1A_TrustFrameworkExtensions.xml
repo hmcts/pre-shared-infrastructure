@@ -239,19 +239,6 @@
           </OutputClaims>
         </TechnicalProfile>
 
-        <TechnicalProfile Id="SelfAsserted-DebugOTP">
-          <DisplayName>Debug: Show OTP</DisplayName>
-          <Protocol Name="Proprietary"
-                    Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider" />
-          <Metadata>
-            <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
-            <Item Key="setting.showContinueButton">true</Item>
-          </Metadata>
-          <OutputClaims>
-            <OutputClaim ClaimTypeReferenceId="verificationCode" />
-          </OutputClaims>
-        </TechnicalProfile>
-
         <TechnicalProfile Id="SendEmailVerificationAPI">
           <DisplayName>Send Email Verification Code</DisplayName>
           <Protocol Name="Proprietary"
