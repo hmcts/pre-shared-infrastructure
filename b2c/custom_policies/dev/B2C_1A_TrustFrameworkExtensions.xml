@@ -26,42 +26,48 @@
       <ClaimType Id="verificationCode">
         <DisplayName>Verification Code</DisplayName>
         <DataType>string</DataType>
-      </ClaimType>
+        <UserHelpText>Enter the 6-digit code we emailed you.</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+        <Restriction>
+          <Pattern RegularExpression="^\d{6}$" HelpText="Enter the 6-digit code." />
+        </Restriction>
 
-      <ClaimType Id="isForgotPassword">
-        <DisplayName>isForgotPassword</DisplayName>
-        <DataType>boolean</DataType>
-        <AdminHelpText>Whether the user clicked Forgot your password</AdminHelpText>
-      </ClaimType>
+            </ClaimType>
 
-      <ClaimType Id="isSignUp">
-        <DisplayName>isSignUp</DisplayName>
-        <DataType>boolean</DataType>
-        <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
-      </ClaimType>
+            <ClaimType Id="isForgotPassword">
+              <DisplayName>isForgotPassword</DisplayName>
+              <DataType>boolean</DataType>
+              <AdminHelpText>Whether the user clicked Forgot your password</AdminHelpText>
+            </ClaimType>
 
-      <ClaimType Id="otpVerified">
-        <DisplayName>OTP Verified</DisplayName>
-        <DataType>boolean</DataType>
-      </ClaimType>
+            <ClaimType Id="isSignUp">
+              <DisplayName>isSignUp</DisplayName>
+              <DataType>boolean</DataType>
+              <AdminHelpText>Whether the user is signing up rather than signing in</AdminHelpText>
+            </ClaimType>
 
-    </ClaimsSchema>
+            <ClaimType Id="otpVerified">
+              <DisplayName>OTP Verified</DisplayName>
+              <DataType>boolean</DataType>
+            </ClaimType>
 
-    <ClaimsTransformations>
-      <ClaimsTransformation Id="CopySignInNameToEmail" TransformationMethod="CopyClaim">
-        <InputClaims>
-          <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="inputClaim" />
-        </InputClaims>
-        <OutputClaims>
-          <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="outputClaim" />
-        </OutputClaims>
-      </ClaimsTransformation>
-    </ClaimsTransformations>
+          </ClaimsSchema>
+
+          <ClaimsTransformations>
+            <ClaimsTransformation Id="CopySignInNameToEmail" TransformationMethod="CopyClaim">
+              <InputClaims>
+                <InputClaim ClaimTypeReferenceId="signInName" TransformationClaimType="inputClaim" />
+              </InputClaims>
+              <OutputClaims>
+                <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="outputClaim" />
+              </OutputClaims>
+            </ClaimsTransformation>
+          </ClaimsTransformations>
 
 
 
-    <ContentDefinitions>
-      <!-- This content definition is to render an error page that displays unhandled errors. -->
+          <ContentDefinitions>
+            <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
         <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
