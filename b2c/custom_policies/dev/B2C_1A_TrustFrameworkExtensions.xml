@@ -119,36 +119,36 @@
         </Metadata>
       </ContentDefinition>
     </ContentDefinitions>
-  </BuildingBlocks>
 
-  <DisplayControls>
-    <DisplayControl Id="EmailVerification" UserInterfaceControlType="VerificationControl">
-      <DisplayClaims>
-        <!-- email textbox + the code textbox inside the control -->
-        <DisplayClaim ClaimTypeReferenceId="email" Required="true" />
-        <DisplayClaim ClaimTypeReferenceId="verificationCode"
-                      ControlClaimType="VerificationCode"
-                      Required="true" />
-      </DisplayClaims>
-      <OutputClaims>
-        <!-- bubble email back to the page after verification -->
-        <OutputClaim ClaimTypeReferenceId="email" />
-      </OutputClaims>
-      <Actions>
-        <Action Id="SendCode">
-          <ValidationClaimsExchange>
-            <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="GenerateCode" />
-            <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="SendEmailVerificationAPI" />
-          </ValidationClaimsExchange>
-        </Action>
-        <Action Id="VerifyCode">
-          <ValidationClaimsExchange>
-            <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="VerifyCode" />
-          </ValidationClaimsExchange>
-        </Action>
-      </Actions>
-    </DisplayControl>
-  </DisplayControls>
+    <DisplayControls>
+      <DisplayControl Id="EmailVerification" UserInterfaceControlType="VerificationControl">
+        <DisplayClaims>
+          <!-- email textbox + the code textbox inside the control -->
+          <DisplayClaim ClaimTypeReferenceId="email" Required="true" />
+          <DisplayClaim ClaimTypeReferenceId="verificationCode"
+                        ControlClaimType="VerificationCode"
+                        Required="true" />
+        </DisplayClaims>
+        <OutputClaims>
+          <!-- bubble email back to the page after verification -->
+          <OutputClaim ClaimTypeReferenceId="email" />
+        </OutputClaims>
+        <Actions>
+          <Action Id="SendCode">
+            <ValidationClaimsExchange>
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="GenerateCode" />
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+            </ValidationClaimsExchange>
+          </Action>
+          <Action Id="VerifyCode">
+            <ValidationClaimsExchange>
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="VerifyCode" />
+            </ValidationClaimsExchange>
+          </Action>
+        </Actions>
+      </DisplayControl>
+    </DisplayControls>
+  </BuildingBlocks>
 
   <ClaimsProviders>
 
