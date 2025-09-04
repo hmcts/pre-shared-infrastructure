@@ -940,10 +940,14 @@
 
         <TechnicalProfile Id="LocalAccountSignUpWithLogonEmail">
           <DisplayName>Email signup</DisplayName>
-          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+          <Protocol
+            Name="Proprietary"
+            Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+          />
           <Metadata>
             <Item Key="IpAddressClaimReferenceId">IpAddress</Item>
             <Item Key="ContentDefinitionReferenceId">api.localaccountsignup</Item>
+            <Item Key="setting.showCancelButton">false</Item>
           </Metadata>
           <CryptographicKeys>
             <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
@@ -961,9 +965,11 @@
             <OutputClaim ClaimTypeReferenceId="newUser" />
 
             <!-- Optional claims, to be collected from the user -->
-            <OutputClaim ClaimTypeReferenceId="displayName" />
-            <OutputClaim ClaimTypeReferenceId="givenName" />
-            <OutputClaim ClaimTypeReferenceId="surName" />
+            <!--            <OutputClaim ClaimTypeReferenceId="displayName" />-->
+            <!--            <OutputClaim ClaimTypeReferenceId="givenName" />-->
+            <!--            <OutputClaim ClaimTypeReferenceId="surName" />-->
+
+            <OutputClaim ClaimTypeReferenceId="isSignUp" DefaultValue="true" />
           </OutputClaims>
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="AAD-UserWriteUsingLogonEmail" />
