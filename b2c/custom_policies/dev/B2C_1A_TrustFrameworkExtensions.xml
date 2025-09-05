@@ -129,6 +129,10 @@
                         Required="true" />
         </DisplayClaims>
 
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="email" />
+        </OutputClaims>
+
         <Actions>
           <Action Id="SendCode">
             <ValidationClaimsExchange>
@@ -142,10 +146,6 @@
             </ValidationClaimsExchange>
           </Action>
         </Actions>
-
-        <OutputClaims>
-          <OutputClaim ClaimTypeReferenceId="email" />
-        </OutputClaims>
       </DisplayControl>
     </DisplayControls>
 
