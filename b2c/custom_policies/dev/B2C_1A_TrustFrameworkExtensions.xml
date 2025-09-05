@@ -124,8 +124,11 @@
       <DisplayControl Id="EmailVerification" UserInterfaceControlType="VerificationControl">
         <DisplayClaims>
           <DisplayClaim ClaimTypeReferenceId="email" Required="true" />
-          <DisplayClaim ClaimTypeReferenceId="verificationCode" ControlClaimType="VerificationCode" Required="true" />
+          <DisplayClaim ClaimTypeReferenceId="verificationCode"
+                        ControlClaimType="VerificationCode"
+                        Required="true" />
         </DisplayClaims>
+
         <Actions>
           <Action Id="SendCode">
             <ValidationClaimsExchange>
@@ -139,11 +142,13 @@
             </ValidationClaimsExchange>
           </Action>
         </Actions>
+
         <OutputClaims>
           <OutputClaim ClaimTypeReferenceId="email" />
         </OutputClaims>
       </DisplayControl>
     </DisplayControls>
+
   </BuildingBlocks>
 
   <ClaimsProviders>
