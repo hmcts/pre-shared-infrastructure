@@ -2228,13 +2228,15 @@
 
 .govuk-button--secondary,
 #api button#cancel,
-#api .verify button.sendButton {
+#api .verify button.sendButton,
+#api .verify button.sendNewCode {
   background-color: #f3f2f1;
   box-shadow: 0 2px 0 rgb(145.8, 145.2, 144.6);
 }
 .govuk-button--secondary, .govuk-button--secondary:link, .govuk-button--secondary:visited, .govuk-button--secondary:active, .govuk-button--secondary:hover,
 #api button#cancel, #api button#cancel:link, #api button#cancel:visited, #api button#cancel:active, #api button#cancel:hover,
-#api .verify button.sendButton, #api .verify button.sendButton:link, #api .verify button.sendButton:visited, #api .verify button.sendButton:active, #api .verify button.sendButton:hover {
+#api .verify button.sendButton, #api .verify button.sendButton:link, #api .verify button.sendButton:visited, #api .verify button.sendButton:active, #api .verify button.sendButton:hover,
+#api .verify button.sendNewCode, #api .verify button.sendNewCode:link, #api .verify button.sendNewCode:visited, #api .verify button.sendNewCode:active, #api .verify button.sendNewCode:hover {
   color: #0b0c0c;
 }
 .govuk-button--secondary:hover,
