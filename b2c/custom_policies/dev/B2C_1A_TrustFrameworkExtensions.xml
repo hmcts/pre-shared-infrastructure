@@ -116,6 +116,7 @@
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
           <Item Key="DisplayName">Collect information from user page</Item>
+          <Item Key="language.intro">Sign in</Item>
         </Metadata>
       </ContentDefinition>
     </ContentDefinitions>
