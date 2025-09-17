@@ -157,10 +157,10 @@
             <DisplayName>Email Restriction Validator</DisplayName>
             <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ValidationProvider">
             </Protocol>
-            <ValidationParameters>
-              <ValidationParameter Name="Pattern" Value="a" />
-              <ValidationParameter Name="ErrorMessage" Value="cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address." />
-            </ValidationParameters>
+            <Metadata>
+              <Item Key="Pattern">a</Item>
+              <Item Key="ErrorMessage">cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address.</Item>
+            </Metadata>
             <InputClaims>
               <InputClaim ClaimTypeReferenceId="email" />
             </InputClaims>
