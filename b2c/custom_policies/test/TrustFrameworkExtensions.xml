@@ -137,8 +137,6 @@
             <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
           </TechnicalProfile>
           <TechnicalProfile Id="SelfAsserted-LocalAccountSignin-Email">
-            <DisplayName>Email Sign-in</DisplayName>
-            <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
             <Metadata>
               <Item Key="setting.forgotPasswordLinkOverride">ForgotPasswordExchange</Item>
               <Item Key="setting.showCancelButton">false</Item>
@@ -146,24 +144,9 @@
             <OutputClaimsTransformations>
               <OutputClaimsTransformation ReferenceId="CopySignInNameToReadOnly" />
             </OutputClaimsTransformations>
-            <ValidationTechnicalProfiles>
-              <ValidationTechnicalProfile ReferenceId="EmailRestriction-Validator" />
-            </ValidationTechnicalProfiles>
           </TechnicalProfile>
           <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
             <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD" />
-          </TechnicalProfile>
-          <TechnicalProfile Id="EmailRestriction-Validator">
-            <DisplayName>Email Restriction Validator</DisplayName>
-            <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ValidationProvider">
-            </Protocol>
-            <Metadata>
-              <Item Key="Pattern">a</Item>
-              <Item Key="ErrorMessage">cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address.</Item>
-            </Metadata>
-            <InputClaims>
-              <InputClaim ClaimTypeReferenceId="email" />
-            </InputClaims>
           </TechnicalProfile>
         </TechnicalProfiles>
       </ClaimsProvider>
