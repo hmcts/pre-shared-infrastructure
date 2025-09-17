@@ -157,7 +157,7 @@
             <DisplayName>Email Restriction Validator</DisplayName>
             <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.ValidationProvider">
               <ValidationParameters>
-                <ValidationParameter Name="Pattern" Value="^(?!(admin|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+|.*@cjsm\.net$)[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+$" />
+                <ValidationParameter Name="Pattern" Value="a" />
                 <ValidationParameter Name="ErrorMessage" Value="cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address." />
               </ValidationParameters>
             </Protocol>
