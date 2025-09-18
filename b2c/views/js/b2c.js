@@ -135,7 +135,29 @@ function validateErrors() {
 
         pageLevelErrorDiv.className = "govuk-error-summary";
 
-      } else {
+      } else if (input.getAttribute('placeholder').toLowerCase() === 'email address') {
+        const restrictedPrefix = /^(admin|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+/i;
+        const restrictedSuffix = /@cjsm\.net$/i;
+
+        function isEmailRestricted(email) {
+          return restrictedPrefix.test(email) || restrictedSuffix.test(email);
+        }
+
+        if (isEmailRestricted(input.value)) {
+          const placeholderText = input.getAttribute('placeholder');
+          const inputId = input.getAttribute('id');
+
+          errorFields.push({
+            placeholderText: placeholderText,
+            inputId: inputId
+          });
+
+          errorDivs[i].textContent = `cjsm.net and shared email addresses (e.g. admin, hello etc. are not allowed)`;
+          pageLevelErrorDiv.className = "govuk-error-summary";
+        }
+      }
+
+      else {
         errorDivs[i].textContent = ''
       }
 
@@ -168,4 +190,5 @@ $(function () {
   removeAutofocus();
   $(window).on('pageshow', removeAutofocus);
   addDescriptiveErrors();
+  addEmailRestrictionCheck();
 });
