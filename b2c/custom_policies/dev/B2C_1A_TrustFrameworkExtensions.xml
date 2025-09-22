@@ -306,6 +306,7 @@
             <Item Key="setting.showCancelButton">false</Item>
             <Item Key="setting.retryLimit">5</Item>
             <Item Key="setting.showRetryButton">true</Item>
+            <Item Key="language.button_continue">Verify code</Item>
             <Item Key="setting.errorMessage">The verification code you entered is incorrect or expired. Please try again.</Item>
           </Metadata>
           <InputClaims>
