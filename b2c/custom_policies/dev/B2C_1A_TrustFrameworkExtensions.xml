@@ -309,6 +309,7 @@
             <Item Key="language.button_continue">Verify code</Item>
             <Item Key="setting.errorMessage">The verification code you entered is incorrect or expired. Please try again.</Item>
             <Item Key="language.intro">A verification code has been sent to {email}</Item>
+            <Item Key="language.heading">A verification code has been sent to {email}</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" />
