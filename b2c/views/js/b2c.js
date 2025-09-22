@@ -117,64 +117,53 @@ function addDescriptiveErrors() {
 function validateErrors() {
   const errorDivs = document.getElementsByClassName('error itemLevel');
   const pageLevelErrorDiv = document.getElementById('requiredFieldMissing');
-  const errorFields = []
+  const errorFields = [];
 
   if (errorDivs) {
     for (let i = 0; i < errorDivs.length; i++) {
       const input = errorDivs[i].nextElementSibling;
+      let errorMessage = '';
 
-      if (input && input.tagName.toLowerCase() === 'input' && input.value.trim() === '') {
+      if (input && input.tagName.toLowerCase() === 'input') {
         const placeholderText = input.getAttribute('placeholder');
         const inputId = input.getAttribute('id');
 
-        errorFields.push({
-          placeholderText: placeholderText,
-          inputId: inputId
-        });
-        errorDivs[i].textContent = `This field is required: ${placeholderText.toLowerCase()}`;
-
-        pageLevelErrorDiv.className = "govuk-error-summary";
-
-      } else if (input.getAttribute('placeholder').toLowerCase() === 'email address') {
-        const restrictedPrefix = /^(admin|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+/i;
-        const restrictedSuffix = /@cjsm\.net$/i;
-
-        function isEmailRestricted(email) {
-          return restrictedPrefix.test(email) || restrictedSuffix.test(email);
+        if (input.value.trim() === '') {
+          errorFields.push({ placeholderText, inputId });
+          errorMessage = `This field is required: ${placeholderText.toLowerCase()}`;
         }
 
-        if (isEmailRestricted(input.value)) {
-          const placeholderText = input.getAttribute('placeholder');
-          const inputId = input.getAttribute('id');
+        if (placeholderText && placeholderText.toLowerCase() === 'email address') {
+          const bannedPrefix = /^(admin|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+/i;
+          const bannedSuffix = /@cjsm\.net$/i;
+          let errorMessages = [];
 
-          errorFields.push({
-            placeholderText: placeholderText,
-            inputId: inputId
-          });
+          if (bannedPrefix.test(input.value)) {
+            errorMessages.push("Shared email addresses (e.g. admin, hello, contact etc.) are not allowed.");
+          }
+          if (bannedSuffix.test(input.value)) {
+            errorMessages.push("cjsm.net email addresses are not allowed.");
+          }
 
-          errorDivs[i].textContent = `cjsm.net and shared email addresses (e.g. admin, hello etc. are not allowed)`;
-          pageLevelErrorDiv.className = "govuk-error-summary";
+          if (errorMessages.length > 0) {
+            errorMessage += (errorMessage ? ' ' : '') + errorMessages.join(" ");
+          }
         }
       }
 
-      else {
-        errorDivs[i].textContent = ''
-      }
-
+      errorDivs[i].textContent = errorMessage;
+      if (errorMessage) pageLevelErrorDiv.className = "govuk-error-summary";
     }
-
   }
 
-  if (errorFields) {
+  if (errorFields.length) {
     pageLevelErrorDiv.innerHTML = `
-            <p class="govuk-error-summary__title">The following required field(s) are missing:</p>
-            <div class="govuk-error-summary__body">
-            <ul class="govuk-list govuk-error-summary__list">
-                 ${errorFields
-      .map(field => `<li><a href="#${field.inputId}" style="color:rgb(212,53,19);">${field.placeholderText}</a></li>`)
-      .join("")}
-            </ul>
-            </div>
+      <p class="govuk-error-summary__title">The following required field(s) are missing:</p>
+      <div class="govuk-error-summary__body">
+        <ul class="govuk-list govuk-error-summary__list">
+          ${errorFields.map(field => `<li><a href="#${field.inputId}" style="color:rgb(212,53,19);">${field.placeholderText}</a></li>`).join("")}
+        </ul>
+      </div>
     `;
   } else {
     pageLevelErrorDiv.textContent = "";
@@ -190,5 +179,4 @@ $(function () {
   removeAutofocus();
   $(window).on('pageshow', removeAutofocus);
   addDescriptiveErrors();
-  addEmailRestrictionCheck();
 });
