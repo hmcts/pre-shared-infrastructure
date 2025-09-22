@@ -223,12 +223,6 @@
         </LocalizedStrings>
       </LocalizedResources>
 
-<!--      <LocalizedResources Id="api.selfasserted.en">-->
-<!--        <LocalizedStrings>-->
-<!--          <LocalizedString ElementType="UxElement" StringId="button_continue">Verify code</LocalizedString>-->
-<!--        </LocalizedStrings>-->
-<!--      </LocalizedResources>-->
-
       <!-- Edit profile sign-in page English-->
       <LocalizedResources Id="api.idpselections.en">
         <LocalizedStrings>
