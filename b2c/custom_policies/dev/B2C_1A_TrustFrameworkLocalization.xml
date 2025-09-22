@@ -223,17 +223,6 @@
         </LocalizedStrings>
       </LocalizedResources>
 
-      <LocalizedResources Id="api.verifyemailcode.en">
-        <LocalizedStrings>
-          <!-- Button text -->
-          <LocalizedString ElementType="UxElement" StringId="button_continue">Verify code</LocalizedString>
-
-          <!-- Heading / intro (only render if your template includes these placeholders) -->
-          <LocalizedString ElementType="UxElement" StringId="heading">Enter verification code</LocalizedString>
-          <LocalizedString ElementType="UxElement" StringId="intro">A verification code has been sent to {email}</LocalizedString>
-        </LocalizedStrings>
-      </LocalizedResources>
-
       <!-- Edit profile sign-in page English-->
       <LocalizedResources Id="api.idpselections.en">
         <LocalizedStrings>

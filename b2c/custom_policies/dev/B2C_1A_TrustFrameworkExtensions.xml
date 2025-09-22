@@ -65,15 +65,6 @@
 
         <ContentDefinitions>
             <!-- This content definition is to render an error page that displays unhandled errors. -->
-            <ContentDefinition Id="api.verifyemailcode">
-                <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
-                <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
-                <!-- keep the same contract you already use for self-asserted pages -->
-                <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
-                <Metadata>
-                    <Item Key="DisplayName">Verify code</Item>
-                </Metadata>
-            </ContentDefinition>
             <ContentDefinition Id="api.error">
                 <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
                 <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
@@ -319,6 +310,7 @@
                         <Item Key="setting.retryLimit">5</Item>
                         <Item Key="setting.showRetryButton">true</Item>
                         <Item Key="language.button_continue">Verify code</Item>
+                        <Item Key="language.page_title">Something something {email}</Item>
                         <Item Key="setting.errorMessage">The verification code you entered is incorrect or expired.
                             Please try again.
                         </Item>
