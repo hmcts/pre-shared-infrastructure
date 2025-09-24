@@ -100,6 +100,12 @@ import {
   to       = azurerm_virtual_machine_extension.edit_init[0]
 }
 
+import {
+  for_each = local.vm_ext_import
+  id       = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/pre-stg/providers/Microsoft.Compute/virtualMachines/edit-vm1-stg/extensions/toolingScript"
+  to       = azurerm_virtual_machine_extension.edit_init[0]
+}
+
 resource "azurerm_virtual_machine_extension" "edit_init" {
   count                = var.num_vid_edit_vms
   name                 = "toolingScript"
