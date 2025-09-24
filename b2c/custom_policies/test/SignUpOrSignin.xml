@@ -30,9 +30,9 @@
       <LocalizedResources Id="api.localaccountsignup.en">
         <LocalizedStrings>
           <LocalizedString
-            ElementType="ClaimType"
+            ElementType="ErrorMessage"
             ElementId="email"
-            StringId="PatternHelpText"
+            StringId="UserMessageIfIncorrectPattern"
           >cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
