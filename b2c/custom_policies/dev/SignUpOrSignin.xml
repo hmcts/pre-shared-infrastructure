@@ -19,8 +19,8 @@
       <ClaimType Id="email">
         <Restriction>
           <Pattern
-            RegularExpression="^[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+(?&lt;!cjsm\.net)$"
-            HelpText="cjsm.net email addresses are not supported. Please enter a valid email address."
+            RegularExpression="^(?!(admin|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+)[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+(?&lt;!cjsm\.net)$"
+            HelpText="cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address."
           />
         </Restriction>
       </ClaimType>
@@ -33,7 +33,7 @@
             ElementType="ClaimType"
             ElementId="email"
             StringId="PatternHelpText"
-          >cjsm.net email addresses are not supported. Please enter a valid email address.</LocalizedString>
+          >cjsm.net email addresses and shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address.</LocalizedString>
         </LocalizedStrings>
       </LocalizedResources>
     </Localization>
