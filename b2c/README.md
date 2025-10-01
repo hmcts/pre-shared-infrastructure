@@ -35,13 +35,16 @@ We have not been granted permission by platops to manually upload policies via t
 
 ### Custom Policies
 
-Uploading of custom policies is automated via a manually triggered GitHub Action. See [workflows definitions](https://github.com/hmcts/pre-shared-infrastructure/tree/master/.github/workflows). These files are run by [Github Actions](https://github.com/hmcts/pre-shared-infrastructure/actions/workflows/b2c_custom_policiesV2.yml).
+Policies are NOT automatically applied through CI/CD (e.g. merging into master).
+
+For changes to the policies to be reflected you will need to manually trigger a GitHub action that will upload the policy to the chosen environment.
+See [workflows definitions](https://github.com/hmcts/pre-shared-infrastructure/tree/master/.github/workflows). These files are run by [Github Actions](https://github.com/hmcts/pre-shared-infrastructure/actions/workflows/b2c_custom_policiesV2.yml).
 
 Each environment has its own set of policies to facilitate testing of changes, they can be found under the custom_policies directory. E.g. staging's policy allows skipping 2FA to allow automated test accounts.
 
 When updating custom policies, it can take a long time for the changes to be realised in the portal. This is expected behaviour due to caching, further information can be found in the [Microsoft docs](https://learn.microsoft.com/en-us/azure/active-directory-b2c/best-practices#operations%22https://learn.microsoft.com/en-us/azure/active-directory-b2c/best-practices#operations%22).
 
-To test policies on different environments, you can change the code on your own branch in the staging folder, then use the Github action to push it to staging.
+To test policies on different environments, you can change the code on your own branch in the Test folder, then use the Github action to upload it to the Test B2C.
 
 ### B2C HTML injection
 The main content of the B2C screens is injected by Microsoft. We don't own or maintain or edit the HTML content of these files. The best we can do is edit and style them via JavaScript and CSS.
@@ -50,9 +53,11 @@ The files under b2c_injection_reference are to assist with local development wor
 
 ### Custom Templates
 
-The static files for the B2C display template (html, css, etc) are hosted in the presa\<env> storage account. The files can be found under the views directory.
+The static files for the B2C display template (html, js, css, etc) are hosted in the presa\<env> storage account. The files can be found under the views directory.
 
-You can use Azure Storage Explorer to look at and edit these files.
+You can use Azure Storage Explorer to look at and edit these files. For example, if you havd added JavaScript to b2c.js, you can upload it to the Test storage account to test it.
+Be aware that someone else might overwrite your changes if they merge into pre-shared-infrastructure or pre-portal. You will need to check your file is
+still there before beginning your testing.
 
 The files are deployed by the [CI/CD pipeline](https://sds-build.hmcts.net/job/HMCTS/job/pre-portal/).
 

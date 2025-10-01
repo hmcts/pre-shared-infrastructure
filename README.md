@@ -9,6 +9,8 @@ The infrastructure for PRE is brought up in 4 stages:
 
 ## Getting started
 
+Please also read the B2C Readme file [b2c/README.md](b2c/README.md)
+
 The terraform version is managed by `.terraform-version` file in the root of the repo, you can update this whenever you want.
 
 ## Lint
