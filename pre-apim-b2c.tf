@@ -2,7 +2,7 @@ resource "random_uuid" "scope_api_request_b2c" {}
 
 import {
   to = azuread_application.api_app
-  id = var.pre_apim_b2c_app_object_id
+  id = "/applications/${var.pre_apim_b2c_app_object_id}"
 }
 
 check "app_import_matches_lookup" {
