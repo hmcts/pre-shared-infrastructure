@@ -70,3 +70,5 @@ edit_vm_data_disks = [{
 cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 
 apim_service_url = "https://pre-api.demo.platform.hmcts.net"
+
+pre_apim_b2c_app_object_id = "5a94e6c8-2b60-4a3e-adf7-c79ed6f5c7f4"
