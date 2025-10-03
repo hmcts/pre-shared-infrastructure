@@ -201,3 +201,7 @@ variable "edit_vm_force_run_id" {
 variable "remove_splunk_uf" {
   default = false
 }
+
+variable "pre_apim_b2c_app_object_id" {
+  description = "The object ID of the pre-apim-b2c app registration"
+}

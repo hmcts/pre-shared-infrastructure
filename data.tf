@@ -116,3 +116,7 @@ data "azurerm_user_assigned_identity" "pre_stg_mi" {
   name                = "${var.product}-stg-mi"
   resource_group_name = "managed-identities-stg-rg"
 }
+
+data "azuread_application" "pre_apim_b2c_app" {
+  display_name = "${var.product}-apim-b2c-${var.env}"
+}
