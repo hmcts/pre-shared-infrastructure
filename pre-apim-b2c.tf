@@ -23,7 +23,7 @@ resource "azuread_application" "api_app" {
     oauth2_permission_scope {
       id                         = random_uuid.scope_api_request_b2c.result
       value                      = "api.request.b2c"
-      type                       = "Admin"   # require admin consent; use "User" if self-consent is OK
+      type                       = "Admin" # require admin consent; use "User" if self-consent is OK
       enabled                    = true
       admin_consent_display_name = "PRE ${var.env} Request B2C"
       admin_consent_description  = "Allow the caller to perform B2C request operations."
