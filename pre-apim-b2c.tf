@@ -37,7 +37,7 @@ resource "azuread_application" "api_app" {
 resource "azuread_application_api_access" "client_needs_api" {
   application_id = data.azuread_application.pre_apim_b2c_app.client_id
   api_client_id  = azuread_application.api_app.client_id
-  scope_ids      = [
+  scope_ids = [
     azuread_application.api_app.oauth2_permission_scope_ids["api.request.b2c"]
   ]
 }
