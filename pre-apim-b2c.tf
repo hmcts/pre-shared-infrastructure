@@ -12,6 +12,7 @@ check "app_import_matches_lookup" {
   }
 }
 
+# This is your API application that protects the APIM resource
 resource "azuread_application" "api_app" {
   display_name    = data.azuread_application.pre_apim_b2c_app.display_name
   identifier_uris = ["api://${data.azuread_application.pre_apim_b2c_app.client_id}"]
@@ -19,11 +20,11 @@ resource "azuread_application" "api_app" {
   api {
     requested_access_token_version = 2
 
-    # Delegated scope (appears in 'scp')
+    # Delegated scope that the B2C app (pre-portal-sso) will request
     oauth2_permission_scope {
       id                         = random_uuid.scope_api_request_b2c.result
       value                      = "api.request.b2c"
-      type                       = "Admin" # require admin consent; use "User" if self-consent is OK
+      type                       = "Admin" # require admin consent
       enabled                    = true
       admin_consent_display_name = "PRE ${var.env} Request B2C"
       admin_consent_description  = "Allow the caller to perform B2C request operations."
@@ -31,13 +32,4 @@ resource "azuread_application" "api_app" {
       user_consent_description   = "Allow the caller to perform B2C request operations."
     }
   }
-}
-
-# --- declare the API permission on the client (delegated scope) ---
-resource "azuread_application_api_access" "client_needs_api" {
-  application_id = "/applications/${data.azuread_application.pre_apim_b2c_app.client_id}"
-  api_client_id  = azuread_application.api_app.client_id
-  scope_ids = [
-    azuread_application.api_app.oauth2_permission_scope_ids["api.request.b2c"]
-  ]
 }
