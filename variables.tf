@@ -205,3 +205,7 @@ variable "remove_splunk_uf" {
 variable "pre_apim_b2c_app_object_id" {
   description = "The object ID of the pre-apim-b2c app registration"
 }
+
+variable "b2c_tenant_id" {
+  description = "The tenant ID of the Azure AD B2C tenant"
+}

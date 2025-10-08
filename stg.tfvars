@@ -76,3 +76,5 @@ cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 apim_service_url = "https://pre-api.staging.platform.hmcts.net"
 
 pre_apim_b2c_app_object_id = "3f7577fd-5329-4265-bd5b-01ee5717113d"
+
+b2c_tenant_id = "8b185f8b-665d-4bb3-af4a-ab7ee61b9334"

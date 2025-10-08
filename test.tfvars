@@ -77,3 +77,5 @@ cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 apim_service_url = "https://pre-api.test.platform.hmcts.net"
 
 pre_apim_b2c_app_object_id = "1694b693-8e90-4adc-a48d-0298e2e90b0b"
+
+b2c_tenant_id = "44379efc-6244-4e94-ab4d-aad9b6778220"
