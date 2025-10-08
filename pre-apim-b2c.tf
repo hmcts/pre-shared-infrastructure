@@ -41,12 +41,3 @@ resource "azuread_application_api_access" "client_needs_api" {
     azuread_application.api_app.oauth2_permission_scope_ids["api.request.b2c"]
   ]
 }
-
-# --- admin consent for that client (required since scope type = "Admin") ---
-resource "azuread_service_principal_delegated_permission_grant" "client_consent_all" {
-  service_principal_object_id          = data.azuread_application.pre_apim_b2c_app.object_id
-  resource_service_principal_object_id = var.pre_apim_b2c_app_object_id
-  claim_values                         = ["api.request.b2c"]
-
-  depends_on = [azuread_application_api_access.client_needs_api]
-}

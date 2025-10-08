@@ -136,7 +136,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 |------|------|
 | [azuread_application.api_app](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application) | resource |
 | [azuread_application_api_access.client_needs_api](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application_api_access) | resource |
-| [azuread_service_principal_delegated_permission_grant.client_consent_all](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_delegated_permission_grant) | resource |
 | [azurerm_key_vault_secret.API_POSTGRES_DATABASE](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.API_POSTGRES_HOST](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/resources/key_vault_secret) | resource |
 | [azurerm_key_vault_secret.API_POSTGRES_PASS](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/resources/key_vault_secret) | resource |
