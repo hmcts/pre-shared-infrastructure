@@ -3,8 +3,8 @@ resource "random_uuid" "scope_api_request_b2c" {}
 resource "random_uuid" "scope_api_app_role" {}
 
 resource "azuread_application" "b2c_api" {
-  provider     = azuread.b2c
-  display_name = "${var.product}-b2c-api-${var.env}"
+  provider        = azuread.b2c
+  display_name    = "${var.product}-b2c-api-${var.env}"
   identifier_uris = ["api://${random_uuid.b2c_audience.result}"]
 
   api {
