@@ -77,3 +77,5 @@ num_adf = 1
 edit_vm_force_run_id = "20251007"
 
 pre_apim_b2c_app_object_id = "8879f7d3-edf7-4452-a51b-33770bc29c8d"
+
+b2c_tenant_id = "0f878b1e-f234-49e3-8be4-f8028cd364f2"
