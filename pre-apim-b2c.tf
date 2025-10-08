@@ -37,10 +37,10 @@ data "azuread_application" "b2c_client" {
   display_name = "${var.product}-portal-sso"
 }
 
-# Prefer pre-authorization (B2C way to trust first-party clients)
-resource "azuread_application_pre_authorized" "b2c_pre_auth" {
-  provider               = azuread.b2c
-  application_object_id  = azuread_application.b2c_api.object_id
-  authorized_client_id   = data.azuread_application.b2c_client.client_id
-  permission_ids         = [random_uuid.scope_api_request_b2c.result]
-}
+# # Prefer pre-authorization (B2C way to trust first-party clients)
+# resource "azuread_application_pre_authorized" "b2c_pre_auth" {
+#   provider               = azuread.b2c
+#   application_object_id  = azuread_application.b2c_api.object_id
+#   authorized_client_id   = data.azuread_application.b2c_client.client_id
+#   permission_ids         = [random_uuid.scope_api_request_b2c.result]
+# }
