@@ -49,6 +49,9 @@
                 <DataType>boolean</DataType>
             </ClaimType>
 
+            <ClaimType Id="bearerToken"><DataType>string</DataType></ClaimType>
+            <ClaimType Id="grant_type"><DataType>string</DataType></ClaimType>
+            <ClaimType Id="scope"><DataType>string</DataType></ClaimType>
         </ClaimsSchema>
 
         <ClaimsTransformations>
@@ -281,27 +284,28 @@
                     </OutputClaims>
                 </TechnicalProfile>
 
-                <TechnicalProfile Id="SendEmailVerificationAPI">
-                    <DisplayName>Send Email Verification Code</DisplayName>
-                    <Protocol Name="Proprietary"
-                              Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
-                    <Metadata>
-                        <Item Key="ServiceUrl">
-                            https://sds-api-mgmt.staging.platform.hmcts.net/pre-api-b2c/b2c/email-verification
-                        </Item>
-                        <Item Key="SendClaimsIn">Body</Item>
-                        <Item Key="AuthenticationType">None</Item>
-                        <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
-                    </Metadata>
-                    <InputClaims>
-                        <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
-                        <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verification_code"
-                                    Required="true"/>
-                    </InputClaims>
-                    <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
-                </TechnicalProfile>
+              <TechnicalProfile Id="SendEmailVerificationAPI">
+                <DisplayName>Send Email Verification Code</DisplayName>
+                <Protocol Name="Proprietary"
+                          Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+                <Metadata>
+                  <Item Key="ServiceUrl">https://sds-api-mgmt.staging.platform.hmcts.net/pre-api-b2c/b2c/email-verification</Item>
+                  <Item Key="SendClaimsIn">Body</Item>
+                  <Item Key="AuthenticationType">Bearer</Item>
+                  <Item Key="UseClaimAsBearerToken">bearerToken</Item>
+                  <Item Key="AllowInsecureAuthInProduction">false</Item>
+                  <Item Key="IncludeClaimResolvingInClaimsHandling">true</Item>
+                </Metadata>
+                <InputClaims>
+                  <InputClaim ClaimTypeReferenceId="bearerToken" />
+                  <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
+                  <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verification_code" Required="true"/>
+                </InputClaims>
+                <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
+              </TechnicalProfile>
 
-                <TechnicalProfile Id="SelfAsserted-VerifyEmailCode">
+
+              <TechnicalProfile Id="SelfAsserted-VerifyEmailCode">
                     <DisplayName>Enter Verification Code</DisplayName>
                     <Protocol Name="Proprietary"
                               Handler="Web.TPEngine.Providers.SelfAssertedAttributeProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
@@ -346,6 +350,30 @@
                         <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpToVerify"/>
                     </InputClaims>
                 </TechnicalProfile>
+
+              <TechnicalProfile Id="REST-AcquireAccessToken">
+                <DisplayName>Acquire access token (client credentials)</DisplayName>
+                <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
+                <Metadata>
+                  <Item Key="ServiceUrl">https://login.microsoftonline.com/{APIM_TENANT_ID}/oauth2/v2.0/token</Item>
+                  <Item Key="SendClaimsIn">Form</Item>
+                  <Item Key="AuthenticationType">Basic</Item> <!-- client_id + secret via Policy Keys -->
+                  <Item Key="AllowInsecureAuthInProduction">false</Item>
+                </Metadata>
+                <CryptographicKeys>
+                  <Key Id="BasicAuthenticationUsername" StorageReferenceId="B2C_1A_OAuth_ClientId" />
+                  <Key Id="BasicAuthenticationPassword" StorageReferenceId="B2C_1A_OAuth_ClientSecret" />
+                </CryptographicKeys>
+                <InputClaims>
+                  <InputClaim ClaimTypeReferenceId="grant_type" DefaultValue="client_credentials" AlwaysUseDefaultValue="true" />
+                  <!-- Use your API's Application ID URI -->
+                  <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://{RESOURCE_APP_ID}/.default" AlwaysUseDefaultValue="true" />
+                </InputClaims>
+                <OutputClaims>
+                  <OutputClaim ClaimTypeReferenceId="bearerToken" PartnerClaimType="access_token" />
+                </OutputClaims>
+              </TechnicalProfile>
+
 
             </TechnicalProfiles>
         </ClaimsProvider>
