@@ -48,11 +48,12 @@ data "azuread_service_principal" "client_sp" {
 }
 
 # Grant the app role to the client (this is the "admin consent" for app perms)
-resource "azuread_service_principal_app_role_assignment" "client_to_api" {
-  service_principal_object_id          = data.azuread_service_principal.client_sp.object_id
-  resource_service_principal_object_id = data.azuread_service_principal.resource_sp.object_id
-  app_role_id                          = data.azuread_service_principal.resource_sp.app_role_ids["pre.api.request.b2c"]
-  depends_on                           = [azuread_application.resource_api]
+resource "azuread_app_role_assignment" "client_to_api" {
+  principal_object_id = data.azuread_service_principal.client_sp.object_id
+  app_role_id         = random_uuid.app_role.result
+  resource_object_id  = data.azuread_service_principal.resource_sp.object_id
+
+  depends_on = [azuread_application.resource_api]
 }
 
 # Create a client secret for client_credentials
