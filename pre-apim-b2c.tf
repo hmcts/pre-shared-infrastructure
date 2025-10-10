@@ -1,15 +1,15 @@
 # Lookups
 data "azuread_application" "resource_app" {
-  display_name = "pre-apim-b2c-${var.env}"     # your protected API
+  display_name = "pre-apim-b2c-${var.env}" # your protected API
 }
 data "azuread_application" "client_app" {
-  display_name = "pre-b2c-client-${var.env}"   # B2C will use this
+  display_name = "pre-b2c-client-${var.env}" # B2C will use this
 }
 
 # Import the existing resource app into state
 import {
   to = azuread_application.resource_api
-  id = "/applications/${var.pre_apim_b2c_app_object_id}"  # OBJECT ID of pre-apim-b2c-${var.env}
+  id = "/applications/${var.pre_apim_b2c_app_object_id}" # OBJECT ID of pre-apim-b2c-${var.env}
 }
 
 # Sanity check
@@ -52,7 +52,7 @@ resource "azuread_service_principal_app_role_assignment" "client_to_api" {
   service_principal_object_id          = azuread_service_principal.client_sp.object_id
   resource_service_principal_object_id = azuread_service_principal.resource_sp.object_id
   app_role_id                          = azuread_service_principal.resource_sp.app_role_ids["pre.api.request.b2c"]
-  depends_on = [azuread_application.resource_api]
+  depends_on                           = [azuread_application.resource_api]
 }
 
 # Create a client secret for client_credentials
