@@ -39,19 +39,19 @@ resource "azuread_application" "resource_api" {
   }
 }
 
-# Ensure SPs exist
-resource "azuread_service_principal" "resource_sp" {
-  client_id = data.azuread_application.resource_app.client_id
+data "azuread_service_principal" "resource_sp" {
+  application_id = data.azuread_application.resource_app.client_id
+  depends_on     = [azuread_application.resource_api]
 }
-resource "azuread_service_principal" "client_sp" {
-  client_id = data.azuread_application.client_app.client_id
+data "azuread_service_principal" "client_sp" {
+  application_id = data.azuread_application.client_app.client_id
 }
 
 # Grant the app role to the client (this is the "admin consent" for app perms)
 resource "azuread_service_principal_app_role_assignment" "client_to_api" {
-  service_principal_object_id          = azuread_service_principal.client_sp.object_id
-  resource_service_principal_object_id = azuread_service_principal.resource_sp.object_id
-  app_role_id                          = azuread_service_principal.resource_sp.app_role_ids["pre.api.request.b2c"]
+  service_principal_object_id          = data.azuread_service_principal.client_sp.object_id
+  resource_service_principal_object_id = data.azuread_service_principal.resource_sp.object_id
+  app_role_id                          = data.azuread_service_principal.resource_sp.app_role_ids["pre.api.request.b2c"]
   depends_on                           = [azuread_application.resource_api]
 }
 
