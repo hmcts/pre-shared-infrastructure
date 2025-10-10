@@ -77,11 +77,6 @@ data "azurerm_subnet" "videoedit_subnet" {
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
-data "azurerm_bastion_host" "bastion" {
-  name                = "${var.product}-bastion-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
-
 ### Dynatrace
 data "azurerm_key_vault_secret" "dynatrace-token" {
   name         = "dynatrace-token"
