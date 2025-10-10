@@ -40,11 +40,11 @@ resource "azuread_application" "resource_api" {
 }
 
 data "azuread_service_principal" "resource_sp" {
-  application_id = data.azuread_application.resource_app.client_id
+  client_id = data.azuread_application.resource_app.client_id
   depends_on     = [azuread_application.resource_api]
 }
 data "azuread_service_principal" "client_sp" {
-  application_id = data.azuread_application.client_app.client_id
+  client_id = data.azuread_application.client_app.client_id
 }
 
 # Grant the app role to the client (this is the "admin consent" for app perms)
