@@ -40,8 +40,8 @@ resource "azuread_application" "resource_api" {
 }
 
 data "azuread_service_principal" "resource_sp" {
-  client_id = data.azuread_application.resource_app.client_id
-  depends_on     = [azuread_application.resource_api]
+  client_id  = data.azuread_application.resource_app.client_id
+  depends_on = [azuread_application.resource_api]
 }
 data "azuread_service_principal" "client_sp" {
   client_id = data.azuread_application.client_app.client_id
