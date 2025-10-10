@@ -1,15 +1,15 @@
 # Lookups
 data "azuread_application" "resource_app" {
-  display_name = "pre-apim-b2c-${var.env}" # your protected API
+  display_name = "pre-apim-b2c-${var.env}"
 }
 data "azuread_application" "client_app" {
-  display_name = "pre-b2c-client-${var.env}" # B2C will use this
+  display_name = "pre-b2c-client-${var.env}"
 }
 
 # Import the existing resource app into state
 import {
   to = azuread_application.resource_api
-  id = "/applications/${var.pre_apim_b2c_app_object_id}" # OBJECT ID of pre-apim-b2c-${var.env}
+  id = "/applications/${var.pre_apim_b2c_app_object_id}"
 }
 
 # Sanity check
@@ -26,7 +26,7 @@ resource "random_uuid" "app_role" {}
 # Resource app
 resource "azuread_application" "resource_api" {
   display_name    = data.azuread_application.resource_app.display_name
-  identifier_uris = ["api://${data.azuread_application.resource_app.client_id}"] # keep existing audience
+  identifier_uris = ["api://${data.azuread_application.resource_app.client_id}"]
   api { requested_access_token_version = 2 }
 
   app_role {
@@ -47,7 +47,7 @@ data "azuread_service_principal" "client_sp" {
   client_id = data.azuread_application.client_app.client_id
 }
 
-# Grant the app role to the client (this is the "admin consent" for app perms)
+# Grant the app role to the client
 resource "azuread_app_role_assignment" "client_to_api" {
   principal_object_id = data.azuread_service_principal.client_sp.object_id
   app_role_id         = random_uuid.app_role.result
