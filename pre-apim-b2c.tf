@@ -13,7 +13,7 @@ data "azuread_service_principal" "client_sp" {
 # Grant the app role to the client
 resource "azuread_app_role_assignment" "client_to_api" {
   principal_object_id = data.azuread_service_principal.client_sp.object_id
-  app_role_id         = data.azuread_application.resource_app.app_role_ids[0]
+  app_role_id         = data.azuread_application.resource_app.app_role_ids["pre.api.request.b2c"]
   resource_object_id  = data.azuread_application.resource_app.object_id
 }
 
