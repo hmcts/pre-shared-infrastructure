@@ -6,43 +6,6 @@ data "azuread_application" "client_app" {
   display_name = "pre-b2c-client-${var.env}"
 }
 
-# Import the existing resource app into state
-import {
-  to = azuread_application.resource_api
-  id = "/applications/${var.pre_apim_b2c_app_object_id}"
-}
-
-# Sanity check
-check "import_matches_lookup" {
-  assert {
-    condition     = data.azuread_application.resource_app.object_id == var.pre_apim_b2c_app_object_id
-    error_message = "Object ID does not match pre-apim-b2c-${var.env}."
-  }
-}
-
-# Stable ID for the app role
-resource "random_uuid" "app_role" {}
-
-# Resource app
-resource "azuread_application" "resource_api" {
-  display_name    = data.azuread_application.resource_app.display_name
-  identifier_uris = ["api://${data.azuread_application.resource_app.client_id}"]
-  api { requested_access_token_version = 2 }
-
-  app_role {
-    id                   = random_uuid.app_role.result
-    value                = "pre.api.request.b2c"
-    display_name         = "PRE ${var.env} Request B2C (app)"
-    description          = "App-only access for 2FA / Forgotten login relay via APIM."
-    allowed_member_types = ["Application"]
-    enabled              = true
-  }
-}
-
-data "azuread_service_principal" "resource_sp" {
-  client_id  = data.azuread_application.resource_app.client_id
-  depends_on = [azuread_application.resource_api]
-}
 data "azuread_service_principal" "client_sp" {
   client_id = data.azuread_application.client_app.client_id
 }
@@ -50,10 +13,8 @@ data "azuread_service_principal" "client_sp" {
 # Grant the app role to the client
 resource "azuread_app_role_assignment" "client_to_api" {
   principal_object_id = data.azuread_service_principal.client_sp.object_id
-  app_role_id         = random_uuid.app_role.result
-  resource_object_id  = data.azuread_service_principal.resource_sp.object_id
-
-  depends_on = [azuread_application.resource_api]
+  app_role_id         = data.azuread_application.resource_app.app_role_ids["pre.api.request.b2c"]
+  resource_object_id  = data.azuread_application.resource_app.object_id
 }
 
 # Create a client secret for client_credentials
