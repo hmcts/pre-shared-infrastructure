@@ -76,4 +76,4 @@ num_adf = 1
 
 edit_vm_force_run_id = "20251007"
 
-pre_apim_b2c_app_object_id = "8879f7d3-edf7-4452-a51b-33770bc29c8d"
+pre_apim_b2c_app_object_id = "6f780cc6-3283-4221-b43d-03c1a4cc7815"
