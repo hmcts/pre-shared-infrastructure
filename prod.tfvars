@@ -74,4 +74,6 @@ apim_service_url = "https://pre-api.platform.hmcts.net"
 
 num_adf = 1
 
-edit_vm_force_run_id = "20250909"
+edit_vm_force_run_id = "20251014"
+
+pre_apim_b2c_app_object_id = "6f780cc6-3283-4221-b43d-03c1a4cc7815"

@@ -77,11 +77,6 @@ data "azurerm_subnet" "videoedit_subnet" {
   virtual_network_name = data.azurerm_virtual_network.vnet.name
 }
 
-data "azurerm_bastion_host" "bastion" {
-  name                = "${var.product}-bastion-${var.env}"
-  resource_group_name = data.azurerm_resource_group.rg.name
-}
-
 ### Dynatrace
 data "azurerm_key_vault_secret" "dynatrace-token" {
   name         = "dynatrace-token"
@@ -115,4 +110,8 @@ data "azurerm_user_assigned_identity" "pre_stg_mi" {
   provider            = azurerm.stg
   name                = "${var.product}-stg-mi"
   resource_group_name = "managed-identities-stg-rg"
+}
+
+data "azuread_application" "pre_apim_b2c_app" {
+  display_name = "${var.product}-apim-b2c-${var.env}"
 }

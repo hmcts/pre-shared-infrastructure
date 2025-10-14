@@ -96,7 +96,7 @@ resource "terraform_data" "force_init_run" {
 
 import {
   for_each = local.vm_ext_import
-  id       = "/subscriptions/c68a4bed-4c3d-4956-af51-4ae164c1957c/resourceGroups/pre-demo/providers/Microsoft.Compute/virtualMachines/edit-vm1-demo/extensions/toolingScript"
+  id       = "/subscriptions/74dacd4f-a248-45bb-a2f0-af700dc4cf68/resourceGroups/pre-stg/providers/Microsoft.Compute/virtualMachines/edit-vm1-stg/extensions/toolingScript"
   to       = azurerm_virtual_machine_extension.edit_init[0]
 }
 
