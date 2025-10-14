@@ -355,19 +355,21 @@
                 <DisplayName>Acquire access token (client credentials)</DisplayName>
                 <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine" />
                 <Metadata>
-                  <Item Key="ServiceUrl">https://login.microsoftonline.com/{APIM_TENANT_ID}/oauth2/v2.0/token</Item>
+                  <!-- Tenant ID for hmcts.net -->
+                  <Item Key="ServiceUrl">https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/v2.0/token</Item>
                   <Item Key="SendClaimsIn">Form</Item>
                   <Item Key="AuthenticationType">Basic</Item> <!-- client_id + secret via Policy Keys -->
                   <Item Key="AllowInsecureAuthInProduction">false</Item>
                 </Metadata>
                 <CryptographicKeys>
-                  <Key Id="BasicAuthenticationUsername" StorageReferenceId="B2C_1A_OAuth_ClientId" />
-                  <Key Id="BasicAuthenticationPassword" StorageReferenceId="B2C_1A_OAuth_ClientSecret" />
+                  <!-- client id for pre-b2c-client-dev -->
+                  <Key Id="BasicAuthenticationUsername" StorageReferenceId="B2C_1A_PREOAuthClientId" />
+                  <Key Id="BasicAuthenticationPassword" StorageReferenceId="B2C_1A_PREOAuthClientSecret" />
                 </CryptographicKeys>
                 <InputClaims>
                   <InputClaim ClaimTypeReferenceId="grant_type" DefaultValue="client_credentials" AlwaysUseDefaultValue="true" />
-                  <!-- Use your API's Application ID URI -->
-                  <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://{RESOURCE_APP_ID}/.default" AlwaysUseDefaultValue="true" />
+                  <!-- app/client id for pre-apim-b2c-dev -->
+                  <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://9863368f-69b4-4a48-9dc5-14cf19d60c0a/.default" AlwaysUseDefaultValue="true" />
                 </InputClaims>
                 <OutputClaims>
                   <OutputClaim ClaimTypeReferenceId="bearerToken" PartnerClaimType="access_token" />
