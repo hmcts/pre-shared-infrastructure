@@ -369,7 +369,7 @@
                 <InputClaims>
                   <InputClaim ClaimTypeReferenceId="grant_type" DefaultValue="client_credentials" AlwaysUseDefaultValue="true" />
                   <!-- app/client id for pre-apim-b2c-dev -->
-                  <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://9863368f-69b4-4a48-9dc5-14cf19d60c0a/.default" AlwaysUseDefaultValue="true" />
+                  <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://b79aae69-ed5f-4b1b-aa59-9fbd950639b4/.default" AlwaysUseDefaultValue="true" />
                 </InputClaims>
                 <OutputClaims>
                   <OutputClaim ClaimTypeReferenceId="bearerToken" PartnerClaimType="access_token" />
