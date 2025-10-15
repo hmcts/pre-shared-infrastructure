@@ -1,13 +1,13 @@
 #network
-mgmt_net_name              = "ss-ptl-vnet"
-mgmt_net_rg_name           = "ss-ptl-network-rg"
-mgmt_subscription_id       = "6c4d2513-a873-41b4-afdd-b05a33206631"
+mgmt_net_name        = "ss-ptl-vnet"
+mgmt_net_rg_name     = "ss-ptl-network-rg"
+mgmt_subscription_id = "6c4d2513-a873-41b4-afdd-b05a33206631"
 
 #identities
 dts_pre_backup_appreg_oid = "7716f08a-c384-4113-bf26-05a04a1f909b"
 
 #backups
-restore_policy_days        = "1"
+restore_policy_days = "1"
 
 #  storage lifecycle management enabled
 delete_after_days_since_creation_greater_than = 90
