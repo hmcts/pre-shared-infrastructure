@@ -12,9 +12,9 @@
     <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
+
   <BuildingBlocks>
     <ClaimsSchema>
-
       <ClaimType Id="isForgotPassword">
         <DisplayName>isForgotPassword</DisplayName>
         <DataType>boolean</DataType>
@@ -25,6 +25,10 @@
         <DataType>string</DataType>
         <UserHelpText/>
         <UserInputType>Readonly</UserInputType>
+      </ClaimType>
+      <ClaimType Id="verificationCode">
+        <DisplayName>Verification Code</DisplayName>
+        <DataType>string</DataType>
       </ClaimType>
     </ClaimsSchema>
     <ClaimsTransformations>
@@ -123,7 +127,7 @@
     <ClaimsProvider>
       <DisplayName>Local Account</DisplayName>
       <TechnicalProfiles>
-        <TechnicalProfile Id="ForgotPassword">
+        <TechnicalProfile Id="ForgotPassword"> <!-- removing for now to put in a separat RP xml -->
           <DisplayName>Forgot your password?</DisplayName>
           <Protocol
             Name="Proprietary"
@@ -208,6 +212,7 @@
         </TechnicalProfile>
       </TechnicalProfiles>
     </ClaimsProvider>
+
     <ClaimsProvider>
       <DisplayName>Validate Email on Sign In</DisplayName>
       <TechnicalProfiles>
@@ -234,8 +239,112 @@
           </OutputClaims>
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD"/>
         </TechnicalProfile>
+
       </TechnicalProfiles>
     </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Send Email Verification</DisplayName>
+      <TechnicalProfiles>
+
+        <TechnicalProfile Id="GenerateCode">
+          <DisplayName>Generate Code</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.OneTimePasswordProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <Metadata>
+            <Item Key="Operation">GenerateCode</Item>
+            <Item Key="CodeExpirationInSeconds">600</Item>
+            <Item Key="CodeLength">6</Item>
+            <Item Key="CharacterSet">0-9</Item>
+            <Item Key="NumRetryAttempts">5</Item>
+            <Item Key="NumCodeGenerationAttempts">10</Item>
+            <Item Key="ReuseSameCode">false</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+          </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpGenerated"/>
+          </OutputClaims>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="SendEmailVerificationAPI">
+          <DisplayName>Send Email Verification Code</DisplayName>
+          <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider"/>
+          <Metadata>
+            <Item Key="ServiceUrl">https://sds-api-mgmt.staging.platform.hmcts.net/pre-api/b2c/email-verification</Item>
+            <Item Key="SendClaimsIn">Body</Item>
+            <Item Key="AuthenticationType">None</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="email" Required="true"/>
+            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="verificationCode" Required="true"/>
+          </InputClaims>
+          <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
+        </TechnicalProfile>
+
+        <TechnicalProfile Id="VerifyCode">
+          <DisplayName>Verify Code</DisplayName>
+          <Protocol Name="Proprietary"
+                    Handler="Web.TPEngine.Providers.OneTimePasswordProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
+          <Metadata>
+            <Item Key="Operation">VerifyCode</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+            <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpToVerify"/>
+          </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+    <ClaimsProvider>
+      <DisplayName>Token Issuer</DisplayName>
+      <TechnicalProfiles>
+
+        <!-- Issues JSON for the /userinfo endpoint -->
+        <TechnicalProfile Id="UserInfoIssuer">
+          <DisplayName>JSON Issuer</DisplayName>
+          <Protocol Name="None" />
+          <OutputTokenFormat>JSON</OutputTokenFormat>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <!-- Claims returned in the /userinfo response -->
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="objectId" />
+            <InputClaim ClaimTypeReferenceId="signInNames.emailAddress" />
+          </InputClaims>
+        </TechnicalProfile>
+
+        <!-- Validates the incoming access token -->
+        <TechnicalProfile Id="UserInfoAuthorization">
+          <DisplayName>UserInfo Authorization</DisplayName>
+          <Protocol Name="None" />
+          <InputTokenFormat>JWT</InputTokenFormat>
+          <Metadata>
+            <Item Key="issuer">
+              https://hmctsdevextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/
+            </Item>
+            <!-- Optional: restrict audiences -->
+            <!-- <Item Key="audience">[ "client-id-1", "client-id-2" ]</Item> -->
+            <Item Key="client_assertion_type">
+              urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+            </Item>
+          </Metadata>
+          <CryptographicKeys>
+            <Key Id="issuer_secret" StorageReferenceId="B2C_1A_TokenSigningKeyContainer" />
+          </CryptographicKeys>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
+            <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
+          </OutputClaims>
+        </TechnicalProfile>
+
+      </TechnicalProfiles>
+    </ClaimsProvider>
+
+
   </ClaimsProviders>
   <UserJourneys>
     <UserJourney Id="CustomSignUpSignIn">
@@ -283,7 +392,6 @@
           </JourneyList>
         </OrchestrationStep>
 
-        <!-- This step forces email verification on sign in only. -->
         <OrchestrationStep Order="4" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
@@ -293,8 +401,7 @@
             </Precondition>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>b330372a-de31-4927-8953-52597715b5e8
-              </Value> <!-- assume automated test super user has valid phone -->
+              <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
 
@@ -309,37 +416,63 @@
 
           </Preconditions>
           <ClaimsExchanges>
-            <ClaimsExchange Id="EmailVerifyOnSignIn" TechnicalProfileReferenceId="EmailVerifyOnSignIn"/>
+            <ClaimsExchange Id="GenerateCodeExchange" TechnicalProfileReferenceId="GenerateCode" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Show self-asserted page only if the directory does not have the user account already (i.e. we do not have an objectId).
-          This can only happen when authentication happened using a social IDP. If local account was created or authentication done
-          using ESTS in step 2, then an user account must exist in the directory by this time. -->
         <OrchestrationStep Order="5" Type="ClaimsExchange">
           <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
+              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
           </Preconditions>
           <ClaimsExchanges>
-            <ClaimsExchange Id="SelfAsserted-Social" TechnicalProfileReferenceId="SelfAsserted-Social"/>
+            <ClaimsExchange Id="SendEmailVerificationAPIExchange" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- This step reads any user attributes that we may not have received when authenticating using ESTS so they can be sent
-          in the token. -->
         <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
-              <Value>authenticationSource</Value>
-              <Value>socialIdpAuthentication</Value>
+              <Value>objectId</Value>
+              <Value>cd2ef111-05a1-41b7-a576-f2f05a6ffcd0</Value> <!-- assume automated test user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>b330372a-de31-4927-8953-52597715b5e8</Value> <!-- assume automated test super user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
           </Preconditions>
           <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserReadWithObjectId" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId"/>
+            <ClaimsExchange Id="VerifyCodeExchange" TechnicalProfileReferenceId="VerifyCode" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
