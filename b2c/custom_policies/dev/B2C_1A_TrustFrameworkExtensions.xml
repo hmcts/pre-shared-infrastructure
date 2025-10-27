@@ -228,6 +228,7 @@
                 <TechnicalProfile Id="LocalAccountWritePasswordUsingObjectId">
                     <Metadata>
                         <Item Key="setting.showCancelButton">false</Item>
+                        <Item Key="language.button_continue">Save new password</Item>
                     </Metadata>
                     <UseTechnicalProfileForSessionManagement ReferenceId="SM-AAD"/>
                 </TechnicalProfile>
