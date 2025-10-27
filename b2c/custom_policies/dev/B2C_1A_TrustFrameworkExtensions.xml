@@ -136,11 +136,11 @@
 
                 <Actions>
                     <Action Id="SendCode">
-                        <ValidationClaimsExchange>
-                            <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="GenerateCode"/>
-                            <ValidationClaimsExchangeTechnicalProfile
-                                    TechnicalProfileReferenceId="SendEmailVerificationAPI"/>
-                        </ValidationClaimsExchange>
+                      <ValidationClaimsExchange>
+                        <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="GenerateCode"/>
+                        <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="REST-AcquireAccessToken"/>
+                        <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="SendEmailVerificationAPI"/>
+                      </ValidationClaimsExchange>
                     </Action>
                     <Action Id="VerifyCode">
                         <ValidationClaimsExchange>

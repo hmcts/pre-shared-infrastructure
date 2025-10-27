@@ -70,19 +70,25 @@
               <Value>isForgotPassword</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="GenerateEmailCode" TechnicalProfileReferenceId="GenerateCode" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
+        <!-- Step 5: Acquire bearer token -->
         <OrchestrationStep Order="5" Type="ClaimsExchange">
           <ClaimsExchanges>
             <ClaimsExchange Id="AcquireToken" TechnicalProfileReferenceId="REST-AcquireAccessToken" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Step 5: Send OTP via your API -->
+        <!-- Step 6: Send OTP via your API -->
         <OrchestrationStep Order="6" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
