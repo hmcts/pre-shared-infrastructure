@@ -70,11 +70,6 @@
               <Value>isForgotPassword</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isSignUp</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange Id="GenerateEmailCode" TechnicalProfileReferenceId="GenerateCode" />
