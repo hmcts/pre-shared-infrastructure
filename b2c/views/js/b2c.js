@@ -305,38 +305,47 @@ function interceptVerificationRequests() {
           console.log('VerifyCode response status:', xhr.status);
           console.log('VerifyCode response:', xhr.responseText);
 
-          if (xhr.status === 400) {
+          // B2C returns 200 with error in the body, not 400 status
+          if (xhr.status === 200 || xhr.status === 400) {
             try {
               const response = JSON.parse(xhr.responseText);
-              console.log('Parsed error response:', response);
+              console.log('Parsed response:', response);
 
-              if (response.errorCode === 'UserMessageIfInvalidCode') {
-                console.log('Invalid code error detected, forcing error display');
+              // Check if the response contains an error (status 400 in the body)
+              if (response.status === "400" && response.errorCode) {
+                console.log('Verification error detected:', response.errorCode);
 
                 // Force the error to display after a short delay to let B2C process
                 setTimeout(function() {
-                  // Try both element ID patterns
-                  const emailFailRetry = document.getElementById('EmailVerification_error_message') ||
-                                         document.getElementById('email_fail_retry');
+                  // Find the verification code input
+                  const verificationCodeInput = document.getElementById('EmailVerification_ver_input') ||
+                                                 document.getElementById('verificationCode');
 
-                  if (emailFailRetry) {
-                    console.log('Found error element:', emailFailRetry.id);
-                    emailFailRetry.style.display = 'block';
-                    emailFailRetry.setAttribute('aria-hidden', 'false');
-                    emailFailRetry.setAttribute('role', 'alert');
+                  if (verificationCodeInput) {
+                    // Find the error div that's immediately before the verification code input
+                    const errorDiv = verificationCodeInput.previousElementSibling;
 
-                    // If the error message is empty, set it from the response
-                    if (!emailFailRetry.textContent.trim() && response.message) {
-                      emailFailRetry.textContent = response.message;
+                    if (errorDiv && errorDiv.classList.contains('error') && errorDiv.classList.contains('itemLevel')) {
+                      console.log('Found the correct error div before verification code input');
+                      console.log('Current display style:', errorDiv.style.display);
+                      console.log('Current content:', errorDiv.textContent);
+
+                      // Set the error message
+                      errorDiv.textContent = response.message;
+                      errorDiv.style.display = 'block';
+                      errorDiv.setAttribute('aria-hidden', 'false');
+                      errorDiv.setAttribute('role', 'alert');
+                      errorDiv.setAttribute('aria-label', response.message);
+
+                      console.log('After update - display:', errorDiv.style.display);
+                      console.log('After update - text:', errorDiv.textContent);
+                      console.log('Error message displayed successfully');
+                    } else {
+                      console.error('Could not find error.itemLevel div before verification code input');
+                      console.log('Previous sibling:', errorDiv);
                     }
-
-                    console.log('Forced error message to display:', emailFailRetry.textContent);
                   } else {
-                    console.error('Could not find error message element');
-
-                    // List all elements with IDs containing 'error' or 'EmailVerification'
-                    const allElements = document.querySelectorAll('[id*="EmailVerification"], [id*="error"]');
-                    console.log('Available elements:', Array.from(allElements).map(el => ({id: el.id, display: el.style.display})));
+                    console.error('Could not find verification code input');
                   }
 
                   // Also update the page-level error
@@ -344,6 +353,34 @@ function interceptVerificationRequests() {
                   if (fieldIncorrectError) {
                     fieldIncorrectError.style.display = 'block';
                     fieldIncorrectError.setAttribute('aria-hidden', 'false');
+                    console.log('Showed fieldIncorrect error');
+                  }
+                }, 100);
+              } else if (response.status === "200" || !response.status) {
+                // Successful verification - clear any errors
+                console.log('Verification successful, clearing errors');
+
+                setTimeout(function() {
+                  // Clear the field-level error
+                  const verificationCodeInput = document.getElementById('EmailVerification_ver_input') ||
+                                                 document.getElementById('verificationCode');
+
+                  if (verificationCodeInput) {
+                    const errorDiv = verificationCodeInput.previousElementSibling;
+                    if (errorDiv && errorDiv.classList.contains('error') && errorDiv.classList.contains('itemLevel')) {
+                      errorDiv.textContent = '';
+                      errorDiv.style.display = 'none';
+                      errorDiv.setAttribute('aria-hidden', 'true');
+                      console.log('Cleared field-level error');
+                    }
+                  }
+
+                  // Clear the page-level error
+                  const fieldIncorrectError = document.getElementById('fieldIncorrect');
+                  if (fieldIncorrectError) {
+                    fieldIncorrectError.style.display = 'none';
+                    fieldIncorrectError.setAttribute('aria-hidden', 'true');
+                    console.log('Cleared page-level fieldIncorrect error');
                   }
                 }, 100);
               }
