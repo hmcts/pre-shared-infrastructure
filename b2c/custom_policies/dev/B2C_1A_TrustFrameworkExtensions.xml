@@ -329,27 +329,34 @@
             <Item Key="setting.showRetryButton">true</Item>
             <Item Key="language.button_continue">Verify code</Item>
             <Item Key="language.page_title">Something something {email}</Item>
-            <Item Key="setting.errorMessage">The verification code you entered is incorrect or expired.
-              Please try again.
-            </Item>
+            <Item Key="setting.errorMessage">The verification code you entered is incorrect or expired. Please try again.</Item>
             <Item Key="language.intro">A verification code has been sent to {email}</Item>
             <Item Key="language.heading">A verification code has been sent to {email}</Item>
           </Metadata>
+
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email"/>
           </InputClaims>
+
+          <!-- Use the verification display control so OTP errors render inline -->
           <DisplayClaims>
-            <DisplayClaim ClaimTypeReferenceId="verificationCode" Required="true"/>
+            <DisplayClaim DisplayControlReferenceId="EmailVerification"/>
           </DisplayClaims>
+
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="otpVerified" DefaultValue="true"/>
           </OutputClaims>
 
+          <!-- REMOVE this: the DisplayControl's VerifyCode action handles validation -->
+          <!--
           <ValidationTechnicalProfiles>
             <ValidationTechnicalProfile ReferenceId="VerifyCode"/>
           </ValidationTechnicalProfiles>
+          -->
+
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
         </TechnicalProfile>
+
 
         <TechnicalProfile Id="VerifyCode">
           <DisplayName>Verify Code</DisplayName>

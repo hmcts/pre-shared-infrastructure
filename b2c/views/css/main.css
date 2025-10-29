@@ -8527,3 +8527,9 @@ input[type="checkbox"] {
 .verificationControlContent ul {
   padding-inline-start: 0;
 }
+
+/* Hide the verification blurb */
+#attributeVerification #verifying_blurb {
+  display: none !important;
+  visibility: hidden !important;
+}
