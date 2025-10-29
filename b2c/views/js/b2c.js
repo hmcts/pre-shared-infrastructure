@@ -202,8 +202,6 @@ function handleVerifyCodeClick() {
   if (verifyButton && verificationInput) {
     // Intercept the verify button click
     verifyButton.addEventListener('click', function(e) {
-      console.log('Verify code button clicked');
-
       // Wait for the AJAX call to complete and check for errors
       setTimeout(function() {
         checkAndDisplayVerificationError();
@@ -214,10 +212,6 @@ function handleVerifyCodeClick() {
         checkAndDisplayVerificationError();
       }, 1500);
     });
-  } else {
-    console.log('Verify button or input not found');
-    console.log('verifyButton:', verifyButton);
-    console.log('verificationInput:', verificationInput);
   }
 }
 
@@ -234,27 +228,15 @@ function checkAndDisplayVerificationError() {
   const emailSuccess = document.getElementById('EmailVerification_success_message') ||
                        document.getElementById('email_success');
 
-  console.log('Checking for verification errors...');
-  console.log('emailFailRetry:', emailFailRetry);
-  console.log('emailFailRetry display:', emailFailRetry ? emailFailRetry.style.display : 'not found');
-  console.log('emailSuccess:', emailSuccess);
-  console.log('emailSuccess display:', emailSuccess ? emailSuccess.style.display : 'not found');
-
   // If success is not showing and we have a 6-digit code, there might be an error
   const hasEnteredCode = verificationInput && verificationInput.value.trim().length === 6;
   const successShowing = emailSuccess && (emailSuccess.style.display === 'block' ||
                                           emailSuccess.style.display === 'inline' ||
                                           emailSuccess.style.display === '');
 
-  console.log('hasEnteredCode:', hasEnteredCode);
-  console.log('successShowing:', successShowing);
-
   if (hasEnteredCode && !successShowing) {
-    console.log('Code entered but no success message - checking for hidden errors');
-
     // Force the retry error message to show
     if (emailFailRetry) {
-      console.log('Showing error message');
       emailFailRetry.style.display = 'block';
       emailFailRetry.setAttribute('aria-hidden', 'false');
       emailFailRetry.setAttribute('role', 'alert');
@@ -268,7 +250,6 @@ function checkAndDisplayVerificationError() {
 
     // Check for server error message
     if (claimVerificationError && claimVerificationError.textContent.trim() !== '') {
-      console.log('Showing claim verification error');
       claimVerificationError.style.display = 'block';
       claimVerificationError.setAttribute('aria-hidden', 'false');
     }
@@ -293,7 +274,6 @@ function interceptVerificationRequests() {
       // Check if this is a verification request
       if (url && url.includes('/VerifyCode')) {
         isVerifyCodeRequest = true;
-        console.log('Intercepted VerifyCode request to:', url);
       }
       return originalOpen.apply(xhr, arguments);
     };
@@ -302,19 +282,13 @@ function interceptVerificationRequests() {
       if (isVerifyCodeRequest) {
         // Add event listener for when the request completes
         xhr.addEventListener('load', function() {
-          console.log('VerifyCode response status:', xhr.status);
-          console.log('VerifyCode response:', xhr.responseText);
-
           // B2C returns 200 with error in the body, not 400 status
           if (xhr.status === 200 || xhr.status === 400) {
             try {
               const response = JSON.parse(xhr.responseText);
-              console.log('Parsed response:', response);
 
               // Check if the response contains an error (status 400 in the body)
               if (response.status === "400" && response.errorCode) {
-                console.log('Verification error detected:', response.errorCode);
-
                 // Force the error to display after a short delay to let B2C process
                 setTimeout(function() {
                   // Find the verification code input
@@ -326,26 +300,13 @@ function interceptVerificationRequests() {
                     const errorDiv = verificationCodeInput.previousElementSibling;
 
                     if (errorDiv && errorDiv.classList.contains('error') && errorDiv.classList.contains('itemLevel')) {
-                      console.log('Found the correct error div before verification code input');
-                      console.log('Current display style:', errorDiv.style.display);
-                      console.log('Current content:', errorDiv.textContent);
-
                       // Set the error message
                       errorDiv.textContent = response.message;
                       errorDiv.style.display = 'block';
                       errorDiv.setAttribute('aria-hidden', 'false');
                       errorDiv.setAttribute('role', 'alert');
                       errorDiv.setAttribute('aria-label', response.message);
-
-                      console.log('After update - display:', errorDiv.style.display);
-                      console.log('After update - text:', errorDiv.textContent);
-                      console.log('Error message displayed successfully');
-                    } else {
-                      console.error('Could not find error.itemLevel div before verification code input');
-                      console.log('Previous sibling:', errorDiv);
                     }
-                  } else {
-                    console.error('Could not find verification code input');
                   }
 
                   // Also update the page-level error
@@ -353,13 +314,10 @@ function interceptVerificationRequests() {
                   if (fieldIncorrectError) {
                     fieldIncorrectError.style.display = 'block';
                     fieldIncorrectError.setAttribute('aria-hidden', 'false');
-                    console.log('Showed fieldIncorrect error');
                   }
                 }, 100);
               } else if (response.status === "200" || !response.status) {
                 // Successful verification - clear any errors
-                console.log('Verification successful, clearing errors');
-
                 setTimeout(function() {
                   // Clear the field-level error
                   const verificationCodeInput = document.getElementById('EmailVerification_ver_input') ||
@@ -371,7 +329,6 @@ function interceptVerificationRequests() {
                       errorDiv.textContent = '';
                       errorDiv.style.display = 'none';
                       errorDiv.setAttribute('aria-hidden', 'true');
-                      console.log('Cleared field-level error');
                     }
                   }
 
@@ -380,12 +337,11 @@ function interceptVerificationRequests() {
                   if (fieldIncorrectError) {
                     fieldIncorrectError.style.display = 'none';
                     fieldIncorrectError.setAttribute('aria-hidden', 'true');
-                    console.log('Cleared page-level fieldIncorrect error');
                   }
                 }, 100);
               }
             } catch (e) {
-              console.error('Error parsing verification response:', e);
+              // Silently handle parsing errors
             }
           }
         });
@@ -396,8 +352,6 @@ function interceptVerificationRequests() {
 
     return xhr;
   };
-
-  console.log('XHR interception enabled for verification requests');
 }
 
 // Initialize when DOM is ready - use both jQuery (if available) and vanilla JS
