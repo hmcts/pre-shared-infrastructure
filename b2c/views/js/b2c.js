@@ -195,8 +195,9 @@ function monitorVerificationErrors() {
 }
 
 function handleVerifyCodeClick() {
-  const verifyButton = document.getElementById('email_ver_but_verify');
-  const verificationInput = document.getElementById('email_ver_input');
+  // Support both old and new B2C element IDs
+  const verifyButton = document.getElementById('EmailVerification_but_verify_code') || document.getElementById('email_ver_but_verify');
+  const verificationInput = document.getElementById('EmailVerification_ver_input') || document.getElementById('email_ver_input');
 
   if (verifyButton && verificationInput) {
     // Intercept the verify button click
@@ -213,32 +214,47 @@ function handleVerifyCodeClick() {
         checkAndDisplayVerificationError();
       }, 1500);
     });
+  } else {
+    console.log('Verify button or input not found');
+    console.log('verifyButton:', verifyButton);
+    console.log('verificationInput:', verificationInput);
   }
 }
 
 function checkAndDisplayVerificationError() {
-  const emailFailRetry = document.getElementById('email_fail_retry');
+  // Try both old and new element ID patterns
+  const emailFailRetry = document.getElementById('EmailVerification_error_message') ||
+                         document.getElementById('email_fail_retry');
   const emailFailNoRetry = document.getElementById('email_fail_no_retry');
   const emailFailCodeExpired = document.getElementById('email_fail_code_expired');
   const claimVerificationError = document.getElementById('claimVerificationServerError');
   const fieldIncorrectError = document.getElementById('fieldIncorrect');
-  const verificationInput = document.getElementById('email_ver_input');
-  const emailSuccess = document.getElementById('email_success');
+  const verificationInput = document.getElementById('EmailVerification_ver_input') ||
+                            document.getElementById('email_ver_input');
+  const emailSuccess = document.getElementById('EmailVerification_success_message') ||
+                       document.getElementById('email_success');
 
   console.log('Checking for verification errors...');
+  console.log('emailFailRetry:', emailFailRetry);
   console.log('emailFailRetry display:', emailFailRetry ? emailFailRetry.style.display : 'not found');
+  console.log('emailSuccess:', emailSuccess);
   console.log('emailSuccess display:', emailSuccess ? emailSuccess.style.display : 'not found');
 
   // If success is not showing and we have a 6-digit code, there might be an error
   const hasEnteredCode = verificationInput && verificationInput.value.trim().length === 6;
-  const successShowing = emailSuccess && emailSuccess.style.display !== 'none';
+  const successShowing = emailSuccess && (emailSuccess.style.display === 'block' ||
+                                          emailSuccess.style.display === 'inline' ||
+                                          emailSuccess.style.display === '');
+
+  console.log('hasEnteredCode:', hasEnteredCode);
+  console.log('successShowing:', successShowing);
 
   if (hasEnteredCode && !successShowing) {
     console.log('Code entered but no success message - checking for hidden errors');
 
     // Force the retry error message to show
     if (emailFailRetry) {
-      console.log('Showing email_fail_retry error');
+      console.log('Showing error message');
       emailFailRetry.style.display = 'block';
       emailFailRetry.setAttribute('aria-hidden', 'false');
       emailFailRetry.setAttribute('role', 'alert');
@@ -299,12 +315,28 @@ function interceptVerificationRequests() {
 
                 // Force the error to display after a short delay to let B2C process
                 setTimeout(function() {
-                  const emailFailRetry = document.getElementById('email_fail_retry');
+                  // Try both element ID patterns
+                  const emailFailRetry = document.getElementById('EmailVerification_error_message') ||
+                                         document.getElementById('email_fail_retry');
+
                   if (emailFailRetry) {
+                    console.log('Found error element:', emailFailRetry.id);
                     emailFailRetry.style.display = 'block';
                     emailFailRetry.setAttribute('aria-hidden', 'false');
                     emailFailRetry.setAttribute('role', 'alert');
-                    console.log('Forced email_fail_retry to display');
+
+                    // If the error message is empty, set it from the response
+                    if (!emailFailRetry.textContent.trim() && response.message) {
+                      emailFailRetry.textContent = response.message;
+                    }
+
+                    console.log('Forced error message to display:', emailFailRetry.textContent);
+                  } else {
+                    console.error('Could not find error message element');
+
+                    // List all elements with IDs containing 'error' or 'EmailVerification'
+                    const allElements = document.querySelectorAll('[id*="EmailVerification"], [id*="error"]');
+                    console.log('Available elements:', Array.from(allElements).map(el => ({id: el.id, display: el.style.display})));
                   }
 
                   // Also update the page-level error
