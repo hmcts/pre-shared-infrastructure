@@ -199,43 +199,164 @@ function handleVerifyCodeClick() {
   const verificationInput = document.getElementById('email_ver_input');
 
   if (verifyButton && verificationInput) {
-    verifyButton.addEventListener('click', function() {
-      // After clicking verify, wait a moment and check if an error occurred
+    // Intercept the verify button click
+    verifyButton.addEventListener('click', function(e) {
+      console.log('Verify code button clicked');
+
+      // Wait for the AJAX call to complete and check for errors
       setTimeout(function() {
-        // Check if verification failed by looking at the page-level error
-        const claimVerificationError = document.getElementById('claimVerificationServerError');
-        const fieldIncorrectError = document.getElementById('fieldIncorrect');
-        const emailFailRetry = document.getElementById('email_fail_retry');
-
-        // If there's a hidden error, make it visible
-        if (claimVerificationError && claimVerificationError.textContent.trim() !== '' &&
-            claimVerificationError.style.display === 'none') {
-          claimVerificationError.style.display = 'block';
-          claimVerificationError.setAttribute('aria-hidden', 'false');
-        }
-
-        if (fieldIncorrectError && fieldIncorrectError.style.display === 'none' &&
-            verificationInput.value.trim().length === 6) {
-          // If the code is 6 digits but verification failed, show the retry error
-          if (emailFailRetry) {
-            emailFailRetry.style.display = 'block';
-            emailFailRetry.setAttribute('aria-hidden', 'false');
-          }
-        }
+        checkAndDisplayVerificationError();
       }, 500);
+
+      // Also check again after a longer delay in case the request is slow
+      setTimeout(function() {
+        checkAndDisplayVerificationError();
+      }, 1500);
     });
   }
 }
 
-$(function () {
+function checkAndDisplayVerificationError() {
+  const emailFailRetry = document.getElementById('email_fail_retry');
+  const emailFailNoRetry = document.getElementById('email_fail_no_retry');
+  const emailFailCodeExpired = document.getElementById('email_fail_code_expired');
+  const claimVerificationError = document.getElementById('claimVerificationServerError');
+  const fieldIncorrectError = document.getElementById('fieldIncorrect');
+  const verificationInput = document.getElementById('email_ver_input');
+  const emailSuccess = document.getElementById('email_success');
+
+  console.log('Checking for verification errors...');
+  console.log('emailFailRetry display:', emailFailRetry ? emailFailRetry.style.display : 'not found');
+  console.log('emailSuccess display:', emailSuccess ? emailSuccess.style.display : 'not found');
+
+  // If success is not showing and we have a 6-digit code, there might be an error
+  const hasEnteredCode = verificationInput && verificationInput.value.trim().length === 6;
+  const successShowing = emailSuccess && emailSuccess.style.display !== 'none';
+
+  if (hasEnteredCode && !successShowing) {
+    console.log('Code entered but no success message - checking for hidden errors');
+
+    // Force the retry error message to show
+    if (emailFailRetry) {
+      console.log('Showing email_fail_retry error');
+      emailFailRetry.style.display = 'block';
+      emailFailRetry.setAttribute('aria-hidden', 'false');
+      emailFailRetry.setAttribute('role', 'alert');
+
+      // Also show it at the page level if not already showing
+      if (fieldIncorrectError && fieldIncorrectError.style.display === 'none') {
+        fieldIncorrectError.style.display = 'block';
+        fieldIncorrectError.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    // Check for server error message
+    if (claimVerificationError && claimVerificationError.textContent.trim() !== '') {
+      console.log('Showing claim verification error');
+      claimVerificationError.style.display = 'block';
+      claimVerificationError.setAttribute('aria-hidden', 'false');
+    }
+  }
+}
+
+// Also intercept XHR requests to catch the error response directly
+function interceptVerificationRequests() {
+  // Store the original XMLHttpRequest
+  const originalXHR = window.XMLHttpRequest;
+
+  window.XMLHttpRequest = function() {
+    const xhr = new originalXHR();
+
+    // Store original open and send
+    const originalOpen = xhr.open;
+    const originalSend = xhr.send;
+
+    let isVerifyCodeRequest = false;
+
+    xhr.open = function(method, url) {
+      // Check if this is a verification request
+      if (url && url.includes('/VerifyCode')) {
+        isVerifyCodeRequest = true;
+        console.log('Intercepted VerifyCode request to:', url);
+      }
+      return originalOpen.apply(xhr, arguments);
+    };
+
+    xhr.send = function() {
+      if (isVerifyCodeRequest) {
+        // Add event listener for when the request completes
+        xhr.addEventListener('load', function() {
+          console.log('VerifyCode response status:', xhr.status);
+          console.log('VerifyCode response:', xhr.responseText);
+
+          if (xhr.status === 400) {
+            try {
+              const response = JSON.parse(xhr.responseText);
+              console.log('Parsed error response:', response);
+
+              if (response.errorCode === 'UserMessageIfInvalidCode') {
+                console.log('Invalid code error detected, forcing error display');
+
+                // Force the error to display after a short delay to let B2C process
+                setTimeout(function() {
+                  const emailFailRetry = document.getElementById('email_fail_retry');
+                  if (emailFailRetry) {
+                    emailFailRetry.style.display = 'block';
+                    emailFailRetry.setAttribute('aria-hidden', 'false');
+                    emailFailRetry.setAttribute('role', 'alert');
+                    console.log('Forced email_fail_retry to display');
+                  }
+
+                  // Also update the page-level error
+                  const fieldIncorrectError = document.getElementById('fieldIncorrect');
+                  if (fieldIncorrectError) {
+                    fieldIncorrectError.style.display = 'block';
+                    fieldIncorrectError.setAttribute('aria-hidden', 'false');
+                  }
+                }, 100);
+              }
+            } catch (e) {
+              console.error('Error parsing verification response:', e);
+            }
+          }
+        });
+      }
+
+      return originalSend.apply(xhr, arguments);
+    };
+
+    return xhr;
+  };
+
+  console.log('XHR interception enabled for verification requests');
+}
+
+// Initialize when DOM is ready - use both jQuery (if available) and vanilla JS
+function initialize() {
   moveForgotPassword();
   moveRetryCode();
   addTsAndCsLink();
   addPasswordCriteria();
   lowerCaseEmailAddresses();
   removeAutofocus();
-  $(window).on('pageshow', removeAutofocus);
   addDescriptiveErrors();
   monitorVerificationErrors();
+  interceptVerificationRequests();
   handleVerifyCodeClick();
-});
+}
+
+// Try jQuery first (B2C injects it)
+if (typeof $ !== 'undefined') {
+  $(function() {
+    initialize();
+  });
+  $(window).on('pageshow', removeAutofocus);
+} else {
+  // Fallback to vanilla JS
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initialize);
+  } else {
+    initialize();
+  }
+  window.addEventListener('pageshow', removeAutofocus);
+}
