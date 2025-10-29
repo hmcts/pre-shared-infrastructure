@@ -169,7 +169,14 @@
         </OutputClaims>
 
         <Actions>
-          <!-- Only the verify action; no SendCode here -->
+          <!-- Required by the contract; harmless here. We will hide the resend button on the page. -->
+          <Action Id="SendCode">
+            <ValidationClaimsExchange>
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="GenerateCode"/>
+            </ValidationClaimsExchange>
+          </Action>
+
+          <!-- Actual verify -->
           <Action Id="VerifyCode">
             <ValidationClaimsExchange>
               <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="VerifyCode"/>
@@ -177,6 +184,7 @@
           </Action>
         </Actions>
       </DisplayControl>
+
     </DisplayControls>
 
   </BuildingBlocks>
@@ -348,7 +356,7 @@
             <Item Key="ContentDefinitionReferenceId">api.selfasserted</Item>
             <Item Key="setting.showCancelButton">false</Item>
             <Item Key="setting.retryLimit">5</Item>
-            <Item Key="setting.showRetryButton">true</Item>
+            <Item Key="setting.showRetryButton">false</Item>
             <Item Key="language.button_continue">Verify code</Item>
             <Item Key="language.page_title">Something something {email}</Item>
             <Item Key="setting.errorMessage">The verification code you entered is incorrect or expired. Please try again.</Item>
@@ -370,6 +378,7 @@
 
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
         </TechnicalProfile>
+
 
 
         <TechnicalProfile Id="VerifyCode">
