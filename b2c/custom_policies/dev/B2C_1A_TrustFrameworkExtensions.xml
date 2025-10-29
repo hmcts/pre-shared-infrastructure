@@ -155,6 +155,28 @@
           </Action>
         </Actions>
       </DisplayControl>
+
+      <DisplayControl Id="EmailVerification-VerifyOnly" UserInterfaceControlType="VerificationControl">
+        <DisplayClaims>
+          <DisplayClaim ClaimTypeReferenceId="email" Required="true"/>
+          <DisplayClaim ClaimTypeReferenceId="verificationCode"
+                        ControlClaimType="VerificationCode"
+                        Required="true"/>
+        </DisplayClaims>
+
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="email"/>
+        </OutputClaims>
+
+        <Actions>
+          <!-- Only the verify action; no SendCode here -->
+          <Action Id="VerifyCode">
+            <ValidationClaimsExchange>
+              <ValidationClaimsExchangeTechnicalProfile TechnicalProfileReferenceId="VerifyCode"/>
+            </ValidationClaimsExchange>
+          </Action>
+        </Actions>
+      </DisplayControl>
     </DisplayControls>
 
   </BuildingBlocks>
@@ -338,21 +360,13 @@
             <InputClaim ClaimTypeReferenceId="email"/>
           </InputClaims>
 
-          <!-- Use the verification display control so OTP errors render inline -->
           <DisplayClaims>
-            <DisplayClaim DisplayControlReferenceId="EmailVerification"/>
+            <DisplayClaim DisplayControlReferenceId="EmailVerification-VerifyOnly"/>
           </DisplayClaims>
 
           <OutputClaims>
             <OutputClaim ClaimTypeReferenceId="otpVerified" DefaultValue="true"/>
           </OutputClaims>
-
-          <!-- REMOVE this: the DisplayControl's VerifyCode action handles validation -->
-          <!--
-          <ValidationTechnicalProfiles>
-            <ValidationTechnicalProfile ReferenceId="VerifyCode"/>
-          </ValidationTechnicalProfiles>
-          -->
 
           <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop"/>
         </TechnicalProfile>
