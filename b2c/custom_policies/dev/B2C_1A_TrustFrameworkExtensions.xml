@@ -357,6 +357,11 @@
                     Handler="Web.TPEngine.Providers.OneTimePasswordProtocolProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
           <Metadata>
             <Item Key="Operation">VerifyCode</Item>
+            <Item Key="UserMessageIfSessionDoesNotExist">You have not requested a verification code.</Item>
+            <Item Key="UserMessageIfMaxRetryAttempted">You have exceeded the maximum number of verification attempts.</Item>
+            <Item Key="UserMessageIfInvalidCode">The verification code you entered is incorrect. Please try again.</Item>
+            <Item Key="UserMessageIfSessionConflict">Unable to verify the code at this time.</Item>
+            <Item Key="UserMessageIfVerificationFailedRetryAllowed">The verification code you entered is incorrect. Please try again.</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
