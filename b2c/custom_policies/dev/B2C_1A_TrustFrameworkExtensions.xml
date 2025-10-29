@@ -367,6 +367,9 @@
             <InputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
             <InputClaim ClaimTypeReferenceId="verificationCode" PartnerClaimType="otpToVerify"/>
           </InputClaims>
+          <OutputClaims>
+            <OutputClaim ClaimTypeReferenceId="email" PartnerClaimType="identifier"/>
+          </OutputClaims>
         </TechnicalProfile>
 
         <TechnicalProfile Id="REST-AcquireAccessToken">

@@ -159,6 +159,74 @@ function validateErrors() {
   }
 }
 
+function monitorVerificationErrors() {
+  // Monitor for verification errors and make them visible
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      // Check if any error divs became visible
+      const emailFailRetry = document.getElementById('email_fail_retry');
+      const emailFailNoRetry = document.getElementById('email_fail_no_retry');
+      const emailFailCodeExpired = document.getElementById('email_fail_code_expired');
+      const claimVerificationError = document.getElementById('claimVerificationServerError');
+
+      // If any verification error is shown, make sure it's visible
+      if (emailFailRetry && emailFailRetry.style.display !== 'none') {
+        emailFailRetry.setAttribute('aria-hidden', 'false');
+      }
+      if (emailFailNoRetry && emailFailNoRetry.style.display !== 'none') {
+        emailFailNoRetry.setAttribute('aria-hidden', 'false');
+      }
+      if (emailFailCodeExpired && emailFailCodeExpired.style.display !== 'none') {
+        emailFailCodeExpired.setAttribute('aria-hidden', 'false');
+      }
+    });
+  });
+
+  // Observe the entire form for changes
+  const form = document.getElementById('attributeVerification');
+  if (form) {
+    observer.observe(form, {
+      attributes: true,
+      attributeFilter: ['style', 'aria-hidden'],
+      subtree: true,
+      childList: true
+    });
+  }
+}
+
+function handleVerifyCodeClick() {
+  const verifyButton = document.getElementById('email_ver_but_verify');
+  const verificationInput = document.getElementById('email_ver_input');
+
+  if (verifyButton && verificationInput) {
+    verifyButton.addEventListener('click', function() {
+      // After clicking verify, wait a moment and check if an error occurred
+      setTimeout(function() {
+        // Check if verification failed by looking at the page-level error
+        const claimVerificationError = document.getElementById('claimVerificationServerError');
+        const fieldIncorrectError = document.getElementById('fieldIncorrect');
+        const emailFailRetry = document.getElementById('email_fail_retry');
+
+        // If there's a hidden error, make it visible
+        if (claimVerificationError && claimVerificationError.textContent.trim() !== '' &&
+            claimVerificationError.style.display === 'none') {
+          claimVerificationError.style.display = 'block';
+          claimVerificationError.setAttribute('aria-hidden', 'false');
+        }
+
+        if (fieldIncorrectError && fieldIncorrectError.style.display === 'none' &&
+            verificationInput.value.trim().length === 6) {
+          // If the code is 6 digits but verification failed, show the retry error
+          if (emailFailRetry) {
+            emailFailRetry.style.display = 'block';
+            emailFailRetry.setAttribute('aria-hidden', 'false');
+          }
+        }
+      }, 500);
+    });
+  }
+}
+
 $(function () {
   moveForgotPassword();
   moveRetryCode();
@@ -168,4 +236,6 @@ $(function () {
   removeAutofocus();
   $(window).on('pageshow', removeAutofocus);
   addDescriptiveErrors();
+  monitorVerificationErrors();
+  handleVerifyCodeClick();
 });
