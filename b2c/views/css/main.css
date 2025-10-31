@@ -8537,4 +8537,5 @@ input[type="checkbox"] {
 /* hide send new code button on sign up for consistency with other flows */
 #EmailVerification_but_send_new_code {
   display: none;
+  visibility: hidden;
 }
