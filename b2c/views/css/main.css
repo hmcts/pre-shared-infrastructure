@@ -8533,3 +8533,8 @@ input[type="checkbox"] {
   display: none !important;
   visibility: hidden !important;
 }
+
+/* hide send new code button on sign up for consistency with other flows */
+#EmailVerification_but_send_new_code {
+  display: none;
+}

@@ -154,9 +154,6 @@
             </ValidationClaimsExchange>
           </Action>
         </Actions>
-        <Metadata>
-          <Item Key="setting.showRetryButton">false</Item>
-        </Metadata>
       </DisplayControl>
     </DisplayControls>
 
