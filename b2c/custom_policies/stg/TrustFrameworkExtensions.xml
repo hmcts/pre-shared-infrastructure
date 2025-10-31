@@ -309,6 +309,11 @@
               <Value>3668f36b-75fd-455a-9aed-b73a12accc5a</Value> <!-- assume automated test super user has valid phone -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>a807b309-bd71-4984-a660-d1e1af99a05d</Value> <!-- Pre Level 3 Test User for automated testing -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
 
             <!-- BEGIN: Performance test users -->
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
