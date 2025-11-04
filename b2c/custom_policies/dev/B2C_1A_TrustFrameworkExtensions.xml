@@ -130,7 +130,7 @@
     <DisplayControls>
       <DisplayControl Id="EmailVerification" UserInterfaceControlType="VerificationControl">
         <DisplayClaims>
-          <DisplayClaim ClaimTypeReferenceId="email" Required="true"/>
+          <DisplayClaim ClaimTypeReferenceId="email" ControlClaimType="Identifier" Required="true"/>
           <DisplayClaim ClaimTypeReferenceId="verificationCode"
                         ControlClaimType="VerificationCode"
                         Required="true"/>
