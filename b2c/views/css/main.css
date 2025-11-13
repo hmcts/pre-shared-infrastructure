@@ -3,52 +3,6 @@
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 @charset "UTF-8";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 :root {
   --govuk-frontend-version: "5.11.0";
   --govuk-breakpoint-mobile: 20rem;
@@ -2274,13 +2228,15 @@
 
 .govuk-button--secondary,
 #api button#cancel,
-#api .verify button.sendButton {
+#api .verify button.sendButton,
+#api .VerificationControl button.sendNewCode {
   background-color: #f3f2f1;
   box-shadow: 0 2px 0 rgb(145.8, 145.2, 144.6);
 }
 .govuk-button--secondary, .govuk-button--secondary:link, .govuk-button--secondary:visited, .govuk-button--secondary:active, .govuk-button--secondary:hover,
 #api button#cancel, #api button#cancel:link, #api button#cancel:visited, #api button#cancel:active, #api button#cancel:hover,
-#api .verify button.sendButton, #api .verify button.sendButton:link, #api .verify button.sendButton:visited, #api .verify button.sendButton:active, #api .verify button.sendButton:hover {
+#api .verify button.sendButton, #api .verify button.sendButton:link, #api .verify button.sendButton:visited, #api .verify button.sendButton:active, #api .verify button.sendButton:hover,
+#api .VerificationControl button.sendNewCode, #api .VerificationControl button.sendNewCode:link, #api .VerificationControl button.sendNewCode:visited, #api .VerificationControl button.sendNewCode:active, #api .VerificationControl button.sendNewCode:hover {
   color: #0b0c0c;
 }
 .govuk-button--secondary:hover,
@@ -8565,5 +8521,21 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 .changeClaims {
+  visibility: hidden;
+}
+
+.verificationControlContent ul {
+  padding-inline-start: 0;
+}
+
+/* Hide the verification blurb */
+#attributeVerification #verifying_blurb {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* hide send new code button on sign up for consistency with other flows */
+#EmailVerification_but_send_new_code {
+  display: none;
   visibility: hidden;
 }
