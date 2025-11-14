@@ -7,7 +7,7 @@
   TenantId="hmctsdevextid.onmicrosoft.com"
   PolicyId="B2C_1A_UserInfo"
   DeploymentMode="Development"
-  PublicPolicyUri="http://hmcts.b2c/policies/B2C_1A_X"
+  PublicPolicyUri="http://hmctsdevextid.onmicrosoft.com/policies/B2C_1A_UserInfo.xml"
 >
 
   <BasePolicy>
