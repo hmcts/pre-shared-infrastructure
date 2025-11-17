@@ -354,7 +354,7 @@ function interceptVerificationRequests() {
   };
 }
 
-// Initialize when DOM is ready - use both jQuery (if available) and vanilla JS
+// Initialize when DOM is ready
 function initialize() {
   moveForgotPassword();
   moveRetryCode();
@@ -368,18 +368,11 @@ function initialize() {
   handleVerifyCodeClick();
 }
 
-// Try jQuery first (B2C injects it)
-if (typeof $ !== 'undefined') {
-  $(function() {
-    initialize();
-  });
-  $(window).on('pageshow', removeAutofocus);
+// Initialize on DOM ready or immediately if DOM is already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initialize);
 } else {
-  // Fallback to vanilla JS
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initialize);
-  } else {
-    initialize();
-  }
-  window.addEventListener('pageshow', removeAutofocus);
+  initialize();
 }
+
+window.addEventListener('pageshow', removeAutofocus);
