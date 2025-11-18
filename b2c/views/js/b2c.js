@@ -218,21 +218,21 @@ function handleVerifyCodeClick() {
 function checkAndDisplayVerificationError() {
   // Try both old and new element ID patterns
   const emailFailRetry = document.getElementById('EmailVerification_error_message') ||
-                         document.getElementById('email_fail_retry');
+    document.getElementById('email_fail_retry');
   const emailFailNoRetry = document.getElementById('email_fail_no_retry');
   const emailFailCodeExpired = document.getElementById('email_fail_code_expired');
   const claimVerificationError = document.getElementById('claimVerificationServerError');
   const fieldIncorrectError = document.getElementById('fieldIncorrect');
   const verificationInput = document.getElementById('EmailVerification_ver_input') ||
-                            document.getElementById('email_ver_input');
+    document.getElementById('email_ver_input');
   const emailSuccess = document.getElementById('EmailVerification_success_message') ||
-                       document.getElementById('email_success');
+    document.getElementById('email_success');
 
   // If success is not showing and we have a 6-digit code, there might be an error
   const hasEnteredCode = verificationInput && verificationInput.value.trim().length === 6;
   const successShowing = emailSuccess && (emailSuccess.style.display === 'block' ||
-                                          emailSuccess.style.display === 'inline' ||
-                                          emailSuccess.style.display === '');
+    emailSuccess.style.display === 'inline' ||
+    emailSuccess.style.display === '');
 
   if (hasEnteredCode && !successShowing) {
     // Force the retry error message to show
@@ -293,7 +293,7 @@ function interceptVerificationRequests() {
                 setTimeout(function() {
                   // Find the verification code input
                   const verificationCodeInput = document.getElementById('EmailVerification_ver_input') ||
-                                                 document.getElementById('verificationCode');
+                    document.getElementById('verificationCode');
 
                   if (verificationCodeInput) {
                     // Find the error div that's immediately before the verification code input
@@ -321,7 +321,7 @@ function interceptVerificationRequests() {
                 setTimeout(function() {
                   // Clear the field-level error
                   const verificationCodeInput = document.getElementById('EmailVerification_ver_input') ||
-                                                 document.getElementById('verificationCode');
+                    document.getElementById('verificationCode');
 
                   if (verificationCodeInput) {
                     const errorDiv = verificationCodeInput.previousElementSibling;
@@ -354,7 +354,7 @@ function interceptVerificationRequests() {
   };
 }
 
-// Initialize when DOM is ready - use both jQuery (if available) and vanilla JS
+// Initialize when DOM is ready
 function initialize() {
   moveForgotPassword();
   moveRetryCode();
@@ -368,18 +368,11 @@ function initialize() {
   handleVerifyCodeClick();
 }
 
-// Try jQuery first (B2C injects it)
-if (typeof $ !== 'undefined') {
-  $(function() {
-    initialize();
-  });
-  $(window).on('pageshow', removeAutofocus);
+// Initialize on DOM ready or immediately if DOM is already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initialize);
 } else {
-  // Fallback to vanilla JS
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initialize);
-  } else {
-    initialize();
-  }
-  window.addEventListener('pageshow', removeAutofocus);
+  initialize();
 }
+
+window.addEventListener('pageshow', removeAutofocus);
