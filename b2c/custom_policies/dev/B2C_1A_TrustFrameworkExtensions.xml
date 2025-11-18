@@ -24,10 +24,10 @@
       <ClaimType Id="verificationCode">
         <DisplayName>Verification Code</DisplayName>
         <DataType>string</DataType>
-        <UserHelpText>Enter the 6-digit code we emailed you.</UserHelpText>
+        <UserHelpText>Enter the code we emailed you.</UserHelpText>
         <UserInputType>TextBox</UserInputType>
         <Restriction>
-          <Pattern RegularExpression="^\d{6}$" HelpText="Enter the 6-digit code."/>
+          <Pattern RegularExpression="^\d{6}$" HelpText="Enter the code."/>
         </Restriction>
 
       </ClaimType>

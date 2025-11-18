@@ -278,7 +278,7 @@
           <LocalizedString ElementType="UxElement" StringId="intro_mixed_p">We have the following numbers on record for you. Choose a number that we can phone or send a code via SMS to authenticate you.</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="button_verify_code">Verify Code</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="requiredField_code">Please enter the verification code you received</LocalizedString>
-          <LocalizedString ElementType="UxElement" StringId="invalid_code">Please enter the 6-digit code you received</LocalizedString>
+          <LocalizedString ElementType="UxElement" StringId="invalid_code">Please enter the code you received</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="button_cancel">Cancel</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="local_number_input_placeholder_text">Phone number</LocalizedString>
           <LocalizedString ElementType="UxElement" StringId="button_retry">Retry</LocalizedString>
