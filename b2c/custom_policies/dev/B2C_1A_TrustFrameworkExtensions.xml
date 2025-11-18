@@ -19,6 +19,12 @@
       <ClaimType Id="email">
         <DisplayName>Email Address</DisplayName>
         <DataType>string</DataType>
+        <Restriction>
+          <Pattern
+            RegularExpression="^(?!(admin|hello|contact|support|sales|office|help)@[a-zA-Z0-9.\-]+)[a-zA-Z0-9.!#$%&amp;'^_`{}~\-+]+@[^\s@]+$"
+            HelpText="Shared email addresses, i.e. ones not specific to you (e.g. admin, support etc.), are not supported. Please enter a valid email address."
+          />
+        </Restriction>
       </ClaimType>
 
       <ClaimType Id="verificationCode">
