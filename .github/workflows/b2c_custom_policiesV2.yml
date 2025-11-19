@@ -10,6 +10,7 @@ on:
         default: 'dev'
         options:
           - dev
+          - stg
 
 jobs:
   build-and-deploy:
