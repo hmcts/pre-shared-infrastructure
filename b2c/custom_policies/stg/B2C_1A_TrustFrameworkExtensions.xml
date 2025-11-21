@@ -2,15 +2,15 @@
 <TrustFrameworkPolicy
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="hmctsdevextid.onmicrosoft.com"
+  TenantId="hmctsstgextid.onmicrosoft.com"
   PolicyId="B2C_1A_TrustFrameworkExtensions"
   DeploymentMode="Development"
-  PublicPolicyUri="http://hmctsdevextid.onmicrosoft.com/policies/B2C_1A_TrustFrameworkExtensions.xml"
+  PublicPolicyUri="http://hmctsstgextid.onmicrosoft.com/policies/B2C_1A_TrustFrameworkExtensions.xml"
   UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights"
 >
 
   <BasePolicy>
-    <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
+    <TenantId>hmctsstgextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
 
@@ -85,7 +85,7 @@
     <ContentDefinitions>
       <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
-        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:globalexception:1.2.1</DataUri>
         <Metadata>
@@ -93,7 +93,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.signuporsignin">
-        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.9</DataUri>
         <Metadata>
@@ -103,7 +103,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.selfasserted">
-        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -112,7 +112,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.localaccountsignup">
-        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -120,7 +120,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.localaccountpasswordreset">
-        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -128,7 +128,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.localaccountsignin">
-        <LoadUri>https://presadev.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presastg.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -395,15 +395,15 @@
             <Item Key="AllowInsecureAuthInProduction">false</Item>
           </Metadata>
           <CryptographicKeys>
-            <!-- client id for pre-b2c-client-dev -->
+            <!-- client id for pre-b2c-client-stg -->
             <Key Id="BasicAuthenticationUsername" StorageReferenceId="B2C_1A_PREOAuthClientId"/>
             <Key Id="BasicAuthenticationPassword" StorageReferenceId="B2C_1A_PREOAuthClientSecret"/>
           </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="grant_type" DefaultValue="client_credentials"
                         AlwaysUseDefaultValue="true"/>
-            <!-- app/client id for pre-apim-b2c-dev -->
-            <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://b79aae69-ed5f-4b1b-aa59-9fbd950639b4/.default"
+            <!-- app/client id for pre-apim-b2c-stg -->
+            <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://1085988a-4178-41f0-b391-4d7859e42c00/.default"
                         AlwaysUseDefaultValue="true"/>
           </InputClaims>
           <OutputClaims>
@@ -441,7 +441,7 @@
           <InputTokenFormat>JWT</InputTokenFormat>
           <Metadata>
             <Item Key="issuer">
-              https://hmctsdevextid.b2clogin.com/7b9fbead-db31-48dd-a052-161a278d333f/v2.0/
+              https://hmctsstgextid.b2clogin.com/8b185f8b-665d-4bb3-af4a-ab7ee61b9334/v2.0/
             </Item>
             <Item Key="audience">[ "22222222-2222-2222-2222-222222222222",
               "33333333-3333-3333-3333-333333333333" ]
@@ -459,16 +459,16 @@
 
         <TechnicalProfile Id="login-NonInteractive">
           <Metadata>
-            <Item Key="client_id">c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2</Item>
-            <Item Key="IdTokenAudience">5ffc2691-a59d-4b1f-9370-7ccd380a1b65</Item>
+            <Item Key="client_id">963b6999-fc75-485d-9ca6-d7053a3cc84a</Item>
+            <Item Key="IdTokenAudience">3e7d2ce2-1789-4734-994e-c77ea95c4d2c</Item>
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="client_id"
-                        DefaultValue="c96b28e3-2333-47e1-a9cf-ac28a9f7e4e2"/>
+                        DefaultValue="963b6999-fc75-485d-9ca6-d7053a3cc84a"/>
             <InputClaim
               ClaimTypeReferenceId="resource_id"
               PartnerClaimType="resource"
-              DefaultValue="5ffc2691-a59d-4b1f-9370-7ccd380a1b65"
+              DefaultValue="3e7d2ce2-1789-4734-994e-c77ea95c4d2c"
             />
           </InputClaims>
         </TechnicalProfile>
