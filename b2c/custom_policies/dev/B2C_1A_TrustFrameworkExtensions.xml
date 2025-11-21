@@ -64,6 +64,10 @@
       <ClaimType Id="scope">
         <DataType>string</DataType>
       </ClaimType>
+
+      <ClaimType Id="skipOtp">
+        <DataType>boolean</DataType>
+      </ClaimType>
     </ClaimsSchema>
 
     <ClaimsTransformations>

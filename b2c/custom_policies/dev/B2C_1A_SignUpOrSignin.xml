@@ -63,8 +63,7 @@
           </JourneyList>
         </OrchestrationStep>
 
-        <!-- Step 4: Generate OTP -->
-        <OrchestrationStep Order="4" Type="ClaimsExchange">
+        <OrchestrationStep Order="4" Type="InvokeSubJourney">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>isForgotPassword</Value>
@@ -74,56 +73,21 @@
               <Value>isSignUp</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+<!-- Add test users here if needed -->
+<!--            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">-->
+<!--              <Value>objectId</Value>-->
+<!--              <Value>a207a1b2-f39b-4e70-a211-bd7e26d7504e</Value>-->
+<!--              <Action>SkipThisOrchestrationStep</Action>-->
+<!--            </Precondition>-->
 
           </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="GenerateEmailCode" TechnicalProfileReferenceId="GenerateCode" />
-          </ClaimsExchanges>
+          <JourneyList>
+            <Candidate SubJourneyReferenceId="EmailOtpFlow" />
+          </JourneyList>
         </OrchestrationStep>
 
-        <!-- Step 5: Acquire bearer token -->
+        <!-- Step 5: Create or read account from AAD B2C -->
         <OrchestrationStep Order="5" Type="ClaimsExchange">
-          <ClaimsExchanges>
-            <ClaimsExchange Id="AcquireToken" TechnicalProfileReferenceId="REST-AcquireAccessToken" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-
-        <!-- Step 6: Send OTP via your API -->
-        <OrchestrationStep Order="6" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isForgotPassword</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isSignUp</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="SendEmailCodeAPI" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-
-        <!-- Step 6: Ask user to enter OTP -->
-        <OrchestrationStep Order="7" Type="ClaimsExchange">
-          <Preconditions>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isForgotPassword</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isSignUp</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
-          </Preconditions>
-          <ClaimsExchanges>
-            <ClaimsExchange Id="EnterEmailCode" TechnicalProfileReferenceId="SelfAsserted-VerifyEmailCode" />
-          </ClaimsExchanges>
-        </OrchestrationStep>
-
-        <!-- Step 7: Create or read account from AAD B2C -->
-        <OrchestrationStep Order="8" Type="ClaimsExchange">
           <Preconditions>
             <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
               <Value>isForgotPassword</Value>
@@ -144,8 +108,8 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Step 8: Issue token -->
-        <OrchestrationStep Order="9" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <!-- Step 6: Issue token -->
+        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
     </UserJourney>
@@ -153,6 +117,41 @@
   </UserJourneys>
 
   <SubJourneys>
+    <SubJourney Id="EmailOtpFlow" Type="Call">
+      <OrchestrationSteps>
+
+        <!-- Step 1: Generate OTP -->
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="GenerateEmailCode" TechnicalProfileReferenceId="GenerateCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 2: Acquire API token -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AcquireToken" TechnicalProfileReferenceId="REST-AcquireAccessToken" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 3: Send OTP -->
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SendEmailCodeAPI" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 4: Ask user to enter OTP -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="EnterEmailCode" TechnicalProfileReferenceId="SelfAsserted-VerifyEmailCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+      </OrchestrationSteps>
+    </SubJourney>
+
+
     <SubJourney Id="PasswordResetSubJourney" Type="Call">
       <OrchestrationSteps>
         <!-- Step 1: Collect email -->
