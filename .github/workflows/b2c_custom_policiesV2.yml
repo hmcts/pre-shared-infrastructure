@@ -12,6 +12,7 @@ on:
           - dev
           - stg
           - test
+          - demo
 
 jobs:
   build-and-deploy:
