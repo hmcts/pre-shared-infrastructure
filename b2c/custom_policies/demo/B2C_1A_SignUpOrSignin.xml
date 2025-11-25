@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TrustFrameworkPolicy
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
+  PolicySchemaVersion="0.3.0.0"
+  TenantId="hmctsdemoextid.onmicrosoft.com"
+  PolicyId="B2C_1A_SignUpOrSignin"
+  DeploymentMode="Development"
+  PublicPolicyUri="http://hmctsdemoextid.onmicrosoft.com/policies/B2C_1A_SignUpOrSignin.xml"
+  UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights"
+>
+  <BasePolicy>
+    <TenantId>hmctsdemoextid.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
+  </BasePolicy>
+
+  <UserJourneys>
+    <UserJourney Id="CustomSignUpSignIn">
+      <OrchestrationSteps>
+
+        <!-- Step 1: Sign-in (email) on the unified page -->
+        <OrchestrationStep Order="1" Type="CombinedSignInAndSignUp" ContentDefinitionReferenceId="api.signuporsignin">
+          <ClaimsProviderSelections>
+            <ClaimsProviderSelection ValidationClaimsExchangeId="LocalAccountSigninEmailExchange" />
+            <ClaimsProviderSelection TargetClaimsExchangeId="ForgotPasswordExchange" />
+          </ClaimsProviderSelections>
+          <ClaimsExchanges>
+            <ClaimsExchange
+                    Id="LocalAccountSigninEmailExchange"
+                    TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
+            />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 2: If the user clicked Forgot password -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange
+                    Id="SignUpWithLogonEmailExchange"
+                    TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail"
+            />
+            <ClaimsExchange Id="ForgotPasswordExchange" TechnicalProfileReferenceId="ForgotPassword" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 3: If the user clicked Forgot password -->
+        <OrchestrationStep Order="3" Type="InvokeSubJourney">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <JourneyList>
+            <Candidate SubJourneyReferenceId="PasswordResetSubJourney" />
+          </JourneyList>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="4" Type="InvokeSubJourney">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>647ef962-b03f-40fa-b9a0-df5243bc8334</Value> <!-- demo user to skip OTP -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+
+          </Preconditions>
+          <JourneyList>
+            <Candidate SubJourneyReferenceId="EmailOtpFlow" />
+          </JourneyList>
+        </OrchestrationStep>
+
+        <!-- Step 5: Create or read account from AAD B2C -->
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
+              <Value>otpVerified</Value>
+              <Value>true</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadOrCreate" TechnicalProfileReferenceId="AAD-UserReadUsingEmailAddress" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 6: Issue token -->
+        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+
+      </OrchestrationSteps>
+    </UserJourney>
+
+  </UserJourneys>
+
+  <SubJourneys>
+    <SubJourney Id="EmailOtpFlow" Type="Call">
+      <OrchestrationSteps>
+
+        <!-- Step 1: Generate OTP -->
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="GenerateEmailCode" TechnicalProfileReferenceId="GenerateCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 2: Acquire API token -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AcquireToken" TechnicalProfileReferenceId="REST-AcquireAccessToken" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 3: Send OTP -->
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SendEmailCodeAPI" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 4: Ask user to enter OTP -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="EnterEmailCode" TechnicalProfileReferenceId="SelfAsserted-VerifyEmailCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+      </OrchestrationSteps>
+    </SubJourney>
+
+
+    <SubJourney Id="PasswordResetSubJourney" Type="Call">
+      <OrchestrationSteps>
+        <!-- Step 1: Collect email -->
+        <OrchestrationStep Order="1" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="PasswordReset-CollectEmail"
+                            TechnicalProfileReferenceId="LocalAccountDiscoveryUsingEmailAddress-NoMsEmail" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+
+        <!-- Step 2: Generate OTP -->
+        <OrchestrationStep Order="2" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="GenerateEmailCode" TechnicalProfileReferenceId="GenerateCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <OrchestrationStep Order="3" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AcquireToken" TechnicalProfileReferenceId="REST-AcquireAccessToken" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 3: Send OTP -->
+        <!-- Debug Step: Show OTP on screen -->
+        <OrchestrationStep Order="4" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="SendEmailCodeAPI" TechnicalProfileReferenceId="SendEmailVerificationAPI" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 4: Enter OTP -->
+        <OrchestrationStep Order="5" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="EnterEmailCode" TechnicalProfileReferenceId="SelfAsserted-VerifyEmailCode" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 5: Lookup user -->
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="ReadUserByEmail" TechnicalProfileReferenceId="AAD-UserReadUsingEmailAddress" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 6: Reset password -->
+        <OrchestrationStep Order="7" Type="ClaimsExchange">
+          <ClaimsExchanges>
+            <ClaimsExchange Id="PasswordReset" TechnicalProfileReferenceId="LocalAccountWritePasswordUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+      </OrchestrationSteps>
+    </SubJourney>
+
+  </SubJourneys>
+
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="CustomSignUpSignIn" />
+    <Endpoints>
+      <!--points to refresh token journey when app makes refresh token request-->
+      <Endpoint Id="Token" UserJourneyReferenceId="RedeemRefreshToken" />
+      <Endpoint Id="UserInfo" UserJourneyReferenceId="UserInfoJourney" />
+    </Endpoints>
+    <UserJourneyBehaviors>
+      <SessionExpiryType>Absolute</SessionExpiryType>
+      <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
+      <JourneyInsights
+              TelemetryEngine="ApplicationInsights"
+              InstrumentationKey="6f130eb6-d747-4654-ac34-70106185429f"
+              DeveloperMode="true"
+              ClientEnabled="true"
+              ServerEnabled="true" />
+      <ScriptExecution>Allow</ScriptExecution>
+    </UserJourneyBehaviors>
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="OpenIdConnect" />
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="email" />
+        <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
+        <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+        <OutputClaim ClaimTypeReferenceId="isSignUp" />
+        <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="sub" />
+    </TechnicalProfile>
+  </RelyingParty>
+</TrustFrameworkPolicy>
