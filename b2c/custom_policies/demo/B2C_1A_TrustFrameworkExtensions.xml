@@ -311,8 +311,7 @@
           <Protocol Name="Proprietary"
                     Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
           <Metadata>
-            <Item Key="ServiceUrl">https://sds-api-mgmt.platform.hmcts.net/pre-api-b2c/b2c/email-verification
-            </Item>
+            <Item Key="ServiceUrl">https://sds-api-mgmt.demo.platform.hmcts.net/pre-api-b2c/b2c/email-verification</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">Bearer</Item>
             <Item Key="UseClaimAsBearerToken">bearerToken</Item>
