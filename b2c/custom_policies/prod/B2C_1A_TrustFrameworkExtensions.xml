@@ -2,15 +2,15 @@
 <TrustFrameworkPolicy
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="hmctsdemoextid.onmicrosoft.com"
+  TenantId="hmctsprodextid.onmicrosoft.com"
   PolicyId="B2C_1A_TrustFrameworkExtensions"
   DeploymentMode="Development"
-  PublicPolicyUri="http://hmctsdemoextid.onmicrosoft.com/policies/B2C_1A_TrustFrameworkExtensions.xml"
+  PublicPolicyUri="http://hmctsprodextid.onmicrosoft.com/policies/B2C_1A_TrustFrameworkExtensions.xml"
   UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights"
 >
 
   <BasePolicy>
-    <TenantId>hmctsdemoextid.onmicrosoft.com</TenantId>
+    <TenantId>hmctsprodextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkLocalization</PolicyId>
   </BasePolicy>
 
@@ -85,7 +85,7 @@
     <ContentDefinitions>
       <!-- This content definition is to render an error page that displays unhandled errors. -->
       <ContentDefinition Id="api.error">
-        <LoadUri>https://presademo.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presaprod.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:globalexception:1.2.1</DataUri>
         <Metadata>
@@ -93,7 +93,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.signuporsignin">
-        <LoadUri>https://presademo.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presaprod.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.9</DataUri>
         <Metadata>
@@ -103,7 +103,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.selfasserted">
-        <LoadUri>https://presademo.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presaprod.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -112,7 +112,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.localaccountsignup">
-        <LoadUri>https://presademo.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presaprod.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -120,7 +120,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.localaccountpasswordreset">
-        <LoadUri>https://presademo.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presaprod.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -128,7 +128,7 @@
         </Metadata>
       </ContentDefinition>
       <ContentDefinition Id="api.localaccountsignin">
-        <LoadUri>https://presademo.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
+        <LoadUri>https://presaprod.blob.core.windows.net/pre-b2c-container/template.html</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
         <Metadata>
@@ -311,7 +311,7 @@
           <Protocol Name="Proprietary"
                     Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"/>
           <Metadata>
-            <Item Key="ServiceUrl">https://sds-api-mgmt.demo.platform.hmcts.net/pre-api-b2c/b2c/email-verification</Item>
+            <Item Key="ServiceUrl">https://sds-api-mgmt.platform.hmcts.net/pre-api-b2c/b2c/email-verification</Item>
             <Item Key="SendClaimsIn">Body</Item>
             <Item Key="AuthenticationType">Bearer</Item>
             <Item Key="UseClaimAsBearerToken">bearerToken</Item>
@@ -394,15 +394,15 @@
             <Item Key="AllowInsecureAuthInProduction">false</Item>
           </Metadata>
           <CryptographicKeys>
-            <!-- client id for pre-b2c-client-demo -->
+            <!-- client id for pre-b2c-client-prod -->
             <Key Id="BasicAuthenticationUsername" StorageReferenceId="B2C_1A_PREOAuthClientId"/>
             <Key Id="BasicAuthenticationPassword" StorageReferenceId="B2C_1A_PREOAuthClientSecret"/>
           </CryptographicKeys>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="grant_type" DefaultValue="client_credentials"
                         AlwaysUseDefaultValue="true"/>
-            <!-- app/client id for pre-apim-b2c-demo -->
-            <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://cdcc857f-cee2-4c92-8630-18b2b15564c8/.default"
+            <!-- app/client id for pre-apim-b2c-prod -->
+            <InputClaim ClaimTypeReferenceId="scope" DefaultValue="api://20e4611e-8b97-4157-a335-4bb9b7e905b1/.default"
                         AlwaysUseDefaultValue="true"/>
           </InputClaims>
           <OutputClaims>
@@ -439,10 +439,7 @@
           <Protocol Name="None"/>
           <InputTokenFormat>JWT</InputTokenFormat>
           <Metadata>
-            <Item Key="issuer">
-              https://hmctsdemoextid.b2clogin.com/e80a88ac-604b-4957-bcee-1af1ebbeaf50
-              /v2.0/
-            </Item>
+            <Item Key="issuer">https://hmctsprodextid.b2clogin.com/0f878b1e-f234-49e3-8be4-f8028cd364f2/v2.0/</Item>
             <Item Key="audience">[ "22222222-2222-2222-2222-222222222222",
               "33333333-3333-3333-3333-333333333333" ]
             </Item>
@@ -459,16 +456,16 @@
 
         <TechnicalProfile Id="login-NonInteractive">
           <Metadata>
-            <Item Key="client_id">bb433784-4d34-48b0-a3fe-986ac75e87f5</Item> <!-- ProxyIdentityExperienceFramework -->
-            <Item Key="IdTokenAudience">60e0df0f-7ef1-40e6-8a0b-3b3f3c6be00f</Item> <!-- IdentityExperienceFramework -->
+            <Item Key="client_id">bc77d15c-5991-44b5-93b9-303f5dce8df2</Item> <!-- ProxyIdentityExperienceFramework -->
+            <Item Key="IdTokenAudience">286718f3-dd4d-4cef-af64-8d2efba605e8</Item> <!-- IdentityExperienceFramework -->
           </Metadata>
           <InputClaims>
             <InputClaim ClaimTypeReferenceId="client_id"
-                        DefaultValue="bb433784-4d34-48b0-a3fe-986ac75e87f5"/>
+                        DefaultValue="bc77d15c-5991-44b5-93b9-303f5dce8df2"/>
             <InputClaim
               ClaimTypeReferenceId="resource_id"
               PartnerClaimType="resource"
-              DefaultValue="60e0df0f-7ef1-40e6-8a0b-3b3f3c6be00f"
+              DefaultValue="286718f3-dd4d-4cef-af64-8d2efba605e8"
             />
           </InputClaims>
         </TechnicalProfile>
