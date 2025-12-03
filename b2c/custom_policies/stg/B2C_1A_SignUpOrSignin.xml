@@ -294,7 +294,7 @@
             </Precondition>
           </Preconditions>
           <ClaimsExchanges>
-            <ClaimsExchange Id="AADUserReadAfterSignUp" TechnicalProfileReferenceId="AAD-UserReadUsingEmailAddress" />
+            <ClaimsExchange Id="AADUserReadAfterSignUp" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
           </ClaimsExchanges>
         </OrchestrationStep>
 
