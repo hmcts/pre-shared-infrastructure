@@ -75,7 +75,12 @@
             </Precondition>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
               <Value>objectId</Value>
-              <Value>647ef962-b03f-40fa-b9a0-df5243bc8334</Value> <!-- prod user to skip OTP -->
+              <Value>ea7978c4-da9a-42ae-ad9e-c5a93e7fa46d</Value> <!-- assume automated test user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>72778f3e-e09a-4711-96bf-c93dd8ef9a5a</Value> <!-- prod user to skip OTP -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
 
