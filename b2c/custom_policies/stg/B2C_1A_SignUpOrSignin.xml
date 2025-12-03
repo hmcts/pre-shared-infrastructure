@@ -266,10 +266,6 @@
               <Value>isForgotPassword</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
-            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
-              <Value>isSignUp</Value>
-              <Action>SkipThisOrchestrationStep</Action>
-            </Precondition>
             <Precondition Type="ClaimEquals" ExecuteActionsIf="false">
               <Value>otpVerified</Value>
               <Value>true</Value>
