@@ -13,6 +13,7 @@ on:
           - stg
           - test
           - demo
+          - prod
 
 jobs:
   build-and-deploy:

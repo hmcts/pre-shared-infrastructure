@@ -4,14 +4,14 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="hmctsdevextid.onmicrosoft.com"
+  TenantId="hmctsprodextid.onmicrosoft.com"
   PolicyId="B2C_1A_SignUpOrSignin"
   DeploymentMode="Development"
-  PublicPolicyUri="http://hmctsdevextid.onmicrosoft.com/policies/B2C_1A_SignUpOrSignin.xml"
+  PublicPolicyUri="http://hmctsprodextid.onmicrosoft.com/policies/B2C_1A_SignUpOrSignin.xml"
   UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights"
 >
   <BasePolicy>
-    <TenantId>hmctsdevextid.onmicrosoft.com</TenantId>
+    <TenantId>hmctsprodextid.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkExtensions</PolicyId>
   </BasePolicy>
 
@@ -73,12 +73,16 @@
               <Value>isSignUp</Value>
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
-<!-- Add test users here if needed -->
-<!--            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">-->
-<!--              <Value>objectId</Value>-->
-<!--              <Value>a207a1b2-f39b-4e70-a211-bd7e26d7504e</Value>-->
-<!--              <Action>SkipThisOrchestrationStep</Action>-->
-<!--            </Precondition>-->
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>ea7978c4-da9a-42ae-ad9e-c5a93e7fa46d</Value> <!-- assume automated test user has valid phone -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>72778f3e-e09a-4711-96bf-c93dd8ef9a5a</Value> <!-- prod user to skip OTP -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
 
           </Preconditions>
           <JourneyList>
@@ -239,7 +243,7 @@
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <JourneyInsights
               TelemetryEngine="ApplicationInsights"
-              InstrumentationKey="2398f937-825e-4455-9201-bda9ca7bff23"
+              InstrumentationKey="3790f980-7828-4f4b-9e24-c944bbe5498a"
               DeveloperMode="true"
               ClientEnabled="true"
               ServerEnabled="true" />

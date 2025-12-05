@@ -27,8 +27,8 @@
           </ClaimsProviderSelections>
           <ClaimsExchanges>
             <ClaimsExchange
-                    Id="LocalAccountSigninEmailExchange"
-                    TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
+              Id="LocalAccountSigninEmailExchange"
+              TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
             />
           </ClaimsExchanges>
         </OrchestrationStep>
@@ -43,8 +43,8 @@
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange
-                    Id="SignUpWithLogonEmailExchange"
-                    TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail"
+              Id="SignUpWithLogonEmailExchange"
+              TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail"
             />
             <ClaimsExchange Id="ForgotPasswordExchange" TechnicalProfileReferenceId="ForgotPassword" />
           </ClaimsExchanges>
@@ -281,8 +281,25 @@
           </ClaimsExchanges>
         </OrchestrationStep>
 
-        <!-- Step 6: Issue token -->
-        <OrchestrationStep Order="6" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
+        <!-- Step 5b: Read account from AAD after signup to populate signInNames.emailAddress -->
+        <OrchestrationStep Order="6" Type="ClaimsExchange">
+          <Preconditions>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="true">
+              <Value>isForgotPassword</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+            <Precondition Type="ClaimsExist" ExecuteActionsIf="false">
+              <Value>isSignUp</Value>
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>
+          </Preconditions>
+          <ClaimsExchanges>
+            <ClaimsExchange Id="AADUserReadAfterSignUp" TechnicalProfileReferenceId="AAD-UserReadUsingObjectId" />
+          </ClaimsExchanges>
+        </OrchestrationStep>
+
+        <!-- Step 7: Issue token -->
+        <OrchestrationStep Order="7" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="JwtIssuer" />
 
       </OrchestrationSteps>
     </UserJourney>
@@ -393,18 +410,17 @@
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <JourneyInsights
-              TelemetryEngine="ApplicationInsights"
-              InstrumentationKey="77d9d14f-455b-4f3e-ab9e-f60c7bf85e6c"
-              DeveloperMode="true"
-              ClientEnabled="true"
-              ServerEnabled="true" />
+        TelemetryEngine="ApplicationInsights"
+        InstrumentationKey="77d9d14f-455b-4f3e-ab9e-f60c7bf85e6c"
+        DeveloperMode="true"
+        ClientEnabled="true"
+        ServerEnabled="true" />
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
       <OutputClaims>
-        <OutputClaim ClaimTypeReferenceId="email" />
         <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
