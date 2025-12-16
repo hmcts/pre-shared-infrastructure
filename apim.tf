@@ -2,7 +2,7 @@ resource "azurerm_monitor_activity_log_alert" "apim_create_update_api_failed" {
   count               = var.env == "prod" ? 1 : 0
   name                = "apim_create_update_api_failed"
   resource_group_name = data.azurerm_resource_group.rg.name
-  location            = 'global'
+  location            = "global"
   scopes              = [data.azurerm_api_management.sds_api_mgmt.id]
 
   description = <<EOT
