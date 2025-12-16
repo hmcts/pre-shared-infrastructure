@@ -3,6 +3,7 @@ locals {
 
   mgmt_network_name    = var.mgmt_net_name
   mgmt_network_rg_name = var.mgmt_net_rg_name
+  activity_log_alert_location = "Global"
 }
 
 module "log_analytics_workspace" {
