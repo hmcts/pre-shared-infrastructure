@@ -1,8 +1,8 @@
 locals {
   env_long_name = var.env == "sbox" ? "sandbox" : var.env == "stg" ? "staging" : var.env
 
-  mgmt_network_name    = var.mgmt_net_name
-  mgmt_network_rg_name = var.mgmt_net_rg_name
+  mgmt_network_name           = var.mgmt_net_name
+  mgmt_network_rg_name        = var.mgmt_net_rg_name
   activity_log_alert_location = "Global"
 }
 
