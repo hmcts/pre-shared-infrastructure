@@ -79,6 +79,6 @@ data "azurerm_user_assigned_identity" "pre_stg_mi" {
 }
 
 data "azurerm_api_management" "sds_api_mgmt" {
-  name                = "$sds-api-mgmt-{var.env}"
+  name                = "sds-api-mgmt-${var.env}"
   resource_group_name = data.azurerm_resource_group.rg.name
 }
