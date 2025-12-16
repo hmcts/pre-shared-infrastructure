@@ -1,5 +1,5 @@
 resource "azurerm_monitor_activity_log_alert" "apim_create_update_api_failed" {
-  count               = var.env == "prod" || var.env == "stg" || var.env == "demo" ? 1 : 0
+  count               = 1 // Create this alert for all envs
   name                = "apim_create_update_api_failed"
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = local.activity_log_alert_location
