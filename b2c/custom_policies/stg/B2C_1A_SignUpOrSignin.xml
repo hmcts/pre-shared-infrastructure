@@ -27,8 +27,8 @@
           </ClaimsProviderSelections>
           <ClaimsExchanges>
             <ClaimsExchange
-                    Id="LocalAccountSigninEmailExchange"
-                    TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
+              Id="LocalAccountSigninEmailExchange"
+              TechnicalProfileReferenceId="SelfAsserted-LocalAccountSignin-Email"
             />
           </ClaimsExchanges>
         </OrchestrationStep>
@@ -43,8 +43,8 @@
           </Preconditions>
           <ClaimsExchanges>
             <ClaimsExchange
-                    Id="SignUpWithLogonEmailExchange"
-                    TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail"
+              Id="SignUpWithLogonEmailExchange"
+              TechnicalProfileReferenceId="LocalAccountSignUpWithLogonEmail"
             />
             <ClaimsExchange Id="ForgotPasswordExchange" TechnicalProfileReferenceId="ForgotPassword" />
           </ClaimsExchanges>
@@ -410,11 +410,11 @@
       <SessionExpiryType>Absolute</SessionExpiryType>
       <SessionExpiryInSeconds>3600</SessionExpiryInSeconds>
       <JourneyInsights
-              TelemetryEngine="ApplicationInsights"
-              InstrumentationKey="77d9d14f-455b-4f3e-ab9e-f60c7bf85e6c"
-              DeveloperMode="true"
-              ClientEnabled="true"
-              ServerEnabled="true" />
+        TelemetryEngine="ApplicationInsights"
+        InstrumentationKey="77d9d14f-455b-4f3e-ab9e-f60c7bf85e6c"
+        DeveloperMode="true"
+        ClientEnabled="true"
+        ServerEnabled="true" />
       <ScriptExecution>Allow</ScriptExecution>
     </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
@@ -422,6 +422,7 @@
       <Protocol Name="OpenIdConnect" />
       <OutputClaims>
         <OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="email" />
+        <OutputClaim ClaimTypeReferenceId="signInName" PartnerClaimType="loginEmail" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
         <OutputClaim ClaimTypeReferenceId="isSignUp" />
