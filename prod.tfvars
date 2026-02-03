@@ -11,3 +11,7 @@ restore_policy_days = "100"
 
 # Dynatrace
 cnp_vault_sub = "8999dec3-0104-4a27-94ee-6588559729d1"
+
+#  storage lifecycle management enabled
+delete_after_days_since_creation_greater_than = 90
+storage_policy_enabled                        = true
