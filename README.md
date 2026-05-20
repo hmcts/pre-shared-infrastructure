@@ -5,7 +5,7 @@ The infrastructure for PRE is brought up in 4 stages:
 1. https://github.com/hmcts/pre-network
 2. https://github.com/hmcts/pre-vault
 3. https://github.com/hmcts/pre-shared-infrastructure  - YOU ARE HERE
-4. https://github.com/hmcts/pre-functions
+4. ~~https://github.com/hmcts/pre-functions~~ ARCHIVED
 
 ## Getting started
 
