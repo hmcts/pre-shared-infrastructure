@@ -38,6 +38,20 @@ function moveRetryCode() {
   }
 }
 
+function addExistingUserHeader() {
+  const emailAddressInput = document.getElementById('signInName');
+
+  if (emailAddressInput) {
+    const existingUserHeader = document.createElement('h2');
+    existingUserHeader.textContent = 'Existing user';
+
+    emailAddressInput.parentNode.insertBefore(existingUserHeader, emailAddressInput.nextElementSibling);
+
+    const entryItem = emailAddressInput.parentNode;
+    entryItem.before(existingUserHeader);
+  }
+}
+
 function addTsAndCsLink() {
   const tsAndCsBlock = document.getElementsByClassName('CheckboxMultiSelect')[0];
   if (tsAndCsBlock) {
@@ -358,6 +372,7 @@ function interceptVerificationRequests() {
 function initialize() {
   moveForgotPassword();
   moveRetryCode();
+  addExistingUserHeader();
   addTsAndCsLink();
   addPasswordCriteria();
   lowerCaseEmailAddresses();
