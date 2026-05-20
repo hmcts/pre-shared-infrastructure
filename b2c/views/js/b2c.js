@@ -43,6 +43,7 @@ function addExistingUserHeader() {
 
   if (emailAddressInput) {
     const existingUserHeader = document.createElement('h2');
+    existingUserHeader.id = 'existingUserHeader';
     existingUserHeader.textContent = 'Existing user';
 
     emailAddressInput.parentNode.insertBefore(existingUserHeader, emailAddressInput.nextElementSibling);
@@ -50,6 +51,23 @@ function addExistingUserHeader() {
     const entryItem = emailAddressInput.parentNode;
     entryItem.before(existingUserHeader);
   }
+}
+
+function moveAndUpdateSignUpNowSection() {
+  const signUpNowSection = document.getElementByClassName('create');
+
+  if (signUpNowSection) {
+    const entrySection = document.getElementsByClassName('entry');
+    entrySection.before(signUpNowSection);
+  }
+
+  const signUpNowHeader = document.createElement('h2');
+  signUpNowHeader.id = 'signUpNowHeader';
+  signUpNowHeader.textContent = 'First time here?';
+  signUpNowSection.insertBefore(signUpNowHeader, signUpNowSection.firstChild);
+
+  const signUpNowText = signUpNowSection.getElementsByTagName('p')[0];
+  signUpNowText.textContent = 'You need to register in the address book. ';
 }
 
 function addTsAndCsLink() {
@@ -373,6 +391,7 @@ function initialize() {
   moveForgotPassword();
   moveRetryCode();
   addExistingUserHeader();
+  moveAndUpdateSignUpNowSection();
   addTsAndCsLink();
   addPasswordCriteria();
   lowerCaseEmailAddresses();
