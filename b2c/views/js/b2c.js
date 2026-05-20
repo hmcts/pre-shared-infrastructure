@@ -65,8 +65,8 @@ function moveAndUpdateSignUpNowSection() {
     signUpNowHeader.textContent = 'First time here?';
     signUpNowSection.insertBefore(signUpNowHeader, signUpNowSection.firstChild);
 
-    const signUpNowText = signUpNowSection.getElementsByTagName('p')[0];
-    signUpNowText.textContent = 'You need to register in the address book. ';
+    const signUpNowBody = signUpNowSection.getElementsByTagName('p')[0];
+    signUpNowBody.textContent = 'You need to register in the address book. ';
   }
 }
 
