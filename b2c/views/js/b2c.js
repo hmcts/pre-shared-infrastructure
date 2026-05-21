@@ -38,7 +38,7 @@ function moveRetryCode() {
   }
 }
 
-function addExistingUserHeader() {
+function addFormSectionHeader() {
   const emailAddressInput = document.getElementById('signInName');
   if (!emailAddressInput) return;
 
@@ -46,49 +46,60 @@ function addExistingUserHeader() {
   existingUserHeader.id = 'existingUserHeader';
   existingUserHeader.textContent = 'Existing user';
 
-  emailAddressInput.parentNode.insertBefore(existingUserHeader, emailAddressInput.nextElementSibling);
-
   const entryItem = emailAddressInput.parentNode;
   entryItem.before(existingUserHeader);
 }
 
-function moveAndUpdateSignUpNowSection() {
-  const signUpNowSection = document.querySelector('.create');
+function moveAndUpdateSignUpSection() {
+  const signUpSection = document.querySelector('.create');
   const entrySection = document.querySelector('.entry');
 
-  if (!signUpNowSection || !entrySection) return;
+  if (!signUpSection || !entrySection) return;
 
-  // Move the sign up now section before the form entry section
-  entrySection.parentNode.insertBefore(signUpNowSection, entrySection);
+  const newSiblingNode = entrySection;
+  moveSignUpSection(signUpSection, newSiblingNode);
 
-  const signUpNowHeader = document.createElement('h2');
-  signUpNowHeader.id = 'signUpNowHeader';
-  signUpNowHeader.textContent = 'First time here?';
-  signUpNowSection.insertBefore(signUpNowHeader, signUpNowSection.firstChild);
+  addHeaderToSignUpSection(signUpSection);
+  updateSignUpSectionBody(signUpSection);
+  removeDivider();
+}
 
-  // Change the text content of the sign up now section
-  const signUpNowBody = signUpNowSection.getElementsByTagName('p')[0];
-  if (!signUpNowBody) return;
+function moveSignUpSection(signUpSection, newSiblingNode) {
+  newSiblingNode.parentNode.insertBefore(signUpSection, newSiblingNode);
+}
+
+function addHeaderToSignUpSection(signUpSection) {
+  const signUpHeader = document.createElement('h2');
+  signUpHeader.id = 'signUpNowHeader';
+  signUpHeader.textContent = 'First time here?';
+  signUpSection.insertBefore(signUpHeader, signUpSection.firstChild);
+}
+
+function updateSignUpSectionBody(signUpSection) {
+  const signUpBody = signUpSection.getElementsByTagName('p')[0];
+  if (!signUpBody) return;
   
-  const signUpLink = signUpNowBody.querySelector('#createAccount') || signUpNowBody.querySelector('a');
+  const signUpLink = signUpBody.querySelector('#createAccount') || signUpBody.querySelector('a');
   if (!signUpLink) return;
 
-  // Find existing leading text node (e.g. "Don't have an account?")
-  const leadingTextNode = Array.from(signUpNowBody.childNodes)
+  // Find existing leading text node
+  const leadingTextNode = Array.from(signUpBody.childNodes)
     .find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '');
 
-  const signUpNowBodyText = 'You need to register in the address book.';
+  const newSignUpBodyText = 'You need to register in the address book.';
 
   if (leadingTextNode) {
-    leadingTextNode.textContent = signUpNowBodyText;
+    leadingTextNode.textContent = newSignUpBodyText;
   } else {
-    signUpNowBody.insertBefore(
-      document.createTextNode(signUpNowBodyText),
+    signUpBody.insertBefore(
+      document.createTextNode(newSignUpBodyText),
       signUpLink
     );
   }
+}
 
-  // Remove the divider
+function removeDivider() {
+  // Remove the "OR" divider section
   const divider = document.querySelector('.divider');
   if (!divider) return;
   divider.remove();
@@ -414,8 +425,8 @@ function interceptVerificationRequests() {
 function initialize() {
   moveForgotPassword();
   moveRetryCode();
-  addExistingUserHeader();
-  moveAndUpdateSignUpNowSection();
+  addFormSectionHeader();
+  moveAndUpdateSignUpSection();
   addTsAndCsLink();
   addPasswordCriteria();
   lowerCaseEmailAddresses();
