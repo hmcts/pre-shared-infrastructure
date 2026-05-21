@@ -54,19 +54,44 @@ function addExistingUserHeader() {
 }
 
 function moveAndUpdateSignUpNowSection() {
-  const signUpNowSection = document.getElementByClassName('create');
+  const signUpNowSection = document.querySelector('.create');
 
   if (signUpNowSection) {
-    const entrySection = document.getElementsByClassName('entry');
-    entrySection.before(signUpNowSection);
+    // Move the sign up now section before the form entry section
+    const entrySection = document.querySelector('.entry');
+    entrySection.parentNode.insertBefore(signUpNowSection, entrySection);
 
     const signUpNowHeader = document.createElement('h2');
     signUpNowHeader.id = 'signUpNowHeader';
     signUpNowHeader.textContent = 'First time here?';
     signUpNowSection.insertBefore(signUpNowHeader, signUpNowSection.firstChild);
 
+    // Change the text content of the sign up now section
     const signUpNowBody = signUpNowSection.getElementsByTagName('p')[0];
-    signUpNowBody.textContent = 'You need to register in the address book. ';
+    if (signUpNowBody) {
+      const signUpLink = signUpNowBody.querySelector('#createAccount') || signUpNowBody.querySelector('a');
+
+      if (signUpLink) {
+        // Find existing leading text node (e.g. "Don't have an account?")
+        const leadingTextNode = Array.from(signUpNowBody.childNodes)
+          .find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '');
+
+        if (leadingTextNode) {
+          leadingTextNode.textContent = 'You need to register in the address book.';
+        } else {
+          signUpNowBody.insertBefore(
+            document.createTextNode('You need to register in the address book.'),
+            signUpLink
+          );
+        }
+      }
+    }
+
+    // Remove the divider
+    const divider = document.querySelector('.divider');
+    if (divider) {
+      divider.remove();
+    }
   }
 }
 
