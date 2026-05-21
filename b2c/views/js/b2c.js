@@ -42,21 +42,20 @@ function addFormSectionHeader() {
   const emailAddressInput = document.getElementById('signInName');
   if (!emailAddressInput) return;
 
-  const existingUserHeader = document.createElement('h2');
-  existingUserHeader.id = 'existingUserHeader';
-  existingUserHeader.textContent = 'Existing user';
+  const header = document.createElement('h2');
+  header.textContent = 'Existing user';
 
-  const entryItem = emailAddressInput.parentNode;
-  entryItem.before(existingUserHeader);
+  const formSection = emailAddressInput.parentNode;
+  formSection.before(header);
 }
 
 function moveAndUpdateSignUpSection() {
   const signUpSection = document.querySelector('.create');
-  const entrySection = document.querySelector('.entry');
+  const formSection = document.querySelector('.entry');
 
-  if (!signUpSection || !entrySection) return;
+  if (!signUpSection || !formSection) return;
 
-  const newSiblingNode = entrySection;
+  const newSiblingNode = formSection;
   moveSignUpSection(signUpSection, newSiblingNode);
 
   addHeaderToSignUpSection(signUpSection);
