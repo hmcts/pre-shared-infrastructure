@@ -40,17 +40,16 @@ function moveRetryCode() {
 
 function addExistingUserHeader() {
   const emailAddressInput = document.getElementById('signInName');
+  if (!emailAddressInput) return;
 
-  if (emailAddressInput) {
-    const existingUserHeader = document.createElement('h2');
-    existingUserHeader.id = 'existingUserHeader';
-    existingUserHeader.textContent = 'Existing user';
+  const existingUserHeader = document.createElement('h2');
+  existingUserHeader.id = 'existingUserHeader';
+  existingUserHeader.textContent = 'Existing user';
 
-    emailAddressInput.parentNode.insertBefore(existingUserHeader, emailAddressInput.nextElementSibling);
+  emailAddressInput.parentNode.insertBefore(existingUserHeader, emailAddressInput.nextElementSibling);
 
-    const entryItem = emailAddressInput.parentNode;
-    entryItem.before(existingUserHeader);
-  }
+  const entryItem = emailAddressInput.parentNode;
+  entryItem.before(existingUserHeader);
 }
 
 function moveAndUpdateSignUpNowSection() {
