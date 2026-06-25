@@ -8539,3 +8539,7 @@ input[type="checkbox"] {
   display: none;
   visibility: hidden;
 }
+
+.no-margin {
+  margin: 0;
+}

@@ -60,7 +60,7 @@ function moveAndUpdateSignUpSection() {
 
   addHeaderToSignUpSection(signUpSection);
   updateSignUpSectionBody(signUpSection);
-  removeDivider();
+  moveDivider(formSection);
 }
 
 function moveSignUpSection(signUpSection, newSiblingNode) {
@@ -77,6 +77,9 @@ function addHeaderToSignUpSection(signUpSection) {
 function updateSignUpSectionBody(signUpSection) {
   const signUpBody = signUpSection.getElementsByTagName('p')[0];
   if (!signUpBody) return;
+
+  // Change the font size
+  signUpBody.classList.add('govuk-label');
   
   const signUpLink = signUpBody.querySelector('#createAccount') || signUpBody.querySelector('a');
   if (!signUpLink) return;
@@ -97,11 +100,16 @@ function updateSignUpSectionBody(signUpSection) {
   }
 }
 
-function removeDivider() {
-  // Remove the "OR" divider section
+function moveDivider(targetNodeToInsertAfter) {
+  // Move the "OR" divider section below the target heading
   const divider = document.querySelector('.divider');
-  if (!divider) return;
-  divider.remove();
+  if (!divider || !targetNodeToInsertAfter) return;
+  targetNodeToInsertAfter.after(divider);
+}
+
+function updatePageHeader() {
+  const heading = document.querySelector(".intro h2");
+  heading.classList.add("no-margin");
 }
 
 function addTsAndCsLink() {
@@ -426,6 +434,7 @@ function initialize() {
   moveRetryCode();
   addFormSectionHeader();
   moveAndUpdateSignUpSection();
+  updatePageHeader();
   addTsAndCsLink();
   addPasswordCriteria();
   lowerCaseEmailAddresses();
