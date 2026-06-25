@@ -8543,3 +8543,7 @@ input[type="checkbox"] {
 .no-margin {
   margin: 0!important;
 }
+
+.no-bottom-margin {
+  margin-bottom: 0!important;
+}

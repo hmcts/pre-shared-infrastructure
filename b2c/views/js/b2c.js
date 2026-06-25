@@ -61,6 +61,7 @@ function moveAndUpdateSignUpSection() {
   addHeaderToSignUpSection(signUpSection);
   updateSignUpSectionBody(signUpSection);
   removeDivider();
+  addOrDivider(signUpSection);
 }
 
 function moveSignUpSection(signUpSection, newSiblingNode) {
@@ -105,6 +106,15 @@ function removeDivider() {
   const divider = document.querySelector('.divider');
   if (!divider) return;
   divider.remove();
+}
+
+function addOrDivider(nodeToInsertAfter) {
+  // Add an "OR" divider section
+  if (!nodeToInsertAfter) return;
+  const orDivider = document.createElement('h2');
+  orDivider.textContent = 'OR';
+
+  nodeToInsertAfter.parentNode.insertBefore(orDivider, nodeToInsertAfter.nextSibling);
 }
 
 function updatePageHeader() {
