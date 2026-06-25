@@ -60,6 +60,7 @@ function moveAndUpdateSignUpSection() {
 
   addHeaderToSignUpSection(signUpSection);
   updateSignUpSectionBody(signUpSection);
+  removeDivider();
 }
 
 function moveSignUpSection(signUpSection, newSiblingNode) {
