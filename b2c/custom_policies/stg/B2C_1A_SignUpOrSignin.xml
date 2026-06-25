@@ -99,6 +99,11 @@
               <Value>a807b309-bd71-4984-a660-d1e1af99a05d</Value> <!-- Pre Level 3 Test User for automated testing -->
               <Action>SkipThisOrchestrationStep</Action>
             </Precondition>
+            <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
+              <Value>objectId</Value>
+              <Value>26ca126a-8ae8-40a2-98e6-ff8dbc2f0ba8</Value> <!-- Pre Level 1 Test User for automated testing -->
+              <Action>SkipThisOrchestrationStep</Action>
+            </Precondition>            
 
             <!-- BEGIN: Performance test users -->
             <Precondition Type="ClaimEquals" ExecuteActionsIf="true">
