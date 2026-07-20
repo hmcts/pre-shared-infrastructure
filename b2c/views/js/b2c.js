@@ -38,6 +38,90 @@ function moveRetryCode() {
   }
 }
 
+function addFormSectionHeader() {
+  const emailAddressInput = document.getElementById('signInName');
+  if (!emailAddressInput) return;
+
+  const header = document.createElement('h2');
+  header.textContent = 'Existing user';
+
+  const formSection = emailAddressInput.parentNode;
+  formSection.before(header);
+}
+
+function moveAndUpdateSignUpSection() {
+  const signUpSection = document.querySelector('.create');
+  const formSection = document.querySelector('.entry');
+
+  if (!signUpSection || !formSection) return;
+
+  const newSiblingNode = formSection;
+  moveSignUpSection(signUpSection, newSiblingNode);
+
+  addHeaderToSignUpSection(signUpSection);
+  updateSignUpSectionBody(signUpSection);
+  removeDivider();
+  addOrDivider(signUpSection);
+}
+
+function moveSignUpSection(signUpSection, newSiblingNode) {
+  newSiblingNode.parentNode.insertBefore(signUpSection, newSiblingNode);
+}
+
+function addHeaderToSignUpSection(signUpSection) {
+  const signUpHeader = document.createElement('h2');
+  signUpHeader.id = 'signUpNowHeader';
+  signUpHeader.textContent = 'First time here?';
+  signUpSection.insertBefore(signUpHeader, signUpSection.firstChild);
+}
+
+function updateSignUpSectionBody(signUpSection) {
+  const signUpBody = signUpSection.getElementsByTagName('p')[0];
+  if (!signUpBody) return;
+
+  // Change the font size
+  signUpBody.classList.add('govuk-label');
+  
+  const signUpLink = signUpBody.querySelector('#createAccount') || signUpBody.querySelector('a');
+  if (!signUpLink) return;
+
+  // Find existing leading text node
+  const leadingTextNode = Array.from(signUpBody.childNodes)
+    .find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '');
+
+  const newSignUpBodyText = 'You need to register in the address book.';
+
+  if (leadingTextNode) {
+    leadingTextNode.textContent = newSignUpBodyText;
+  } else {
+    signUpBody.insertBefore(
+      document.createTextNode(newSignUpBodyText),
+      signUpLink
+    );
+  }
+}
+
+function removeDivider() {
+  // Remove the "OR" divider section
+  const divider = document.querySelector('.divider');
+  if (!divider) return;
+  divider.remove();
+}
+
+function addOrDivider(nodeToInsertAfter) {
+  // Add an "OR" divider section
+  if (!nodeToInsertAfter) return;
+  const orDivider = document.createElement('h2');
+  orDivider.textContent = 'OR';
+
+  nodeToInsertAfter.parentNode.insertBefore(orDivider, nodeToInsertAfter.nextSibling);
+}
+
+function updatePageHeader() {
+  const heading = document.querySelector(".intro h2");
+  heading.classList.add("no-margin");
+}
+
 function addTsAndCsLink() {
   const tsAndCsBlock = document.getElementsByClassName('CheckboxMultiSelect')[0];
   if (tsAndCsBlock) {
@@ -358,6 +442,9 @@ function interceptVerificationRequests() {
 function initialize() {
   moveForgotPassword();
   moveRetryCode();
+  addFormSectionHeader();
+  moveAndUpdateSignUpSection();
+  updatePageHeader();
   addTsAndCsLink();
   addPasswordCriteria();
   lowerCaseEmailAddresses();
