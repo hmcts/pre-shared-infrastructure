@@ -35,7 +35,7 @@ module "data_store_db_v14" {
     azurerm.postgres_network = azurerm.postgres_network
   }
 
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible.git?ref=master"
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=DTSPO-30107-additional-postgres-admins"
   env    = var.env
 
   product       = var.product
