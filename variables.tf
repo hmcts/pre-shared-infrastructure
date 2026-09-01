@@ -95,7 +95,3 @@ variable "restore_policy_days" {}
 variable "cnp_vault_sub" {
   description = "The subscription ID of the subscription that contains the CNP KeyVault"
 }
-
-variable "dev_subscription_id" {
-  default = "867a878b-cb68-4de5-9741-361ac9e178b6"
-}

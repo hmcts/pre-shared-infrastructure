@@ -63,12 +63,6 @@ provider "azurerm" {
   subscription_id = var.cnp_vault_sub
 }
 
-provider "azurerm" {
-  alias           = "dev"
-  subscription_id = var.dev_subscription_id
-  features {}
-}
-
 provider "azuread" {}
 
 provider "azurerm" {
