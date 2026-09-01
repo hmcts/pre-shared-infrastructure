@@ -69,12 +69,6 @@ provider "azurerm" {
   features {}
 }
 
-provider "azurerm" {
-  alias           = "stg"
-  subscription_id = var.stg_subscription_id
-  features {}
-}
-
 provider "azuread" {}
 
 provider "azurerm" {

@@ -72,13 +72,6 @@ data "azurerm_user_assigned_identity" "pre_dev_mi" {
   resource_group_name = "managed-identities-dev-rg"
 }
 
-data "azurerm_user_assigned_identity" "pre_stg_mi" {
-  count               = var.env == "stg" ? 1 : 0
-  provider            = azurerm.stg
-  name                = "${var.product}-stg-mi"
-  resource_group_name = "managed-identities-stg-rg"
-}
-
 data "azurerm_api_management" "sds_api_mgmt" {
   name                = "sds-api-mgmt-${var.env}"
   resource_group_name = "ss-${var.env}-network-rg"
