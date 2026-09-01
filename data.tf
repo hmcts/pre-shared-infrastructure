@@ -66,11 +66,6 @@ data "azurerm_key_vault_secret" "slack_monitoring_address" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
-data "azurerm_user_assigned_identity" "pre_dev_mi" {
-  provider            = azurerm.dev
-  name                = "${var.product}-dev-mi"
-  resource_group_name = "managed-identities-dev-rg"
-}
 
 data "azurerm_api_management" "sds_api_mgmt" {
   name                = "sds-api-mgmt-${var.env}"
