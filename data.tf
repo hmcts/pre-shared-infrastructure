@@ -3,11 +3,7 @@ data "azurerm_client_config" "current" {}
 data "azuread_service_principal" "pre_sp" {
   display_name = "DTS Bootstrap (sub:dts-sharedservices-${var.env})"
 }
-data "azurerm_log_analytics_workspace" "loganalytics" {
-  provider            = azurerm.oms
-  name                = module.log_analytics_workspace.name
-  resource_group_name = module.log_analytics_workspace.resource_group_name
-}
+
 
 data "azurerm_key_vault" "keyvault" {
   name                = "${var.product}-hmctskv-${var.env}"
