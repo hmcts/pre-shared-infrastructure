@@ -26,23 +26,11 @@ provider "azurerm" {
   }
 }
 
-provider "azurerm" {
-  alias           = "oms"
-  subscription_id = module.log_analytics_workspace.subscription_id
-  features {}
-}
 
 provider "azurerm" {
   alias           = "mgmt"
   subscription_id = var.mgmt_subscription_id
   features {}
-}
-
-provider "azurerm" {
-  alias           = "private_dns"
-  subscription_id = "1baf5470-1c3e-40d3-a6f7-74bfbce4b348"
-  features {}
-
 }
 
 provider "azurerm" {
@@ -65,8 +53,3 @@ provider "azurerm" {
 
 provider "azuread" {}
 
-provider "azurerm" {
-  alias = "dcr"
-  features {}
-  subscription_id = var.env == "prod" ? "8999dec3-0104-4a27-94ee-6588559729d1" : var.env == "sbox" ? "bf308a5c-0624-4334-8ff8-8dca9fd43783" : "1c4f0704-a29e-403d-b719-b90c34ef14c9"
-}
