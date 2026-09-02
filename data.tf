@@ -3,11 +3,7 @@ data "azurerm_client_config" "current" {}
 data "azuread_service_principal" "pre_sp" {
   display_name = "DTS Bootstrap (sub:dts-sharedservices-${var.env})"
 }
-data "azurerm_log_analytics_workspace" "loganalytics" {
-  provider            = azurerm.oms
-  name                = module.log_analytics_workspace.name
-  resource_group_name = module.log_analytics_workspace.resource_group_name
-}
+
 
 data "azurerm_key_vault" "keyvault" {
   name                = "${var.product}-hmctskv-${var.env}"
@@ -66,18 +62,6 @@ data "azurerm_key_vault_secret" "slack_monitoring_address" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
-data "azurerm_user_assigned_identity" "pre_dev_mi" {
-  provider            = azurerm.dev
-  name                = "${var.product}-dev-mi"
-  resource_group_name = "managed-identities-dev-rg"
-}
-
-data "azurerm_user_assigned_identity" "pre_stg_mi" {
-  count               = var.env == "stg" ? 1 : 0
-  provider            = azurerm.stg
-  name                = "${var.product}-stg-mi"
-  resource_group_name = "managed-identities-stg-rg"
-}
 
 data "azurerm_api_management" "sds_api_mgmt" {
   name                = "sds-api-mgmt-${var.env}"
