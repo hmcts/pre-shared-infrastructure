@@ -93,7 +93,7 @@ To fix this you need to:
 ## tooling script import for Demo remains in code
 The code in [PR 1049](https://github.com/hmcts/pre-shared-infrastructure/pull/1049) was merged to prevent a repeating issue with demo needing a Terraform import of the tooling script into the Edit VM.
 https://github.com/hmcts/pre-shared-infrastructure/pull/1049
-Leaving that in place should simply import in demo each time its needed. 
+Leaving that in place should simply import in demo each time its needed.
 Once the Edit VM is removed from Demo that code can be reverted.
 
 ## LICENSE
@@ -115,11 +115,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 |------|---------|
 | <a name="provider_azuread"></a> [azuread](#provider\_azuread) | n/a |
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 4.38.1 |
-| <a name="provider_azurerm.dev"></a> [azurerm.dev](#provider\_azurerm.dev) | 4.38.1 |
 | <a name="provider_azurerm.mgmt"></a> [azurerm.mgmt](#provider\_azurerm.mgmt) | 4.38.1 |
-| <a name="provider_azurerm.oms"></a> [azurerm.oms](#provider\_azurerm.oms) | 4.38.1 |
 | <a name="provider_azurerm.private_dns"></a> [azurerm.private\_dns](#provider\_azurerm.private\_dns) | 4.38.1 |
-| <a name="provider_azurerm.stg"></a> [azurerm.stg](#provider\_azurerm.stg) | 4.38.1 |
 
 ## Modules
 
@@ -201,8 +198,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | [azurerm_subnet.jenkins_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/data-sources/subnet) | data source |
 | [azurerm_subnet.videoedit_subnet](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/data-sources/subnet) | data source |
 | [azurerm_user_assigned_identity.managed_identity](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_user_assigned_identity.pre_dev_mi](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/data-sources/user_assigned_identity) | data source |
-| [azurerm_user_assigned_identity.pre_stg_mi](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/data-sources/user_assigned_identity) | data source |
 | [azurerm_virtual_network.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/4.38.1/docs/data-sources/virtual_network) | data source |
 
 ## Inputs
@@ -215,7 +210,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_cors_rules"></a> [cors\_rules](#input\_cors\_rules) | cors rule for final storage account | <pre>list(object({<br/>    allowed_headers    = list(string)<br/>    allowed_methods    = list(string)<br/>    allowed_origins    = list(string)<br/>    exposed_headers    = list(string)<br/>    max_age_in_seconds = number<br/>  }))</pre> | <pre>[<br/>  {<br/>    "allowed_headers": [<br/>      "*"<br/>    ],<br/>    "allowed_methods": [<br/>      "GET",<br/>      "POST"<br/>    ],<br/>    "allowed_origins": [<br/>      "https://*.justice.gov.uk",<br/>      "https://*.blob.core.windows.net",<br/>      "https://*.files.core.windows.net"<br/>    ],<br/>    "exposed_headers": [<br/>      "*"<br/>    ],<br/>    "max_age_in_seconds": 600<br/>  }<br/>]</pre> | no |
 | <a name="input_database_name"></a> [database\_name](#input\_database\_name) | n/a | `string` | `"pre-db"` | no |
 | <a name="input_delete_after_days_since_creation_greater_than"></a> [delete\_after\_days\_since\_creation\_greater\_than](#input\_delete\_after\_days\_since\_creation\_greater\_than) | Number of days to keep an ingest file for before deleting it. Default 90 days | `number` | `90` | no |
-| <a name="input_dev_subscription_id"></a> [dev\_subscription\_id](#input\_dev\_subscription\_id) | n/a | `string` | `"867a878b-cb68-4de5-9741-361ac9e178b6"` | no |
 | <a name="input_dns_resource_group"></a> [dns\_resource\_group](#input\_dns\_resource\_group) | Private DNS zone configuration (for postgres) | `string` | `"core-infra-intsvc-rg"` | no |
 | <a name="input_dts_pre_backup_appreg_oid"></a> [dts\_pre\_backup\_appreg\_oid](#input\_dts\_pre\_backup\_appreg\_oid) | n/a | `any` | n/a | yes |
 | <a name="input_env"></a> [env](#input\_env) | n/a | `any` | n/a | yes |
@@ -231,7 +225,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 | <a name="input_restore_policy_days"></a> [restore\_policy\_days](#input\_restore\_policy\_days) | n/a | `any` | n/a | yes |
 | <a name="input_sa_account_tier"></a> [sa\_account\_tier](#input\_sa\_account\_tier) | n/a | `string` | `"Standard"` | no |
 | <a name="input_sa_replication_type"></a> [sa\_replication\_type](#input\_sa\_replication\_type) | n/a | `string` | `"GRS"` | no |
-| <a name="input_stg_subscription_id"></a> [stg\_subscription\_id](#input\_stg\_subscription\_id) | n/a | `string` | `"74dacd4f-a248-45bb-a2f0-af700dc4cf68"` | no |
 | <a name="input_storage_policy_enabled"></a> [storage\_policy\_enabled](#input\_storage\_policy\_enabled) | Status of the storage account lifecycle policy. Default 'false' | `bool` | `false` | no |
 
 ## Outputs
