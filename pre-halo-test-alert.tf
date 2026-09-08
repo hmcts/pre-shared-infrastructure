@@ -1,5 +1,5 @@
 module "pre-halo-test-alert" {
-  count             = var.env == "test" ? 1 : 0
+  count             = var.env == "stg" ? 1 : 0
   source            = "git@github.com:hmcts/cnp-module-metric-alert"
   location          = data.azurerm_application_insights.app_insights.location
   app_insights_name = data.azurerm_application_insights.app_insights.name
