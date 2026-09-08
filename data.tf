@@ -67,3 +67,8 @@ data "azurerm_api_management" "sds_api_mgmt" {
   name                = "sds-api-mgmt-${var.env}"
   resource_group_name = "ss-${var.env}-network-rg"
 }
+
+data "azurerm_application_insights" "app_insights" {
+  name                = "pre-${var.env}-appinsights"
+  resource_group_name = "${var.product}-${var.env}"
+}
