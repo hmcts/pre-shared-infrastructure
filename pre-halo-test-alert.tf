@@ -18,7 +18,7 @@ EOF
   time_window_in_minutes     = "5"
   severity_level             = "3"
   action_group_name          = data.azurerm_monitor_action_group.halo_itsm_nonprod.name
-  action_group_rg_name       = data.azurerm_monitor_action_group.halo_itsm_nonprod.resource_group_name
+  action_group_rg            = data.azurerm_monitor_action_group.halo_itsm_nonprod.resource_group_name
   custom_email_subject       = "PRE API Halo Webhook Test (Not a real alert)"
   trigger_threshold_operator = "GreaterThan"
   trigger_threshold          = "3"
