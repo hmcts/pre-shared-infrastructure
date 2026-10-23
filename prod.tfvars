@@ -17,3 +17,5 @@ delete_after_days_since_creation_greater_than = 90
 storage_policy_enabled                        = true
 
 stg_subscription_id = "5ca62022-6aa2-4cee-aaa7-e7536c8d566c"
+
+service_criticality = 5

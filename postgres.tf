@@ -68,6 +68,7 @@ module "data_store_db_v14" {
 
   admin_user_object_id = var.jenkins_AAD_objectId
 
+  service_criticality = var.service_criticality
 }
 
 # Needed by the Common Pipeline db migration step
