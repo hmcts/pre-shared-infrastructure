@@ -21,19 +21,11 @@ resource "azuread_app_role_assignment" "client_to_api" {
   resource_object_id  = data.azuread_service_principal.resource_sp.object_id
 }
 
-# TEMPORARY Rotation - Need to confirm secret's actual use in future
-resource "time_rotating" "b2c_client_secret_rotation" {
-  rotation_days = 358 # ~rotate before expiry
-}
-
 # Create a client secret for client_credentials
 resource "azuread_application_password" "client_secret" {
-  end_date_relative = "8760h" # ~365 days
   application_id = data.azuread_application.client_app.id
   display_name   = "pre-b2c-client-${var.env}-client-secret"
-  rotate_when_changed = {
-    rotation = time_rotating.b2c_client_secret_rotation.id
-  }
+  end_date       = "2027-10-28T00:00:00Z"
 }
 
 # Save client secret to Key Vault
