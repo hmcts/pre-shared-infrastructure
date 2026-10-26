@@ -25,7 +25,7 @@ resource "azuread_app_role_assignment" "client_to_api" {
 resource "azuread_application_password" "client_secret" {
   application_id = data.azuread_application.client_app.id
   display_name   = "pre-b2c-client-${var.env}-client-secret"
-  end_date       = "2027-10-28T00:00:00Z" # Hardcoded temporarily, as it is marked for deprecation
+  end_date       = "2027-10-28T00:00:00Z" # Hardcoded temporarily, until deleted or migrated S28-5228
 }
 
 # Save client secret to Key Vault
