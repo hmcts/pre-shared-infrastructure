@@ -30,7 +30,7 @@ locals {
 
 }
 
-module "data_store_db_v14" {
+module "data_store_db" {
   providers = {
     azurerm.postgres_network = azurerm.postgres_network
   }
@@ -56,8 +56,8 @@ module "data_store_db_v14" {
     }
   ]
 
-  pgsql_version         = "14"
-  backup_retention_days = 35
+  pgsql_version         = var.pgsql_version
+  backup_retention_days = var.database_backup_retention_days
 
   location             = var.location
   resource_group_name  = data.azurerm_resource_group.rg.name
@@ -74,7 +74,7 @@ module "data_store_db_v14" {
 # Needed by the Common Pipeline db migration step
 resource "azurerm_key_vault_secret" "API_POSTGRES_HOST" {
   name         = "api-POSTGRES-HOST"
-  value        = module.data_store_db_v14.fqdn
+  value        = module.data_store_db.fqdn
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
@@ -101,7 +101,7 @@ resource "azurerm_key_vault_secret" "API_POSTGRES_USER" {
 #https://github.com/hmcts/terraform-module-postgresql-flexible/blob/master/outputs.tf
 resource "azurerm_key_vault_secret" "API_POSTGRES_PASS" {
   name         = "api-POSTGRES-PASS"
-  value        = module.data_store_db_v14.password
+  value        = module.data_store_db.password
   key_vault_id = data.azurerm_key_vault.keyvault.id
   lifecycle {
     ignore_changes = [
@@ -114,7 +114,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_active_connections" {
   count               = var.env == "prod" ? 1 : 0
   name                = "postgres_active_connections_greater_than_80_percent"
   resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = [module.data_store_db_v14.instance_id]
+  scopes              = [module.data_store_db.instance_id]
   description         = "Whenever the maximum active connections is greater than 80%"
 
   tags = var.common_tags
@@ -137,7 +137,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_failed_connections" {
   count               = var.env == "prod" ? 1 : 0
   name                = "postgres_failed_connections_greater_than_10"
   resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = [module.data_store_db_v14.instance_id]
+  scopes              = [module.data_store_db.instance_id]
   description         = "Whenever the maximum failed connections is greater than 10"
 
   tags = var.common_tags
@@ -160,7 +160,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_cpu" {
   count               = var.env == "prod" ? 1 : 0
   name                = "postgres_cpu_percent_95"
   resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = [module.data_store_db_v14.instance_id]
+  scopes              = [module.data_store_db.instance_id]
   description         = "Whenever the cpu utilization is greater than 95"
   frequency           = "PT1H"
   window_size         = "P1D"
@@ -183,7 +183,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_memory" {
   count               = var.env == "prod" ? 1 : 0
   name                = "postgres_memory_percent_95"
   resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = [module.data_store_db_v14.instance_id]
+  scopes              = [module.data_store_db.instance_id]
   description         = "Whenever the memory utilization is greater than 95"
   frequency           = "PT1H"
   window_size         = "P1D"
@@ -206,7 +206,7 @@ resource "azurerm_monitor_metric_alert" "postgres_alert_storage_utilization" {
   count               = var.env == "prod" ? 1 : 0
   name                = "postgres_storage_utilization_90"
   resource_group_name = data.azurerm_resource_group.rg.name
-  scopes              = [module.data_store_db_v14.instance_id]
+  scopes              = [module.data_store_db.instance_id]
   description         = "Whenever the storage utilization is greater than 90"
   frequency           = "PT1H"
   window_size         = "P1D"

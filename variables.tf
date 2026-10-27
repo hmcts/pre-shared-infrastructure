@@ -45,6 +45,14 @@ variable "pgsql_storage_mb" {
   default = "32768"
 }
 
+variable "pgsql_version" {
+  default = "14"
+}
+
+variable "database_backup_retention_days" {
+  default = 35
+}
+
 # Private DNS zone configuration (for postgres)
 variable "dns_resource_group" {
   default = "core-infra-intsvc-rg"
