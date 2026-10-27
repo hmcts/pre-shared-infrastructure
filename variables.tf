@@ -95,3 +95,9 @@ variable "restore_policy_days" {}
 variable "cnp_vault_sub" {
   description = "The subscription ID of the subscription that contains the CNP KeyVault"
 }
+
+variable "service_criticality" {
+  description = "Service criticality rating from 1-5."
+  type        = number
+  default     = 1
+}

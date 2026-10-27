@@ -35,7 +35,7 @@ module "data_store_db_v14" {
     azurerm.postgres_network = azurerm.postgres_network
   }
 
-  source = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=DTSPO-30107-additional-postgres-admins"
+  source = "git@github.com:hmcts/terraform-module-postgresql-flexible?ref=master"
   env    = var.env
 
   product       = var.product
@@ -68,6 +68,7 @@ module "data_store_db_v14" {
 
   admin_user_object_id = var.jenkins_AAD_objectId
 
+  service_criticality = var.service_criticality
 }
 
 # Needed by the Common Pipeline db migration step
