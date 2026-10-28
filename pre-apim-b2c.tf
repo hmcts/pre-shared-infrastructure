@@ -20,20 +20,3 @@ resource "azuread_app_role_assignment" "client_to_api" {
   app_role_id         = data.azuread_service_principal.resource_sp.app_role_ids["pre.api.request.b2c"]
   resource_object_id  = data.azuread_service_principal.resource_sp.object_id
 }
-
-# Create a client secret for client_credentials
-resource "azuread_application_password" "client_secret" {
-  application_id = data.azuread_application.client_app.id
-  display_name   = "pre-b2c-client-${var.env}-client-secret"
-  end_date       = "2027-10-28T00:00:00Z" # Hardcoded temporarily, until deleted or migrated S28-5228
-}
-
-# Save client secret to Key Vault
-resource "azurerm_key_vault_secret" "client_secret_kv" {
-  name         = "pre-b2c-client-secret"
-  value        = azuread_application_password.client_secret.value
-  key_vault_id = data.azurerm_key_vault.keyvault.id
-
-  # Use client secret expiration date to set the expiration date of the Key Vault secret
-  expiration_date = azuread_application_password.client_secret.end_date
-}
