@@ -56,8 +56,8 @@ module "data_store_db_v14" {
     }
   ]
 
-  pgsql_version         = "14"
-  backup_retention_days = 35
+  pgsql_version         = var.pgsql_version
+  backup_retention_days = var.database_backup_retention_days
 
   location             = var.location
   resource_group_name  = data.azurerm_resource_group.rg.name
