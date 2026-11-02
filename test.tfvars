@@ -16,6 +16,6 @@ storage_policy_enabled                        = true
 cnp_vault_sub = "1c4f0704-a29e-403d-b719-b90c34ef14c9"
 
 # Database
-pgsql_version = "16"
+pgsql_version = "18"
 
 database_backup_retention_days = 7
