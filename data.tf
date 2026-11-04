@@ -67,3 +67,13 @@ data "azurerm_api_management" "sds_api_mgmt" {
   name                = "sds-api-mgmt-${var.env}"
   resource_group_name = "ss-${var.env}-network-rg"
 }
+
+data "azurerm_application_insights" "app_insights" {
+  name                = "pre-${var.env}-appinsights"
+  resource_group_name = "${var.product}-${var.env}"
+}
+
+data "azurerm_monitor_action_group" "halo_itsm_nonprod" {
+  name                = "halo-itsm-nonprod"
+  resource_group_name = "monitoring-development-rg"
+}
