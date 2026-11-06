@@ -46,7 +46,7 @@ variable "pgsql_storage_mb" {
 }
 
 variable "pgsql_version" {
-  default = "18"
+  default = "17"
 }
 
 variable "database_backup_retention_days" {
